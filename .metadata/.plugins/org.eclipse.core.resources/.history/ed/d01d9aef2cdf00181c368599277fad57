@@ -1,0 +1,75 @@
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Top_K_stream {
+	private int k = 2;
+	
+	private Map<String, Integer> map1 = new HashMap<>();
+	
+	private Map<String, Tuple> map2 = new HashMap<>();
+	
+	private Queue<Tuple> heap = new PriorityQueue<Tuple>(k+1, new Comparator<Tuple>() {
+		public int compare(Tuple t1, Tuple t2)
+		{			
+			return t1.frequency != t2.frequency ? t1.frequency - t2.frequency : t2.data.compareTo(t1.data);
+		}
+	});
+	
+	public void findTopK()
+	{
+		while(!heap.isEmpty())
+		{
+			System.out.print(heap.poll().data + " ");
+		}
+	}
+	
+	public void addElement(String data)
+	{
+		int newFrequency = map1.getOrDefault(data, 0) + 1;
+		map1.put(data, newFrequency);
+		Tuple t = new Tuple(data, newFrequency);
+		
+		if (!map2.containsKey(data))
+		{
+			heap.offer(t);
+			map2.put(data, t);
+			
+			if (heap.size() >= k+1)
+			{
+				Tuple temp = heap.poll();
+				map2.remove(temp.data);
+			}
+		} 
+		else 
+		{
+			map2.get(data).frequency++;
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		Top_K_stream test = new Top_K_stream();
+		test.addElement("a");
+		test.addElement("a");
+		test.addElement("a");
+		test.addElement("b");
+		test.addElement("c");
+		test.findTopK();
+		test.addElement("c");
+		test.findTopK();
+	}
+}
+
+class Tuple {
+	String data;
+	int frequency;
+	
+	public Tuple(String data, int frequency)
+	{
+		this.data = data;
+		this.frequency = frequency;
+	}
+}

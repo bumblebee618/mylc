@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q212_Word_Search_II&apos; to &apos;Le_212_Word_Search_II&apos;&#x0A;- Original project: &apos;LeetCode_Graph_Search&apos;&#x0A;- Original element: &apos;Q212_Word_Search_II&apos;&#x0A;- Renamed element: &apos;Le_212_Word_Search_II&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q212_Word_Search_II&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q212_Word_Search_II.java[Q212_Word_Search_II" matchStrategy="1" name="Le_212_Word_Search_II" qualified="false" references="true" similarDeclarations="false" stamp="1527532292286" textual="true" version="1.0"/>
+</session>

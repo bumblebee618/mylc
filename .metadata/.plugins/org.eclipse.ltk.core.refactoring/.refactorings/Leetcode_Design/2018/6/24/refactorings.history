@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q535_Encode_and_Decode_TinyURL&apos; to &apos;Le_535_Encode_and_Decode_TinyURL&apos;&#x0A;- Original project: &apos;Leetcode_Design&apos;&#x0A;- Original element: &apos;Q535_Encode_and_Decode_TinyURL&apos;&#x0A;- Renamed element: &apos;Le_535_Encode_and_Decode_TinyURL&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q535_Encode_and_Decode_TinyURL&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q535_Encode_and_Decode_TinyURL.java[Q535_Encode_and_Decode_TinyURL" matchStrategy="1" name="Le_535_Encode_and_Decode_TinyURL" qualified="false" references="true" similarDeclarations="false" stamp="1529036018206" textual="true" version="1.0"/>
+</session>

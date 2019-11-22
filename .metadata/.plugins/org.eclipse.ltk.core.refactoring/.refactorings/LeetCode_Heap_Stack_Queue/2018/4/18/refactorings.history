@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q692_Top_K_Frequent_Words&apos; to &apos;Le_692_Top_K_Frequent_Words&apos;&#x0A;- Original project: &apos;LeetCode_Heap_Stack_Queue&apos;&#x0A;- Original element: &apos;Q692_Top_K_Frequent_Words&apos;&#x0A;- Renamed element: &apos;Le_692_Top_K_Frequent_Words&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q692_Top_K_Frequent_Words&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q692_Top_K_Frequent_Words.java[Q692_Top_K_Frequent_Words" matchStrategy="1" name="Le_692_Top_K_Frequent_Words" qualified="false" references="true" similarDeclarations="false" stamp="1525051720400" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;sum&apos; in &apos;Q441_Arranging_Coins.arrangeCoins(...)&apos; to &apos;sum1&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q441_Arranging_Coins.arrangeCoins(int).sum&apos;&#x0A;- Renamed element: &apos;sum&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;sum&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q441_Arranging_Coins.java[Q441_Arranging_Coins~arrangeCoins~I@sum!194!206!199!201!J!0!false" name="sum1" references="true" stamp="1571204487268" version="1.0"/>
+</session>

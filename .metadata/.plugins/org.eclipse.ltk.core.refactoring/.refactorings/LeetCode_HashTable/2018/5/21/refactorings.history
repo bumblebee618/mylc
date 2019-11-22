@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q791_Custom_Sort_String&apos; to &apos;Le_791_Custom_Sort_String&apos;&#x0A;- Original project: &apos;LeetCode_HashTable&apos;&#x0A;- Original element: &apos;Q791_Custom_Sort_String&apos;&#x0A;- Renamed element: &apos;Le_791_Custom_Sort_String&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q791_Custom_Sort_String&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q791_Custom_Sort_String.java[Q791_Custom_Sort_String" matchStrategy="1" name="Le_791_Custom_Sort_String" qualified="false" references="true" similarDeclarations="false" stamp="1527051767156" textual="false" version="1.0"/>
+</session>

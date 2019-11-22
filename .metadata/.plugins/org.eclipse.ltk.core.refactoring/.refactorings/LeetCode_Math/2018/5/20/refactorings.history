@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q507_Perfect_Number&apos; to &apos;Le_507_Perfect_Number&apos;&#x0A;- Original project: &apos;LeetCode_Math&apos;&#x0A;- Original element: &apos;Q507_Perfect_Number&apos;&#x0A;- Renamed element: &apos;Le_507_Perfect_Number&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q507_Perfect_Number&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q507_Perfect_Number.java[Q507_Perfect_Number" matchStrategy="1" name="Le_507_Perfect_Number" qualified="false" references="true" similarDeclarations="false" stamp="1526170433628" textual="false" version="1.0"/>
+</session>

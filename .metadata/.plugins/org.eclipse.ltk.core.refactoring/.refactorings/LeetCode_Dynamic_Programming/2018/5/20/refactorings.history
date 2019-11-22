@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q542_01_Matrix&apos; to &apos;Le_542_01_Matrix&apos;&#x0A;- Original project: &apos;LeetCode_Dynamic_Programming&apos;&#x0A;- Original element: &apos;Q542_01_Matrix&apos;&#x0A;- Renamed element: &apos;Le_542_01_Matrix&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q542_01_Matrix&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q542_01_Matrix.java[Q542_01_Matrix" matchStrategy="1" name="Le_542_01_Matrix" qualified="false" references="true" similarDeclarations="false" stamp="1526614815505" textual="false" version="1.0"/>
+</session>

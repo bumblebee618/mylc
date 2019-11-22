@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Q722_Remove_Comments&apos; to &apos;Le_722_Remove_Comments&apos;&#x0A;- Original project: &apos;Leetcode_String&apos;&#x0A;- Original element: &apos;Q722_Remove_Comments&apos;&#x0A;- Renamed element: &apos;Le_722_Remove_Comments&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Q722_Remove_Comments&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Q722_Remove_Comments.java[Q722_Remove_Comments" matchStrategy="1" name="Le_722_Remove_Comments" qualified="false" references="true" similarDeclarations="false" stamp="1527458684216" textual="true" version="1.0"/>
+</session>
