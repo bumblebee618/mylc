@@ -13,13 +13,14 @@ public class Li_4_1_Tiny_Url {
     
     /****************** long url to short url ****************/
     
-    public String longToShort(String url) {
-        if(url2Id.containsKey(url)){
-            return "http://tiny.url/" + idtoShortKey(url2Id.get(url));
+    public String longToShort(String longUrl) {
+        if(url2Id.containsKey(longUrl)){
+            return "http://tiny.url/" + idtoShortKey(url2Id.get(longUrl));
         } 
+        
         globalId++;
-        id2Url.put(globalId, url);
-        url2Id.put(url, globalId);
+        id2Url.put(globalId, longUrl);
+        url2Id.put(longUrl, globalId);
         return "http://tiny.url/" + idtoShortKey(globalId);
     }
     

@@ -22,50 +22,55 @@ Note: The length of each dimension in the given grid does not exceed 50.
  *
  */
 public class Q695_Max_Area_of_Island {
-	public int maxAreaOfIsland(int[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public int maxAreaOfIsland(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0)
+        {
             return 0;
         }
         
+        int result = 0;
         int row = grid.length;
         int col = grid[0].length;
         boolean[][] visited = new boolean[row][col];
-        int maxArea = 0;
         
-        for(int x = 0; x < row; x++) {
-            for (int y = 0; y < col; y++) {
-                if (grid[x][y] == 1 && !visited[x][y]) {
-                    maxArea = Math.max(maxArea, DFS(grid, visited, x, y));
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (grid[i][j] == 1 && !visited[i][j])
+                {
+                    result = Math.max(result, dfs(grid, visited, i, j));
                 }
             }
         }
         
-        return maxArea;
+        return result;
     }
     
-    private int DFS (int[][] grid, boolean[][] visited, int x, int y) {
-        if (visited[x][y] == true) {
-            return 0;
-        }
-        
-        int row = grid.length;
-        int col = grid[0].length;
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
+    private int dfs(int[][] grid, boolean[][] visited, int x, int y)
+    {
+        int count = 1;
         visited[x][y] = true;
-        int area = 1;
         
-        for (int i = 0; i < 4; i++) {
-        	int newX = x + dx[i];
-        	int newY = y + dy[i];
-        	
-            if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 1) {
-                area += DFS(grid, visited, newX, newY);
+        for (int i = 0; i < dx.length; i++)
+        {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+            
+            if (newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length && grid[newX][newY] == 1 && !visited[newX][newY])
+            {
+                count += dfs(grid, visited, newX, newY);
             }
         }
         
-        return area;
+        return count;
     }
+
+    
+    
     
     public static void main(String[] args) {
     	int[][] grid = {

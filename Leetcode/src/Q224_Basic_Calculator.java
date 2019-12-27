@@ -21,88 +21,106 @@ Note: Do not use the eval built-in library function.
 public class Q224_Basic_Calculator {
 	// using recursion
 	public int calculate(String s) {
-        if(s == null || s.length() == 0) {
+        if (s == null)
+        {
             return 0;
         }
         
-        int len = s.length();
+        s = s.trim();
+        
+        if (s.length() == 0)
+        {
+            return 0;
+        }
+        
+        Stack<Integer> stack = new Stack<>();
         char prevSign = ' ';
         int num = 0;
-        Stack<Integer> stack = new Stack<>();
-        int index = 0;
-        int sum = 0;
+        int size = s.length();
         
-        while(index < len) {
-            char c = s.charAt(index);
+        for (int i = 0; i < size; i++)
+        {
+            char c = s.charAt(i);
             
-            if(Character.isDigit(c)) {
-                num = num * 10 + (int) (c - '0');
+            if (c == ' ')
+            {
+                continue;
             }
             
-            if(!Character.isDigit(c) && c != ' ' || index == len - 1) {
-                if(c == '(') {
-                    int endPos = getClosePosition(s, index);
-                    
-                    if(endPos == -1) {
-                        return 0;
-                    } 
-                    
-                    num = calculate(s.substring(index + 1, endPos));
-                    index = endPos + 1;
-                    continue;
+            if (Character.isDigit(c))
+            {
+                num = num*10 + (c-'0');
+            }
+            
+            if (c == '(')
+            {
+                int end = findClosePos(s, i);
+                
+                if (end == -1)
+                {
+                    return 0;
                 }
                 
-                if(prevSign == '+') {
+                num = calculate(s.substring(i+1, end));
+                i = end;
+            }
+            
+            if (!Character.isDigit(c) || i == size-1)
+            {
+                if (prevSign == '+')
+                {
                     stack.push(num);
-                } else if(prevSign == '-') {
+                }
+                else if (prevSign == '-')
+                {
                     stack.push(-num);
-                } else {
+                }
+                else if (prevSign == ' ')
+                {
                     stack.push(num);
                 }
                 
                 prevSign = c;
                 num = 0;
             }
-            
-            index++;
         }
         
-        while(!stack.isEmpty()) {
-            sum += stack.pop();
+        int result = 0;
+        
+        while (!stack.isEmpty())
+        {
+            result += stack.pop();
         }
         
-        if(num != 0) {
-            if(prevSign == '+') {
-                sum += num;
-            } else if(prevSign == '-') {
-                sum -= num;
-            } else {
-                sum += num;
-            }
-        }
-        
-        return sum;
+        return result;
     }
     
-    public int getClosePosition(String s, int start) {
+    private int findClosePos(String s, int start)
+    {
         int count = 0;
         
-        for(int i = start; i < s.length(); i++) {
+        for (int i = start; i < s.length(); i++)
+        {
             char c = s.charAt(i);
             
-            if(c == '(') {
+            if (c == '(')
+            {
                 count++;
-            } else if(c == ')') {
+            }
+            else if (c == ')')
+            {
                 count--;
             }
             
-            if(count == 0) {
+            if (count == 0)
+            {
                 return i;
             }
         }
         
         return -1;
     }
+
     
     
 	

@@ -21,7 +21,7 @@ Note: m and n will be at most 100.
  * */
 
 public class Q063_Unique_Paths_II {
-	ublic int uniquePathsWithObstacles(int[][] obstacleGrid) {
+	public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 		if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
 			return 0;
 		}

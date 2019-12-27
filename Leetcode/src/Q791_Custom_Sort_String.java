@@ -25,7 +25,46 @@ S and T consist of lowercase letters only.
  *
  */
 public class Q791_Custom_Sort_String {
-	public String customSortString(String S, String T) {
+	// perfect method! Time O(n), space O(1)
+	public String customSortString(String s, String t) 
+    {
+        if (s == null || s.length() == 0 || t == null || t.length() == 0)
+        {
+            return t;
+        }
+        
+        int[] count = new int[256];
+        
+        for (char c : t.toCharArray())
+        {
+            count[c]++;
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        
+        for (char c : s.toCharArray())
+        {
+            while (count[c] > 0)
+            {
+                builder.append(c);
+                count[c]--;
+            }
+        }
+        
+        for (char c = 'a'; c <= 'z'; c++)
+        {
+            while (count[c] > 0)
+            {
+                builder.append(c);
+                count[c]--;
+            }
+        }
+        
+        return builder.toString();
+    }
+	
+	
+	public String customSortString2(String S, String T) {
         if (S == null || S.length() == 0 || T == null || T.length() == 0) {
             return "";
         }

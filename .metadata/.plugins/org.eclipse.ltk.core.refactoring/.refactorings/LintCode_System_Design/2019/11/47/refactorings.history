@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;url&apos; in &apos;Li_4_1_Tiny_Url.longToShort(...)&apos; to &apos;longUrl&apos;&#x0A;- Original project: &apos;LintCode_System_Design&apos;&#x0A;- Original element: &apos;Li_4_1_Tiny_Url.longToShort(String).url&apos;&#x0A;- Renamed element: &apos;url&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;url&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Li_4_1_Tiny_Url.java[Li_4_1_Tiny_Url~longToShort~QString;@url!428!437!435!437!QString;!0!true" name="longUrl" references="true" stamp="1574410226312" version="1.0"/>
+</session>

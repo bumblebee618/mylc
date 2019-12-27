@@ -64,21 +64,22 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	    }
 	    
 	    // Find the minimum distance
-	    int ans = -1;
+	    int ans = Integer.MAX_VALUE;
 	    
 	    for (int i = 0; i < row; ++i) {
 	        for (int j = 0; j < col; ++j) {
-	            if (grid[i][j] == buildings.size() && (ans < 0 || dist[i][j] < ans)) {
-	                ans = dist[i][j];
+	            if (grid[i][j] == buildings.size())
+	            {
+	                ans = Math.min(ans, dist[i][j]);
 	            }
 	        }
 	    }
 	    
-	    return ans;
+	    return ans == Integer.MAX_VALUE ? -1 : ans;
 	}
 	
 	// BFS, k means currently how many building it can reach
-	public void bfs(Tuple root, int k, int[][] dist, int[][] grid, int row, int col) {
+	public void bfs(Tuple root, int visitedNum, int[][] dist, int[][] grid, int row, int col) {
 		int[] dx = {1, 0, -1, 0};
 		int[] dy = {0, 1, 0, -1};
 	    Queue<Tuple> queue = new LinkedList<>();
@@ -92,8 +93,8 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	            int newX = t.x + dx[i];
 	            int newY = t.y + dy[i];
 	            
-	            if (newX >= 0 && newX < col && newY >= 0 && newY < row && grid[newY][newX] == k) {
-	                grid[newY][newX] = k + 1;
+	            if (newX >= 0 && newX < col && newY >= 0 && newY < row && grid[newY][newX] == visitedNum) {
+	                grid[newY][newX] = visitedNum + 1;
 	                queue.add(new Tuple(newY, newX, t.distance + 1));
 	            }
 	        }

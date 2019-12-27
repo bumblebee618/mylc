@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 /*******
  * 
 Given a string that contains only digits 0-9 and a target value, return all possibilities to add binary operators (not unary) +, -, or * between the digits so they evaluate to the target value.
@@ -18,41 +19,49 @@ Examples:
 
 public class Q282_Expression_Add_Operators {
 	// test case: ["0"], ["01"], ["101"]
-	
 	public List<String> addOperators(String num, int target) {
-        List<String> ans = new ArrayList<String>();
+        List<String> result = new LinkedList<>();
         
-        if(num == null || num.length() == 0) {
-        	return ans;
+        if (num == null || num.length() == 0)
+        {
+            return result;
         }
         
-        backtrack(ans, num, target, "", 0, 0, 0);
-        return ans;
+        backtrack(result, num, 0, "", target, 0, 0);
+        return result;
     }
-    	
-    public void backtrack(List<String> ans, String num, int target, String solution, int start, long sum, long prevNum){
+    
+    private void backtrack(List<String> result, String num, int startPos, String solution, int target, long sum, long prevSum)
+    {
     	// prevNum is used to store the previous valid number 
-        if(start == num.length()){
-            if(target == sum){
-                ans.add(solution);
+        if (startPos == num.length())
+        {
+            if (sum == target)
+            {
+                result.add(solution);
             }
             
             return;
         }
         
-        for(int i = start; i < num.length(); i++){ 
-            if(i != start && num.charAt(start) == '0'){    // 注意这里是start，而不是 i  ！！！
-            	break;                                     // 可以是 "0", 但不可以是"01"之类的 ！！！
+        for (int i = startPos; i < num.length(); i++)
+        {
+            if (i > startPos && num.charAt(startPos) == '0')   // 注意这里是start，而不是 i  ！！！
+            {                                                  // 可以是 "0", 但不可以是"01"之类的 ！！！
+                return;
             }
             
-            long cur = Long.parseLong(num.substring(start, i + 1));
+            long curNum = Long.parseLong(num.substring(startPos, i+1));
             
-            if(start == 0){
-                backtrack(ans, num, target, solution + cur, i + 1, cur, cur);
-            } else{
-                backtrack(ans, num, target, solution + "+" + cur, i + 1, sum + cur, cur);                
-                backtrack(ans, num, target, solution + "-" + cur, i + 1, sum - cur, -cur);               
-                backtrack(ans, num, target, solution + "*" + cur, i + 1, sum + prevNum * cur - prevNum, prevNum * cur);   // because in last recusrion, multed has been add one time.
+            if (solution.length() == 0)
+            {
+                backtrack(result, num, i+1, num.substring(startPos, i+1), target, curNum, curNum);
+            }
+            else
+            {
+                backtrack(result, num, i+1, String.format("%s%s%s", solution, "+", curNum), target, sum+curNum, curNum);
+                backtrack(result, num, i+1, String.format("%s%s%s", solution, "-", curNum), target, sum-curNum, -curNum);
+                backtrack(result, num, i+1, String.format("%s%s%s", solution, "*", curNum), target, sum+prevSum*(curNum-1), prevSum*curNum);
             }
         }
     }

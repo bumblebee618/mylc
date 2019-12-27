@@ -38,13 +38,14 @@ public class Q071_Simplify_Path {
 			return "/";
 		}
 		
-        path = "";
+		StringBuilder builder = new StringBuilder();
         
-		while(!stack.isEmpty()){
-			path = '/' + stack.pop() + path;
-		}
-		
-		return path;
+        while (!stack.isEmpty())
+        {
+            builder.insert(0, String.format("%s%s", "/", stack.pop()));
+        }
+        
+        return builder.toString();
 	}
 	
 	

@@ -71,7 +71,7 @@ public class Q269_Alien_Dictionary {
                     break;
                 }
                 
-                if(index == minLen - 1 && words[i].charAt(index) == words[i + 1].charAt(index) && words[i].length() > minLen) {
+                if(index == minLen - 1 && c1 == c2 && words[i].length() > minLen) {
                     return "";
                 }
             }

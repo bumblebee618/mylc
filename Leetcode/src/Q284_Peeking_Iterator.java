@@ -48,7 +48,7 @@ public class Q284_Peeking_Iterator {
 		    if(iter.hasNext()){
 		    	next = iter.next();
 		    } else {
-		    	next = (Integer) null;
+		    	next = null;
 		    }
 		    
 		    return ans;
@@ -56,7 +56,7 @@ public class Q284_Peeking_Iterator {
 
 		@Override
 		public boolean hasNext() {
-			return next != (Integer) null;
+			return next != null;
 		}
 	}
 }

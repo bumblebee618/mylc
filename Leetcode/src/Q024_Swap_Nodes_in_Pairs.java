@@ -13,27 +13,32 @@ For example,
 
 public class Q024_Swap_Nodes_in_Pairs {
 	public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null) {
+        if (head == null || head.next == null)
+        {
             return head;
         }
         
         ListNode dummy = new ListNode(0);
+        dummy.next = head;
         ListNode curNode = dummy;
-        ListNode front = head.next, back = head;
+        ListNode front = dummy, back = dummy;
         
-        while (front != null) {
-            ListNode nextHead = front.next;
+        while (front != null && front.next != null)
+        {
+            front = front.next.next;
+            back = back.next;
+            
+            if (front == null)
+            {
+                break;
+            }
+            
+            ListNode nextFront = front.next;
             curNode.next = front;
             front.next = back;
-            back.next = nextHead;
-            back = back.next;
+            back.next = nextFront;
             curNode = curNode.next.next;
-            
-            if (back != null) {
-                front = back.next;
-            } else {
-                front = null;
-            }
+            front = back = curNode;
         }
         
         return dummy.next;

@@ -477,6 +477,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.me-south-1.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.me-south-1.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.me-south-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.me-south-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.me-south-1.amazonaws.com</service>
             <service name="DynamoDBStream">https://streams.dynamodb.me-south-1.amazonaws.com</service>

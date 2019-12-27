@@ -26,35 +26,29 @@ Longest consecutive sequence path is 2-3,not3-2-1, so return 2.
  * */
 
 public class Q298_Binary_Tree_Longest_Consecutive_Sequence {
-	private int maxLen = 1;
+	private int maxLen = 0;
     
     public int longestConsecutive(TreeNode root) {
-        if(root == null) {
-            return 0;
-        }    
+        if (root == null)
+        {
+            return maxLen;    
+        }
         
-        DFS(root);
+        dfs(root, null, 0);
         return maxLen;
     }
     
-    public int DFS(TreeNode node) {
-        if(node == null) {
-            return 0;
+    private void dfs(TreeNode cur, TreeNode parent, int curLen)
+    {
+        if (cur == null)
+        {
+            return;
         }
         
-        int left = DFS(node.left);
-        int right = DFS(node.right);
-        int current = 1;
-        
-        if(node.left != null && node.val + 1 == node.left.val) {
-            current = Math.max(current, left + 1);
-        }
-        
-        if(node.right != null && node.val + 1 == node.right.val) {
-            current = Math.max(current, right + 1);
-        }
-        
-        maxLen = Math.max(maxLen, current);
-        return current;
+        curLen = (parent == null || cur.val != parent.val+1) ? 1 : curLen+1;
+        maxLen = Math.max(maxLen, curLen);
+        dfs(cur.left, cur, curLen);
+        dfs(cur.right, cur, curLen);
     }
+
 }

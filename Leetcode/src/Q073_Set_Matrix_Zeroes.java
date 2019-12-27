@@ -44,33 +44,42 @@ public class Q073_Set_Matrix_Zeroes {
         //把第一列的0所在行都设为0，把第一行的0所在列都设为0  
         for (i = 1; i < row; i++) {        // 注意，从1开始
             if (0 == matrix[i][0]) {  
-                for (j = 1; j < col; j++) {  
-                    matrix[i][j] = 0;  
-                }  
+            	setValue(matrix, i, true);   
             }  
         }  
         
         for (j = 1; j < col; j++) {        // 注意，从1开始
             if (0 == matrix[0][j]) {  
-                for (i = 1; i < row; i++) {  
-                    matrix[i][j] = 0;  
-                }  
+            	setValue(matrix, i, false);  
             }  
         }  
           
         //根据标记决定第一行和第一列是否全设为0  
         if (firstRow) {  
-            for (j = 0; j < col; j++) {  
-                matrix[0][j] = 0;  
-            }  
+        	setValue(matrix, 0, true);   
         }  
         if (firstCol) {  
-            for (i = 0; i < row; i++) {  
-                matrix[i][0] = 0;  
-            }  
+        	setValue(matrix, 0, false); 
         }  
     }
 	
+	private void setValue(int[][] matrix, int index, boolean isRow)
+    {
+        if (isRow)
+        {
+            for (int i = 0; i < matrix[0].length; i++)
+            {
+                matrix[index][i] = 0;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < matrix.length; i++)
+            {
+                matrix[i][index] = 0;
+            }
+        }
+    }
 	
 	
 	

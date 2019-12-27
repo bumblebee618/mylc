@@ -20,28 +20,36 @@ Could you do it in one-pass, using only O(1) extra memory and without modifying 
  */
 public class Q419_Battleships_in_a_Board {
 	public int countBattleships(char[][] board) {
-        if (board == null || board.length == 0 || board[0].length == 0) {
+        if (board == null || board.length == 0 || board[0].length == 0)
+        {
             return 0;
         }
         
-        int row = board.length;
-        int col = board[0].length;
         int count = 0;
         
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (board[i][j] == '.') {
+        for (int i = 0; i < board.length; i++)
+        {
+            for (int j = 0; j < board[0].length; j++)
+            {
+                if (board[i][j] == '.')
+                {
                     continue;
-                } else if (i >= 1 && board[i-1][j] == 'X') {
-                    continue;
-                } else if (j >= 1 && board[i][j-1] == 'X') {
-                    continue;
-                } else {
-                    count++;
                 }
+                
+                if (i >= 1 && board[i-1][j] == 'X')
+                {
+                    continue;
+                }
+                
+                if (j >= 1 && board[i][j-1] == 'X')
+                {
+                    continue;
+                }
+                
+                count++;
             }
         }
         
         return count;
-    }
+	}
 }

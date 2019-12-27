@@ -12,12 +12,12 @@ import java.util.*;
  * */
 
 public class Q146_LRU_Cache {
-	private class Node{
+	private class CacheItem{
         int key;
         int value;
-        Node prev, next;
+        CacheItem prev, next;
 
-        public Node(int key, int value) {
+        public CacheItem(int key, int value) {
             this.key = key;
             this.value = value;
             this.prev = this.next = null;
@@ -25,9 +25,9 @@ public class Q146_LRU_Cache {
     }
 
     private int capacity;
-    private HashMap<Integer, Node> map = new HashMap<Integer, Node>();
-    private Node head = new Node(-1, -1);
-    private Node tail = new Node(-1, -1);
+    private Map<Integer, CacheItem> map = new HashMap<Integer, CacheItem>();
+    private CacheItem head = new CacheItem(-1, -1);
+    private CacheItem tail = new CacheItem(-1, -1);
 	
     public Q146_LRU_Cache(int capacity) {
         this.capacity = capacity;
@@ -42,7 +42,7 @@ public class Q146_LRU_Cache {
         }
 
         // remove current
-        Node current = map.get(key);
+        CacheItem current = map.get(key);
         current.prev.next = current.next;
         current.next.prev = current.prev;
 
@@ -63,12 +63,12 @@ public class Q146_LRU_Cache {
             head.next.prev = head;
         }
 
-        Node insert = new Node(key, value);
+        CacheItem insert = new CacheItem(key, value);
         map.put(key, insert);
         move_to_tail(insert);
     }
 
-    private void move_to_tail(Node current) {
+    private void move_to_tail(CacheItem current) {
         current.prev = tail.prev;
         tail.prev = current;
         current.prev.next = current;

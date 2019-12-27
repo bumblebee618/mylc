@@ -58,6 +58,7 @@ public class Q005_Longest_Palindromic_Substring {
         
         for(int i = 1; i < len; ++i){
             dp[i - 1][i] = (array[i - 1] == array[i]);
+            
             if(dp[i - 1][i] == true){
                 maxLen = 2;
                 pos = i - 1;
@@ -66,7 +67,8 @@ public class Q005_Longest_Palindromic_Substring {
         
         for(int length = 2; length < len; ++length){
             for(int start = 0; start + length < len; ++start){
-                dp[start][start + length] = dp[start + 1][start + length - 1] && ( array[start] == array[start + length] );
+                dp[start][start + length] = dp[start + 1][start + length - 1] && (array[start] == array[start + length]);
+                
                 if(dp[start][start + length] == true && maxLen <= length + 1){
                     maxLen = length + 1;
                     pos = start;

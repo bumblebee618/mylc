@@ -37,7 +37,7 @@ public class Q296_Best_Meeting_Point {
         return getDistance(list_x) + getDistance(list_y);
 	}
 
-	public int getDistance(List<Integer> list){
+	private int getDistance(List<Integer> list){
         int left = 0, right = list.size() - 1, distance = 0;
         Collections.sort(list);
         

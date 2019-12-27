@@ -18,13 +18,16 @@ public class Q138_Copy_List_with_Random_Pointer {
         HashMap<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();   // 以RandomListNode为key放入map
         RandomListNode dummy = new RandomListNode(0);
         RandomListNode pre = dummy, newNode;
+        
         while (head != null) {
             if (map.containsKey(head)) {
                 newNode = map.get(head);
-            } else {
+            } 
+            else {
                 newNode = new RandomListNode(head.label);
                 map.put(head, newNode);
             }
+            
             pre.next = newNode;
 
             if (head.random != null) {

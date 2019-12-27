@@ -17,30 +17,40 @@ public class Q158_Read_N_Characters_Given_Read4_II_Call_multiple_times {
 	 * 
 	 ***************************************************************************/
 	
-	private int curTotalReadByte = 0;     // 设置成全局变量，防止上一次读取read4，没有全部用掉
-    private int curHaveReadByte = 0;      // 偏移位，用于记录已经读取到了哪一位置，用于和currentTotalRead进行比较 
+	private int curTotalReadNum = 0;     // 设置成全局变量，防止上一次读取read4，没有全部用掉
+    private int curHaveReadNum = 0;      // 偏移位，用于记录已经读取到了哪一位置，用于和currentTotalRead进行比较 
     private char[] readBuf = new char[4];  
     
     public int read(char[] buf, int n) {
-        int alreadyReadByte = 0;
+        int alreadyReadNum = 0;
         
-        while(alreadyReadByte < n){
-            if(curHaveReadByte == curTotalReadByte){
-                curHaveReadByte = 0;
-                curTotalReadByte = read4(readBuf);
+        while (alreadyReadNum < n)
+        {
+            if (curHaveReadNum == curTotalReadNum)
+            {
+                curHaveReadNum = 0;
+                curTotalReadNum = read4(readBuf);
             }
-        
-            if(curTotalReadByte == 0){
+            
+            if (curTotalReadNum == 0)
+            {
                 break;
             }
             
-            while(alreadyReadByte < n && curHaveReadByte < curTotalReadByte){
-                buf[alreadyReadByte++] = readBuf[curHaveReadByte++];
+            int len = Math.min(curTotalReadNum-curHaveReadNum, n-alreadyReadNum);
+            
+            for (int i = 0; i < len; i++)
+            {
+                buf[alreadyReadNum+i] = readBuf[curHaveReadNum+i];
             }
+            
+            curHaveReadNum += len;
+            alreadyReadNum += len;
         }
         
-        return alreadyReadByte;
+        return alreadyReadNum;
     }
+
     
     
     

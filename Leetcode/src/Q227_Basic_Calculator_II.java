@@ -20,41 +20,71 @@ Some examples:
 
 public class Q227_Basic_Calculator_II {
 	public int calculate(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null)
+        {
             return 0;
         }
         
-        int len = s.length();
-        Stack<Integer> stack = new Stack<Integer>();
-        int ans = 0;
-        int num = 0;
-        char prevSign = ' ';
+        s = s.trim();
         
-        for (int i = 0; i < len; i++) {
+        if (s.length() == 0)
+        {
+            return 0;
+        }
+        
+        Stack<Integer> stack = new Stack<>();
+        char prevSign = ' ';
+        int num = 0;
+        int size = s.length();
+        
+        for (int i = 0; i < size; i++)
+        {
             char c = s.charAt(i);
             
-            if (Character.isDigit(c)) {
-                num = num * 10 + (int) (c - '0');
-            }  
+            if (c == ' ')
+            {
+                continue;
+            }
             
-            if ( (!Character.isDigit(c) && c != ' ') || i == len - 1) {
-                if (prevSign == '+') {
+            if (Character.isDigit(c))
+            {
+                num = num*10 + (c-'0');
+            }
+            
+            if (!Character.isDigit(c) || i == size-1)
+            {
+                if (prevSign == '+')
+                {
                     stack.push(num);
-                } else if (prevSign == '-') {
+                }
+                else if (prevSign == '-')
+                {
                     stack.push(-num);
-                } else if (prevSign == '*') {
-                    if (!stack.isEmpty()) {
-                        stack.push(stack.pop() * num);    
-                    } else {
+                }
+                else if (prevSign == '*')
+                {
+                    if (!stack.isEmpty())
+                    {
+                        stack.push(stack.pop()*num);
+                    }
+                    else
+                    {
                         break;
                     }
-                } else if (prevSign == '/') {
-                    if (!stack.isEmpty()) {
-                        stack.push(stack.pop() / num);    
-                    } else {
+                }
+                else if (prevSign == '/')
+                {
+                    if (!stack.isEmpty())
+                    {
+                        stack.push(stack.pop()/num);
+                    }
+                    else
+                    {
                         break;
                     }
-                } else {
+                }
+                else if (prevSign == ' ')
+                {
                     stack.push(num);
                 }
                 
@@ -63,20 +93,17 @@ public class Q227_Basic_Calculator_II {
             }
         }
         
-        while (!stack.isEmpty()) {
-            ans += stack.pop();
+        int result = 0;
+        
+        while (!stack.isEmpty())
+        {
+            result += stack.pop();
         }
         
-        return ans;
+        return result;
     }
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 	
 	

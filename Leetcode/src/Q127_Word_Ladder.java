@@ -39,36 +39,53 @@ public class Q127_Word_Ladder {
     // beginWord == endWord
     // wordList is empty
 	
-	public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        if(beginWord == null || endWord == null){
+	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0)
+        {
             return 0;
-        } else if(beginWord.equals(endWord)){
+        }
+        else if (beginWord.equals(endWord))
+        {
             return 0;
         }
         
-        int step = 1;
-        Queue<String> queue = new LinkedList<String>();
-        HashSet<String> visited =  new HashSet<String>();
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
         queue.offer(beginWord);
         visited.add(beginWord);
-        wordList.add(endWord);
+        int step = 1;
         
-        while(!queue.isEmpty()){
+        Set<String> dict = new HashSet<>();
+        
+        for (String word : wordList)
+        {
+            dict.add(word);
+        }
+        
+        while (!queue.isEmpty())
+        {
             step++;
             int size = queue.size();
             
-            for(int i = 0; i < size; ++i){
-                String str = queue.poll();
+            for (int i = 0; i < size; i++)
+            {
+                String cur = queue.poll();
                 
-                for(String s : Expends(str, wordList)){
-                    if(visited.contains(s)){
+                for (String newWord : expends(cur, dict))
+                {
+                    if (visited.contains(newWord))
+                    {
                         continue;
-                    } else if(s.equals(endWord)){
+                    }
+                    else if (newWord.equals(endWord))
+                    {
                         return step;
                     }
-                    
-                    visited.add(s);
-                    queue.offer(s);
+                    else
+                    {
+                        visited.add(newWord);
+                        queue.offer(newWord);
+                    }
                 }
             }
         }
@@ -76,30 +93,34 @@ public class Q127_Word_Ladder {
         return 0;
     }
     
-    
-    public List<String> Expends(String str, Set<String> wordList){
-        List<String> list = new LinkedList<String>();
-        char[] array = str.toCharArray();
-        
-        for(int i = 0; i < array.length; ++i){
-            char temp = array[i];
+    private List<String> expends(String word, Set<String> dict)
+    {
+        List<String> list = new LinkedList<>();
+        char[] letters = word.toCharArray();
             
-            for(char c = 'a'; c <= 'z'; ++c){
-                if(c == temp){
+        for (int i = 0; i < letters.length; i++)
+        {
+            char temp = letters[i];
+                
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                if (c == temp)
+                {
                     continue;
                 }
-                
-                array[i] = c;
-                String newWord = new String(array);
-                
-                if(wordList.contains(newWord)){
+                    
+                letters[i] = c;
+                String newWord = new String(letters);
+                    
+                if (dict.contains(newWord))
+                {
                     list.add(newWord);
                 }
             }
-            
-            array[i] = temp;
+                
+            letters[i] = temp;
         }
-        
+            
         return list;
     }
 }

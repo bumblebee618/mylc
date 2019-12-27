@@ -34,7 +34,7 @@ public class Q295_Find_Median_from_Data_Stream {
 	 *				   maxHeap.size() + 1 < minHeap.size()
 	 * 
 	 *******************************************************/
-	
+	// 类似题480
     private Queue<Integer> maxHeap = new PriorityQueue<Integer>();
     private Queue<Integer> minHeap = new PriorityQueue<Integer>();
     private int median;

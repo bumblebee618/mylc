@@ -26,7 +26,8 @@ public class Q214_Shortest_Palindrome {
             }
         }
         
-        return new StringBuilder(s).reverse().toString() + s;
+        String suffix = s.substring(1, len);
+        return new StringBuilder(suffix).reverse().toString() + s;
     }
     
     public boolean isPalindrome(String s, int start, int end) {

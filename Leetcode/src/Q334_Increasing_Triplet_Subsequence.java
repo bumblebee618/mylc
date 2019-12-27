@@ -40,9 +40,6 @@ public class Q334_Increasing_Triplet_Subsequence {
 				max1 = nums[i];
 			}
 		}
-		
-		String str = "";
-		StringBuffer sb = new StringBuffer(str);
 
 		return false;
 	}

@@ -28,59 +28,72 @@ public class Q721_Accounts_Merge {
 	public List<List<String>> accountsMerge(List<List<String>> accounts) {
         List<List<String>> result = new LinkedList<>();
         
-        if (accounts == null || accounts.size() == 0) {
+        if (accounts == null || accounts.size() == 0)
+        {
             return result;
         }
         
-        Map<String, String> emailToName = new HashMap<>();
-        Map<String, LinkedList<String>> graph = new HashMap<>();
-        Set<String> visited = new HashSet<>();
+        Map<String, List<String>> graph = new HashMap();
+        Map<String, String> emailToName = new HashMap();
         
-        for (List<String> account : accounts) {
-            if (account == null || account.size() < 2) {
-                continue;
-            }
+        for (List<String> account : accounts)
+        {
+            String name = "";
             
-            String name = account.get(0);
-            
-            for (String email : account) {
-                if (email.equals(name)) {
+            for (String info : account)
+            {
+                if (name == "")
+                {
+                    name = info;
                     continue;
                 }
                 
-                graph.computeIfAbsent(email, x -> new LinkedList<String>()).add(account.get(1));
-                graph.computeIfAbsent(account.get(1), x -> new LinkedList<String>()).add(email);
-                emailToName.put(email, name);                
+                String firstEmail = account.get(1);
+                graph.computeIfAbsent(info, x -> new LinkedList<String>()).add(firstEmail);
+                graph.computeIfAbsent(firstEmail, x -> new LinkedList<String>()).add(info);
+                emailToName.put(info, name);
             }
         }
         
-        for (Map.Entry<String, LinkedList<String>> entry : graph.entrySet()) {
-            String email = entry.getKey();
-            
-            if (!visited.contains(email)) {
-                visited.add(email);
-                Stack<String> stack = new Stack();
-                stack.push(email);
-                List<String> list = new LinkedList<>();
-                
-                while (!stack.isEmpty()) {
-                    String node = stack.pop();
-                    list.add(node);
-                    
-                    for (String next : graph.get(node)) {
-                        if (!visited.contains(next)) {
-                            visited.add(next);
-                            stack.push(next);
-                        }
-                    }
-                }
-                
+        Set<String> visited = new HashSet<>();
+        
+        for (String email : graph.keySet())
+        {
+            if (!visited.contains(email))
+            {
+                List<String> list = dfs(graph, email, visited);
                 Collections.sort(list);
-                list.add(0, emailToName.get(email));
+                String name = emailToName.get(email);
+                list.add(0, name);
                 result.add(list);
             }
         }
         
         return result;
+    }
+    
+    private List<String> dfs(Map<String, List<String>> graph, String email, Set<String> visited)
+    {
+        Stack<String> stack = new Stack();
+        stack.push(email);
+        visited.add(email);
+        List<String> list = new LinkedList();
+        
+        while (!stack.isEmpty())
+        {
+            String node = stack.pop();
+            list.add(node);
+            
+            for (String next : graph.get(node))
+            {
+                if (!visited.contains(next))
+                {
+                    stack.push(next);
+                    visited.add(next);
+                }
+            }
+        }
+        
+        return list;
     }
 }

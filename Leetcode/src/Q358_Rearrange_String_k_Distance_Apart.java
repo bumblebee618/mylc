@@ -36,23 +36,23 @@ public class Q358_Rearrange_String_k_Distance_Apart {
         }
         
         int len = str.length();
-        int[] letters = new int[256];
-        int[] valid = new int[256];
+        int[] frequency = new int[256];
+        int[] validIndex = new int[256];
         StringBuilder builder = new StringBuilder();
         
         for(int i = 0; i < len; i++){
-            letters[str.charAt(i)]++;
+            frequency[str.charAt(i)]++;
         }
 
-        for(int i = 0; i < len; i++){
-            int candidate = getMaxFrequency(letters, valid, i);
+        for(int index = 0; index < len; index++){
+            int candidate = getMaxFrequency(frequency, validIndex, index);
             
             if(candidate == -1){
                 return "";
             }
             
-            letters[candidate]--;
-            valid[candidate] = i + k;
+            frequency[candidate]--;
+            validIndex[candidate] = index + k;
             builder.append((char)(candidate));     // candidate is a char
         }
         
