@@ -46,7 +46,7 @@ public class Q085_Maximal_Rectangle {
         }
         
         for(int i = 0; i < row; i++){
-            Stack<Integer> stack = new Stack();
+            Stack<Integer> stack = new Stack<>();
             
             for(int j = 0; j <= col; j++){
                 int curHeight = (j == col) ? Integer.MIN_VALUE : heights[i][j];

@@ -39,6 +39,7 @@ public class Q301_Remove_Invalid_Parentheses {
         
         while(!q.isEmpty()){
             String tempStr = q.poll();
+            
             if(isValid(tempStr)){
                 ans.add(tempStr);
                 found = true;
@@ -49,13 +50,16 @@ public class Q301_Remove_Invalid_Parentheses {
             }
             
             int len = tempStr.length();
+            
             for(int i = 0; i < len; ++i){
                 char c = tempStr.charAt(i);  // 需要剔除无效字符
+                
                 if(c != '(' && c != ')'){
                     continue;
                 }
                 
                 String newStr = tempStr.substring(0, i) + tempStr.substring(i + 1);
+                
                 if(!visited.contains(newStr)){
                     visited.add(newStr);
                     q.offer(newStr);

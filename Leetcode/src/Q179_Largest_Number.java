@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -90,5 +91,7 @@ public class Q179_Largest_Number {    // 注意test case： 0，0，0，0
 //		int[] nums = {999999998,999999997,999999999};
 		System.out.println(l.largestNumber(nums));
 		System.out.println(l.largestNumber2(nums));
+		
+		System.out.println(Objects.hashCode(1212));
 	}
 }

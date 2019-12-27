@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;dp&apos; in &apos;Q_Find_A_Shortest_Path_In_Matrix.findMinModify(...)&apos; to &apos;steps&apos;&#x0A;- Original project: &apos;I_Google_Onsite&apos;&#x0A;- Original element: &apos;Q_Find_A_Shortest_Path_In_Matrix.findMinModify(char[][]).dp&apos;&#x0A;- Renamed element: &apos;dp&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;dp&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q_Find_A_Shortest_Path_In_Matrix.java[Q_Find_A_Shortest_Path_In_Matrix~findMinModify~\[\[C@dp!373!403!381!382!\[\[I!0!false" name="steps" references="true" stamp="1578722236595" version="1.0"/>
+</session>

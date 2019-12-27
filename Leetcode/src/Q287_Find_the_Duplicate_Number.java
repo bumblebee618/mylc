@@ -24,7 +24,7 @@ public class Q287_Find_the_Duplicate_Number {
             return -1;
         }
         
-        Set<Integer> visited = new HashSet();
+        Set<Integer> visited = new HashSet();f
         
         for(int num : nums) {
             if(!visited.add(num)) {

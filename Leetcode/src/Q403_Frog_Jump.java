@@ -41,60 +41,37 @@ the gap between the 5th and 6th stone is too large.
 
 public class Q403_Frog_Jump {
 	public boolean canCross(int[] stones) {
-        if (stones.length < 1 || stones[0] != 0){
-        	return false;
+        if (stones == null || stones.length == 0)
+        {
+            return false;
         }
         
-        int len = stones.length;
         Map<Integer, Set<Integer>> map = new HashMap<>();
         
-        for (int s : stones){
-        	map.put(s, new HashSet<Integer>());
+        for (int stone : stones)
+        {
+            map.put(stone, new HashSet<Integer>());
         }
         
-        for (int stone : stones) {
-            Set<Integer> jSet = map.get(stone);
-            
-            // Initial condition
-            if (stone == 0) {
-                jSet.add(0);
-                
-                if (map.containsKey(1)){
-                	map.get(1).add(1);
-                }
-                continue;
-            }
-            
-            // For other stones
-            for (int prevJump : jSet) {
-                int curJump = prevJump - 1;
-                int nextStone = stone + curJump;
-                
-                // Previous jump - 1
-                if (nextStone != stone && map.containsKey(nextStone)) {
-                	map.get(nextStone).add(curJump);
-                }
-                
-                // Previous jump
-                curJump++; 
-                nextStone = stone + curJump;
-                
-                if (nextStone != stone && map.containsKey(nextStone)) {
-                	map.get(nextStone).add(curJump);
-                }
-                
-                // Previous jump + 1
-                curJump++; 
-                nextStone = stone + curJump;
-                
-                if (nextStone != stone && map.containsKey(nextStone)) {
-                	map.get(nextStone).add(curJump);
+        map.get(0).add(0);
+        
+        for (int stone : stones)
+        {
+            for (int k : map.get(stone))
+            {
+                for (int step = k-1; step <= k+1; step++)
+                {
+                    if (step > 0 && map.containsKey(stone+step))
+                    {
+                        map.get(stone+step).add(step);
+                    }
                 }
             }
         }
         
-        return !map.get(stones[len - 1]).isEmpty();
-	}
+        return map.get(stones[stones.length-1]).size() > 0;
+    }
+
 	
 	
 	

@@ -47,8 +47,50 @@ All characters have an ASCII value in [35, 126].
  *
  */
 public class Q443_String_Compression {
-	// solution 1: two pointers and time is O(n), space is O(n)
+	// solution 1: Time complexity is O(n) and space is O(1)
 	public int compress(char[] chars) {
+        if (chars == null || chars.length == 0)
+        {
+            return 0;
+        }
+        else if (chars.length == 1)
+        {
+            return 1;
+        }
+        
+        int front = 0, back = 0;
+        int size = chars.length;
+        
+        while (front < size)
+        {
+            char target = chars[front];
+            int count = 0;
+            
+            while (front < size && chars[front] == target)
+            {
+                front++;
+                count++;
+            }
+            
+            chars[back] = target;
+            
+            if (count > 1)
+            {
+                for (char c : Integer.toString(count).toCharArray())
+                {
+                    chars[++back] = c; 
+                }
+            }
+            
+            back++;
+        }
+        
+        return back;
+    }
+
+	
+	// solution 2: two pointers and time is O(n), space is O(n)
+	public int compress2(char[] chars) {
         if (chars == null || chars.length == 0) {
             return 0;
         }
@@ -84,8 +126,8 @@ public class Q443_String_Compression {
     }
 	
 	
-	// solution 2 for follow up: three pointers and time is O(n), space is O(1)
-	public int compress2(char[] chars) {
+	// solution 3 for follow up: three pointers and time is O(n), space is O(1)
+	public int compress3(char[] chars) {
         if (chars == null || chars.length == 0) {
             return 0;
         }

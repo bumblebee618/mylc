@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 /*******
  * 
@@ -10,8 +11,40 @@ For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
  * */
 
 public class Q228_Summary_Ranges {
-	// 类似题Le_163
 	public List<String> summaryRanges(int[] nums) {
+        List<String> result = new LinkedList<>();
+        
+        if (nums == null || nums.length == 0)
+        {
+            return result;
+        }
+        
+        int index = 0;
+        
+        while (index < nums.length)
+        {
+            int start = index;
+            
+            while (index+1 < nums.length && nums[index] == nums[index+1]-1)
+            {
+                index++;
+            }
+            
+            int end = index++;
+            result.add(getStr(nums[start], nums[end]));
+        }
+        
+        return result;
+    }
+    
+    private String getStr(int start, int end)
+    {
+        return (start == end) ? Integer.toString(start) : String.format("%s->%s", start, end);
+    }
+
+	
+	// 类似题Le_163
+	public List<String> summaryRanges2(int[] nums) {
         List<String> ans = new ArrayList<>();
         
         if (nums == null || nums.length == 0) {
@@ -44,19 +77,7 @@ public class Q228_Summary_Ranges {
         ans.add(getStr(start, needNum - 1));   // 扫尾 ！！！ test case: [3] 
         return ans;
     }
-    
-    public String getStr(int start, int end) {
-        StringBuilder builder = new StringBuilder();
-        
-        if (start == end) {
-            builder.append(start);
-        } else {
-            builder.append(start).append("->").append(end);
-        }
-        
-        return builder.toString();
-    }
-	
+
 	
 	
     
@@ -71,7 +92,7 @@ public class Q228_Summary_Ranges {
     
     /********************************************/
 	// by Jackie
-	public List<String> summaryRanges2(int[] nums) {
+	public List<String> summaryRanges3(int[] nums) {
         List<String> ans = new ArrayList<String>();
         if(nums == null || nums.length == 0){
             return ans;
@@ -108,7 +129,7 @@ public class Q228_Summary_Ranges {
     
     
 	//by jackie
-	public ArrayList<String> summaryRanges3(int[] nums) {
+	public ArrayList<String> summaryRanges4(int[] nums) {
 		ArrayList<String> res = new ArrayList<String>();
         int n = nums.length;
         int front = 0, back = 0;

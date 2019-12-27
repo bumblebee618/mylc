@@ -40,29 +40,29 @@ public class Q435_Non_overlapping_Intervals {
     //      (3). [1, 5], [4, 7], [6, 10]
     //      (4). [1, 2], [1, 3], [2, 3]
     
-    // time complex is O(nlogn)
-    public int eraseOverlapIntervals(Interval[] intervals) {
-        if(intervals == null || intervals.length == 0) {
-            return 0;
+    // time complex is O(nlogn), 类似题452
+	public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0)
+        {
+            return 0;           
         }
         
-        Arrays.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval a, Interval b) {
-                return a.end - b.end;
-            }
-        });
+        Arrays.sort(intervals, (a, b) -> (a[0] != b[0] ? a[1]-b[1] : a[0]-b[0]));
+        int count = 0;
+        int end = intervals[0][1];
         
-        int count = 1;
-        int end = intervals[0].end;
-        
-        for(int i = 1; i < intervals.length; i++) {
-            if(intervals[i].start >= end){
-                end = intervals[i].end;
+        for (int i = 1; i < intervals.length; i++)
+        {
+            if (end > intervals[i][0])
+            {
                 count++;
             }
+            else
+            {
+                end = intervals[i][1];
+            }
         }
         
-        return intervals.length - count;
+        return count;
     }
 }

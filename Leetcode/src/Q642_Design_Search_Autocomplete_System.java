@@ -111,4 +111,150 @@ public class Q642_Design_Search_Autocomplete_System {
             this.times = times;
         }
     }
+    
+    
+    
+    // 用Trie实现
+    /***
+    private Trie root;
+    private String curStr = "";
+        
+    public AutocompleteSystem(String[] sentences, int[] times) {
+        if (sentences == null || times == null || sentences.length != times.length)
+        {
+            return;   
+        }
+        
+        root = new Trie('0');
+        
+        for (int i = 0; i < sentences.length; i++)
+        {
+            addWord(sentences[i], times[i]);
+        }
+    }
+    
+    public List<String> input(char c) {
+        List<String> result = new LinkedList<>();
+        
+        if (c != '#')
+        {
+            curStr += c;
+            result = getSuggestion(curStr);
+        }
+        else
+        {
+            addWord(curStr, 1);
+        }
+        
+        return result;
+    }
+    
+    private void addWord(String word, int times)
+    {
+        if (word == null || word.length() == 0)
+        {
+            return;
+        }
+        
+        Trie node = root;
+        
+        for (char c : word.toCharArray())
+        {
+            if (node.children[c] == null)
+            {
+                node.children[c] = new Trie(c);
+            }
+            
+            node = node.children[c];
+        }
+        
+        node.isWord = true;
+        node.times += times;
+    }
+    
+    private List<String> getSuggestion(String input)
+    {
+        List<String> result = new LinkedList();
+        
+        if (input == null || input.length() == 0)
+        {
+            return result;
+        }
+        
+        Trie node = root;
+        
+        for (char c : input.toCharArray())
+        {
+            if (node.children[c] == null)
+            {
+                node = null;
+                break;
+            }
+            
+            node = node.children[c];
+        }
+        
+        if (node != null)
+        {
+            List<Tuple> list = new LinkedList();
+            getSuggestionWithTimes(node, "", list);
+            Collections.sort(list, (a, b) -> a.times != b.times ? b.times-a.times : a.str.compareTo(b.str));
+            int len = Math.min(3, list.size());
+            
+            for (int i = 0; i < len; i++)
+            {
+                result.add(String.format("%s%s", input, list.get(i).str));
+            }
+        }
+        
+        return result;
+    }
+    
+    private void getSuggestionWithTimes(Trie node, String solution, List<Tuple> result)
+    {
+        while (node != null)
+        {
+            solution += node.val;
+            
+            if (node.isWord)
+            {
+                result.add(new Tuple(solution, node.times));
+                
+                for (Trie child : node.children)
+                {
+                    getSuggestionWithTimes(child, solution, result);
+                }
+            }
+        }
+    }
+    
+    class Trie
+    {
+        public char val;
+        public int times;
+        public boolean isWord;
+        public Trie[] children;
+        
+        public Trie(char val)
+        {
+            this.val = val;
+            times = 0;
+            isWord = false;
+            children = new Trie[256];
+        }
+    }
+    
+    class Tuple
+    {
+        public String str;
+        public int times;
+        
+        public Tuple(String str, int times)
+        {
+            this.str = str;
+            this.times = times;
+        }
+    }
+    
+    ***/
 }

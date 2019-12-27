@@ -28,7 +28,53 @@ If M[i][j] = 1, then M[j][i] = 1.
  *
  */
 public class Q547_Friend_Circles {
-	public int findCircleNum(int[][] M) {
+	// bfs
+	public int findCircleNum(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+        {
+            return 0;
+        }
+        
+        Set<Integer> visited = new HashSet<>();
+        int count = 0;
+        
+        for (int i = 0; i < matrix.length; i++)
+        {
+            if (!visited.contains(i))
+            {
+                bfs(matrix, visited, i);
+                count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    private void bfs(int[][] matrix, Set<Integer> visited, int start)
+    {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(start);
+        visited.add(start);
+        
+        while (!queue.isEmpty())
+        {
+            int curNode = queue.poll();
+            
+            for (int i = 0; i < matrix[0].length; i++)
+            {
+                if (matrix[curNode][i] == 1 && !visited.contains(i))
+                {
+                    queue.offer(i);
+                    visited.add(i);
+                }
+            }
+        }
+    }
+
+    
+    // dfs
+	
+	public int findCircleNum2(int[][] M) {
         if (M == null || M.length == 0 || M[0].length == 0) {
             return 0;
         }

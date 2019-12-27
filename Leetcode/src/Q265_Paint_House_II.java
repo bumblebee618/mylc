@@ -133,6 +133,7 @@ public class Q265_Paint_House_II {
             curMin1 = curMin2 = -1;
             
             for(int j = 0; j < k; j++){
+            	// 比对的是当前的总和，所以要先update costs[i][j]
                 if(j != lastMin1){
                     costs[i][j] += lastMin1 < 0 ? 0 : costs[i - 1][lastMin1];
                 } else {

@@ -20,46 +20,70 @@ You should return the indices: [0,9].
 
 public class Q030_Substring_with_Concatenation_of_All_Words {
 	public List<Integer> findSubstring(String s, String[] words) {
-        List<Integer> ans = new ArrayList<>();
+        List<Integer> result = new LinkedList<>();
         
-        if(s == null || s.length() == 0 || words == null || words.length == 0) {
-            return ans;
+        if (s == null || s.length() == 0 || words == null || words.length == 0)
+        {
+            return result;
         }
         
-        Map<String, Integer> map = new HashMap<>();
-        int sLen = s.length();
+        Map<String, Integer> wordMap = new HashMap<>();
         int wordLen = words[0].length();
         int wordNum = words.length;
         
-        for(String word : words) {
-            map.put(word, map.getOrDefault(word, 0) + 1);
+        for (String word : words)
+        {
+            wordMap.put(word, wordMap.getOrDefault(word, 0)+1);
         }
         
-        for(int start = 0; start <= sLen - wordNum * wordLen; start++) {
-            Map<String, Integer> copyMap = new HashMap<>(map);
+        int size = s.length();
+        
+        for (int start = 0; start+(wordLen*wordNum) <= size; start++)
+        {
+            String word = s.substring(start, start+wordLen);
             
-            for(int j = 0; j < wordNum; j++) {
-                String newWord = s.substring(start + j * wordLen, start + (j+1) * wordLen);
+            if (!wordMap.containsKey(word))
+            {
+                continue;
+            }
+            
+            int index = start+wordLen;
+            Map<String, Integer> map = new HashMap<>(wordMap);
+            updateMap(map, word);
+            
+            for (int i = 1; i < wordNum; i++)
+            {
+                String nextWord = s.substring(index, index+wordLen);
+                index += wordLen;
                 
-                if(copyMap.containsKey(newWord)) {
-                    int count = copyMap.get(newWord);
-                    
-                    if(count == 1) {
-                        copyMap.remove(newWord);
-                        
-                        if(copyMap.size() == 0) {
-                            ans.add(start);
-                            break;
-                        } 
-                    } else {
-                        copyMap.put(newWord, count - 1);
-                    }
-                } else {
+                if (!map.containsKey(nextWord))
+                {
                     break;
                 }
+                
+                updateMap(map, nextWord);
+            }
+            
+            if (map.size() == 0)
+            {
+                result.add(start);
             }
         }
         
-        return ans;
+        return result;
+    }
+    
+    private void updateMap(Map<String, Integer> map, String word)
+    {
+        int count = map.get(word);
+            
+        if (count == 1)
+        {
+            map.remove(word);
+        }
+        else
+        {
+            map.put(word, count-1);
+        }
     }
 }

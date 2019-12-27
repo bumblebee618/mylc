@@ -49,18 +49,17 @@ public class Q127_Word_Ladder {
             return 0;
         }
         
-        Queue<String> queue = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-        queue.offer(beginWord);
-        visited.add(beginWord);
-        int step = 1;
-        
         Set<String> dict = new HashSet<>();
-        
         for (String word : wordList)
         {
             dict.add(word);
         }
+        
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        Set<String> visited = new HashSet<>();
+        visited.add(beginWord);
+        int step = 1;        
         
         while (!queue.isEmpty())
         {

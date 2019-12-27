@@ -11,63 +11,77 @@ public class Q134_Gas_Station {
 	 * When the 2 pointers meet, we just check whether we ended up with 
 	 * enough gas or not to complete the trip. 
 	 *********************************************************************/
-	// by Jackie using two pointers, time complexity is O(n), space is O(1)
+	// Time complexity O(n)
 	public int canCompleteCircuit(int[] gas, int[] cost) {
-        if (gas == null || gas.length == 0 || cost == null || cost.length == 0 || gas.length != cost.length) {
+        if (gas == null || gas.length == 0 || cost == null || cost.length == 0 || gas.length != cost.length)
+        {
             return -1;
         }
         
-        int len = gas.length;
-        int index = 0;
+        int totalGas = 0;
+        int curGas = 0;
+        int start = 0;
         
-        while (index < len) {
-            int gasLeft = gas[index] - cost[index];
-            int faster = index;
+        for (int i = 0; i < gas.length; i++)
+        {
+            totalGas += gas[i]-cost[i];
+            curGas += gas[i]-cost[i];
             
-            while (gasLeft >= 0) {
-                faster = (faster + 1) % len;
-                
-                if (faster == index) {
-                    return index;
-                } else {
-                    gasLeft += gas[faster] - cost[faster];
+            if (curGas < 0)
+            {
+                curGas = 0;
+                start = i+1;
+            }
+        }
+        
+        return totalGas >= 0 ? start : -1;
+    }
+	
+    
+	// Time complexity O(n^2)
+    public int canCompleteCircuit2(int[] gas, int[] cost) {
+        if (gas == null || gas.length == 0 || cost == null || cost.length == 0 || gas.length != cost.length)
+        {
+            return -1;
+        }
+        
+        int start = 0;
+        int size = gas.length;
+        
+        while (start < size)
+        {
+            if (gas[start]-cost[start] < 0)
+            {
+                start++;
+                continue;
+            }
+            
+            int index = (start+1) % size;
+            int sum = gas[start]-cost[start];
+            
+            while (index != start)
+            {
+                sum += gas[index]-cost[index];
+                    
+                if (sum < 0)
+                {
+                    break;
                 }
+                
+                index = (index+1) % size;
             }
             
-            if (faster < index) {
-                return -1;
-            } else {
-                index = faster + 1;   
+            if (sum >= 0)
+            {
+                return start;
             }
+            
+            start++;
         }
         
         return -1;
     }
-	
-	
-	// by other using greedy
-	public int canCompleteCircuit2(int[] gas, int[] cost) {
-        if(gas == null || gas.length == 0 || cost == null ||cost.length == 0 || gas.length != cost.length) {
-            return -1;        
-        }
 
-        int n = gas.length;
-        int startIndex = 0;   // 两个指针往两头延伸，直到相遇，判断此时gas是否足够
-        int endIndex = 1;
-        int totalProfit = gas[startIndex] - cost[startIndex];
-        
-        while(n > 1 && startIndex != endIndex){
-            if(totalProfit >= 0){
-                totalProfit += gas[endIndex] - cost[endIndex];
-                endIndex = (endIndex + 1) % n;
-            }
-            else{
-                startIndex = (startIndex == 0) ? n - 1 : startIndex - 1;
-                totalProfit += gas[startIndex] - cost[startIndex];
-            }
-        }
-        return totalProfit >= 0 ? startIndex : -1;
-    }
 	
 	
 	/*************************************************/

@@ -1,7 +1,62 @@
+import java.util.Arrays;
+/***
+ * 
+ * 
+ * @author jackie
+ * 
+ * Say you have an array for which the i-th element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most k transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+Example 1:
+
+Input: [2,4,1], k = 2
+Output: 2
+Explanation: Buy on day 1 (price = 2) and sell on day 2 (price = 4), profit = 4-2 = 2.
+Example 2:
+
+Input: [3,2,6,5,0,3], k = 2
+Output: 7
+Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-2 = 4.
+             Then buy on day 5 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+ */
+
 public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
 	/******************************************************/
-	// by ninechapter using DP, O(nk) with O(n^2) space
 	public int maxProfit(int k, int[] prices) {
+		if(prices == null || prices.length == 0){
+            return 0;
+        } else if(k >= prices.length / 2){
+            int profit = 0;
+            
+            for(int i = 0; i < prices.length - 1; i++){
+                if(prices[i] < prices[i+1]){
+                    profit += prices[i+1] - prices[i];
+                }
+            }
+            
+            return profit;
+        }
+        
+        int[] costs = new int[k + 1];
+        int[] profits = new int[k + 1];
+        Arrays.fill(costs, Integer.MAX_VALUE);
+        
+        for(int price : prices) {
+            for(int i = 1; i <= k; i++) {
+                costs[i] = Math.min(costs[i], price - profits[i-1]);
+                profits[i] = Math.max(profits[i], price - costs[i]);
+            }
+        }
+        
+        return profits[k];
+    }
+	
+	// by ninechapter using DP, O(nk) with O(n^2) space
+	public int maxProfit2(int k, int[] prices) {
 		if(prices == null || prices.length == 0){
             return 0;
         } else if(k >= prices.length / 2){
@@ -17,19 +72,17 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
         }
         
         int len = prices.length;
-        int[][] global = new int[len][k + 1];         // mustSell[i][j]: 表示总交易次数为j截止到第i天并且在最后一天要做交易的情况下的最大获益
-        int[][] mustSell = new int[len][k + 1];       // globalbest[i][j]: 表示总交易次数为j截止到第i天的最大获益;可以不sell
+        int[][] global = new int[len][k+1];         // mustSell[i][j]: 表示总交易次数为j截止到第i天并且在最后一天要做交易的情况下的最大获益
+        int[][] mustSell = new int[len][k+1];       // globalbest[i][j]: 表示总交易次数为j截止到第i天的最大获益;可以不sell
         
-        for (int i = 0; i <= k; i++) {
-			mustSell[0][i] = global[0][i] = 0;
-		}
-        
-        for(int i = 1; i < len; i++){
-            int gainOrLose = prices[i] - prices[i - 1];
+        for(int i = 1; i < len; i++)
+        {
+            int gainOrLose = prices[i] - prices[i-1];
             
-            for(int j = 1; j <= k; j++){
-                mustSell[i][j] = Math.max(mustSell[i - 1][j], global[i - 1][j - 1]) + gainOrLose;
-                global[i][j] = Math.max(global[i - 1][j], mustSell[i][j]);
+            for(int j = 1; j <= k; j++)
+            {
+                mustSell[i][j] = Math.max(mustSell[i-1][j], global[i-1][j-1]) + gainOrLose;
+                global[i][j] = Math.max(global[i-1][j], mustSell[i][j]);
             }
         }
         
@@ -39,7 +92,7 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
 	
 	/******************************************************/
 	// by other using DP, O(nk) with space O(n)
-	public int maxProfit2(int k, int[] prices) {
+	public int maxProfit3(int k, int[] prices) {
 		if (k >= prices.length / 2) {
 			int maxProfit = 0;
 			for (int i = 1; i < prices.length; i++) {
@@ -51,10 +104,10 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
 
 		int[] maxProfit = new int[k + 1];    // 记录第i次操作的最大收益
 		int[] lowPrice = new int[k + 1];     // 记录第i次操作前买入的最低花销
-		for (int i = 0; i < lowPrice.length; i++)
-			lowPrice[i] = Integer.MAX_VALUE;
+		Arrays.fill(lowPrice, Integer.MAX_VALUE);
+		
 		for (int p : prices) {
-			for (int i = k; i >= 1; i--) {
+			for (int i = 0; i < prices.length; i++) {
 				maxProfit[i] = Math.max(maxProfit[i], p - lowPrice[i]);  // p表示当天卖出的钱
 				lowPrice[i] = Math.min(lowPrice[i], p - maxProfit[i - 1]);
 			}

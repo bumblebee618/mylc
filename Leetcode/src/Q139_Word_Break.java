@@ -46,9 +46,9 @@ public class Q139_Word_Break {
         for(int i = 1; i <= n; ++i){
             for(int lastWordLen = 1; lastWordLen <= maxLen && i - lastWordLen >= 0; ++lastWordLen){
                 if(canSplit[i - lastWordLen] == true){
-                    String curWord = s.substring(i - lastWordLen, i);
+                    String lastWord = s.substring(i - lastWordLen, i);
                     
-                    if(wordDict.contains(curWord)){
+                    if(wordDict.contains(lastWord)){
                         canSplit[i] = true;
                         break;      // 当寻找到之后，直接退出
                     }

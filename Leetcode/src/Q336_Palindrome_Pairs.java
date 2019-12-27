@@ -44,7 +44,7 @@ public class Q336_Palindrome_Pairs {
                 String part2 = words[i].substring(j);
                 
                 if(isPalindrome(part1)){
-                    String part2_reverse = new StringBuffer(part2).reverse().toString();
+                    String part2_reverse = new StringBuilder(part2).reverse().toString();
                     
                     if(map.containsKey(part2_reverse) && map.get(part2_reverse) != i){
                         List<Integer> list = new ArrayList<Integer>();

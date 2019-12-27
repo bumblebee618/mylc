@@ -37,6 +37,115 @@ public class Q126_Word_Ladder_II {
     // beginWord == endWord
     // wordList is empty
     // beginWord cannot been transfered to endWord
+	
+	// bfs + dfs
+	private List<List<String>> result1 = new LinkedList<>();
+    
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0)
+        {
+            return result1;
+        }
+        else if (beginWord.equals(endWord))
+        {
+            return result1;
+        }
+        
+        Set<String> wordSet = new HashSet<>();
+        for (String word : wordList)
+        {
+            wordSet.add(word);
+        }
+        
+        Map<String, List<String>> nextWordMap = new HashMap<>();
+        Set<String> level = new HashSet<>();
+        level.add(beginWord);
+        bfs(level, wordSet, nextWordMap, endWord);
+        
+        List<String> path = new LinkedList<>();
+        path.add(beginWord);
+        dfs(beginWord, endWord, nextWordMap, path);
+        return result1;
+    }
+    
+    private void bfs(Set<String> curLevel, Set<String> wordSet, Map<String, List<String>> nextWordMap, String endWord)
+    {
+        wordSet.removeAll(curLevel);
+        Set<String> nextLevel = new HashSet<>();
+        boolean found = false;
+        
+        for (String word : curLevel)
+        {
+            char[] letters = word.toCharArray();
+            
+            for (int i = 0; i < letters.length; i++)
+            {
+                char temp = letters[i];
+                
+                for (char c = 'a'; c <= 'z'; c++)
+                {
+                    if (c == temp)
+                    {
+                        continue;
+                    }
+                    
+                    letters[i] = c;
+                    String newWord = new String(letters);
+                    
+                    if (wordSet.contains(newWord))
+                    {
+                        if (endWord.equals(newWord))
+                        {
+                            found = true;
+                        }
+                        else
+                        {
+                            nextLevel.add(newWord);
+                        }
+                        
+                        if (!nextWordMap.containsKey(word))
+                        {
+                            nextWordMap.put(word, new LinkedList<String>());
+                        }
+                        
+                        nextWordMap.get(word).add(newWord);
+                    }
+                }
+                
+                letters[i] = temp;
+            }
+        }
+        
+        if (!found && nextLevel.size() > 0)
+        {
+            bfs(nextLevel, wordSet, nextWordMap, endWord);
+        }
+    }
+    
+    private void dfs(String curWord, String endWord, Map<String, List<String>> nextWordMap, List<String> path)
+    {
+        if (curWord.equals(endWord))
+        {
+            result.add(new LinkedList<String>(path));
+            return;
+        }
+        else if (!nextWordMap.containsKey(curWord))
+        {
+            return;
+        }
+        
+        for (String nextWord : nextWordMap.get(curWord))
+        {
+            path.add(nextWord);
+            dfs(nextWord, endWord, nextWordMap, path);
+            path.remove(path.size()-1);
+        }
+    }
+
+    
+    
+    
+    
 
 	
 	// using DFS, BFS
@@ -356,12 +465,13 @@ public class Q126_Word_Ladder_II {
 
 	public static void main(String[] args) {
 		Q126_Word_Ladder_II t = new Q126_Word_Ladder_II();
-		Set<String> wordList = new HashSet<String>();
+		List<String> wordList = new LinkedList<String>();
 		wordList.add("hot");
 		wordList.add("dot");
 		wordList.add("dog");
 		wordList.add("lot");
 		wordList.add("log");
+		wordList.add("cog");
 		
 		Set<String> wordList2 = new HashSet<String>();
 		wordList2.add("hot");

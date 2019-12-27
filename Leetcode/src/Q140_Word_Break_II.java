@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.naming.InitialContext;
+
 /******
  * 
 Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
@@ -28,17 +30,21 @@ public class Q140_Word_Break_II {
 	 * 自底向上，用memoSearch记录已经求过的答案，减少重复计算
 	 * 
 	 ********************************************************************************************************/
+	private List<String> result = new LinkedList<>();
+    private int maxWordLen = 0;
+    private Set<String> wordSet; 
 	
 	public List<String> wordBreak(String s, Set<String> wordDict) {
         if(s == null || s.length() == 0 || wordDict.size() == 0){
             return new LinkedList<String>();
         }
         
+        init(wordDict);
         List<String>[] memo = new List[s.length()];
-        return helper(s, 0, wordDict, memo);
+        return backtrack(s, 0, memo);
     }
     
-    public List<String> helper(String s, int start, Set<String> wordDict, List<String>[] memo){
+    public List<String> backtrack(String s, int start, List<String>[] memo){
         List<String> ans = new LinkedList<String>();  // 每次递归都开辟新的list
         
         if(start == s.length()){
@@ -46,17 +52,19 @@ public class Q140_Word_Break_II {
             return ans;
         }
         
-        int len = s.length();
+        if (memo[start] != null)
+        {
+        	return memo[start];
+        }
         
-        for(int index = start; index < len; ++index){
-            String nextWord = s.substring(start, index + 1);
+        for(int end = start; end-start <= maxWordLen && end < s.length(); ++end){
+            String nextWord = s.substring(start, end + 1);
             
-            if(wordDict.contains(nextWord)){
-                if(memo[index] == null){     // 这里memo用index，防止index = s.length() 越界
-                    memo[index] = helper(s, index + 1, wordDict, memo);  // 从 i+1 开始
-                } 
+            if(wordSet.contains(nextWord)){
+            	// 这里memo用index，防止index = s.length() 越界. 从end+1开始
+            	List<String> list = backtrack(s, end+1, memo);
                 
-                for(String str : memo[index]){
+                for(String str : list){
                     if(str == ""){
                         ans.add(nextWord);
                     } else {
@@ -66,10 +74,21 @@ public class Q140_Word_Break_II {
             }
         }
         
+        memo[start] = ans;
         return ans;
     }
     
-    
+    private void init(Set<String> wordDict)
+    {
+    	wordSet = wordDict;
+    	
+        for (String word : wordDict)
+        {
+            maxWordLen = Math.max(maxWordLen, word.length());
+        }
+    }
+
+
     
     /*******************************************************************/
 	// by Jackie, but exceed time limit, O(n * m)

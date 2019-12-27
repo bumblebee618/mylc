@@ -15,7 +15,31 @@ Note: Length of the array will not exceed 10,000.
  *
  */
 public class Q674_Longest_Continuous_Increasing_Subsequence {
+	// Time complexity is O(n)
 	public int findLengthOfLCIS(int[] nums) {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        int maxLen = 1;
+        int pos = 0;
+        
+        for (int i = 0; i < nums.length; i++)
+        {
+            if (i > 0 && nums[i] <= nums[i-1])
+            {
+                pos = i;
+            }
+            
+            maxLen = Math.max(maxLen, i-pos+1);
+        }
+        
+        return maxLen;
+    }
+
+	// Time complexity is O(n^2)
+	public int findLengthOfLCIS2(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }

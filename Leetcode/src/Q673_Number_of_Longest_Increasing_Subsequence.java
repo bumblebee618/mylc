@@ -37,7 +37,6 @@ public class Q673_Number_of_Longest_Increasing_Subsequence {
                     } else if (curMaxLen[i] == curMaxLen[j] + 1) {
                         times[i] += times[j];
                     }
-                    curMaxLen[i] = Math.max(curMaxLen[i], curMaxLen[j] + 1);
                 } 
             }
             
@@ -54,12 +53,15 @@ public class Q673_Number_of_Longest_Increasing_Subsequence {
         return count;
     }
 	
+
+	
 	
 	
 	public static void main(String[] args) {
 		Q673_Number_of_Longest_Increasing_Subsequence test = new Q673_Number_of_Longest_Increasing_Subsequence();
 //		int[] nums = {1,2,4,3,5,4,7,2};
-		int[] nums = {1,1,1,2,2,2,3,3,3};
+//		int[] nums = {1,1,1,2,2,2,3,3,3};
+		int[] nums = {1,3,5,4,7};
 		System.out.println(test.findNumberOfLIS(nums));
 	}
 }

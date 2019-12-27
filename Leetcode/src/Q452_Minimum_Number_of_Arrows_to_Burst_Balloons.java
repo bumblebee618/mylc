@@ -26,6 +26,7 @@ and another arrow at x = 11 (bursting the other two balloons).
  *
  */
 public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
+	// 类似题435
 	public int findMinArrowShots(int[][] points) {
         if (points == null || points.length == 0 || points[0].length == 0) {
             return 0;
@@ -46,4 +47,16 @@ public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
         
         return minArrow;
     }
+	
+	
+	
+	
+	
+	public static void main(String[] args)
+	{
+		Q452_Minimum_Number_of_Arrows_to_Burst_Balloons test = new Q452_Minimum_Number_of_Arrows_to_Burst_Balloons();
+		int[][] points = {{10, 16}, {2, 8}, {1, 6}, {7, 12}};
+		int result = test.findMinArrowShots(points);
+		System.out.print(result);
+	}
 }
