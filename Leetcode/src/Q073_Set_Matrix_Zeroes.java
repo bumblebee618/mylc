@@ -23,7 +23,8 @@ public class Q073_Set_Matrix_Zeroes {
                 firstRow = true;  
                 break;  
             }  
-        }  
+        }
+        
         for (i = 0; i < row; i++) {  
             if (0 == matrix[i][0]) {  
                 firstCol = true;  
