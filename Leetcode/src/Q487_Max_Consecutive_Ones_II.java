@@ -34,14 +34,13 @@ public class Q487_Max_Consecutive_Ones_II {
         
         int len = nums.length;
         int maxLen = 0, zeroCount = 0;
-        int k = 1;
         
         for (int front = 0, back = 0; front < len; front++) {
             if (nums[front] == 0) {
                 zeroCount++;
             }
             
-            while (zeroCount > k) {
+            while (zeroCount > 1) {
                 if (nums[back++] == 0) {
                     zeroCount--;
                 }

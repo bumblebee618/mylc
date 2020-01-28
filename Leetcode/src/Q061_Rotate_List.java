@@ -14,59 +14,57 @@ return 4->5->1->2->3->NULL.
 
 public class Q061_Rotate_List {
 	public ListNode rotateRight(ListNode head, int k) {
-        if(head == null || head.next == null || k == 0){
+        if (head == null || k <= 0)
+        {
             return head;
         }
         
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode node = dummy;
         ListNode faster = head;
-        int len = 0;
+        int count = getCount(head);
+        k %= count;
         
-        while(faster != null){
-            len++;
+        if (k == 0)
+        {
+            return head;
+        }
+        
+        for (int i = 0; i < count-k-1; i++)
+        {
             faster = faster.next;
         }
         
-        k %= len;
-        faster = dummy;
-        
-        for(int i = 0; i < len - k; i++){
-            faster = faster.next;
-        }
-        
-        node.next = faster.next;
+        ListNode node = faster.next;
+        ListNode newHead = faster.next;
         faster.next = null;
+        ListNode prevNode = null;
         
-        while(node.next != null){
+        while (node != null)
+        {
+            prevNode = node;
             node = node.next;
         }
         
-        node.next = head;
-        return dummy.next;
+        prevNode.next = head;
+        return newHead;
+    }
+    
+    private int getCount(ListNode head)
+    {
+        int count = 0;
+        
+        while (head != null)
+        {
+            count++;
+            head = head.next;
+        }
+        
+        return count;
     }
 
-	
-	
-	
-	public ListNode rotateRight_2(ListNode head, int k) { // by other
-		Stack<ListNode> stack = new Stack<ListNode>();
-		ListNode current = head;
-		while (current != null) {
-			stack.push(current);
-			current = current.next;
-		}
-		int rotations = stack.size() == 0 ? 0 : k % stack.size();
-		for (int i = 0; i < rotations; i++) {
-			ListNode node = stack.pop();
-			ListNode last = stack.peek();
-			last.next = null;
-			node.next = head;
-			head = node;
-		}
-		return head;
-	}
+    
+    
+    
+    
 	
 	public static void main(String[] args){
 		Q061_Rotate_List r = new Q061_Rotate_List();

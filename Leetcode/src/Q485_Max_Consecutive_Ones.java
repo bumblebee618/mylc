@@ -23,23 +23,57 @@ public class Q485_Max_Consecutive_Ones {
     
     // using tow pointers, time is O(n)
     public int findMaxConsecutiveOnes(int[] nums) {
-        if(nums == null || nums.length == 0) {
+    	if (nums == null || nums.length == 0) {
             return 0;
-        } 
+        }
         
-        int len = nums.length, maxLen = 0;
-        int[] hash = new int[2];
+        int len = nums.length;
+        int maxLen = 0, zeroCount = 0;
         
-        for(int faster = 0, slower = 0; faster < len; faster++) {
-            hash[nums[faster]]++;
-            
-            while(slower < faster && hash[0] > 0) {
-                hash[nums[slower++]]--;
+        for (int front = 0, back = 0; front < len; front++) {
+            if (nums[front] == 0) {
+                zeroCount++;
             }
             
-            if(hash[0] == 0) {
-                maxLen = Math.max(maxLen, faster - slower + 1);
+            while (zeroCount > 0) {
+                if (nums[back++] == 0) {
+                    zeroCount--;
+                }
             }
+            
+            maxLen = Math.max(maxLen, front - back + 1);
+        }
+        
+        return maxLen;
+    }
+    
+    
+    // two pointers, time O(n)
+    public int findMaxConsecutiveOnes2(int[] nums) {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        int maxLen = 0;
+        int size = nums.length;
+        int front = 0;
+        
+        while (front < size)
+        {
+            if (nums[front] == 1)
+            {
+                int back = front;
+                
+                while (front < size && nums[front] == 1)
+                {
+                    front++;
+                }
+                
+                maxLen = Math.max(maxLen, front-back);
+            }
+            
+            front++;
         }
         
         return maxLen;

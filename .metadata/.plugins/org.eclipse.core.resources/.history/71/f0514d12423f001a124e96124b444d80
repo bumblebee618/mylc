@@ -1,0 +1,80 @@
+import java.util.Stack;
+
+/************
+ * 
+Given a list, rotate the list to the right by k places, where k is non-negative.
+
+For example:
+Given 1->2->3->4->5->NULL and k = 2,
+return 4->5->1->2->3->NULL.
+
+ * 
+ * 
+ * */
+
+public class Q061_Rotate_List {
+	public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || k <= 0)
+        {
+            return head;
+        }
+        
+        ListNode faster = head, slower = head;
+        ListNode prevFaster = null, prevSlower = null;
+        int count = getCount(head);
+        k %= count;
+        
+        if (k == 0)
+        {
+            return head;
+        }
+        
+        for (int i = 0; i < count-k-1; i++)
+        {
+            faster = faster.next;
+        }
+        
+        ListNode node = faster.next;
+        ListNode newHead = faster.next;
+        faster.next = null;
+        ListNode prevNode = null;
+        
+        while (node != null)
+        {
+            prevNode = node;
+            node = node.next;
+        }
+        
+        prevNode.next = head;
+        return newHead;
+    }
+    
+    private int getCount(ListNode head)
+    {
+        int count = 0;
+        
+        while (head != null)
+        {
+            count++;
+            head = head.next;
+        }
+        
+        return count;
+    }
+
+    
+    
+    
+    
+	
+	public static void main(String[] args){
+		Q061_Rotate_List r = new Q061_Rotate_List();
+		ListNode head = new ListNode(1);
+		head.Insert(head, 2);
+		head.Insert(head, 3);
+		head.Insert(head, 4);
+		head.Insert(head, 5);
+		ListNode temp = r.rotateRight(head, 2);
+		temp.Display(temp);
+	}
+}

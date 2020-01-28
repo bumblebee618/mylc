@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,24 +49,20 @@ TimeMap.set and TimeMap.get functions will be called a total of 120000 times (co
 
 
 public class Q981_Time_Based_Key_Value_Store {
-	private Map<String, List<Tuple>> map;
+private Map<String, List<Tuple>> map;
     
     /** Initialize your data structure here. */
     public Q981_Time_Based_Key_Value_Store() {
-        map = new HashMap();
+        map = new HashMap<String, List<Tuple>>();
     }
     
     public void set(String key, String value, int timestamp) {
-        if (map.containsKey(key))
+        if (!map.containsKey(key))
         {
-            map.get(key).add(new Tuple(value, timestamp));
+            map.put(key, new LinkedList<Tuple>());
         }
-        else
-        {
-            List<Tuple> list = new ArrayList<>();
-            list.add(new Tuple(value, timestamp));
-            map.put(key, list);
-        }
+        
+        map.get(key).add(new Tuple(value, timestamp));
     }
     
     public String get(String key, int timestamp) {
@@ -75,45 +71,54 @@ public class Q981_Time_Based_Key_Value_Store {
             return "";
         }
         
-        List<Tuple> list = map.get(key);
-        int left = 0, right = list.size() - 1;
-        
-        while (left + 1 < right)
+        int index = binarySearch(map.get(key), timestamp);
+        return index == -1 ? "" : map.get(key).get(index).value;
+    }
+    
+    private int binarySearch(List<Tuple>list, int curTimestamp)
+    {
+        if (list.size() == 0 || curTimestamp < list.get(0).timestamp)
         {
-            int mid = left + (right - left) / 2;
+            return -1;
+        }
+        else if (curTimestamp > list.get(list.size()-1).timestamp)
+        {
+            return list.size()-1;
+        }
+        
+        int left = 0, right = list.size()-1;
+        
+        while (left+1 < right)
+        {
+            int midIndex = left+(right-left)/2;
+            int mid = list.get(midIndex).timestamp;
             
-            if (timestamp < list.get(mid).timeStamp )
+            if (mid < curTimestamp)
             {
-                right = mid;
+                left = midIndex;
+            }
+            else if (mid > curTimestamp)
+            {
+                right = midIndex;
             }
             else
             {
-                left = mid;
+                return midIndex;
             }
         }
         
-        if (list.get(right).timeStamp <= timestamp)
-        {
-            return list.get(right).value;
-        }
-        else if (list.get(left).timeStamp <= timestamp)
-        {
-            return list.get(left).value;
-        }
-        else
-        {
-            return "";
-        }
+        return list.get(right).timestamp <= curTimestamp ? right : left;
     }
     
-    class Tuple {
-        String value;
-        int timeStamp;
+    class Tuple
+    {
+        public String value;
+        public int timestamp;
         
-        public Tuple(String value, int timeStamp)
+        public Tuple(String value, int timestamp)
         {
             this.value = value;
-            this.timeStamp = timeStamp;
+            this.timestamp = timestamp;
         }
     }
 }
