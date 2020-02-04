@@ -15,25 +15,31 @@ Note: The sequence of integers will be represented as a string.
 public class Q038_Count_and_Say {
 	// solution 1:
 	public String countAndSay(int n) {
-        if (n <= 0) {
+        if (n <= 0)
+        {
             return "";
         }
         
-        StringBuilder cur = new StringBuilder("1");
+        StringBuilder cur = new StringBuilder().append("1");
         StringBuilder prev = new StringBuilder();
         
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < n; i++)
+        {
             prev = cur;
             cur = new StringBuilder();
-            int count = 1;
             char say = prev.charAt(0);
+            int count = 0;
             
-            for (int j = 1, len = prev.length(); j < len; j++) {
-                if (prev.charAt(j) != say) {
+            for (int j = 0; j < prev.length(); j++)
+            {
+                if (prev.charAt(j) != say)
+                {
                     cur.append(count).append(say);
-                    count = 1;
                     say = prev.charAt(j);
-                } else {
+                    count = 1;
+                }
+                else
+                {
                     count++;
                 }
             }

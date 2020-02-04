@@ -19,7 +19,12 @@ The length of S will be in the range [1, 20000].
 The length of T will be in the range [1, 100].
  *
  */
-public class Q727_Minimum_Window_Subsequence {
+public class Q727_Minimum_Window_Subsequence {// dp[i][j] 表示范围S中0～i个字符包含范围T中0～j个字符的子串的起始位置
+    // -1 表示未匹配或无法匹配
+    // dp[i][j] 中的j不能大于i，因为T的长度不能大于S的长度 -> 所以j大于i的 dp[i][j] = -1
+    // 公式1： 当 S[i] == T[j] 的时候，dp[i][j] = dp[i - 1][j - 1] 
+    // 公式2： 当 S[i] != T[j] 的时候，dp[i][j] = dp[i - 1][j] (S[i]肯定不可以用来做subsequence)
+	
 	// use dp, time complexity is O(m*n)
 	public String minWindow(String S, String T) {
         if (S == null || T == null || S.length() < T.length()) {

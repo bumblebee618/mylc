@@ -27,8 +27,38 @@ by one to see if T has its subsequence. In this scenario, how would you change y
  * */
 
 public class Q392_Is_Subsequence {
-	// solution 1: using str.indexOf(), time O(n*m), space O(1)
+	// solution 1, time O(m+n)
 	public boolean isSubsequence(String s, String t) {
+        if (s == null || t == null || s.length() > t.length())
+        {
+            return false;
+        }
+        
+        int size1 = s.length();
+        int size2 = t.length();
+        int index1 = 0, index2 = 0;
+        
+        while (index1 < size1 && index2 < size2)
+        {
+            while (index2 < size2 && t.charAt(index2) != s.charAt(index1))
+            {
+                index2++;
+            }
+            
+            if (index2 == size2)
+            {
+                return false;
+            }
+            
+            index1++;
+            index2++;
+        }
+        
+        return index1 == size1;
+    }
+	
+	// solution 2: using str.indexOf(), time O(n*m), space O(1)
+	public boolean isSubsequence2(String s, String t) {
         if(s == null || s.length() == 0) {
             return true;
         } else if(t == null || t.length() == 0) {
@@ -52,8 +82,8 @@ public class Q392_Is_Subsequence {
 	
 	
 	
-	// solution 2: using DP, time O(n*m), space O(n*m)
-	public boolean isSubsequence2(String s, String t) {
+	// solution 3: using DP, time O(n*m), space O(n*m)
+	public boolean isSubsequence3(String s, String t) {
         if(s == null || s.length() == 0) {
             return true;
         } else if(t == null || t.length() == 0) {
@@ -92,7 +122,7 @@ public class Q392_Is_Subsequence {
 	 * Since there is a lot of s, it would be reasonable to preprocess t to generate something that is easy to search for if a character of s is in t. 
 	 * Sounds like a HashMap, which is super suitable for search for existing stuff. 
 	 */	
-	public boolean isSubsequence3(String s, String t) {
+	public boolean isSubsequence4(String s, String t) {
         if(s == null || s.length() == 0) {
             return true;
         } else if(t == null || t.length() == 0) {

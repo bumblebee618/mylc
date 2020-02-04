@@ -18,6 +18,48 @@ public class Q482_License_Key_Formatting {
     }
 	
 	
+	// Solution 2
+	public String licenseKeyFormatting2(String S, int K) {
+        if (S == null || S.length() == 0 || K <= 0)
+        {
+            return S;
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        StringBuilder cache = new StringBuilder();
+        int gap = 'a' - 'A';
+        
+        for (int i = S.length()-1; i >= 0; i--)
+        {
+            char c = S.charAt(i);
+            
+            if (c == '-')
+            {
+                continue;
+            }
+            
+            if (c >= 'a' & c <= 'z')
+            {
+                c = (char) (c-gap);
+            }
+            
+            cache.insert(0, c);
+            
+            if (cache.length() == K)
+            {
+                builder.insert(0, cache.toString()).insert(0, "-");
+                cache = new StringBuilder();
+            }
+        }
+        
+        if (cache.length() > 0)
+        {
+            builder.insert(0, cache.toString());
+        }
+        
+        return (builder.length() > 0 && builder.charAt(0) == '-') ? builder.substring(1) : builder.toString();
+    }
+
 	
 	
 	
