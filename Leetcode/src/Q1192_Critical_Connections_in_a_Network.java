@@ -71,7 +71,7 @@ public class Q1192_Critical_Connections_in_a_Network {
             int endDeep; // dfs终点深度
         
             // 深度为-1的点没走过，可以dfs
-            if(deepArray[i]==-1)
+            if(deepArray[i] == -1)
             { 
                 endDeep = dfs(i, current, deep+1);
                 

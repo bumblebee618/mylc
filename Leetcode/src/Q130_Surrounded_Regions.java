@@ -30,8 +30,79 @@ public class Q130_Surrounded_Regions {
 	 *  (3). 将第三态D的结点改为O, 将原来为O的结点改为X
 	 *  
 	 *******************************************************************/
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public void solve(char[][] board) {
+        if (board == null || board.length == 0 || board[0].length == 0)
+        {
+            return;
+        }
+        
+        int row = board.length;
+        int col = board[0].length;
+        
+        for (int i = 0; i < row; i++)
+        {
+            if (board[i][0] == 'O')
+            {
+                dfs(board, i, 0);
+            }
+            
+            if (board[i][col-1] == 'O')
+            {
+                dfs(board, i, col-1);
+            }
+        }
+        
+        for (int i = 0; i < col; i++)
+        {
+            if (board[0][i] == 'O')
+            {
+                dfs(board, 0, i);
+            }
+            
+            if (board[row-1][i] == 'O')
+            {
+                dfs(board, row-1, i);
+            }
+        }
+        
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (board[i][j] == 'O')
+                {
+                    board[i][j] = 'X'; 
+                }
+                else if (board[i][j] == 'D')
+                {
+                    board[i][j] = 'O'; 
+                }
+            }
+        }
+    }
+    
+    private void dfs(char[][] board, int x, int y)
+    {
+        board[x][y] = 'D';
+        
+        for (int i = 0; i < dx.length; i++)
+        {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+            
+            if (newX >= 0 && newX < board.length && newY >= 0 && newY < board[0].length && board[newX][newY] == 'O')
+            {
+                dfs(board, newX, newY);
+            }
+        }
+    }
+
 	
-	public void solve(char[][] board) {
+	
+	public void solve2(char[][] board) {
         if(board == null || board.length == 0 || board[0].length == 0) {
             return;
         }

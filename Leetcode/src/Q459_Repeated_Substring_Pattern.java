@@ -31,32 +31,40 @@ Show Similar Problems
  * */
 
 public class Q459_Repeated_Substring_Pattern {
-	public boolean repeatedSubstringPattern(String str) {
-        if(str == null || str.length() == 0) {
+	public boolean repeatedSubstringPattern(String s) {
+        if (s == null || s.length() == 0)
+        {
             return false;
         }
         
-        int len = str.length();
+        int size = s.length();
         
-        for(int subLen = 1; subLen <= len/2; subLen++) {
-            if(len % subLen != 0) {
+        for (int subLen = 1; subLen <= size/2; subLen++)
+        {
+            if (size % subLen != 0)
+            {
                 continue;
             }
             
             int start = 0;
-            String subStr = str.substring(start, start + subLen);
-        
-            while(start + subLen <= len) {
-                int index = str.indexOf(subStr, start);
+            String pattern = s.substring(0, subLen);
+            
+            while (start < size)
+            {
+                int index = s.indexOf(pattern, start);
                 
-                if(index != start) {
+                if (index != start)
+                {
                     break;
-                } else {
+                }
+                else
+                {
                     start += subLen;
                 }
             }
             
-            if(start == len) {
+            if (start == size)
+            {
                 return true;
             }
         }
