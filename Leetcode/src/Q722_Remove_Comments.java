@@ -22,15 +22,18 @@ public class Q722_Remove_Comments {
             }
             
             while (index < lineLen) {
-                if (!inblock && index+1 < lineLen && letters[index] == '/' && letters[index+1] == '*') {
+            	if (!inblock && index+1 < lineLen && letters[index] == '/' && letters[index+1] == '/') {
+                    break;
+                } 
+            	else if (!inblock && index+1 < lineLen && letters[index] == '/' && letters[index+1] == '*') {
                     inblock = true;
                     index++;
-                } else if (inblock && index+1 < lineLen && letters[index] == '*' && letters[index+1] == '/') {
+                } 
+            	else if (inblock && index+1 < lineLen && letters[index] == '*' && letters[index+1] == '/') {
                     inblock = false;
                     index++;
-                } else if (!inblock && index+1 < lineLen && letters[index] == '/' && letters[index+1] == '/') {
-                    break;
-                } else if (!inblock) {
+                } 
+            	else if (!inblock) {
                     sb.append(letters[index]);
                 }
                 

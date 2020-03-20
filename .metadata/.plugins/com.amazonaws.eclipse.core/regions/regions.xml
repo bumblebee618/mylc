@@ -11,6 +11,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.ap-east-1.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.ap-east-1.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.ap-east-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.ap-east-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.ap-east-1.amazonaws.com</service>
             <service name="EC2">https://ec2.ap-east-1.amazonaws.com</service>
@@ -265,6 +266,7 @@
             <service name="S3">https://s3.cn-north-1.amazonaws.com.cn</service>
             <service name="SNS">https://sns.cn-north-1.amazonaws.com.cn</service>
             <service name="SQS">https://sqs.cn-north-1.amazonaws.com.cn</service>
+            <service name="XRay">https://xray.cn-north-1.amazonaws.com.cn</service>
         </services>
     </region>
     <region>
@@ -296,6 +298,7 @@
             <service name="S3">https://s3.cn-northwest-1.amazonaws.com.cn</service>
             <service name="SNS">https://sns.cn-northwest-1.amazonaws.com.cn</service>
             <service name="SQS">https://sqs.cn-northwest-1.amazonaws.com.cn</service>
+            <service name="XRay">https://xray.cn-northwest-1.amazonaws.com.cn</service>
         </services>
     </region>
     <region>
@@ -345,6 +348,7 @@
             <service name="CloudWatchEvents">https://events.eu-north-1.amazonaws.com</service>
             <service name="CodeCommit">https://codecommit.eu-north-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.eu-north-1.amazonaws.com</service>
+            <service name="CodeStar">https://codestar.eu-north-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.eu-north-1.amazonaws.com</service>
             <service name="DynamoDBStream">https://streams.dynamodb.eu-north-1.amazonaws.com</service>
             <service name="EC2">https://ec2.eu-north-1.amazonaws.com</service>
@@ -560,7 +564,7 @@
             <service name="Logs">https://logs.us-east-1.amazonaws.com</service>
             <service name="OpsWorks">https://opsworks.us-east-1.amazonaws.com</service>
             <service name="RDS">https://rds.us-east-1.amazonaws.com</service>
-            <service name="S3">https://s3.amazonaws.com</service>
+            <service name="S3">https://s3.us-east-1.amazonaws.com</service>
             <service name="SNS">https://sns.us-east-1.amazonaws.com</service>
             <service name="SQS">https://sqs.us-east-1.amazonaws.com</service>
             <service name="SimpleDB">https://sdb.amazonaws.com</service>
@@ -630,6 +634,7 @@
             <service name="S3">https://s3.us-gov-east-1.amazonaws.com</service>
             <service name="SNS">https://sns.us-gov-east-1.amazonaws.com</service>
             <service name="SQS">https://sqs.us-gov-east-1.amazonaws.com</service>
+            <service name="XRay">https://xray.us-gov-east-1.amazonaws.com</service>
         </services>
     </region>
     <region>
@@ -661,6 +666,7 @@
             <service name="S3">https://s3.us-gov-west-1.amazonaws.com</service>
             <service name="SNS">https://sns.us-gov-west-1.amazonaws.com</service>
             <service name="SQS">https://sqs.us-gov-west-1.amazonaws.com</service>
+            <service name="XRay">https://xray.us-gov-west-1.amazonaws.com</service>
         </services>
     </region>
     <region>

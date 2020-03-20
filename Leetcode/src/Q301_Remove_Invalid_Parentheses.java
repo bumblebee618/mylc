@@ -26,7 +26,7 @@ public class Q301_Remove_Invalid_Parentheses {
 	 *******************************************************************/
 	
 	public List<String> removeInvalidParentheses(String s) {
-        List<String> ans = new ArrayList<String>();
+		List<String> ans = new ArrayList<String>();
         if(s == null){
             return ans;
         }
@@ -38,32 +38,42 @@ public class Q301_Remove_Invalid_Parentheses {
         boolean found = false;
         
         while(!q.isEmpty()){
-            String tempStr = q.poll();
+            int size = q.size();
             
-            if(isValid(tempStr)){
-                ans.add(tempStr);
-                found = true;
-            }
-            
-            if(found == true){  // 只要找到一个解，则不再往下拆分，只统计当前层里的解
-                continue;
-            }
-            
-            int len = tempStr.length();
-            
-            for(int i = 0; i < len; ++i){
-                char c = tempStr.charAt(i);  // 需要剔除无效字符
+            for (int i = 0; i < size; i++)
+            {
+                String tempStr = q.poll();
                 
-                if(c != '(' && c != ')'){
+                if(isValid(tempStr)){
+                    ans.add(tempStr);
+                    found = true;
+                }
+                
+                if(found == true){  // 只要找到一个解，则不再往下拆分，只统计当前层里的解
                     continue;
                 }
+            
+                int len = tempStr.length();
+            
+                for(int j = 0; j < len; ++j){
+                    char c = tempStr.charAt(j);  // 需要剔除无效字符
                 
-                String newStr = tempStr.substring(0, i) + tempStr.substring(i + 1);
+                    if(c != '(' && c != ')'){
+                        continue;
+                    }
                 
-                if(!visited.contains(newStr)){
-                    visited.add(newStr);
-                    q.offer(newStr);
+                    String newStr = tempStr.substring(0, j) + tempStr.substring(j+1);
+                
+                    if(!visited.contains(newStr)){
+                        visited.add(newStr);
+                        q.offer(newStr);
+                    }
                 }
+            }
+            
+            if (found)
+            {
+                break;
             }
         }
         

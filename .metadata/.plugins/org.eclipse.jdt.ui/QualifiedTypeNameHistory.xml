@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="Find_Duplicate_Number_More_Than_1_Time"/>
-<fullyQualifiedTypeName name="Q12_1_Average_Double"/>
-<fullyQualifiedTypeName name="java.util.concurrent.CountDownLatch"/>
 <fullyQualifiedTypeName name="Q12_1_Average_Double_Array"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
 <fullyQualifiedTypeName name="java.lang.Boolean"/>
@@ -26,13 +23,9 @@
 <fullyQualifiedTypeName name="java.lang.Character"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.Comparator"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="ListNode"/>
-<fullyQualifiedTypeName name="java.awt.event.MouseWheelEvent"/>
 <fullyQualifiedTypeName name="java.awt.peer.SystemTrayPeer"/>
 <fullyQualifiedTypeName name="java.sql.PseudoColumnUsage"/>
 <fullyQualifiedTypeName name="java.nio.channels.spi.AbstractSelectionKey"/>
@@ -48,16 +41,23 @@
 <fullyQualifiedTypeName name="z_exercise.findMinPath.Tuple"/>
 <fullyQualifiedTypeName name="javax.lang.model.element.Element"/>
 <fullyQualifiedTypeName name="org.omg.CORBA.SystemException"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.lang.NumberFormatException"/>
 <fullyQualifiedTypeName name="javax.swing.plaf.DesktopPaneUI"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseWheelEvent"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="myComparator"/>
+<fullyQualifiedTypeName name="java.awt.Dialog.ModalityType"/>
+<fullyQualifiedTypeName name="java.util.LinkedHashSet"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
 </qualifiedTypeNameHistroy>
