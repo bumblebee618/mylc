@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;curSum&apos; in &apos;Q363_Max_Sum_of_Rectangle_No_Larger_Than_K.maxSumSubmatrix(...)&apos; to &apos;totalSum&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q363_Max_Sum_of_Rectangle_No_Larger_Than_K.maxSumSubmatrix(int[][], int).curSum&apos;&#x0A;- Renamed element: &apos;curSum&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;curSum&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q363_Max_Sum_of_Rectangle_No_Larger_Than_K.java[Q363_Max_Sum_of_Rectangle_No_Larger_Than_K~maxSumSubmatrix~\[\[I~I@curSum!1663!1677!1667!1672!I!0!false" name="totalSum" references="true" stamp="1586127308118" version="1.0"/>
+</session>

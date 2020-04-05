@@ -45,9 +45,9 @@ public class Q1197_Minimum_Knight_Moves {
         
         m = Math.abs(m);
         n = Math.abs(n);
-        Queue<int[]> queue = new LinkedList();
+        Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{0,0});
-        Set<String> visited = new HashSet();
+        Set<String> visited = new HashSet<>();
         visited.add("0,0");
         int steps = 0;
         
@@ -56,7 +56,7 @@ public class Q1197_Minimum_Knight_Moves {
             
             for (int i = 0; i < len; i++) 
             {
-                int[] coor = queue.remove();
+                int[] coor = queue.poll();
                 int x = coor[0];
                 int y = coor[1];
                 
@@ -71,7 +71,7 @@ public class Q1197_Minimum_Knight_Moves {
                     int newY = y + dy[j];
                     String newIndex = newX+","+newY;
                     
-                    if(newX >= -1 && newY >= -1 && !visited.contains(newIndex)){
+                    if(newX >= -2 && newY >= -2 && !visited.contains(newIndex)){
                         queue.add(new int[]{newX, newY});
                         visited.add(newIndex);
                     }

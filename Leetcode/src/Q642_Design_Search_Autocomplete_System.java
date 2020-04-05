@@ -55,6 +55,132 @@ Please remember to RESET your class variables declared in class AutocompleteSyst
  *
  */
 public class Q642_Design_Search_Autocomplete_System {
+	private Trie root;
+    private String cur_sent = "";
+    private int size = 3;
+    
+    public Q642_Design_Search_Autocomplete_System(String[] sentences, int[] times) {
+        if (sentences == null || sentences.length == 0 || times == null || times.length == 0 || sentences.length != times.length) {
+            return;
+        }
+        
+        root = new Trie();
+        
+        for (int i = 0; i < sentences.length; i++) 
+        {
+            insert(sentences[i], times[i]);
+        }
+    }
+    
+    public List<String> input(char c) {
+        List<String> res = new ArrayList<>();
+    
+        if (c == '#') 
+        {
+            insert(cur_sent, 1);
+            cur_sent = "";
+        } 
+        else 
+        {
+            cur_sent += c;
+            List<Node> list = lookup(cur_sent);
+            Collections.sort(list, (a, b) -> a.times == b.times ? a.sentence.compareTo(b.sentence) : b.times - a.times);
+      
+            for (int i = 0; i < Math.min(size, list.size()); i++)  
+            {
+                res.add(list.get(i).sentence);
+            }
+        }
+        
+        return res;
+    }
+    
+    private void insert(String sentence, int times) 
+    {
+        Trie node = root;
+        
+        for (int i = 0; i < sentence.length(); i++) 
+        {
+            if (node.children[toInt(sentence.charAt(i))] == null) 
+            {
+                node.children[toInt(sentence.charAt(i))] = new Trie();
+            }
+        
+            node = node.children[toInt(sentence.charAt(i))];
+        }
+        
+        node.times += times;
+    }
+    
+    private List<Node> lookup(String sentence) 
+    {
+        List<Node> list = new ArrayList<>();
+        Trie node = root;
+    
+        for (int i = 0; i < sentence.length(); i++) 
+        {
+            if (node.children[toInt(sentence.charAt(i))] == null) 
+            {
+                return list;
+            }
+      
+            node = node.children[toInt(sentence.charAt(i))];
+        }
+        
+        traverse(sentence, node, list);
+        return list;
+    }
+    
+    private void traverse(String sentence, Trie node, List<Node> list) 
+    {
+        if (node.times > 0)
+        {
+            list.add(new Node(sentence, node.times));
+        }
+    
+        for (char i = 'a'; i <= 'z'; i++) 
+        {
+            if (node.children[i - 'a'] != null) 
+            {
+                traverse(sentence + i, node.children[i - 'a'], list);
+            }
+        }
+    
+        if (node.children[26] != null) 
+        {
+            traverse(sentence + ' ', node.children[26], list);
+        }
+    }
+    
+    private int toInt(char c) 
+    {
+        return c == ' ' ? 26 : c - 'a';
+    }
+    
+    class Trie {
+        public int times;
+        public Trie[] children;
+        
+        public Trie()
+        {
+            times = 0;
+            children = new Trie[27];
+        }
+    }
+    
+    class Node {
+        public String sentence;
+        public int times;
+
+        Node(String st, int t) 
+        {
+            sentence = st;
+            times = t;
+        }
+    }
+
+	
+	/***
 	private Map<String, Integer>[] maps;
     private String curStr = "";
     

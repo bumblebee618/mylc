@@ -1,4 +1,20 @@
 import java.util.*;
+/***
+ * 
+ * @author jackie
+ * Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the matrix such that its sum is no larger than k.
+
+Example:
+
+Input: matrix = [[1,0,1],[0,-2,3]], k = 2
+Output: 2 
+Explanation: Because the sum of rectangle [[0, 1], [-2, 3]] is 2,
+             and 2 is the max number no larger than k (k = 2).
+Note:
+
+The rectangle inside the matrix must have an area > 0.
+What if the number of rows is much larger than the number of columns?
+ */
 
 public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 	/***
@@ -11,7 +27,7 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 	 * 
 	 ***/
 	// solution 1, use treeSet, time complexity is O(n^3 * logn)
-	public int maxSumSubmatrix(int[][] matrix, int target) {
+	public int maxSumSubmatrix(int[][] matrix, int k) {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
 			return 0;
 		}
@@ -20,30 +36,30 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 		// indicating sum up in every row or every column
 		int ans = Integer.MIN_VALUE;
 
-		// start from column between i and j, row from 0 to row
-		for (int colStart = 0; colStart < col; colStart++) {
-			int[] rowSum = new int[row];  // compress sum of each row into an array
+		// start from row between i and j, row from 0 to col
+		for (int rowStart = 0; rowStart < row; rowStart++) {
+            // compress sum of each row into an array
+			int[] rowSum = new int[col];  
 			
-			// sum row:[0, row - 1], col: [i, j]
-			// sum from col i to col - 1
-			for (int colEnd = colStart; colEnd < col; colEnd++) {
-				int curSum = 0;
+			// sum row: [i, j] col:[0, col - 1]
+			for (int rowEnd = rowStart; rowEnd < row; rowEnd++) {
+				int totalSum = 0;
 				TreeSet<Integer> set = new TreeSet<Integer>();
 				set.add(0);   // in case k == curSum;
 
 				// traverse every row and sum up
-				for (int k = 0; k < row; k++) {
-					rowSum[k] += matrix[k][colEnd];
-					curSum += rowSum[k];
+				for (int i = 0; i < col; i++) {
+					rowSum[i] += matrix[rowEnd][i];
+					totalSum += rowSum[i];
 					
 					// use TreeMap to binary search previous sum to get possible result
-					Integer subResult = set.ceiling(curSum - target);
+					Integer subResult = set.ceiling(totalSum - k);
 
 					if (subResult != null) {
-						ans = Math.max(ans, curSum - subResult);
+						ans = Math.max(ans, totalSum - subResult);
 					}
 
-					set.add(curSum);
+					set.add(totalSum);
 				}
 			}
 		}

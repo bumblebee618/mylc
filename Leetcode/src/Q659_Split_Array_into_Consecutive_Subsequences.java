@@ -43,9 +43,10 @@ public class Q659_Split_Array_into_Consecutive_Subsequences {
             return false;
         }
         
-        int size = nums.length;
         Map<Integer, Integer> frequency = new HashMap<>();
-        Map<Integer, Integer> tails = new HashMap<>();
+        
+        // the map used to keep the tail of the sub-array
+        Map<Integer, Integer> tail = new HashMap<>();
         
         for (int num : nums)
         {
@@ -61,16 +62,16 @@ public class Q659_Split_Array_into_Consecutive_Subsequences {
             
             frequency.put(num, frequency.get(num)-1);
             
-            if (tails.getOrDefault(num-1, 0) > 0)
+            if (tail.getOrDefault(num-1, 0) > 0)
             {
-                tails.put(num-1, tails.get(num-1)-1);
-                tails.put(num, tails.getOrDefault(num, 0)+1);
+                tail.put(num-1, tail.get(num-1)-1);
+                tail.put(num, tail.getOrDefault(num, 0)+1);
             }
             else if (frequency.getOrDefault(num+1, 0) > 0 && frequency.getOrDefault(num+2, 0) > 0)
             {
                 frequency.put(num+1, frequency.get(num+1)-1);
                 frequency.put(num+2, frequency.get(num+2)-1);
-                tails.put(num+2, tails.getOrDefault(num+2, 0)+1);
+                tail.put(num+2, tail.getOrDefault(num+2, 0)+1);
             }
             else
             {

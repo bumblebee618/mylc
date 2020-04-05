@@ -1,3 +1,5 @@
+import javax.imageio.ImageTypeSpecifier;
+
 /********
  * 
 Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.
@@ -25,62 +27,66 @@ public class Q034_Search_for_a_Range {
         }
         
         int[] ans = new int[2];
-        ans[0] = searchForLeftBound(nums, target);
+        ans[0] = searchForBound(nums, target, 0, true);
         
         if(ans[0] == -1) {
             return new int[]{-1, -1};
         } else {
-            ans[1] = searchForRightBound(nums, target, ans[0]);
+            ans[1] = searchForBound(nums, target, ans[0], false);
             return ans;
         }
     }
     
-    public int searchForLeftBound(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
+    private int searchForBound(int[] nums, int target, int start, boolean isLeft) {
+    	int left = start, right = nums.length - 1;
         
         while(left + 1 < right) {
             int mid = left + (right - left) / 2;
             
-            if(nums[mid] < target) {
-                left = mid;
-            } else {
-                right = mid;
+            if (isLeft)
+            {
+            	if(nums[mid] < target) {
+                    left = mid;
+                } else {
+                    right = mid;
+                }
+            }
+            else
+            {
+            	if(nums[mid] > target) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
             }
         }
         
-        if(nums[left] == target) {
-            return left;
-        } else if(nums[right] == target) {
-            return right;
-        } else {
-            return -1;
+        if (nums[left] != target && nums[right] != target)
+        {
+        	return -1;
+        }
+        
+        if (isLeft)
+        {
+        	if(nums[left] == target) {
+                return left;
+            } 
+        	else {
+                return right;
+            } 
+        }
+        else
+        {
+        	if(nums[right] == target) {
+                return right;
+            } 
+        	else {
+                return left;
+            } 
         }
     }
     
-    public int searchForRightBound(int[] nums, int target, int start) {
-        int left = start, right = nums.length - 1;
-        
-        while(left + 1 < right) {
-            int mid = left + (right - left) / 2;
-            
-            if(nums[mid] > target) {
-                right = mid;
-            } else {
-                left = mid;
-            }
-        }
-        
-        if(nums[right] == target) {
-            return right;
-        } else if(nums[left] == target) {
-            return left;
-        } else {
-            return -1;
-        }
-    }
-    
-    
-    
+   
     
     
     

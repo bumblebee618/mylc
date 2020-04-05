@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;limit&apos; in &apos;Q452_Minimum_Number_of_Arrows_to_Burst_Balloons.findMinArrowShots(...)&apos; to &apos;hitPos&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q452_Minimum_Number_of_Arrows_to_Burst_Balloons.findMinArrowShots(int[][]).limit&apos;&#x0A;- Renamed element: &apos;limit&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;limit&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q452_Minimum_Number_of_Arrows_to_Burst_Balloons.java[Q452_Minimum_Number_of_Arrows_to_Burst_Balloons~findMinArrowShots~\[\[I@limit!1360!1384!1364!1368!I!0!false" name="hitPos" references="true" stamp="1584838715001" version="1.0"/>
+</session>

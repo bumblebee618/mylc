@@ -62,8 +62,8 @@ public class Q863_All_Nodes_Distance_K_in_Binary_Tree {
         }
         else if (node == target) 
         {
-            subtree_add(node, 0);
-            return 1;
+            subtree_add(node, 0); // 向下走，查询子节点 children nodes
+            return 1;             // 往上走，查询父节点 parent nodes
         } 
         else {
             int left = dfs(node.left);

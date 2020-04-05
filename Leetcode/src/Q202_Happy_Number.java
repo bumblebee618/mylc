@@ -4,27 +4,45 @@ import java.util.Set;
 
 public class Q202_Happy_Number {
 	/******************************************************/
-	// by other, faster
 	public boolean isHappy(int n) {
-        int[] map = new int[1000];
-        while(n != 1) {
-            n = getSum(n);
-            map[n]++;
-            
-            if (map[n] > 1)
-                return false;
+        if (n <= 0)
+        {
+            return false;
         }
+        
+        Set<Integer> visited = new HashSet<>();
+        
+        while (n != 1)
+        {
+            n = getSum(n);
+            
+            if (visited.contains(n))
+            {
+                return false;
+            }
+            else
+            {
+                visited.add(n);
+            }
+        }
+        
         return true;
     }
-
-    public int getSum(int num) {
-        char[] temp = (num + "").toCharArray();
+    
+    private int getSum(int n)
+    {
         int sum = 0;
-        for (int i = 0; i < temp.length; i++) {
-            sum += ((temp[i] - '0') * (temp[i] - '0'));
+        
+        while (n > 0)
+        {
+            int digit = n % 10;
+            n /= 10;
+            sum += digit*digit;
         }
+        
         return sum;
     }
+
     
     
     

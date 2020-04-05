@@ -12,41 +12,8 @@ which has length = 4.
  * */
 
 public class Q032_Longest_Valid_Parentheses {
-	// solution 1: using DP, time O(n), space O(n)
-	public int longestValidParentheses(String s) {
-        if(s == null || s.length() == 0) {
-            return 0;
-        }
-        
-        char[] letters = s.toCharArray();
-        int[] dp = new int[letters.length];
-        int open = 0;
-        int maxLen = 0;
-        
-        for (int i = 0; i < letters.length; i++) {
-    	    if (letters[i] == '(') {
-    	        open++;
-    	        
-    	    } else if (letters[i] == ')' && open > 0) {
-    		    dp[i] = 2 + dp[i-1];
-    		
-                if(i - 2 - dp[i-1] >= 0) {
-                    dp[i] += dp[i - 2 - dp[i-1]];
-                }
-    		  
-    		    open--;
-    	    }
-    	    
-    	    maxLen = Math.max(maxLen, dp[i]);
-        }
-        
-        return maxLen;
-    }
-	
-	
-	
-	// solution 2: using stack, time O(n), space O(n)
-	public int longestValidParentheses2(String s) {  // 使用 test case ")(()()())" 来理解！！！
+	// solution 1: using stack, time O(n), space O(n)
+	public int longestValidParentheses(String s) {  // 使用 test case ")(()()())" 来理解！！！
         if(s == null || s.length() == 0){
             return 0;
         }
@@ -81,8 +48,8 @@ public class Q032_Longest_Valid_Parentheses {
 	
 	
 	
-	// solution 3: using DP, time O(n^3), space O(n^2)
-		public int longestValidParentheses3(String s) {
+	// solution 2: using DP, time O(n^3), space O(n^2)
+		public int longestValidParentheses2(String s) {
 			if(s == null || s.length() == 0){
 	            return 0;
 	        }
@@ -123,7 +90,36 @@ public class Q032_Longest_Valid_Parentheses {
 	        return maxLen;	        
 		}
 	
-	
+		// solution 3: using DP, time O(n), space O(n)
+		public int longestValidParentheses3(String s) {
+	        if(s == null || s.length() == 0) {
+	            return 0;
+	        }
+	        
+	        char[] letters = s.toCharArray();
+	        int[] dp = new int[letters.length];
+	        int open = 0;
+	        int maxLen = 0;
+	        
+	        for (int i = 0; i < letters.length; i++) {
+	    	    if (letters[i] == '(') {
+	    	        open++;
+	    	        
+	    	    } else if (letters[i] == ')' && open > 0) {
+	    		    dp[i] = 2 + dp[i-1];
+	    		
+	                if(i - 2 - dp[i-1] >= 0) {
+	                    dp[i] += dp[i - 2 - dp[i-1]];
+	                }
+	    		  
+	    		    open--;
+	    	    }
+	    	    
+	    	    maxLen = Math.max(maxLen, dp[i]);
+	        }
+	        
+	        return maxLen;
+	    }
 		
 		
 		

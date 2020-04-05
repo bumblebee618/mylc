@@ -22,20 +22,20 @@ Example 2:
 public class Q121_Best_Time_to_Buy_and_Sell_Stock {
 	// solution 1: time O(n), space O(n)
 	public int maxProfit(int[] prices) {
-        if(prices == null || prices.length == 0) {
+        if(prices == null || prices.length == 0) 
+        {
             return 0;
         }
-        
+
         int len = prices.length;
-        int[] minPrices = new int[len];
-        minPrices[0] = prices[0];
+        int minPrice = prices[0];
         int maxProfit = 0;
-        
+
         for(int i = 1; i < len; i++) {
-            minPrices[i] = Math.min(minPrices[i-1], prices[i]);
-            maxProfit = Math.max(maxProfit, prices[i] - minPrices[i]);
+            minPrice = Math.min(minPrice, prices[i]);
+            maxProfit = Math.max(maxProfit, prices[i] - minPrice);
         }
-        
+
         return maxProfit;
     }
     

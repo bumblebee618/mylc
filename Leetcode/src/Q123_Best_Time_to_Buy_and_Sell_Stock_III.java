@@ -24,16 +24,16 @@ public class Q123_Best_Time_to_Buy_and_Sell_Stock_III {
         left[0] = 0;
         int minPrice = prices[0];
         for (int i = 1; i < prices.length; i++) {
+        	minPrice = Math.min(prices[i], minPrice);
         	left[i] = Math.max(left[i-1], prices[i] - minPrice);
-            minPrice = Math.min(prices[i], minPrice);
         }
 
         // DP from right to left;              // max: 截至到当前的最高价格， prices[i].  买入价格
         right[prices.length - 1] = 0;
         int maxPrice = prices[prices.length - 1];
         for (int i = prices.length - 2; i >= 0; i--) {
+        	maxPrice = Math.max(prices[i], maxPrice);
         	right[i] = Math.max(right[i+1], maxPrice - prices[i]);
-            maxPrice = Math.max(prices[i], maxPrice);
         }
 
         int profit = 0;

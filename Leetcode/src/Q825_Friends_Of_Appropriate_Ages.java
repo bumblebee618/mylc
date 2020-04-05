@@ -74,6 +74,6 @@ public class Q825_Friends_Of_Appropriate_Ages {
     
     private boolean isValid(int age1, int age2)
     {
-        return (age1 * 0.5 + 7 >= age2 || age1 < age2 || (age1 < 100 && 100 < age1)) ? false : true;
+        return (age1 * 0.5 + 7 >= age2 || age1 < age2 || (age1 < 100 && 100 < age2)) ? false : true;
     }
 }

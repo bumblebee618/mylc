@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;tails&apos; in &apos;Q659_Split_Array_into_Consecutive_Subsequences.isPossible(...)&apos; to &apos;tail&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q659_Split_Array_into_Consecutive_Subsequences.isPossible(int[]).tails&apos;&#x0A;- Renamed element: &apos;tails&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;tails&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q659_Split_Array_into_Consecutive_Subsequences.java[Q659_Split_Array_into_Consecutive_Subsequences~isPossible~\[I@tails!903!948!925!929!QMap\&lt;QInteger;QInteger;&gt;;!0!false" name="tail" references="true" stamp="1585807996457" version="1.0"/>
+</session>

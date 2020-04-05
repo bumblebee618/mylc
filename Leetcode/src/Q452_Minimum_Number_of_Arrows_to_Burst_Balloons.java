@@ -34,14 +34,14 @@ public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
         
         Arrays.sort(points, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : a[1] - b[1]);
         int minArrow = 1;
-        int limit = points[0][1];
+        int hitPos = points[0][1];
         
         for (int[] point : points) {
-            if (point[0] <= limit) {
-                limit = Math.min(limit, point[1]);
+            if (point[0] <= hitPos) {
+                hitPos = Math.min(hitPos, point[1]);
             } else {
                 minArrow++;
-                limit = point[1];
+                hitPos = point[1];
             }
         }
         

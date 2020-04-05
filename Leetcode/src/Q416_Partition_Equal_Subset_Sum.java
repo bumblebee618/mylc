@@ -23,7 +23,7 @@ Example 2:
  *
  * */
 public class Q416_Partition_Equal_Subset_Sum {
-	// solution 1: using backtack
+	// solution 1: using backtrack
 	public boolean canPartition(int[] nums) {
         if(nums == null || nums.length <= 1) {
             return false;

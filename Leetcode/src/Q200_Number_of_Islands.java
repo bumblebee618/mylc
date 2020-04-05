@@ -47,7 +47,7 @@ public class Q200_Number_of_Islands {
         for(int i = 0; i < row; ++i){
             for(int j = 0; j < col; ++j){
                 if(grid[i][j] == '1' && visited[i][j] != true){
-                    helper(grid, visited, i, j);
+                    bfs(grid, visited, i, j);
                     count++;
                 }
             }
@@ -56,7 +56,7 @@ public class Q200_Number_of_Islands {
         return count;
     }
     
-    public void helper(char[][] grid, boolean[][] visited, int x, int y){
+    public void bfs(char[][] grid, boolean[][] visited, int x, int y){
         if(visited[x][y] == true){
             return;
         }
@@ -72,7 +72,7 @@ public class Q200_Number_of_Islands {
             int newY = y + dy[i];
             
             if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == '1'){
-                helper(grid, visited, newX, newY);
+                bfs(grid, visited, newX, newY);
             }
         }
     }

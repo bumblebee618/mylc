@@ -19,30 +19,31 @@ public class Q670_Maximum_Swap {
 	public int maximumSwap(int num) {
         if (num <= 0)
         {
-            return num;
+            return 0;
         }
         
         char[] digits = Integer.toString(num).toCharArray();
-        int size = digits.length;
-        int[] indexs = new int[size];
-        indexs[size-1] = size-1;
+        int[] last = new int[10];
         
-        for (int i = size-2; i >= 0; i--)
+        for (int i = 0; i < digits.length; i++) 
         {
-            indexs[i] = (digits[i+1] > digits[indexs[i+1]]) ? i+1 : indexs[i+1];
+            last[digits[i] - '0'] = i;
         }
-        
-        for (int i = 0; i < size; i++)
+
+        for (int i = 0; i < digits.length; i++) 
         {
-            if (digits[i] < digits[indexs[i]])
+            for (int d = 9; d > digits[i] - '0'; d--) 
             {
-                char temp = digits[i];
-                digits[i] = digits[indexs[i]];
-                digits[indexs[i]] = temp;
-                break;
+                if (last[d] > i) 
+                {
+                    char tmp = digits[i];
+                    digits[i] = digits[last[d]];
+                    digits[last[d]] = tmp;
+                    return Integer.valueOf(new String(digits));
+                }
             }
         }
         
-        return Integer.parseInt(new String(digits));
+        return num;
     }
 }

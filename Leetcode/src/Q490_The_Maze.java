@@ -75,7 +75,7 @@ public class Q490_The_Maze {
         visited[start[0]][start[1]] = true;
         
         while (!queue.isEmpty()) {
-            int[] current = queue.remove();
+            int[] current = queue.poll();
             
             if (current[0] == destination[0] && current[1] == destination[1])
             {
