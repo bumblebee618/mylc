@@ -28,10 +28,41 @@ Note:
 words[i] only consists of English lowercase letters.
  */
 public class Q1048_Longest_String_Chain {
+	// solution 1:
+	public int longestStrChain(String[] words) {
+        if (words == null || words.length == 0)
+        {
+            return 0;
+        }
+        
+        Map<String, Integer> dp = new HashMap<>();
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
+        int result = 0;
+        
+        for (String word : words) 
+        {
+            int best = 0;
+            
+            for (int i = 0; i < word.length(); ++i) 
+            {
+                String prev = word.substring(0, i) + word.substring(i+1);
+                best = Math.max(best, dp.getOrDefault(prev, 0) + 1);
+            }
+            
+            dp.put(word, best);
+            result = Math.max(result, best);
+        }
+
+        return result;
+    }
+
+	
+	
+	// solution 2
 	private Map<Integer, Set<String>> map = new HashMap<>();
     private Map<String, Integer> lenMap = new HashMap<>();
     
-    public int longestStrChain(String[] words) {
+    public int longestStrChain2(String[] words) {
         if (words == null || words.length == 0)
         {
             return 0;

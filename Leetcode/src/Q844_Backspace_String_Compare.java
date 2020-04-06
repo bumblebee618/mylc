@@ -37,66 +37,73 @@ Can you solve it in O(N) time and O(1) space?
  */
 public class Q844_Backspace_String_Compare {
 	// Time complexity O(n), space complexity O(1)
-	public boolean backspaceCompare(String s, String t) {
-        if (s == null || t == null)
+	public boolean backspaceCompare(String S, String T) {
+        if (S == null || S.length() == 0 || T == null || T.length() == 0)
         {
-            return s == null && t == null ? true : false;
+            return false;
         }
         
-        int index1 = s.length()-1;
-        int index2 = t.length()-1;
-        
-        while (index1 >= 0 || index2 >= 0)
-        {
-            index1 = findValidIndex(s, index1);
-            index2 = findValidIndex(t, index2);
-            
-            if (index1 >= 0 && index2 >= 0)
-            {              
-                if (s.charAt(index1) != t.charAt(index2))
+        int i = S.length() - 1, j = T.length() - 1;
+        int skipS = 0, skipT = 0;
+
+        while (i >= 0 || j >= 0) 
+        { 
+            // While there may be chars in build(S) or build (T)
+            while (i >= 0) 
+            { 
+                // Find position of next possible char in build(S)
+                if (S.charAt(i) == '#') 
                 {
-                    return false;
+                    skipS++; 
+                    i--;
                 }
-                
-                index1--;
-                index2--;
-            }
-            else
-            {
-                break;
-            }
-        }
-        
-        return index1 < 0 && index2 < 0;
-    }
-    
-    private int findValidIndex(String str, int index)
-    {
-        while (index >= 0 && str.charAt(index) == '#')
-        {
-            int count = 0;
-        
-            while (index >= 0)
-            {
-                if (str.charAt(index) == '#')
+                else if (skipS > 0) 
                 {
-                    count++;
+                    skipS--; 
+                    i--;
                 }
-                else
-                {
-                    count--;
-                }
-            
-                index--;
-                
-                if (count == 0)
+                else 
                 {
                     break;
                 }
             }
+            
+            while (j >= 0) 
+            { 
+                // Find position of next possible char in build(T)
+                if (T.charAt(j) == '#') 
+                {
+                    skipT++; 
+                    j--;
+                }
+                else if (skipT > 0) 
+                {
+                    skipT--; 
+                    j--;
+                }
+                else 
+                {
+                    break;
+                }
+            }
+            
+            // If two actual characters are different
+            if (i >= 0 && j >= 0 && S.charAt(i) != T.charAt(j))
+            {
+                return false;
+            }
+            
+            // If expecting to compare char vs nothing
+            if ((i >= 0) != (j >= 0))
+            {
+                return false;
+            }
+            
+            i--; 
+            j--;
         }
- 
-        return index;
+        
+        return true;
     }
     
     
