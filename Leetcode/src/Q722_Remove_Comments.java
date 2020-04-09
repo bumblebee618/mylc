@@ -8,7 +8,6 @@ public class Q722_Remove_Comments {
             return result;
         }
         
-        int len = source.length;
         boolean inblock = false;
         StringBuilder sb = new StringBuilder();
         

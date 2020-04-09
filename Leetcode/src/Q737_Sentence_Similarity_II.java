@@ -25,29 +25,27 @@ The length of each words[i] and pairs[i][j] will be in the range [1, 20].
  */
 public class Q737_Sentence_Similarity_II {
 	public boolean areSentencesSimilarTwo(String[] words1, String[] words2, List<List<String>> pairs) {
-        if (words1 == null || words2 == null)
-        {
-            return words1 == null && words2 == null;
-        }
-        else if (words1.length != words2.length)
+        if (words1 == null || words2 == null || words1.length != words2.length)
         {
             return false;
         }
-        
+
         UnionFind uf = new UnionFind(pairs);
-        int size = words1.length;
         
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < words1.length; i++)
         {
-            if (words1[i].equals(words2[i]))
+            String parent1 = uf.find(words1[i]);
+            String parent2 = uf.find(words2[i]);
+            
+            if (parent1.equals(parent2))
             {
                 continue;
             }
-            else if (uf.find(words1[i]).equals(""))
+            else if (parent1.equals(""))
             {
                 return false;
             }
-            else if (!uf.find(words1[i]).equals(uf.find(words2[i])))
+            else if (!parent1.equals(parent2))
             {
                 return false;
             }
@@ -64,56 +62,54 @@ public class Q737_Sentence_Similarity_II {
         {
             father = new HashMap<>();
             
+            if (pairs == null || pairs.size() == 0)
+            {
+                return;
+            }
+            
             for (List<String> pair : pairs)
             {
+                if (pair == null || pair.size() != 2)
+                {
+                    continue;
+                }
+                
                 String word1 = pair.get(0);
                 String word2 = pair.get(1);
-                
-                if (!father.containsKey(word1))
-                {
-                    father.put(word1, word1);
-                }
-                
-                if (!father.containsKey(word2))
-                {
-                    father.put(word2, word2);
-                }
-                
+                father.computeIfAbsent(word1, k -> word1);
+                father.computeIfAbsent(word2, k -> word2);
                 union(word1, word2);
             }
         }
         
-        public String find(String node)
+        public String find(String word)
         {
-            if (!father.containsKey(node))
+            if (!father.containsKey(word))
             {
                 return "";
             }
             
-            String parent = father.get(node);
+            String parent = father.get(word);
             
-            while (parent != father.get(parent))
+            while (!parent.equals(father.get(parent)))
             {
                 parent = father.get(parent);
             }
             
-            String temp = "";
-            String fa = node;
-            
-            while (fa != father.get(fa))
+            while (!word.equals(father.get(word)))
             {
-                temp = father.get(fa);
-                father.put(fa, parent);
-                fa = temp;
+                String temp = father.get(word);
+                father.put(word, parent);
+                word = temp;
             }
             
             return parent;
         }
         
-        private void union(String node1, String node2)
+        public void union(String word1, String word2)
         {
-            String parent1 = find(node1);
-            String parent2 = find(node2);
+            String parent1 = find(word1);
+            String parent2 = find(word2);
             
             if (!parent1.equals(parent2))
             {

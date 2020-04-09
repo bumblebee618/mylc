@@ -25,34 +25,30 @@ The length of each words[i] and pairs[i][j] will be in the range [1, 20].
  */
 public class Q734_Sentence_Similarity {
 	public boolean areSentencesSimilar(String[] words1, String[] words2, List<List<String>> pairs) {
-        if (words1 == null || words2 == null)
-        {
-            return words1 == null && words2 == null;
-        }
-        else if (words1.length != words2.length)
+        if (words1 == null || words2 == null || words1.length != words2.length)
         {
             return false;
         }
         
-        int size = words1.length;
         Map<String, Set<String>> map = new HashMap<>();
         
-        for (List<String> pair : pairs)
+        if (pairs != null && pairs.size() > 0)
         {
-            if (!map.containsKey(pair.get(0)))
+            for (List<String> pair : pairs)
             {
-                map.put(pair.get(0), new HashSet<>());
+                if (pair != null && pair.size() == 2)
+                {
+                    String word1 = pair.get(0);
+                    String word2 = pair.get(1);
+                    map.computeIfAbsent(word1, k -> new HashSet<String>());
+                    map.get(word1).add(word2);
+                    map.computeIfAbsent(word2, k -> new HashSet<String>());
+                    map.get(word2).add(word1);
+                }
             }
-            map.get(pair.get(0)).add(pair.get(1));
-            
-            if (!map.containsKey(pair.get(1)))
-            {
-                map.put(pair.get(1), new HashSet<>());
-            }
-            map.get(pair.get(1)).add(pair.get(0));
         }
         
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < words1.length; i++)
         {
             if (words1[i].equals(words2[i]))
             {
