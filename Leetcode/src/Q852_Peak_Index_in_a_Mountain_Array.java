@@ -24,24 +24,24 @@ A is a mountain, as defined above.
 
  */
 public class Q852_Peak_Index_in_a_Mountain_Array {
+	// solution 1, time complexity is O(logn)
 	public int peakIndexInMountainArray(int[] nums) {
         if (nums == null || nums.length < 3)
         {
             return -1;
-        
         }
         
         int left = 0, right = nums.length-1;
         
-        while (left + 1 < right)
+        while (left+1 < right)
         {
-            int mid = left + (right - left) / 2;
+            int mid = left + (right-left)/2;
             
-            if (nums[mid] <= nums[mid-1])
+            if (nums[mid] < nums[mid-1])
             {
                 right = mid;
             }
-            else if (nums[mid] <= nums[mid+1])
+            else if (nums[mid] < nums[mid+1])
             {
                 left = mid;
             }
@@ -52,5 +52,42 @@ public class Q852_Peak_Index_in_a_Mountain_Array {
         }
         
         return nums[left] > nums[right] ? left : right;
+    }
+	
+	
+	// solution 2, 带验证功能, time complexity is O(n)
+    public int peakIndexInMountainArray2(int[] nums) {
+        if (nums == null || nums.length < 3)
+        {
+            return -1;
+        }
+        
+        boolean isIncrease = true;
+        int candidate = -1;
+        
+        for (int i = 0; i < nums.length-1; i++)
+        {
+            if (nums[i] < nums[i+1])
+            {
+                if (!isIncrease)
+                {
+                    return -1;
+                }
+            }
+            else if (nums[i] > nums[i+1])
+            {
+                if (isIncrease)
+                {
+                    isIncrease = !isIncrease;
+                    candidate = i;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        
+        return candidate;
     }
 }

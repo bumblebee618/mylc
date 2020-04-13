@@ -40,84 +40,104 @@ public class Q218_The_Skyline_Problem {
 	//  错误结果：[[0,3],[5,0]]
 	
 	// solution 1: using scan line, time is O(nlogn), space is O(n)
-	public List<int[]> getSkyline(int[][] buildings) {
-        List<int[]> ans = new ArrayList<>();
+	public List<List<Integer>> getSkyline(int[][] buildings) {
+        List<List<Integer>> result = new ArrayList<>();
         
-        if (buildings == null || buildings.length == 0 || buildings[0].length == 0) {
-            return ans;
-        } 
-        
-        Queue<Pair> queue = new PriorityQueue<Pair>(buildings.length * 2, new Comparator<Pair>(){
-            public int compare(Pair p1, Pair p2) {
-                if (p1.index != p2.index) {
-                    return p1.index - p2.index;
-                } else {
-                    if (p1.isStart == false && p2.isStart == true) {
-                        return -1;
-                    } else if (p1.isStart == true && p2.isStart == false) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                }
-            }
-        });
-        
-        Queue<Integer> curHeight = new PriorityQueue<Integer>(buildings.length, new Comparator<Integer>(){
-            public int compare(Integer h1, Integer h2) {
-                return h2 - h1;
-            }
-        });
-        
-        for (int[] building : buildings) {
-            queue.offer(new Pair(building[0], building[2], true));
-            queue.offer(new Pair(building[1], building[2], false));
+        if (buildings == null || buildings.length == 0 || buildings[0].length == 0)
+        {
+            return result;
         }
         
-        while (!queue.isEmpty()) {
-            Pair p = queue.poll();
+        int size = buildings.length;   
+        
+        Queue<Tuple> heap = new PriorityQueue<>(size * 2, new Comparator<Tuple>() {
+            @Override
+            public int compare(Tuple p1, Tuple p2) 
+            {
+                if (p1.index != p2.index) 
+                {
+                    return p1.index - p2.index;
+                } 
+                else if (p1.isStart == false && p2.isStart == true) 
+                {
+                    return -1;
+                }
+                else if (p1.isStart == true && p2.isStart == false) 
+                {
+                    return 1;
+                } 
+                else 
+                {
+                    return 0;
+                }
+            }
+        });
+
+        Queue<Integer> curHeight = new PriorityQueue<>(size, (a, b) -> b - a);   
+        
+        for (int[] building : buildings) {
+            heap.offer(new Tuple(building[0], building[2], true));
+            heap.offer(new Tuple(building[1], building[2], false));
+        }
+        
+        while (!heap.isEmpty())
+        {
+            Tuple node = heap.poll();
             
-            if (p.isStart == true) {
-                curHeight.offer(p.height);
-            } else {
-                curHeight.remove(p.height);
+            if (node.isStart)
+            {
+                curHeight.offer(node.height);
+            }
+            else
+            {
+                curHeight.remove(node.height);
             }
             
-            while (!queue.isEmpty() && queue.peek().index == p.index) {
-                Pair tempNode = queue.poll();
-                
-                if (tempNode.isStart == true) {
-                    curHeight.offer(tempNode.height);
-                } else {
-                    curHeight.remove(tempNode.height);
+            while (!heap.isEmpty() && heap.peek().index == node.index)
+            {
+                Tuple nextNode = heap.poll();
+            
+                if (nextNode.isStart)
+                {
+                    curHeight.offer(nextNode.height);
+                }
+                else
+                {
+                    curHeight.remove(nextNode.height);
                 }
             }
             
-            int[] result = new int[2];
-            result[0] = p.index;
-            result[1] = curHeight.isEmpty() ? 0 : curHeight.peek();
+            int height = curHeight.isEmpty() ? 0 : curHeight.peek();
             
-            if (ans.size() > 0 && ans.get(ans.size() - 1)[1] == result[1]) {
+            if (result.size() > 0 && result.get(result.size()-1).get(1) == height)
+            {
                 continue;
             }
             
-            ans.add(result);   
+            List<Integer> list = new ArrayList<>();
+            list.add(node.index);
+            list.add(height);
+            result.add(list);
         }
         
-        return ans;
+        return result;
     }
     
-    class Pair {
-        int index;
-        int height;
-        boolean isStart;
+    class Tuple
+    {
+        public int index;
+        public int height;
+        public boolean isStart;
         
-        public Pair(int index, int height, boolean isStart) {
+        public Tuple(int index, int height, boolean isStart)
+        {
             this.index = index;
             this.height = height;
             this.isStart = isStart;
         }
     }
+
+
 	
 	
 	
@@ -209,10 +229,12 @@ public class Q218_The_Skyline_Problem {
 			{5, 6, 1}
 		};
 
+		/***
 		List<int[]> res = t.getSkyline(buildings);
 
 		for (int i = 0; i < res.size(); ++i) {
 			System.out.print("[" + res.get(i)[0] + ", " + res.get(i)[1] + "], ");
 		}
+		***/
 	}
 }

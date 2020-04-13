@@ -52,73 +52,73 @@ return [3, 4]
 
 
 public class Q310_Minimum_Height_Trees {
-	public ArrayList<Integer> findMinHeightTrees(int n, int[][] edges) {
-		ArrayList<Integer> leaves = new ArrayList<Integer>();
-		
-		if(n <= 1){
-		    if(n == 1){
-		        leaves.add(0);
-		    }
-		    
-		    return leaves;
-		}
+	// Prune the leaves, 剪枝法
+	public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        List<Integer> result = new LinkedList<>();
+        
+        if (n <= 0 || edges == null)
+        {
+            return result;
+        }
+        else if (n == 1)
+        {
+            result.add(0);
+            return result;
+        }
+        
+        Set<Integer>[] graph = new Set[n];
+        
+        // Construct adjencent graph
+        for (int i = 0; i < n; i++)
+        {
+            graph[i] = new HashSet<>();
+        }
+        
+        for (int[] edge : edges)
+        {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        
+        List<Integer> leaves = new LinkedList<>();
+        
+        // Add leaves which have one leaf
+        for (int i = 0; i < n; i++)
+        {
+            if (graph[i].size() == 1)
+            {
+                leaves.add(i);
+            }
+        }
+        
+        // Remove leaves level by level
+        while (n > 2)
+        {
+            List<Integer> newLeaves = new LinkedList<>();
+            
+            for (int leave : leaves)
+            {
+            	// 注意 n--在这里，表示删除掉leaf这个节点 ！！！
+                n--;
+                
+                for (int next : graph[leave])
+                {
+                	// Remove connection
+                    graph[next].remove(leave);
+                    
+                    if (graph[next].size() == 1)
+                    {
+                        newLeaves.add(next);
+                    }
+                }
+            }
+            
+            leaves = newLeaves;
+        }
+        
+        return leaves;
+    }
 
-		// Construct adjencent graph
-		Set<Integer>[] graph = new HashSet[n];
-		
-		for (int i = 0; i < n; ++i) {
-			graph[i] = new HashSet<Integer>();
-		}
-
-		for (int[] e : edges) {
-			graph[e[0]].add(e[1]);
-			graph[e[1]].add(e[0]);
-		}
-
-		// Add leaves which have one leaf
-		for (int i = 0; i < n; i++) {
-			if (graph[i].size() == 1){
-				leaves.add(i);
-			}
-		}
-
-		// Remove leaves level by level
-		while (n > 2) {
-			ArrayList<Integer> newLeaves = new ArrayList<Integer>();  // 这里的这种用法比较nice ！！！
-			
-			for (int leaf : leaves) {
-				for (int nextleaf : graph[leaf]) {					
-					graph[nextleaf].remove(leaf);     // Remove connection
-					n--;                        // 注意 n--在这里，表示删除掉leaf这个节点 ！！！
-					
-					if (graph[nextleaf].size() == 1) {
-						newLeaves.add(nextleaf);
-					}
-				}
-			}
-			
-			leaves = newLeaves;
-		}
-		
-		return leaves;
-	}
-	
-	   
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

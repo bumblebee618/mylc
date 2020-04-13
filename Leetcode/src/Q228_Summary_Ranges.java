@@ -19,28 +19,32 @@ public class Q228_Summary_Ranges {
             return result;
         }
         
-        int index = 0;
+        int size = nums.length;
+        int start = 0;
         
-        while (index < nums.length)
+        while (start < size)
         {
-            int start = index;
+            int end = start+1;
             
-            while (index+1 < nums.length && nums[index] == nums[index+1]-1)
+            while (end < size && nums[end-1]+1 == nums[end])
             {
-                index++;
+                end++;
             }
             
-            int end = index++;
-            result.add(getStr(nums[start], nums[end]));
+            result.add(getStr(nums[start], nums[end-1]));
+            start = end;
         }
         
         return result;
     }
     
-    private String getStr(int start, int end)
+    private String getStr(int num1, int num2)
     {
-        return (start == end) ? Integer.toString(start) : String.format("%s->%s", start, end);
+        return num1 == num2 
+            ? new StringBuilder().append(num1).toString() 
+            : new StringBuilder().append(num1).append("->").append(num2).toString();
     }
+
 
 	
 	// 类似题Le_163

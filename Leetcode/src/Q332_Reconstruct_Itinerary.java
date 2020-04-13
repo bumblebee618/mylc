@@ -41,26 +41,25 @@ public class Q332_Reconstruct_Itinerary {
 	 *  
 	 *******************************************************************/
 	
-	public List<String> findItinerary(String[][] tickets) {
-        List<String> res = new ArrayList<String>();
-        if(tickets == null || tickets.length == 0 || tickets[0].length == 0){
-            return res;
+	public List<String> findItinerary(List<List<String>> tickets) {
+        List<String> result = new ArrayList<String>();
+
+        if(tickets == null || tickets.size() == 0)
+        {
+            return result;
+        }
+
+        // 注意只有linkedlist有poll() API ！！！
+        Map<String, LinkedList<String>> map = new HashMap<String, LinkedList<String>>();
+        int size = tickets.size();
+
+        for(int i = 0; i < size; ++i)
+        {
+            map.computeIfAbsent(tickets.get(i).get(0), k -> new LinkedList<String>()).add(tickets.get(i).get(1));
         }
         
-        Map<String, LinkedList<String>> map = new HashMap<String, LinkedList<String>>();  // 这里必须使用linkedlist, 其有poll() API ！！！
-        int len = tickets.length;
-        
-        for(int i = 0; i < len; ++i){
-        	if(map.containsKey(tickets[i][0])){
-        		map.get(tickets[i][0]).add(tickets[i][1]);
-        	} else{
-        		LinkedList<String> tempList = new LinkedList<String>();  // 注意只有linkedlist有poll()！！！
-        		tempList.add(tickets[i][1]);
-        		map.put(tickets[i][0], tempList);
-        	}
-        }
-        
-        for(Map.Entry<String, LinkedList<String>> entry : map.entrySet()){
+        for(Map.Entry<String, LinkedList<String>> entry : map.entrySet())
+        {
             Collections.sort(entry.getValue());
         }
         
@@ -70,26 +69,25 @@ public class Q332_Reconstruct_Itinerary {
         // 以下是深度优先搜索的写法，必须写成这样；注释部分写法不正确
         // stack不断push之后，stack的peek()是不断变化的
         // 如何在不知道图中总结点树的情况下，用map来dfs遍历一个图的方法：
-        while (!stack.empty()) {  
-            while (map.containsKey(stack.peek()) && !map.get(stack.peek()).isEmpty()){
+        while (!stack.empty()) 
+        {  
+            while (map.containsKey(stack.peek()) && !map.get(stack.peek()).isEmpty())
+            {
                 stack.push(map.get(stack.peek()).poll());
             }
-            res.add(0, stack.pop());
             
-//            String str = stack.pop();
-//            while (map.containsKey(str) && !map.get(str).isEmpty()){
-//                stack.push(map.get(str).poll());
-//            }
-//            res.add(0, str);
+            result.add(0, stack.pop());
+            
+//          String str = stack.pop();
+//          while (map.containsKey(str) && !map.get(str).isEmpty()){
+//              stack.push(map.get(str).poll());
+//          }
+//          res.add(0, str);
         }
-        
-        return res;
+
+        return result;
     }
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -99,6 +97,7 @@ public class Q332_Reconstruct_Itinerary {
 	
 	public static void main(String[] args){
 		Q332_Reconstruct_Itinerary t = new Q332_Reconstruct_Itinerary();
+		/***
 		String[][] tickets = {
 				{"MUC","LHR"},
 				{"JFK","MUC"},
@@ -109,5 +108,6 @@ public class Q332_Reconstruct_Itinerary {
 		for(int i = 0; i < res.size(); ++i){
 			System.out.print(res.get(i) + ", ");
 		}
+		***/
 	}
 }

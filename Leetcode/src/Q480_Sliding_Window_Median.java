@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 /***
  * 
  * @author jackie
@@ -33,73 +35,109 @@ public class Q480_Sliding_Window_Median {
 	// 类似题295
 	// test case: [1] [k = 1], [2147483647,2147483647] [k = 2],
 	// [-2147483648,-2147483648,2147483647,-2147483648,-2147483648,-2147483648,2147483647,2147483647,2147483647,2147483647,-2147483648,2147483647,-2147483648] [k = 3]
-	private Queue<Double> maxHeap = new PriorityQueue<>();
-	private Queue<Double> minHeap = new PriorityQueue<>();
 	private Double median = null;
-
-	public double[] medianSlidingWindow(int[] nums, int k) {
-		if (nums == null || nums.length == 0 || k <= 0) {
-			return new double[0];
-		} else if (k > nums.length) {
-			k = nums.length;
-		}
-
-		int len = nums.length;
-		int index = 0;
-		double[] result = new double[len - k + 1];
-
-		for (int i = 0; i < len; i++) {
-			if (i >= k) {
-				if ((double) nums[i - k] < median) {
-					maxHeap.remove(-(double) nums[i - k]);
-				} else if ((double) nums[i - k] > median) {
-					minHeap.remove((double) nums[i - k]);
-				} else {
-					median = (maxHeap.size() > minHeap.size()) ? -maxHeap.poll() : minHeap.poll();
-				}
-			}
-
-			addNum((double) nums[i]);
-
-			if (i >= k - 1) {
-				result[index++] = getMedian(k);
-			}
-		}
-
-		return result;
-	}
-
-	private void addNum(double num) {
-		if (median == null) {
-			median = num;
-			return;
-		}
-
-		if ((double) num < median) {
-			maxHeap.offer(-num);
-		} else {
-			minHeap.offer(num);
-		}
-
-		if (maxHeap.size() + 1 < minHeap.size()) {
-			maxHeap.offer(-median);
-			median = minHeap.poll();
-		}
-
-		if (minHeap.size() < maxHeap.size()) {
-			minHeap.offer(median);
-			median = -maxHeap.poll();
-		}
-	}
-
-	private double getMedian(int k) {
-		if (k % 2 != 0) {
-			return (double) median;
-		} else {
-			double num = (maxHeap.size() > minHeap.size()) ? -maxHeap.peek() : minHeap.peek();
-			return (median + num) / 2.0;
-		}
-	}
+    private Queue<Double> maxHeap;
+    private Queue<Double> minHeap;
+    
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k <= 0)
+        {
+            return new double[0];
+        }
+        else if (k > nums.length)
+        {
+            k = nums.length;
+        }
+        
+        int size = nums.length;
+        maxHeap = new PriorityQueue<>();
+        minHeap = new PriorityQueue<>();
+        double[] result = new double[size-k+1];
+        int index = 0;
+        
+        for (int i = 0; i < size; i++)
+        {
+            addNum((double) nums[i]);
+            
+            if (i >= k)
+            {
+                removeNum((double) nums[i-k]);
+            }
+            
+            if (i >= k-1)
+            {
+                result[index++] = getMedian(k);
+            }
+        }
+        
+        return result;
+    }
+    
+    private void addNum(double num)
+    {
+        if (median == null)
+        {
+            median = num;
+            return;
+        }
+        
+        if (num < median)
+        {
+            maxHeap.offer(-num);
+        }
+        else
+        {
+            minHeap.offer(num);
+        }
+        
+        balance();
+    }
+    
+    private void removeNum(double num)
+    {
+        if (num < median)
+        {
+            maxHeap.remove(-num);
+        }
+        else if (num > median)
+        {
+            minHeap.remove(num);
+        }
+        else
+        {
+            median = (maxHeap.size() > minHeap.size()) ? -maxHeap.poll() : minHeap.poll();
+        }
+        
+        balance();
+    }
+    
+    private void balance()
+    {
+        if (maxHeap.size() + 1 < minHeap.size())
+        {
+            maxHeap.offer(-median);
+            median = minHeap.poll();
+        }
+        else if (maxHeap.size() > minHeap.size())
+        {
+            minHeap.offer(median);
+            median = -maxHeap.poll();
+        }
+    }
+    
+    private double getMedian(int k)
+    {
+        if (k % 2 == 1)
+        {
+            return median;
+        }
+        else
+        {
+            double num = (maxHeap.size() > minHeap.size()) ? -maxHeap.peek() : minHeap.peek();
+            return (median + num) / 2.0;
+        }
+    }
+	
 
 
 	/********************************
@@ -109,12 +147,16 @@ public class Q480_Sliding_Window_Median {
 	public static void main(String[] args) {
 		Q480_Sliding_Window_Median t = new Q480_Sliding_Window_Median();
 		// int[] nums = {1,3,-1,-3,5,3,6,7};
+		int[] nums = {Integer.MAX_VALUE, Integer.MAX_VALUE};
 		// int[] nums = {-1,-1,1,-1,-1,-1,1,1,1,1,-1,1,-1}; Integer.MAX_VALUE
-		int[] nums = { Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE,
+		/***
+		 int[] nums = { Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE,
 				Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
 				Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE };
+		***/		
+				
 		// System.out.println(nums.length);
-		int k = 3;
+		int k = 2;
 		double[] ans = t.medianSlidingWindow(nums, k);
 
 		for (double elem : ans) {

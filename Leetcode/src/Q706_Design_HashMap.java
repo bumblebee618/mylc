@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 /***
@@ -31,99 +33,90 @@ The number of operations will be in the range of [1, 10000].
 Please do not use the built-in HashMap library.
  */
 public class Q706_Design_HashMap {
-	private final int sizeOfTable = 1024;
-    private Node[] table;
-        
+	private int capacity = 1024;
+    private List<Node>[] list;
+    
     /** Initialize your data structure here. */
     public Q706_Design_HashMap() {
-        table = new Node[sizeOfTable];
+        list = new List[capacity];
     }
     
     /** value will always be non-negative. */
     public void put(int key, int value) {
         int hash = Objects.hashCode(key);
-        int pos = hash & (sizeOfTable - 1);
-        Node p = table[pos];
+        int pos = hash & (capacity-1);
         
-        if (p == null) 
+        if (list[pos] == null)
         {
-            table[pos] = new Node(key, value);
-        } 
-        else if (p.key == key) 
+            list[pos] = new LinkedList<>();
+        }
+        
+        int index = 0;
+        
+        while (index < list[pos].size() && key != list[pos].get(index).key)
         {
-            p.value = value;
-        } 
-        else {
-            Node pre = p;
-            
-            while (p != null && p.key != key)
-            {
-                pre = p;
-                p = p.next;
-            }
-
-            if (p == null) 
-            {
-                pre.next = new Node(key, value);
-            } 
-            else 
-            {
-                p.value = value;
-            }
+            index++;
+        }
+        
+        if (index < list[pos].size())
+        {
+            list[pos].get(index).value = value;
+        }
+        else
+        {
+            list[pos].add(new Node(key, value));
         }
     }
     
     /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
     public int get(int key) {
         int hash = Objects.hashCode(key);
-        int pos = hash & (sizeOfTable - 1);
-        Node p = table[pos];
+        int pos = hash & (capacity-1);
         
-        while (p != null && p.key != key) 
+        if (list[pos] == null)
         {
-            p = p.next;
+            return -1;
         }
-
-        return p == null ? -1 : p.value;
+        
+        int index = 0;
+        
+        while (index < list[pos].size() && key != list[pos].get(index).key)
+        {
+            index++;
+        }
+        
+        return (index < list[pos].size()) ? list[pos].get(index).value : -1;
     }
     
     /** Removes the mapping of the specified value key if this map contains a mapping for the key */
     public void remove(int key) {
         int hash = Objects.hashCode(key);
-        int pos = hash & (sizeOfTable - 1);
-        Node p = table[pos];
+        int pos = hash & (capacity-1);
         
-        if (p == null) 
+        if (list[pos] == null)
         {
             return;
         }
-        else if (p.key == key) 
+        
+        int index = 0;
+        
+        while (index < list[pos].size() && key != list[pos].get(index).key)
         {
-            table[pos] = p.next;
-        } 
-        else 
+            index++;
+        }
+        
+        if (index < list[pos].size())
         {
-            Node pre = p;
-            
-            while (p != null && p.key != key)
-            {
-                pre = p;
-                p = p.next;
-            } 
-
-            if (p != null) 
-            {
-                pre.next = p.next;
-            }
+            list[pos].remove(index);
         }
     }
     
-    private class Node {
+    class Node
+    {
         public int key;
         public int value;
-        public Node next;
-
-        public Node(int key, int value) 
+        
+        public Node(int key, int value)
         {
             this.key = key;
             this.value = value;

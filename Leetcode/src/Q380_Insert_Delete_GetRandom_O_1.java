@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /******
  * 
@@ -42,7 +43,7 @@ randomSet.getRandom();
 public class Q380_Insert_Delete_GetRandom_O_1 {
 	private ArrayList<Integer> list;
     private HashMap<Integer, Integer> map;
-    private java.util.Random rand = new java.util.Random();
+    private Random rand = new Random();
 
     /** Initialize your data structure here. */
     public Q380_Insert_Delete_GetRandom_O_1() {

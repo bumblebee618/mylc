@@ -23,30 +23,14 @@ All coordinates in rectangles will be between -10^9 and 10^9.
  */
 public class Q836_Rectangle_Overlap {
 	public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
-        if (rec1 == null || rec2 == null || rec1.length != 4 || rec2.length != 4)
+        if (rec1 == null || rec1.length != 4 || rec2 == null || rec2.length != 4)
         {
             return false;
-        }
-        else if (rec1[0] >= rec1[2] || rec1[1] >= rec1[3])
-        {
-            return false;    
-        }
-        else if (rec2[0] >= rec2[2] || rec2[1] >= rec2[3])
-        {
-            return false;    
         }
         
-        if (rec1[0] >= rec2[2] || rec1[1] >= rec2[3])
-        {
-            return false;
-        }
-        else if (rec2[0] >= rec1[2] || rec2[1] >= rec1[3])
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return !(rec1[2] <= rec2[0] ||   // left
+                 rec1[3] <= rec2[1] ||   // bottom
+                 rec1[0] >= rec2[2] ||   // right
+                 rec1[1] >= rec2[3]);    // top
     }
 }

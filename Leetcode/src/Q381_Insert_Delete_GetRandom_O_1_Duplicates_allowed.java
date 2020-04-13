@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 /******
@@ -41,57 +42,56 @@ collection.getRandom();
  * */
 
 public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed {
-	List<Integer> numbers;
-	Map<Integer, Set<Integer>> number_pos_Map;
-	java.util.Random rand = new java.util.Random();
-
-	/** Initialize your data structure here. */
-	public Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed() {
-		numbers = new ArrayList<Integer>();
-		number_pos_Map = new HashMap<Integer, Set<Integer>>();
-	}
-
-	/**
-	 * Inserts a value to the collection. Returns true if the collection did not
-	 * already contain the specified element.
-	 */
-	public boolean insert(int val) {
-		boolean contain_flag = number_pos_Map.containsKey(val);
-
-		if (!contain_flag) {
-			number_pos_Map.put(val, new HashSet<Integer>());
-		}
-
-		number_pos_Map.get(val).add(numbers.size());
-		numbers.add(val);
-		return !contain_flag;
-	}
-
-	/**
-	 * Removes a value from the collection. Returns true if the collection
-	 * contained the specified element.
-	 */
-	public boolean remove(int val) {
-		if (!number_pos_Map.containsKey(val) || !number_pos_Map.get(val).iterator().hasNext()) {
+	private List<Integer> list;
+    private Map<Integer, Set<Integer>> map;
+    private Random rand;
+    
+    /** Initialize your data structure here. */
+    public Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed() {
+        list = new ArrayList<>();
+        map = new HashMap<>();
+        rand = new Random();
+    }
+    
+    /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
+    public boolean insert(int val) {
+        boolean result = false;
+        
+        if (!map.containsKey(val))
+        {
+            result = true;
+            map.put(val, new HashSet<Integer>());
+        }
+        
+        list.add(val);
+        map.get(val).add(list.size()-1);
+        return result;
+    }
+    
+    /** Removes a value from the collection. Returns true if the collection contained the specified element. */
+    public boolean remove(int val) {
+        if (!map.containsKey(val) || !map.get(val).iterator().hasNext())
+        {
             return false;
         }
         
-        int pos = number_pos_Map.get(val).iterator().next();
-        number_pos_Map.get(val).remove(pos);
+        int pos = map.get(val).iterator().next();
+        map.get(val).remove(pos);
         
-        if (pos < numbers.size() - 1) {
-            int lastElement = numbers.get(numbers.size() - 1);
-            numbers.set(pos, lastElement);
-            number_pos_Map.get(lastElement).remove(numbers.size() - 1);
-            number_pos_Map.get(lastElement).add(pos);
+        if (pos != list.size()-1)
+        {
+            int lastElem = list.get(list.size()-1);
+            list.set(pos, lastElem);
+            map.get(lastElem).remove(list.size()-1);
+            map.get(lastElem).add(pos);
         }
         
-        numbers.remove(numbers.size() - 1);
+        list.remove(list.size()-1);
         return true;
-	}
-
-	/** Get a random element from the collection. */
-	public int getRandom() {
-		return numbers.get(rand.nextInt(numbers.size()));
-	}
+    }
+    
+    /** Get a random element from the collection. */
+    public int getRandom() {
+        return list.get(rand.nextInt(list.size()));
+    }
 }

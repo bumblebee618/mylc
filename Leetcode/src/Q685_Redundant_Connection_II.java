@@ -45,13 +45,10 @@ public class Q685_Redundant_Connection_II {
         }
         
         Map<Integer, Set<Integer>> graph = new HashMap<>();
-        int root = 
         
         for (int[] edge : edges) {
-        	System.out.println("step 1: " + edge[0] + ", " + edge[1]);
         	
             if (bfs(graph, 1, edge[0]) && bfs(graph, 1, edge[1])) {
-            	System.out.println("2: " + edge[0] + ", " + edge[1]);
                 return edge;
             }
             
@@ -60,9 +57,9 @@ public class Q685_Redundant_Connection_II {
         
         return new int[] {-1, -1};
     }
+	
     
     private boolean bfs(Map<Integer, Set<Integer>> graph, int start, int target) {
-    	System.out.println("step2: start is " + start + ", target is " + target);
         Queue<Integer> queue = new LinkedList<>();
         Set<Integer> visited = new HashSet<>();
         queue.offer(start);
@@ -71,10 +68,7 @@ public class Q685_Redundant_Connection_II {
         while (!queue.isEmpty()) {
             int node = queue.poll();
             
-            System.out.println("step3: node is " + node);
-            
             if (node == target) {
-            	System.out.println("step4: node is " + node + ", target is " + target);
                 return true;
             } 
             
@@ -83,10 +77,7 @@ public class Q685_Redundant_Connection_II {
             }
             
             for (int next : graph.get(node)) {
-            	
-            	
                 if (!visited.contains(next)) {
-                	System.out.println("step5: node is " + node + ", next is " + next);
                     visited.add(next);
                     queue.offer(next);
                 }

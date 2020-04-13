@@ -17,54 +17,67 @@ public class Q163_Missing_Ranges {
 	  *******************************************************************/
 	
 	// test case: [0, Integer.MAX_VALUE]
-	
 	public List<String> findMissingRanges(int[] nums, int lower, int upper) {
-        List<String> ans = new ArrayList<>();
+        List<String> result = new LinkedList<>();
         
-        if(lower > upper){
-            return ans;
+        if (nums == null)
+        {
+            return result;
         }
         
         int numNeed = lower;
         
-        for (int num : nums) {
-            if (num < numNeed) {
+        for (int num : nums)
+        {
+            if (num > upper)
+            {
+                break;
+            }
+            
+            if (num < numNeed)
+            {
                 continue;
-            } else if (num == numNeed) {
-            	if (num == Integer.MAX_VALUE) {  // test case: [Integer.MAX_VALUE], Integer.MAX_VALUE, Integer.MAX_VALUE
-                    return ans;
-                } else {
-                	numNeed++;
+            }
+            else if (num == numNeed)
+            {
+            	// test case: [Integer.MAX_VALUE], Integer.MAX_VALUE, Integer.MAX_VALUE
+                if (numNeed == Integer.MAX_VALUE)  
+                {
+                    return result;
                 }
-            } else {
-                ans.add(getStr(numNeed, num - 1));
                 
-                if (num == Integer.MAX_VALUE) {    // 防止test case 为 [0, Integer.MAX_VALUE] ！！！
-                    return ans;
-                } else {
-                    numNeed = num + 1;
+                numNeed++;
+            }
+            else
+            {
+                result.add(getStr(numNeed, num-1));
+                
+                // 防止test case 为 [0, Integer.MAX_VALUE] ！！！
+                if (num == Integer.MAX_VALUE)
+                {
+                    return result;
                 }
+                
+                numNeed = num+1;
             }
         }
         
-        if (numNeed <= upper) {                    // 注意扫尾 ！！！
-            ans.add(getStr(numNeed, upper));
+        // 注意扫尾 ！！！
+        if (numNeed <= upper) 
+        { 
+            result.add(getStr(numNeed, upper));
         }
         
-        return ans;
+        return result;
     }
     
-    public String getStr(int start, int end){
-        StringBuilder builder = new StringBuilder();
-        
-        if(start == end){
-            builder.append(start);
-        } else {
-            builder.append(start).append("->").append(end);
-        }
-        
-        return builder.toString();
+    private String getStr(int num1, int num2)
+    {
+        return num1 == num2 
+            ? new StringBuilder().append(num1).toString() 
+            : new StringBuilder().append(num1).append("->").append(num2).toString();
     }
+
     
     
     

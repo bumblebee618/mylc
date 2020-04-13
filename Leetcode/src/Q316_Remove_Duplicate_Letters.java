@@ -11,52 +11,53 @@ public class Q316_Remove_Duplicate_Letters {
      * one in lexicographical order, the previous character should be removed;
      * 
      *****************************************************************************************************/
-	
-	public String removeDuplicateLetters(String s) { 
-		if(s == null || s.length() == 0) {
-            return "";
+	// solution 1
+	public String removeDuplicateLetters(String s) {
+        if (s == null || s.length() <= 1)
+        {
+            return s;
         }
         
+        Stack<Character> stack = new Stack<>();
+        Set<Character> visited = new HashSet<>();
         int[] hash = new int[256];
-        Set<Character> inStack = new HashSet();
-        Stack<Character> stack = new Stack();
         
-        for(char c : s.toCharArray()) {
-            hash[c]++;
+        for (int i = 0; i < s.length(); i++)
+        {
+            hash[s.charAt(i)] = i;
         }
-        
-        for(char c : s.toCharArray()) {
-            if(inStack.contains(c)) {
-                hash[c]--;
-                continue;
-            }
-            
-            while(!stack.isEmpty()) {
-                char top = stack.peek();
-                
-                if(hash[top] > 1 && c < top) {
-                    stack.pop();
-                    inStack.remove(top);
-                    hash[top]--;
-                } else {
-                    break;
+
+        for(int i = 0; i < s.length(); i++)
+        {
+            char c = s.charAt(i);
+
+            if (!visited.contains(c))
+            {
+                while(!stack.isEmpty() && c < stack.peek() && hash[stack.peek()] > i)
+                {
+                    visited.remove(stack.pop());
                 }
+                
+                visited.add(c);
+                stack.push(c);
             }
-            
-            stack.push(c);
-            inStack.add(c);
         }
         
-        StringBuilder builder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         
-        while(!stack.isEmpty()) {
-            builder.insert(0, stack.pop());
+        for (char c : stack) 
+        {
+            sb.append(c);
         }
         
-        return builder.toString();
-    }	
+        return sb.toString();
+    }
+
 	
 	
+	
+	
+	// solution 2
 	public String removeDuplicateLetters2(String s) {
 		if (s == null || s.isEmpty()) {
             return "";

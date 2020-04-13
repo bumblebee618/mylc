@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +37,6 @@ public class Q705_Design_HashSet {
 	private final int capacity = 1024;
     private List<Integer>[] list;
     
-    
     /** Initialize your data structure here. */
     public Q705_Design_HashSet() {
         list = new List[capacity];
@@ -48,26 +48,19 @@ public class Q705_Design_HashSet {
         
         if (list[pos] == null)
         {
-            list[pos] = new ArrayList<Integer>();
-            list[pos].add(key);
+            list[pos] = new LinkedList<>();
         }
-        else
+        
+        int index = 0;
+            
+        while (index < list[pos].size() && list[pos].get(index) != key)
         {
-            int index = 0;
-            
-            while (index < list[pos].size() && list[pos].get(index) != key)
-            {
-                index++;
-            }
-            
-            if (index == list[pos].size())
-            {
-                list[pos].add(key);
-            }
-            else
-            {
-                list[pos].set(index, key);
-            }
+            index++;
+        }
+        
+        if (index == list[pos].size())
+        {
+            list[pos].add(key);
         }
     }
     
@@ -100,16 +93,14 @@ public class Q705_Design_HashSet {
         {
             return false;
         }
-        else
+        
+        int index = 0;
+            
+        while (index < list[pos].size() && list[pos].get(index) != key)
         {
-            int index = 0;
-            
-            while (index < list[pos].size() && list[pos].get(index) != key)
-            {
-                index++;
-            }
-            
-            return index == list[pos].size() ? false : true;
+            index++;
         }
+            
+        return index < list[pos].size();
     }
 }

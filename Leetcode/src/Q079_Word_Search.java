@@ -23,22 +23,25 @@ Hide Tags
 
 
 public class Q079_Word_Search {
-	public boolean exist(char[][] board, String word) {
-        if (board == null || board.length == 0 || board[0].length == 0) {
-            if (word == null || word.length() == 0) {
-                return true;
-            } else {
-                return false;
-            }
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0 || board[0].length == 0 || word == null || word.length() == 0)
+        {
+            return false;
         }
         
         int row = board.length;
         int col = board[0].length;
         boolean[][] visited = new boolean[row][col];
         
-        for(int i = 0; i < row; i++) {
-            for(int j = 0; j < col; j++) {
-            	if (backtrack(board, visited, i, j, word, 0)) {
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (bfs(board, visited, i, j, word, 0))
+                {
                     return true;
                 }
             }
@@ -47,40 +50,39 @@ public class Q079_Word_Search {
         return false;
     }
     
-	private boolean backtrack(char[][] board, boolean[][] visited, int x, int y, String word, int start) {
-    	if (board[x][y] != word.charAt(start)) {
+    private boolean bfs(char[][] board, boolean[][] visited, int x, int y, String word, int index)
+    {
+        if (board[x][y] != word.charAt(index))
+        {
             return false;
-        } else if (start == word.length() - 1) {  // 必须在这里判断，防止test case: [a], a  ！！！
+        }
+        else if (index == word.length()-1)  // 必须在这里判断，防止test case: [a], a  ！！！
+        {
             return true;
-        }  
+        }
         
         visited[x][y] = true;
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
-        int row = board.length;
-        int col = board[0].length;
+        boolean result = false;
         
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < dx.length; i++)
+        {
             int newX = x + dx[i];
             int newY = y + dy[i];
             
-            if (newX >= 0 && newX < row && newY >= 0 && newY < col && visited[newX][newY] == false) {
-                if (backtrack(board, visited, newX, newY, word, start+1)) {
-                    return true;
+            if (newX >= 0 && newX < board.length && newY >= 0 && newY < board[0].length && !visited[newX][newY])
+            {
+                if (bfs(board, visited, newX, newY, word, index+1))
+                {
+                    result = true;
+                    break;
                 }
             }
         }
         
         visited[x][y] = false;
-        return false;
+        return result;
     }
-	
-	
-	
-    
-    
-    
-    
+
     
     
     
