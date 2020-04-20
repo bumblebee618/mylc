@@ -16,20 +16,23 @@ For example:
 
 public class Q168_Excel_Sheet_Column_Title {
 	public String convertToTitle(int n) {
-        if(n <= 0) {
+        if (n <= 0) 
+        {
         	return null;
         }
-        
-        StringBuffer res = new StringBuffer();
-        
-        while(n > 0){
+
+        StringBuilder builder = new StringBuilder();
+
+        while (n > 0)
+        {
             char c = (char) ((n-1) % 26 + 'A');
-            res.insert(0, c);
+            builder.insert(0, c);
             n = (n-1) / 26;
         }
-        
-        return res.toString();
+
+        return builder.toString();
     }
+
 	
 	
 	

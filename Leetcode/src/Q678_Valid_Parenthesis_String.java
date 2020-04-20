@@ -33,45 +33,47 @@ public class Q678_Valid_Parenthesis_String {
         
         for (int i = 0; i < size; i++)
         {
-            dp[i][i] = s.charAt(i) == '*' ? true : false;
+            if (s.charAt(i) == '*')
+            {
+                dp[i][i] = true;
+            }
         }
         
         for (int i = 0; i < size-1; i++)
         {
             char c1 = s.charAt(i);
             char c2 = s.charAt(i+1);
-            
-            if ((c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*')) 
-            {
-                dp[i][i+1] = true;
-            }
+            dp[i][i+1] = isValid(c1, c2);
         }
         
         for (int length = 2; length < size; length++)
         {
             for (int start = 0; start+length < size; start++)
             {
-                int end = start+length;
-            
-                if (s.charAt(start) == '*' && dp[start+1][end] == true) 
+                int end = start + length;
+                dp[start][end] = dp[start+1][end-1] && isValid(s.charAt(start), s.charAt(end));
+                
+                if (dp[start][end])
                 {
-                    dp[start][end] = true;
-                } 
-                else if (s.charAt(start) == '(' || s.charAt(start) == '*') 
+                    continue;
+                }
+                
+                for (int k = start+1; k < end-1; k++)
                 {
-                    for (int k = start+1; k <= end; k++) 
+                    if (dp[start][k] && dp[k+1][end])
                     {
-                        if ((s.charAt(k) == ')' || s.charAt(k) == '*') &&
-                                (k == start+1 || dp[start+1][k-1]) &&
-                                (k == end || dp[k+1][end])) 
-                        {
-                            dp[start][end] = true;
-                        }
+                        dp[start][end] = true;
+                        break;
                     }
                 }
             }
         }
         
         return dp[0][size-1];
+    }
+    
+    private boolean isValid(char c1, char c2)
+    {
+        return (c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*');
     }
 }

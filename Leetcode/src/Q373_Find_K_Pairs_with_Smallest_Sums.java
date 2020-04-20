@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -52,50 +53,46 @@ public class Q373_Find_K_Pairs_with_Smallest_Sums {
 	 ********************************************************************************************************************/
 	
 	// time complexity O( (n+k) * logn)
-	public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        List<int[]> ans = new ArrayList<>();
+	public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        List<List<Integer>> result = new LinkedList<>();
         
-        if(nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || k <= 0) {
-            return ans;
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || k <= 0)
+        {
+            return result;
         }
         
-        Queue<Pair> heap = new PriorityQueue<Pair>(nums1.length, new Comparator<Pair>(){
+        int size1 = nums1.length, size2 = nums2.length;
+
+        Queue<int[]> heap = new PriorityQueue<>(2, new Comparator<int[]>(){
             @Override
-            public int compare(Pair p1, Pair p2) {
-                return p1.value - p2.value;
+            public int compare(int[] pair1, int[] pair2)
+            {
+                return (nums1[pair1[0]] + nums2[pair1[1]]) - (nums1[pair2[0]] + nums2[pair2[1]]);
             }
         });
         
-        int len1 = nums1.length, len2 = nums2.length;
-        
-        for(int i = 0; i < len1; i++) {
-            heap.offer(new Pair(i, 0, nums1[i] + nums2[0]));
+        for (int i = 0; i < size1; i++)
+        {
+            heap.offer(new int[] {i, 0});
         }
         
-        for(int i = 0; i < k && i < len1 * len2; i++) {
-            Pair p = heap.poll();
-            int[] array = {nums1[p.x], nums2[p.y]};
-            ans.add(array);
+        for (int i = 0; i < k && i < size1 * size2; i++)
+        {
+            int[] node = heap.poll();
+            List<Integer> list = new LinkedList<>();
+            list.add(nums1[node[0]]);
+            list.add(nums2[node[1]]);
+            result.add(list);
             
-            if(p.y < len2 - 1) {
-                heap.offer(new Pair(p.x, p.y + 1, nums1[p.x] + nums2[p.y + 1]));
+            if (node[1]+1 < size2)
+            {
+                heap.offer(new int[] {node[0], node[1]+1});
             }
         }
         
-        return ans;
+        return result;
     }
-    
-    class Pair {
-        int x;
-        int y;
-        int value;
         
-        public Pair(int x, int y, int value) {
-            this.x = x;
-            this.y = y;
-            this.value = value;
-        }
-    }
 	
     
     

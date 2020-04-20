@@ -30,7 +30,7 @@ public class Q033_Search_in_Rotated_Sorted_Array {
                 } else {
                     left = mid;
                 }
-            } else if(nums[mid] < nums[left] || nums[mid] < nums[right]){
+            } else if(nums[mid] < nums[left] || nums[mid] <= nums[right]){
                 if(target > nums[mid] && target <= nums[right]){
                     left = mid;
                 } else {

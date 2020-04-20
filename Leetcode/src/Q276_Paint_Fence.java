@@ -23,25 +23,31 @@ public class Q276_Paint_Fence {
 	 ****************************************************************************************************************/
 	// solution 1: using DP, space O(n)
 	public int numWays(int n, int k) {
-        if(n == 0){
+        if (n <= 0)
+        {
             return 0;
-        } else if(n == 1){
+        }
+        else if (n == 1)
+        {
             return k;
         }
         
-        int[] sameColor = new int[n];
-        int[] diffColor = new int[n];
-        sameColor[0] = diffColor[0] = k;
-        sameColor[1] = k;
-        diffColor[1] = k * (k - 1);
+        int[] same = new int[n];
+        int[] diff = new int[n];
+        same[0] = k;
+        diff[0] = k;
+        same[1] = same[0];
+        diff[1] = k * (k-1);
         
-        for(int i = 2; i < n; ++i){
-            sameColor[i] = diffColor[i - 1];
-            diffColor[i] = (diffColor[i - 1] + sameColor[i - 1]) * (k - 1);
+        for (int i = 2; i < n; i++)
+        {
+            same[i] = diff[i-1];
+            diff[i] = (same[i-1] + diff[i-1]) * (k-1);
         }
         
-        return sameColor[n - 1] + diffColor[n - 1];
+        return same[n-1] + diff[n-1];
     }
+
 	
 	
 	
