@@ -20,36 +20,49 @@ Note:
 public class Q205_Isomorphic_Strings {
 	// solution 1: 
 	public boolean isIsomorphic(String s, String t) {
-        if(s == null || s.length() == 0){
-            if(t == null || t.length() == 0){
+        if (s == null || s.length() == 0)
+        {
+            if (t == null || t.length() == 0)
+            {
                 return true;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
-        } else if(t == null || t.length() != s.length()){
+        } 
+        else if (t == null || t.length() != s.length())
+        {
             return false;
         }
-        
+
         Map<Character, Character> map = new HashMap<Character, Character>();
-        int len = s.length();
-        
-        for(int i = 0; i < len; i++){
+
+        for(int i = 0; i < s.length(); i++)
+        {
             char c1 = s.charAt(i);
             char c2 = t.charAt(i);
-            
-            if(map.containsKey(c1)){
-                if(map.get(c1) != c2){
+
+            if (map.containsKey(c1))
+            {
+                if(map.get(c1) != c2)
+                {
                     return false;
                 }
-            } else if(map.containsValue(c2)){
+            } 
+            else if (map.containsValue(c2))
+            {
                 return false;
-            } else {
+            } 
+            else 
+            {
                 map.put(c1, c2);
             }
         }
-        
+
         return true;
     }
+	
 	
 	
 	

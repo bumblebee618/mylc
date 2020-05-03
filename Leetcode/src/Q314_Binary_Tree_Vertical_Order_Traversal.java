@@ -69,51 +69,50 @@ return its vertical order traversal as:
 public class Q314_Binary_Tree_Vertical_Order_Traversal {
 	// using BFS
 	public List<List<Integer>> verticalOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        if(root == null){
-            return ans;
+        List<List<Integer>> result = new LinkedList<>();
+        
+        if (root == null)
+        {
+            return result;
         }
-        
-        Queue<Pair> q = new LinkedList<Pair>();
-        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+
+        Queue<Pair> queue = new LinkedList<Pair>();
+        queue.offer(new Pair(root, 0));
+        Map<Integer, List<Integer>> map = new HashMap<>();
         int leftBound = 0, rightBound = 0;
-        q.offer(new Pair(root, 0));
-        
-        while(!q.isEmpty()){
-            Pair temp = q.poll();
-            
+
+        while (!queue.isEmpty())
+        {
+            Pair temp = queue.poll();
             leftBound = Math.min(leftBound, temp.col);
             rightBound = Math.max(rightBound, temp.col);
+            map.computeIfAbsent(temp.col, key -> new LinkedList<Integer>()).add(temp.node.val);
             
-            if(map.containsKey(temp.col)){
-                map.get(temp.col).add(temp.node.val);
-            } else {
-                List<Integer> list = new ArrayList<Integer>();
-                list.add(temp.node.val);
-                map.put(temp.col, list);
+            if (temp.node.left != null)
+            {
+                queue.offer(new Pair(temp.node.left, temp.col - 1));
             }
-            
-            if(temp.node.left != null){
-                q.offer(new Pair(temp.node.left, temp.col - 1));
-            }
-            
-            if(temp.node.right != null){
-                q.offer(new Pair(temp.node.right, temp.col + 1));
+
+            if(temp.node.right != null)
+            {
+                queue.offer(new Pair(temp.node.right, temp.col + 1));
             }
         }
-        
-        for(int i = leftBound; i <= rightBound; i++){
-            ans.add(map.get(i));
+
+        for (int i = leftBound; i <= rightBound; i++)
+        {
+            result.add(map.get(i));
         }
-        
-        return ans;
+
+        return result;
     }
     
     class Pair{
         TreeNode node;
         int col;
-        
-        public Pair(TreeNode n, int c){
+
+        public Pair(TreeNode n, int c)
+        {
             node = n;
             col = c;
         }

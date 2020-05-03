@@ -30,37 +30,34 @@ public class Q1122_Relative_Sort_Array {
 	public int[] relativeSortArray(int[] arr1, int[] arr2) {
         if (arr1 == null || arr1.length == 0 || arr2 == null || arr2.length == 0)
         {
-            return arr1;
+            return new int[0];
         }
         
-        Map<Integer, Integer> map = new HashMap<>();
+        int[] bucket = new int[1001];
         
-        for (int i = 0; i < arr2.length; i++)
+        for (int num : arr1)
         {
-            map.put(arr2[i], i);
+            bucket[num]++;
         }
         
-        List<Integer> list = IntStream.of(arr1).boxed().collect(Collectors.toList());
+        int index = 0;
         
-        Collections.sort(list, (a, b) -> {
-            if (map.containsKey(a) && map.containsKey(b))
+        for (int num : arr2)
+        {
+            while (bucket[num]-- > 0)
             {
-                return map.get(a) - map.get(b);
+                arr1[index++] = num;
             }
-            else if (map.containsKey(a))
-            {
-                return -1;
-            }
-            else if (map.containsKey(b))
-            {
-                return 1;
-            }
-            else
-            {
-                return a-b;
-            }
-        });
+        }
         
-        return list.stream().mapToInt(i -> i).toArray();
+        for (int num = 0; num < 1001; num++)
+        {
+            while (bucket[num]-- > 0)
+            {
+                arr1[index++] = num;
+            }
+        }
+        
+        return arr1;
     }
 }

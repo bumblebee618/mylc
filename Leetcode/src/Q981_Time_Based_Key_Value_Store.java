@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /***
  * Create a timebased key-value store class TimeMap, that supports two operations.
@@ -49,9 +50,39 @@ TimeMap.set and TimeMap.get functions will be called a total of 120000 times (co
 
 
 public class Q981_Time_Based_Key_Value_Store {
-private Map<String, List<Tuple>> map;
+	private Map<String, TreeMap<Integer, String>> map;
     
     /** Initialize your data structure here. */
+    public Q981_Time_Based_Key_Value_Store() {
+        map = new HashMap<>();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+        if (!map.containsKey(key))
+        {
+            map.put(key, new TreeMap<>());
+        }
+        
+        map.get(key).put(timestamp, value);
+    }
+    
+    public String get(String key, int timestamp) {
+        if (!map.containsKey(key))
+        {
+            return "";
+        }
+        
+        TreeMap<Integer, String> treeMap = map.get(key);
+        Integer time = treeMap.floorKey(timestamp);
+        return time != null ? treeMap.get(time) : "";
+    }
+
+	
+	
+	/***
+	
+    private Map<String, List<Tuple>> map;
+    
     public Q981_Time_Based_Key_Value_Store() {
         map = new HashMap<String, List<Tuple>>();
     }
@@ -110,6 +141,7 @@ private Map<String, List<Tuple>> map;
         return list.get(right).timestamp <= curTimestamp ? right : left;
     }
     
+    
     class Tuple
     {
         public String value;
@@ -121,4 +153,6 @@ private Map<String, List<Tuple>> map;
             this.timestamp = timestamp;
         }
     }
+    
+    ***/
 }
