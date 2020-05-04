@@ -21,22 +21,22 @@ public class Q503_Next_Greater_Element_II {
         {
             return new int[0];
         }
-        
+
         int size = nums.length;
         int[] result = new int[size];
         Stack<Integer> stack = new Stack<>();
-        
+
         for (int i = size*2-1; i >= 0; i--)
         {
-            while (!stack.empty() && nums[stack.peek()] <= nums[i % size])
+            while (!stack.empty() && stack.peek() <= nums[i % size])
             {
                 stack.pop();
             }
-            
-            result[i % size] = stack.empty() ? -1 : nums[stack.peek()];
-            stack.push(i % size);
+
+            result[i % size] = stack.empty() ? -1 : stack.peek();
+            stack.push(nums[i % size]);
         }
-        
+
         return result;
     }
 }

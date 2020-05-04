@@ -20,35 +20,39 @@ public class Q038_Count_and_Say {
             return "";
         }
         
-        StringBuilder cur = new StringBuilder().append("1");
         StringBuilder prev = new StringBuilder();
+        StringBuilder current = new StringBuilder().append("1");
         
         for (int i = 1; i < n; i++)
         {
-            prev = cur;
-            cur = new StringBuilder();
+            prev = current;
+            current = new StringBuilder();
             char say = prev.charAt(0);
             int count = 0;
             
             for (int j = 0; j < prev.length(); j++)
             {
-                if (prev.charAt(j) != say)
-                {
-                    cur.append(count).append(say);
-                    say = prev.charAt(j);
-                    count = 1;
-                }
-                else
+                if (prev.charAt(j) == say)
                 {
                     count++;
                 }
+                else
+                {
+                    current.append(count).append(say);
+                    say = prev.charAt(j);
+                    count = 1;
+                }
             }
             
-            cur.append(count).append(say);
+            current.append(count).append(say);
         }
         
-        return cur.toString();
+        return current.toString();
     }
+	
+	
+	
+	
 	
 	
 	// solution 2:
