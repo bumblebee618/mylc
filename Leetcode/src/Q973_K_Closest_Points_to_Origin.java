@@ -1,5 +1,6 @@
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /***
  * 
@@ -44,7 +45,7 @@ public class Q973_K_Closest_Points_to_Origin {
         
         int[][] result = new int[k][2];
         
-        PriorityQueue<Tuple> maxHeap = new PriorityQueue<>(k+1, new Comparator<Tuple>(){
+        Queue<Tuple> maxHeap = new PriorityQueue<>(k+1, new Comparator<Tuple>(){
             @Override
             public int compare(Tuple t1, Tuple t2)
             {

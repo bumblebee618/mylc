@@ -24,26 +24,51 @@ public class Q300_Longest_Increasing_Subsequence {
 	 ***************************************************************/
 	// solution 1: using binary, time O(nlogn)
 	public int lengthOfLIS(int[] nums) {
-        if(nums == null || nums.length == 0){
+        if (nums == null || nums.length == 0)
+        {
             return 0;
         }
         
         int firstInsertPos = 0;
-        
-        for(int element : nums){
-            if(firstInsertPos == 0 || element > nums[firstInsertPos - 1]){
+
+        for (int element : nums)
+        {
+            if (firstInsertPos == 0 || element > nums[firstInsertPos - 1])
+            {
                 nums[firstInsertPos++] = element;
-            } else {
-                int index = Arrays.binarySearch(nums, 0, firstInsertPos, element);
-                
-                if(index < 0){
-                    nums[-(index + 1)] = element;
-                }
+            } 
+            else 
+            {
+                int index = findPos(nums, 0, firstInsertPos, element);
+                nums[index] = element;
+            }
+        }
+
+        return firstInsertPos;
+    }
+    
+    private int findPos(int[] nums, int left, int right, int target)
+    {
+        while (left+1 < right)
+        {
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] < target)
+            {
+                left = mid;
+            }
+            else
+            {
+                right = mid;
             }
         }
         
-        return firstInsertPos;
+        return nums[left] >= target ? left : right;
     }
+
+    
+    
+    
 	
 	// solution 2: using ArrayList, time complexity O(nlogn), space O(n)
 	private int[] array;

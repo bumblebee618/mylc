@@ -43,36 +43,27 @@ public class Q921_Minimum_Add_to_Make_Parentheses_Valid {
             return 0;
         }
         
-        int open = 0;
+        int result = 0;
         int count = 0;
         
-        for (int i = 0; i < str.length(); i++)
+        for (char c : str.toCharArray())
         {
-            char c = str.charAt(i);
-            
             if (c == '(')
             {
-                if (open >= 0)
-                {
-                    open++;
-                }
-                else
-                {
-                    open = 1;
-                }
+                count++;
             }
-            else
+            else if (c == ')')
             {
-                open--;
-                
-                if (open < 0)
-                {
-                    count++;
-                }
+                count--;
+            }
+            
+            if (count < 0)
+            {
+                result += Math.abs(count);
+                count = 0;
             }
         }
         
-        count += open > 0 ? open : 0;
-        return count;
+        return result + count;
     }
 }
