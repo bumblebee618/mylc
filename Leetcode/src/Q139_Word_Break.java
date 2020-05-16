@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /*************
@@ -33,31 +34,56 @@ public class Q139_Word_Break {
 	 ********************************************************************************************************/
 	
 	// using DP, time is O(n), space is O(n)
-	public boolean wordBreak(String s, Set<String> wordDict) {
-		if(s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
+	private int maxLen = 0;
+    private Set<String> wordDict;
+    
+    public boolean wordBreak(String s, List<String> wordList) {
+        if (s == null || s.length() == 0)
+        {
+            return false;
+        }
+        else if (wordList == null || wordList.size() == 0)
+        {
             return false;
         }
         
-        int maxLen = getMaxWordLength(wordDict);
-        int n = s.length();
-        boolean[] canSplit = new boolean[n + 1];
+        
+        init(wordList);
+        int size = s.length();
+        boolean[] canSplit = new boolean[size+1];
         canSplit[0] = true;
         
-        for(int i = 1; i <= n; ++i){
-            for(int lastWordLen = 1; lastWordLen <= maxLen && i - lastWordLen >= 0; ++lastWordLen){
-                if(canSplit[i - lastWordLen] == true){
-                    String lastWord = s.substring(i - lastWordLen, i);
+        for (int i = 1; i <= size; i++)
+        {
+            for (int wordLen = 1; wordLen <= maxLen && i - wordLen >= 0; wordLen++)
+            {
+                if (canSplit[i-wordLen])
+                {
+                    String word = s.substring(i-wordLen, i);
                     
-                    if(wordDict.contains(lastWord)){
+                    if (wordDict.contains(word))
+                    {
                         canSplit[i] = true;
-                        break;      // 当寻找到之后，直接退出
+                        break;
                     }
                 }
             }
         }
         
-        return canSplit[n];
+        return canSplit[size];
     }
+    
+    private void init(List<String> wordList)
+    {
+        wordDict = new HashSet<>();
+        
+        for (String word : wordList)
+        {
+            wordDict.add(word);
+            maxLen = Math.max(maxLen, word.length());
+        }
+    }
+
     
     public int getMaxWordLength(Set<String> wordDict){
         int maxLen = 0;

@@ -52,10 +52,10 @@ public class Q426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List {
         }
         
         Stack<Node> stack = new Stack<>();
+        Node head = null, tail = null;
+        Node prev = null;
         long max = Long.MIN_VALUE;
         long min = Long.MAX_VALUE;
-        Node start = null, end = null;
-        Node prev = null;
         
         while (root != null || !stack.isEmpty())
         {
@@ -67,32 +67,33 @@ public class Q426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List {
             
             root = stack.pop();
             
+            if (prev != null)
+            {
+                root.left = prev;
+                prev.right = root;
+            }
+            
             if (root.val > max)
             {
                 max = root.val;
-                end = root;
+                tail = root;
             }
             
             if (root.val < min)
             {
                 min = root.val;
-                start = root;
-            }
-            
-            if (prev != null)
-            {
-                prev.right = root;
-                root.left = prev;
+                head = root;
             }
             
             prev = root;
             root = root.right;
         }
         
-        start.left = end;
-        end.right = start;
-        return start;
+        head.left = tail;
+        tail.right = head;
+        return head;
     }
+
 	
 	class Node {
 	    public int val;

@@ -33,60 +33,68 @@ public class Q140_Word_Break_II {
 	private List<String> result = new LinkedList<>();
     private int maxWordLen = 0;
     private Set<String> wordSet; 
-	
-	public List<String> wordBreak(String s, Set<String> wordDict) {
+    
+    public List<String> wordBreak(String s, List<String> wordDict) {
         if(s == null || s.length() == 0 || wordDict.size() == 0){
             return new LinkedList<String>();
         }
-        
+
         init(wordDict);
         List<String>[] memo = new List[s.length()];
         return backtrack(s, 0, memo);
     }
     
-    public List<String> backtrack(String s, int start, List<String>[] memo){
-        List<String> ans = new LinkedList<String>();  // 每次递归都开辟新的list
+    private List<String> backtrack(String s, int start, List<String>[] memo)
+    {
+        List<String> result = new LinkedList<>();
         
-        if(start == s.length()){
-            ans.add("");        // 这里必须要，因为此解法是从后往前递推的，即从start = s.length()开始，相当于dp[0]的初始化
-            return ans;
-        }
-        
-        if (memo[start] != null)
+        if (start == s.length())
         {
-        	return memo[start];
+            result.add("");
+            return result;
+        }
+        else if (memo[start] != null)
+        {
+            return memo[start];
         }
         
-        for(int end = start; end-start <= maxWordLen && end < s.length(); ++end){
-            String nextWord = s.substring(start, end + 1);
+        for (int end = start; end < s.length() && end-start+1 <= maxWordLen; end++)
+        {
+            String nextWord = s.substring(start, end+1);
             
-            if(wordSet.contains(nextWord)){
-            	// 这里memo用index，防止index = s.length() 越界. 从end+1开始
-            	List<String> list = backtrack(s, end+1, memo);
+            if (wordSet.contains(nextWord))
+            {
+                List<String> list = backtrack(s, end+1, memo);
                 
-                for(String str : list){
-                    if(str == ""){
-                        ans.add(nextWord);
-                    } else {
-                        ans.add(nextWord + " " + str);
+                for (String str : list)
+                {
+                    if (str.equals(""))
+                    {
+                        result.add(nextWord);
+                    }
+                    else
+                    {
+                        result.add(nextWord + " " + str);
                     }
                 }
             }
         }
         
-        memo[start] = ans;
-        return ans;
+        memo[start] = result;
+        return result;
     }
     
-    private void init(Set<String> wordDict)
+    private void init(List<String> wordDict)
     {
-    	wordSet = wordDict;
-    	
+    	wordSet = new HashSet<String>();
+
         for (String word : wordDict)
         {
+            wordSet.add(word);
             maxWordLen = Math.max(maxWordLen, word.length());
         }
     }
+
 
 
     
