@@ -27,7 +27,7 @@ where the largest sum among the two subarrays is only 18.
  */
 public class Q410_Split_Array_Largest_Sum {
 	public int splitArray(int[] nums, int m) {
-        if (nums == null || m <= 0 || nums.length < m)
+        if (nums == null || nums.length == 0 || m <= 0 || m > nums.length)
         {
             return 0;
         }
@@ -44,7 +44,7 @@ public class Q410_Split_Array_Largest_Sum {
         {
             int mid = left + (right-left)/2;
             
-            if (!canSpit(nums, m, mid))
+            if (!canSplit(nums, m, mid))
             {
                 left = mid;
             }
@@ -54,23 +54,23 @@ public class Q410_Split_Array_Largest_Sum {
             }
         }
         
-        return canSpit(nums, m, left) ? left : right; 
+        return canSplit(nums, m, left) ? left : right;
     }
     
-    private boolean canSpit(int[] nums, int m, int target)
+    private boolean canSplit(int[] nums, int m, int maxSum)
     {
         int count = 1;
         int sum = 0;
         
         for (int num : nums)
         {
-            sum += num;
-            
-            if (sum > target)
+            if (sum + num > maxSum)
             {
-                sum = num;
                 count++;
+                sum = 0;
             }
+            
+            sum += num;
             
             if (count > m)
             {
@@ -80,6 +80,11 @@ public class Q410_Split_Array_Largest_Sum {
         
         return true;
     }
+    
+    
+    
+    
+    
     
     
     // f[i][j]: the minimum largest subarray sum for splitting nums[0..i] into j parts.

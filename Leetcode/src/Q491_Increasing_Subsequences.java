@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,50 @@ The given array may contain duplicates, and two equal integers should also be co
  *
  */
 public class Q491_Increasing_Subsequences {
-	public List<List<Integer>> findSubsequences(int[] nums) {
+	// solution 1
+	private List<List<Integer>> result = new LinkedList<>();
+    
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        if (nums == null || nums.length <= 1)
+        {
+            return result;
+        }
+
+        backtrack(new LinkedList<Integer>(), nums, 0);
+        return result;
+    }
+    
+    private void backtrack(List<Integer> list, int[] nums, int start)
+    {
+        if (list.size() >= 2)
+        {
+            result.add(new LinkedList<Integer>(list));
+        }
+        
+        Set<Integer> visited = new HashSet<>();
+        
+        for (int i = start; i < nums.length; i++)
+        {
+            if (visited.contains(nums[i]))
+            {
+                continue;
+            }
+            
+            if (list.size() == 0 || nums[i] >= list.get(list.size()-1))
+            {
+                visited.add(nums[i]);
+                list.add(nums[i]); 
+                backtrack(list, nums, i+1);
+                list.remove(list.size()-1);
+            }
+        }
+    }
+
+    
+    
+    
+	// solution 2
+	public List<List<Integer>> findSubsequences2(int[] nums) {
         if (nums == null || nums.length == 0) {
             return new ArrayList<>();
         }

@@ -27,36 +27,31 @@ The length of accounts[i][j] will be in the range [1, 30].
 public class Q721_Accounts_Merge {
 	public List<List<String>> accountsMerge(List<List<String>> accounts) {
         List<List<String>> result = new LinkedList<>();
-        
+
         if (accounts == null || accounts.size() == 0)
         {
             return result;
         }
-        
-        Map<String, List<String>> graph = new HashMap();
-        Map<String, String> emailToName = new HashMap();
-        
+
+        Map<String, List<String>> graph = new HashMap<>();
+        Map<String, String> emailToName = new HashMap<>();
+
         for (List<String> account : accounts)
         {
-            String name = "";
-            
-            for (String info : account)
+            String name = account.get(0);
+            String firstEmail = account.get(1);
+
+            for (int i = 1; i < account.size(); i++)
             {
-                if (name == "")
-                {
-                    name = info;
-                    continue;
-                }
-                
-                String firstEmail = account.get(1);
-                graph.computeIfAbsent(info, x -> new LinkedList<String>()).add(firstEmail);
-                graph.computeIfAbsent(firstEmail, x -> new LinkedList<String>()).add(info);
-                emailToName.put(info, name);
+                String email = account.get(i);
+                graph.computeIfAbsent(email, x -> new ArrayList<String>()).add(firstEmail);
+                graph.computeIfAbsent(firstEmail, x -> new ArrayList<String>()).add(email);
+                emailToName.put(email, name);
             }
         }
-        
+
         Set<String> visited = new HashSet<>();
-        
+
         for (String email : graph.keySet())
         {
             if (!visited.contains(email))
@@ -68,7 +63,7 @@ public class Q721_Accounts_Merge {
                 result.add(list);
             }
         }
-        
+
         return result;
     }
     
@@ -78,12 +73,12 @@ public class Q721_Accounts_Merge {
         stack.push(email);
         visited.add(email);
         List<String> list = new LinkedList();
-        
+
         while (!stack.isEmpty())
         {
             String node = stack.pop();
             list.add(node);
-            
+
             for (String next : graph.get(node))
             {
                 if (!visited.contains(next))
@@ -93,7 +88,7 @@ public class Q721_Accounts_Merge {
                 }
             }
         }
-        
+
         return list;
     }
 }

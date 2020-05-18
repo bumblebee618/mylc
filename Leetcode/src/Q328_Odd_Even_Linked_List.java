@@ -2,36 +2,29 @@
 public class Q328_Odd_Even_Linked_List {
 	// by Jackie
 	public ListNode oddEvenList(ListNode head) {
-        if (head == null || head.next == null)
-        {
+        if(head == null || head.next == null || head.next.next == null){
             return head;
         }
-        
-        ListNode dummy1 = new ListNode(0);
-        ListNode odd = dummy1;
-        ListNode dummy2 = new ListNode(0);
-        ListNode even = dummy2;
-        int count = 0;
+
+        ListNode dummy1 = new ListNode(0), dummy2 = new ListNode(0);
+        ListNode oddStart = dummy1, evenStart = dummy2;
         
         while (head != null)
         {
-            if (count % 2 == 0)
-            {
-                odd.next = head;
-                odd = odd.next;
-            }
-            else
-            {
-                even.next = head;
-                even = even.next;
-            }
-            
+            oddStart.next = head;
+            oddStart = oddStart.next;
             head = head.next;
-            count++;
+            
+            evenStart.next = head;
+            
+            if (head != null)
+            {
+                evenStart = evenStart.next;
+                head = head.next;
+            }
         }
         
-        odd.next = dummy2.next;
-        even.next = null;
+        oddStart.next = dummy2.next;
         return dummy1.next;
     }
 }

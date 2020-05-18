@@ -10,7 +10,8 @@ For example, given nums = [3, 5, 2, 1, 6, 4], one possible answer is [1, 6, 2, 5
 public class Q280_Wiggle_Sort {
 	// solution 1: using sort, time complexity O(nlogn), space O(1)
     public void wiggleSort2(int[] nums) {
-        if(nums == null || nums.length <= 1){
+        if(nums == null || nums.length <= 1)
+        {
             return ;
         }
         
@@ -18,7 +19,8 @@ public class Q280_Wiggle_Sort {
         Arrays.sort(nums);
         int index = 1;
         
-        while(index + 1 < len){
+        while(index + 1 < len)
+        {
             int temp = nums[index];
             nums[index] = nums[index + 1];
             nums[index + 1] = temp;

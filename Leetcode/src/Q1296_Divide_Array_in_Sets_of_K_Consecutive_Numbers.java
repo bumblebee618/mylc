@@ -43,29 +43,29 @@ public class Q1296_Divide_Array_in_Sets_of_K_Consecutive_Numbers {
             return false;
         }
         
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> frequency = new HashMap<>();
         Arrays.sort(nums);
         
         for (int num : nums)
         {
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
         }
         
         for (int num : nums)
         {
-            if (map.get(num) == 0)
+            if (frequency.get(num) == 0)
             {
                 continue;
             }
             
             for (int i = 0; i < k; i++)
             {
-                if (!map.containsKey(num+i) || map.get(num+i) == 0)
+                if (!frequency.containsKey(num+i) || frequency.get(num+i) == 0)
                 {
                     return false;
                 }
                 
-                map.put(num+i, map.get(num+i)-1);
+                frequency.put(num+i, frequency.get(num+i)-1);
             }
         }
         

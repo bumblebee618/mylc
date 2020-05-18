@@ -41,30 +41,30 @@ public class Q846_Hand_of_Straights {
             return false;
         }
         
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> frequency = new HashMap<>();
         
         for (int num : hand)
         {
-            map.put(num, map.getOrDefault(num, 0)+1);
+            frequency.put(num, frequency.getOrDefault(num, 0)+1);
         }
 
         Arrays.sort(hand);
          
-        for (int i = 0; i < hand.length; i++)
+        for (int card : hand)
         {
-            if (map.get(hand[i]) == 0)
+            if (frequency.get(card) == 0)
             {
                 continue;
             }
             
             for (int j = 0; j < W; j++)
             {
-                if (!map.containsKey(hand[i]+j) || map.get(hand[i]+j) == 0)
+                if (!frequency.containsKey(card+j) || frequency.get(card+j) == 0)
                 {
                     return false;
                 }
                 
-                map.put(hand[i]+j, map.get(hand[i]+j)-1);
+                frequency.put(card+j, frequency.get(card+j)-1);
             }
         }
         

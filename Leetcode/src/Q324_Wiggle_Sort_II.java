@@ -20,7 +20,8 @@ Follow Up:
 public class Q324_Wiggle_Sort_II {	
 	// solution 1: 
 	public void wiggleSort(int[] nums) {
-		if(nums == null || nums.length == 0) {
+		if(nums == null || nums.length == 0) 
+		{
 			return;
 		}
 		
@@ -29,22 +30,30 @@ public class Q324_Wiggle_Sort_II {
         int[] arraySmall = new int[len];
         int[] arrayLarge = new int[nums.length-len];
         
-        for(int i = 0, n = nums.length, len1 = arraySmall.length; i < n; ++i){
-            if(i <= len1-1) {
+        for(int i = 0, n = nums.length, len1 = arraySmall.length; i < n; ++i)
+        {
+            if(i <= len1-1) 
+            {
                 arraySmall[i] = nums[i];
-            } else {
+            } 
+            else 
+            {
                 arrayLarge[i-len1] = nums[i];
             }
         }
         
         int flag = 0;
-        int x = 0, y = 0;
+        int index1 = 0, index2 = 0;
         
-        for(int i = 0, n = nums.length; i < n; ++i){
-            if(flag++ % 2 == 0) {
-                nums[i] = arraySmall[x++];
-            } else {
-                nums[i] = arrayLarge[y++];
+        for(int i = 0, n = nums.length; i < n; ++i)
+        {
+            if(flag++ % 2 == 0) 
+            {
+                nums[i] = arraySmall[index1++];
+            } 
+            else 
+            {
+                nums[i] = arrayLarge[index2++];
             }
         }
         

@@ -48,7 +48,7 @@ public class Q1031_Maximum_Sum_of_Two_Non_Overlapping_Subarrays {
     private int nonOverlappedSum(int[] nums, int L, int M) 
     {
         int l_sum = 0, m_sum = 0;
-        int l_max = 0, result = 0;
+        int l_maxSum = 0, result = 0;
         
         for (int i = 0; i < L; i++)
         {
@@ -56,7 +56,7 @@ public class Q1031_Maximum_Sum_of_Two_Non_Overlapping_Subarrays {
             result += nums[i];
         }
         
-        l_max = l_sum;
+        l_maxSum = l_sum;
         
         for (int i = L; i < L+M; i++)
         {
@@ -70,8 +70,8 @@ public class Q1031_Maximum_Sum_of_Two_Non_Overlapping_Subarrays {
             m_sum -= nums[i-M];
             l_sum += nums[i-M];
             l_sum -= nums[i-M-L];
-            l_max = Math.max(l_max, l_sum);
-            result = Math.max(result, l_max + m_sum);
+            l_maxSum = Math.max(l_maxSum, l_sum);
+            result = Math.max(result, l_maxSum + m_sum);
         }
         
         return result;

@@ -29,22 +29,22 @@ public class Q300_Longest_Increasing_Subsequence {
             return 0;
         }
         
-        int firstInsertPos = 0;
+        int totalLen = 0;
 
         for (int element : nums)
         {
-            if (firstInsertPos == 0 || element > nums[firstInsertPos - 1])
+            if (totalLen == 0 || element > nums[totalLen - 1])
             {
-                nums[firstInsertPos++] = element;
+                nums[totalLen++] = element;
             } 
             else 
             {
-                int index = findPos(nums, 0, firstInsertPos, element);
+                int index = findPos(nums, 0, totalLen, element);
                 nums[index] = element;
             }
         }
 
-        return firstInsertPos;
+        return totalLen;
     }
     
     private int findPos(int[] nums, int left, int right, int target)

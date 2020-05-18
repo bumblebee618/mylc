@@ -15,17 +15,23 @@ Note:
  */
 public class Q698_Partition_to_K_Equal_Sum_Subsets {
 	public boolean canPartitionKSubsets(int[] nums, int k) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null || nums.length == 0) 
+        {
             return k == 0;
-        } else if (k < 0) {
+        } 
+        else if (k < 0) 
+        {
             return false;
-        } else if (k == 0) {
+        } 
+        else if (k == 0) 
+        {
             return true;
         }
         
         int sum = Arrays.stream(nums).sum();
         
-        if (sum % k != 0) {
+        if (sum % k != 0) 
+        {
             return false;
         }
         
@@ -35,17 +41,23 @@ public class Q698_Partition_to_K_Equal_Sum_Subsets {
     }
     
     private boolean backtrack(int[] nums, boolean[] visited, int start, int sum, int target, int k) {
-        if (k == 1) {
+        if (k == 1) 
+        {
             return true;
-        } else if (sum == target) {
+        } 
+        else if (sum == target) 
+        {
             return backtrack(nums, visited, 0, 0, target, k-1);
         }
         
-        for (int i = start; i < nums.length; i++) {
-            if (!visited[i]) {
+        for (int i = start; i < nums.length; i++) 
+        {
+            if (!visited[i]) 
+            {
                 visited[i] = true;
                 
-                if (backtrack(nums, visited, i+1, sum+nums[i], target, k)) {
+                if (backtrack(nums, visited, i+1, sum+nums[i], target, k)) 
+                {
                     return true;
                 }
                 

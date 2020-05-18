@@ -62,11 +62,13 @@ public class Q659_Split_Array_into_Consecutive_Subsequences {
             
             frequency.put(num, frequency.get(num)-1);
             
+            // 尽量先往前靠
             if (tail.getOrDefault(num-1, 0) > 0)
             {
                 tail.put(num-1, tail.get(num-1)-1);
                 tail.put(num, tail.getOrDefault(num, 0)+1);
             }
+            // 然后再考虑重新建一个新的subarray
             else if (frequency.getOrDefault(num+1, 0) > 0 && frequency.getOrDefault(num+2, 0) > 0)
             {
                 frequency.put(num+1, frequency.get(num+1)-1);
