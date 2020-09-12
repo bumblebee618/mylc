@@ -50,13 +50,14 @@ public class Q020_Valid_Parentheses {
 	
 	// follow up, if there have many kinds of Parentheses
 	public boolean isValid_follow_up(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null || s.length() == 0) 
+        {
             return true;
         }
         
         Set<Character> validSign = new HashSet<Character>();
-        Map<Character, Character> map = new HashMap();
-        Stack<Character> stack = new Stack();
+        Map<Character, Character> map = new HashMap<>();
+        Stack<Character> stack = new Stack<>();
         
         map.put(')', '(');
         map.put(']', '[');
@@ -65,18 +66,26 @@ public class Q020_Valid_Parentheses {
         validSign.add('[');
         validSign.add('{');
         
-        for(char c : s.toCharArray()) {
-        	if(validSign.contains(c)) {
+        for(char c : s.toCharArray()) 
+        {
+        	if(validSign.contains(c)) 
+        	{
         		stack.push(c);        		
-        	} else if(map.containsKey(c)) {
-        		if(stack.isEmpty()) {
+        	} 
+        	else if(map.containsKey(c)) 
+        	{
+        		if (stack.isEmpty()) 
+        		{
         			return false;
         		} 
         		
-        		if(stack.pop() != map.get(c)) {
+        		if (stack.pop() != map.get(c)) 
+        		{
         			return false;
         		}
-        	} else {
+        	} 
+        	else 
+        	{
         		return false;
         	}
         }

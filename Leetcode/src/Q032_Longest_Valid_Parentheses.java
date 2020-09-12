@@ -11,7 +11,7 @@ which has length = 4.
  * 
  * */
 
-public class Q032_Longest_Valid_Parentheses {
+public class Q032_Longest_Valid_Parentheses {	
 	// solution 1: using stack, time O(n), space O(n)
 	public int longestValidParentheses(String s) {  // 使用 test case ")(()()())" 来理解！！！
         if(s == null || s.length() == 0){

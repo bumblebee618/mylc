@@ -35,7 +35,8 @@ public class Q721_Accounts_Merge {
 
         Map<String, List<String>> graph = new HashMap<>();
         Map<String, String> emailToName = new HashMap<>();
-
+        
+        // build email graph
         for (List<String> account : accounts)
         {
             String name = account.get(0);
@@ -49,7 +50,8 @@ public class Q721_Accounts_Merge {
                 emailToName.put(email, name);
             }
         }
-
+        
+        // start dfs
         Set<String> visited = new HashSet<>();
 
         for (String email : graph.keySet())

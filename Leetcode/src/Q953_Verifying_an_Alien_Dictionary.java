@@ -34,51 +34,60 @@ All characters in words[i] and order are English lowercase letters.
  */
 public class Q953_Verifying_an_Alien_Dictionary {
 	public boolean isAlienSorted(String[] words, String order) {
-        if (words == null || words.length <= 1)
+        if (words == null || words.length == 0 || order == null || order.length() == 0)
         {
             return true;
         }
-        else if (order == null || order.length() == 0)
-        {
-            return false;
-        }
         
-        int[] index = new int[26];
+        int[] map = new int[26];
         
-        for (int i = 0; i < order.length(); ++i)
+        for (int i = 0; i < order.length(); i++)
         {
-            index[order.charAt(i)-'a'] = i;
+            map[order.charAt(i)-'a'] = i;
         }
         
         for (int i = 0; i < words.length-1; i++)
         {
-            String word1 = words[i];
-            String word2 = words[i+1];
-            int size = Math.min(word1.length(), word2.length());
-            boolean found = false; 
+            int diffIndex = findFirstDiffPos(words[i], words[i+1]);
             
-            for (int j = 0; j < size; j++)
+            if (diffIndex != -1)
             {
-                if (word1.charAt(j) != word2.charAt(j))
+                int p1 = words[i].charAt(diffIndex)-'a';
+                int p2 = words[i+1].charAt(diffIndex)-'a';
+                
+                if (map[p1] > map[p2])
                 {
-                    if (index[word1.charAt(j)-'a'] > index[word2.charAt(j)-'a'])
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        found = true;
-                        break;
-                    }
+                    return false;
                 }
             }
-            
-            if (!found && word1.length() > word2.length())
+            else
             {
-                return false;
+                if (words[i].length() > words[i+1].length())
+                {
+                    return false;
+                }
             }
         }
         
         return true;
+    }
+    
+    private int findFirstDiffPos(String word1, String word2)
+    {
+        int index = 0;
+        
+        while (index < word1.length() && index < word2.length())
+        {
+            if (word1.charAt(index) == word2.charAt(index))
+            {
+                index++;
+            }
+            else
+            {
+                return index;
+            }
+        }
+        
+        return -1;
     }
 }

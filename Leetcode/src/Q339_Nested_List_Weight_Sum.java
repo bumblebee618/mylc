@@ -22,8 +22,63 @@ public class Q339_Nested_List_Weight_Sum {
 	 * 这里有level的概念，因此考虑用层序遍历
 	 * 
 	 ****************************************************/
-	// solution 1: using recursion
 	public int depthSum(List<NestedInteger> nestedList) {
+        if (nestedList == null || nestedList.size() == 0)
+        {
+            return 0;
+        }
+        
+        int result = 0;
+        int level = 1;
+        
+        Queue<NestedInteger> queue = new LinkedList<>();
+        
+        for (NestedInteger item : nestedList)
+        {
+            if (item.isInteger())
+            {
+                result += item.getInteger() * level;
+            }
+            else
+            {
+                for (NestedInteger next : item.getList())
+                {
+                    queue.offer(next);
+                }
+            }
+        }
+        
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
+            level++;
+            
+            for (int i = 0; i < size; i++)
+            {
+                NestedInteger item = queue.poll();
+                
+                if (item.isInteger())
+                {
+                    result += item.getInteger() * level;
+                }
+                else
+                {
+                    for (NestedInteger next : item.getList())
+                    {
+                        queue.offer(next);
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+
+	
+	
+	
+	// solution 2: using recursion
+	public int depthSum2(List<NestedInteger> nestedList) {
         if(nestedList == null || nestedList.size() == 0) {
             return 0;
         }
@@ -53,8 +108,8 @@ public class Q339_Nested_List_Weight_Sum {
 	
 	
     
-    // solution 2: using iterator
-    public int depthSum2(List<NestedInteger> nestedList) {
+    // solution 3: using iterator
+    public int depthSum3(List<NestedInteger> nestedList) {
         if(nestedList == null || nestedList.size() == 0) {
             return 0;
         }

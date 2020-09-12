@@ -1,15 +1,23 @@
 
 public class Q171_Excel_Sheet_Column_Number {
-	// by Jackie
 	public int titleToNumber(String s) {
-        if(s == null || s.length() == 0) return 0;
-        int sum = 0;
-        char[] array = s.toCharArray();
-        for(char c : array){
-            sum = sum * 26 + (c - 'A' + 1);
+        if (s == null || s.length() == 0)
+        {
+            return 0;
         }
-        return sum;
+        
+        long sum = 0;
+        int base = 26;
+        
+        for (int i = 0; i < s.length(); i++)
+        {
+            int digit = s.charAt(i)-'A'+1;
+            sum = sum * base + digit;
+        }
+        
+        return sum > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) sum;
     }
+	
 	
 	public static void main(String[] args){
 		Q171_Excel_Sheet_Column_Number t = new Q171_Excel_Sheet_Column_Number();

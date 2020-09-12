@@ -54,6 +54,12 @@ public class Q636_Exclusive_Time_of_Functions {
         for (String log : logs)
         {
             String[] info = log.split(":");
+            
+            if (info.length != 3 || (!info[1].equals("start") && !info[1].equals("end")))
+            {
+                continue;
+            }
+            
             int id = Integer.parseInt(info[0]);
             int time = Integer.parseInt(info[2]);
             
@@ -61,7 +67,7 @@ public class Q636_Exclusive_Time_of_Functions {
             {
                 if (!stack.isEmpty())
                 {
-                    result[stack.peek()] += time-prevTime;
+                    result[stack.peek()] += time-prevTime; 
                 }
                 
                 stack.push(id);
@@ -69,7 +75,7 @@ public class Q636_Exclusive_Time_of_Functions {
             }
             else
             {
-                result[stack.pop()] += time-prevTime+1;
+                result[stack.pop()] += time-prevTime+1; 
                 prevTime = time+1;
             }
         }

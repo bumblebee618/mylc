@@ -23,7 +23,82 @@ nums[i] will be between 1 and 65535.
 k will be between 1 and floor(nums.length / 3).
  */
 public class Q689_Maximum_Sum_of_3_Non_Overlapping_Subarrays {
-	public int[] maxSumOfThreeSubarrays(int[] nums, int k) 
+	// solution 1
+	public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k <= 0 || nums.length < 3*k)
+        {
+            return new int[0];
+        }
+        
+        int size = nums.length;
+        int[] sum = new int[size+1];
+        
+        for (int i = 0; i < size; i++)
+        {
+            sum[i+1] = sum[i]+nums[i];
+        }
+        
+        int[] leftStart = new int[size];
+        int leftMax = sum[k] - sum[0];
+        leftStart[0] = 0;
+        
+        for (int i = k; i < size; i++)
+        {
+            if (leftMax < sum[i+1]-sum[i+1-k])
+            {
+                leftMax = sum[i+1]-sum[i+1-k];
+                leftStart[i] = i+1-k;
+            }
+            else
+            {
+                leftStart[i] = leftStart[i-1];
+            }
+        }
+        
+        int[] rightStart = new int[size];
+        int rightMax = sum[size]-sum[size-k];
+        rightStart[size-k] = size-k;
+        
+        for (int i = size-k-1; i >= 0; i--)
+        {
+            if (rightMax <= sum[i+k]-sum[i])
+            {
+                rightMax = sum[i+k]-sum[i];
+                rightStart[i] = i;
+            }
+            else
+            {
+                rightStart[i] = rightStart[i+1];
+            }
+        }
+
+        int globalMax = Integer.MIN_VALUE;
+        int[] result = new int[3];
+        
+        for (int i = k; i <= size-2*k; i++)
+        {
+            int l = leftStart[i-1];
+            int r = rightStart[i+k];
+            int total = (sum[l+k]-sum[l]) + (sum[r+k]-sum[r]) + (sum[i+k]-sum[i]);
+            
+            if (total > globalMax)
+            {
+                globalMax = total;
+                result[0] = l;
+                result[1] = i;
+                result[2] = r;
+            }
+        }
+        
+        return result;
+    }
+
+	
+	
+	
+	
+	// solution 2
+	public int[] maxSumOfThreeSubarrays2(int[] nums, int k) 
 	{
 		if (nums == null || nums.length < k*3)
 		{

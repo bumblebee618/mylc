@@ -15,24 +15,39 @@ public class Q088_Merge_Sorted_Array {
     // nums1 not has enough space
 	
 	public void merge(int[] nums1, int m, int[] nums2, int n) {
-        if(nums1 == null || nums2 == null) {
-            return ;
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || m < 0 || n < 0)
+        {
+            return;
+        }
+        else if (m + n > nums1.length)
+        {
+            return;
         }
         
-        int index = n + m - 1;
-        int index1 = m - 1, index2 = n - 1;
+        int index = m+n-1;
+        int index1 = m-1;
+        int index2 = n-1;
         
-        while(index1 >= 0 || index2 >= 0){
-            if(index1 >= 0 && index2 >= 0) {
-                if(nums1[index1] > nums2[index2]) {
+        while (index1 >= 0 || index2 >= 0)
+        {
+            if (index1 >= 0 && index2 >= 0)
+            {
+                if (nums1[index1] > nums2[index2])
+                {
                     nums1[index--] = nums1[index1--];
-                } else {
+                }
+                else
+                {
                     nums1[index--] = nums2[index2--];
                 }
-            } else if(index2 >= 0) {
+            }
+            else if (index2 >= 0)
+            {
                 nums1[index--] = nums2[index2--];
-            } else {
-                break;
+            }
+            else
+            {
+                return;
             }
         }
     }

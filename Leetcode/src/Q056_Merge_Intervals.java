@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
@@ -19,46 +20,51 @@ public class Q056_Merge_Intervals {
     // intervals is sorted?
     // invalid input: interval.start >= intervals.end
 	
-	public List<Interval> merge(List<Interval> intervals) {
-        List<Interval> ans = new ArrayList<>();
-        
-        if(intervals == null || intervals.size() == 0) {
-            return ans;
+	public int[][] merge(int[][] intervals) {
+        List<int[]> list = new ArrayList<>();
+
+        if(intervals == null || intervals.length == 0) 
+        {
+            return new int[0][0];
         }
         
-//        Collections.sort(intervals, new Comparator<Interval>(){
-//            public int compare(Interval l1, Interval l2){
-//                if(l1.start != l2.start) {
-//                    return l1.start - l2.start;
-//                } else {
-//                    return l1.end - l2.end;
-//                }
-//            }
-//        });
-        
-        Collections.sort(intervals, (a, b) -> (a.start != b.start) ? a.start - b.start : a.end - b.end);
+        Arrays.sort(intervals, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : a[1] - b[1]);
         Integer startPos = null;
         Integer endPos = null;
-        
-        for(Interval node : intervals) {
-            if(startPos == null) {
-                startPos = node.start;
-                endPos = node.end;
+
+        for(int[] node : intervals) 
+        {
+            if(startPos == null) 
+            {
+                startPos = node[0];
+                endPos = node[1];
                 continue;
             }
-            
-            if(endPos >= node.start) {
-                endPos = Math.max(endPos, node.end);
-            } else {
-                ans.add(new Interval(startPos, endPos));
-                startPos = node.start;
-                endPos = node.end;
+
+            if(endPos >= node[0]) 
+            {
+                endPos = Math.max(endPos, node[1]);
+            } 
+            else 
+            {
+                list.add(new int[]{startPos, endPos});
+                startPos = node[0];
+                endPos = node[1];
             }
         }
+
+        list.add(new int[] {startPos, endPos});
+        int[][] result = new int[list.size()][2];
+        int index = 0;
         
-        ans.add(new Interval(startPos, endPos));
-        return ans;
+        for (int[] elem : list)
+        {
+            result[index++] = elem;
+        }
+        
+        return result;
     }
+
 	
     
     
@@ -87,10 +93,12 @@ public class Q056_Merge_Intervals {
     		list.add(new Interval(array[i][0], array[i][1]));
     	}
     	
+    	/***
     	List<Interval> ans = t.merge(list);
     	
     	for(int i = 0; i < ans.size(); ++i){
     		System.out.print("[" + ans.get(i).start + ", " + ans.get(i).end + "], ");
     	}
+    	***/
     }
 }
