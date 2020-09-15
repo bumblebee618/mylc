@@ -17,6 +17,7 @@ n is a non-negative integer which won't exceed the input array size.
  *
  */
 public class Q605_Can_Place_Flowers {
+	// solution 1:
 	public boolean canPlaceFlowers(int[] flowerbed, int n) {
         if (flowerbed == null || flowerbed.length == 0) {
             return n == 0;
@@ -38,6 +39,55 @@ public class Q605_Can_Place_Flowers {
             }
             
             index++;
+        }
+        
+        return false;
+    }
+	
+	// solution 2:
+	public boolean canPlaceFlowers2(int[] flowerbed, int n) {
+        if (flowerbed == null || flowerbed.length == 0)
+        {
+            return n <= 0;
+        }
+        else if (n <= 0)
+        {
+            return true;
+        }
+        
+        return backtrack(flowerbed, n);
+    }
+    
+    private boolean backtrack(int[] flowerbed, int n)
+    {
+        if (n == 0)
+        {
+            return true;
+        }
+        
+        for (int i = 0; i < flowerbed.length; i++)
+        {
+            if (flowerbed[i] != 0)
+            {
+                continue;
+            }
+            else if (i > 0 && flowerbed[i-1] == 1)
+            {
+                continue;
+            }
+            else if (i+1 < flowerbed.length && flowerbed[i+1] == 1)
+            {
+                continue;
+            }
+            
+            flowerbed[i] = 1;
+            
+            if (backtrack(flowerbed, n-1))
+            {
+                return true;
+            }
+            
+            flowerbed[i] = 0;
         }
         
         return false;
