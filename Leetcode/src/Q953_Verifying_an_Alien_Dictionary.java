@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /***
  * 
  * @author jackie
@@ -33,7 +35,69 @@ All characters in words[i] and order are English lowercase letters.
 
  */
 public class Q953_Verifying_an_Alien_Dictionary {
+	// solution 1:
 	public boolean isAlienSorted(String[] words, String order) {
+        if (words == null || words.length <= 1)
+        {
+            return true;
+        }
+        else if (order == null || order.length() == 0)
+        {
+            return false;
+        }
+        
+        int[] index = new int[256];
+        Arrays.fill(index, -1);
+        
+        for (int i = 0; i < order.length(); i++)
+        {
+            if (index[order.charAt(i)] != -1)
+            {
+                return false;
+            }
+            
+            index[order.charAt(i)] = i;
+        }
+        
+        for (int i = 0; i < words.length-1; i++)
+        {
+            if (words[i].equals(words[i+1]))
+            {
+                continue;
+            }
+            
+            int size = Math.min(words[i].length(), words[i+1].length());
+            
+            for (int j = 0; j < size; j++)
+            {
+                char c1 = words[i].charAt(j);
+                char c2 = words[i+1].charAt(j);
+                
+                if (index[c1] - index[c2] > 0)
+                {
+                    return false;
+                }
+                else if (index[c1] - index[c2] < 0)
+                {
+                    break;
+                }
+                
+                if (j == size-1 && words[i].length() > words[i+1].length())
+                {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+
+	
+	
+	
+	
+	// solution 2:
+	public boolean isAlienSorted2(String[] words, String order) {
         if (words == null || words.length == 0 || order == null || order.length() == 0)
         {
             return true;

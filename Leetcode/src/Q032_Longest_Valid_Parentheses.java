@@ -48,7 +48,7 @@ public class Q032_Longest_Valid_Parentheses {
 	
 	
 	
-	// solution 2: using DP, time O(n^3), space O(n^2)
+	// solution 2: using 区间DP, time O(n^3), space O(n^2)
 		public int longestValidParentheses2(String s) {
 			if(s == null || s.length() == 0){
 	            return 0;

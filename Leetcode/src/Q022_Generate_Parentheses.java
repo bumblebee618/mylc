@@ -20,31 +20,37 @@ For example, given n = 3, a solution set is:
 public class Q022_Generate_Parentheses {
 	// solution 1: using backtrack
 	public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList<>();
+        List<String> result = new LinkedList<>();
         
-        if (n <= 0) {
-            return ans;
+        if (n <= 0)
+        {
+            return result;
         }
         
-        helper(ans, "", 0, 0, n);
-        return ans;
+        generationHelper(result, "", 0, 0, n);
+        return result;
     }
     
-    public void helper(List<String> ans, String solution, int openNum, int closeNum, int n) {
-        if (n * 2 == solution.length()) {
-            ans.add(solution);
-            return ;
+    private void generationHelper(List<String> result, String solution, int open, int close, int n)
+    {
+        if (solution.length() == n*2)
+        {
+            result.add(solution);
+            return;
         }
         
-        if (openNum < n) {
-            helper(ans, solution + "(", openNum + 1, closeNum, n);
-        } 
+        if (open < n)
+        {
+            generationHelper(result, solution + "(", open+1, close, n);
+        }
         
-        if (closeNum < openNum) {
-            helper(ans, solution + ")", openNum, closeNum + 1, n);
+        // 注意不能用 else
+        if (close < open)  
+        {
+            generationHelper(result, solution + ")", open, close+1, n);
         }
     }
-    
+
     
 	
 	// solution 2: using backtrack, but exceed time limit

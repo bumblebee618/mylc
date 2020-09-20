@@ -37,33 +37,34 @@ S only consists of '(' and ')' characters.
  *
  */
 public class Q921_Minimum_Add_to_Make_Parentheses_Valid {
-	public int minAddToMakeValid(String str) {
-        if (str == null || str.length() == 0)
+	public int minAddToMakeValid(String s) {
+        if (s == null || s.length() == 0)
         {
             return 0;
         }
         
-        int result = 0;
-        int count = 0;
+        int stackSize = 0;
+        int modifyCount = 0;
         
-        for (char c : str.toCharArray())
+        for (char c : s.toCharArray())
         {
             if (c == '(')
             {
-                count++;
+                stackSize++;
             }
             else if (c == ')')
             {
-                count--;
-            }
-            
-            if (count < 0)
-            {
-                result += Math.abs(count);
-                count = 0;
+                if (stackSize == 0)
+                {
+                    modifyCount++;
+                }
+                else
+                {
+                    stackSize--;
+                }
             }
         }
         
-        return result + count;
+        return modifyCount + stackSize;
     }
 }

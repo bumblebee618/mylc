@@ -59,9 +59,9 @@ public class Q282_Expression_Add_Operators {
             }
             else
             {
-                backtrack(result, num, i+1, String.format("%s%s%s", solution, "+", curNum), target, sum+curNum, curNum);
-                backtrack(result, num, i+1, String.format("%s%s%s", solution, "-", curNum), target, sum-curNum, -curNum);
-                backtrack(result, num, i+1, String.format("%s%s%s", solution, "*", curNum), target, sum+prevSum*(curNum-1), prevSum*curNum);
+                backtrack(result, num, i+1, String.format("%s+%s", solution, curNum), target, sum+curNum, curNum);
+                backtrack(result, num, i+1, String.format("%s-%s", solution, curNum), target, sum-curNum, -curNum);
+                backtrack(result, num, i+1, String.format("%s*%s", solution, curNum), target, sum+prevSum*(curNum-1), prevSum*curNum);
             }
         }
     }

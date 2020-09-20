@@ -7,8 +7,56 @@ import java.util.*;
  * */
 
 public class Q023_Merge_k_Sorted_Lists {
-	// Solution 1: using divide & conquer
-	public ListNode mergeKLists(ListNode[] lists) {
+	// Solution 1: using priorityQueue
+		public ListNode mergeKLists(ListNode[] lists) {
+	        if (lists == null || lists.length == 0)
+	        {
+	            return null;
+	        }
+	        
+	        /***
+	        Queue<ListNode> heap = new PriorityQueue<>(size, new Comparator<ListNode>(){
+	            @Override
+	            public int compare(ListNode node1, ListNode node2)
+	            {
+	                return node1.val - node2.val;
+	            }
+	        });
+	        ***/
+	        
+	        int size = lists.length;
+	        Queue<ListNode> heap = new PriorityQueue<>(size, (a, b) -> a.val - b.val);
+	        
+	        for (ListNode list : lists)
+	        {
+	            if (list != null)
+	            {
+	                heap.offer(list);
+	            }
+	        }
+	        
+	        ListNode dummy = new ListNode(0);
+	        ListNode point = dummy;
+	        
+	        while (!heap.isEmpty())
+	        {
+	            ListNode node = heap.poll();
+	            point.next = node;
+	            point = point.next;
+	            
+	            if (node.next != null)
+	            {
+	                heap.offer(node.next);
+	            }
+	        }
+	        
+	        return dummy.next;
+	    }
+		
+		
+		
+	// Solution 2: using divide & conquer
+	public ListNode mergeKLists2(ListNode[] lists) {
 		if (lists == null || lists.length == 0) {
 			return null;
 		}
@@ -56,40 +104,8 @@ public class Q023_Merge_k_Sorted_Lists {
 
 	
 	
-	// Solution 2: using priorityQueue
-	public ListNode mergeKLists2(ListNode[] lists) {
-		if (lists == null || lists.length == 0) {
-			return null;
-		}
+	
 
-		Queue<ListNode> minHeap = new PriorityQueue<ListNode>(lists.length, new Comparator<ListNode>() {
-			@Override
-			public int compare(ListNode node1, ListNode node2) {
-				return node1.val - node2.val;
-			}
-		});
-
-		for (int i = 0; i < lists.length; i++) {
-			if (lists[i] != null) {
-				minHeap.offer(lists[i]);
-			}
-		}
-
-		ListNode dummy = new ListNode(0);
-		ListNode travelor = dummy;
-
-		while (!minHeap.isEmpty()) {
-			ListNode node = minHeap.poll();
-			travelor.next = node;
-			travelor = travelor.next;
-
-			if (node.next != null) {
-				minHeap.offer(node.next);
-			}
-		}
-
-		return dummy.next;
-	}
 
 	
 	

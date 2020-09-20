@@ -48,6 +48,7 @@ public class Q339_Nested_List_Weight_Sum {
             }
         }
         
+        // bfs
         while (!queue.isEmpty())
         {
             int size = queue.size();

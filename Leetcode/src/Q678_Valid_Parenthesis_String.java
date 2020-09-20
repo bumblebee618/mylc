@@ -31,6 +31,7 @@ public class Q678_Valid_Parenthesis_String {
         int size = s.length();
         boolean[][] dp = new boolean[size][size];
         
+        // "*" 作为空字符使用
         for (int i = 0; i < size; i++)
         {
             if (s.charAt(i) == '*')
