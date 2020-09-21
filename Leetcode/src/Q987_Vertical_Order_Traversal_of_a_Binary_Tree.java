@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 /***
  * 
@@ -58,22 +59,17 @@ public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
         {
             return result;
         }
-           
+        
+        Map<Integer, List<Tuple>> map = new HashMap<>();
         Queue<Tuple> queue = new LinkedList<>();
         queue.offer(new Tuple(root, 0, 0));
-        Map<Integer, List<Tuple>> map = new HashMap<>();
-        int size = 1, leftBound = 0, rightBound = 0;
+        int leftBound = 0;
+        int rightBound = 0;
         
         while (!queue.isEmpty())
         {
             Tuple t = queue.poll();
-            
-            if (!map.containsKey(t.y))
-            {
-                map.put(t.y, new LinkedList<Tuple>());
-            }
-            
-            map.get(t.y).add(t);
+            map.computeIfAbsent(t.y, x -> new LinkedList<Tuple>()).add(t);
             leftBound = Math.min(leftBound, t.y);
             rightBound = Math.max(rightBound, t.y);
             
@@ -86,33 +82,36 @@ public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
             {
                 queue.offer(new Tuple(t.node.right, t.x+1, t.y+1));
             }
-            
-            if (--size == 0)
-            {
-                size = queue.size();
-            }
         }
         
         for (int i = leftBound; i <= rightBound; i++)
         {
-            List<Tuple> list = map.get(i);
-            
-            Collections.sort(list, new Comparator<Tuple>(){
-                @Override
-                public int compare(Tuple t1, Tuple t2)
-                {
-                    return (t1.x != t2.x) ? t1.x - t2.x : t1.node.val - t2.node.val; 
-                }
-            });
-            
-            List<Integer> nums = new LinkedList<>();
-            
-            for (Tuple t : list)
+            if (map.containsKey(i))
             {
-                nums.add(t.node.val);
-            }
+                List<Tuple> list = map.get(i);
+                Collections.sort(list, (t1, t2) -> (t1.x != t2.x ? t1.x - t2.x : t1.node.val - t2.node.val));
+                List<Integer> valList = list.stream().map(x -> x.node.val).collect(Collectors.toList());
+                result.add(valList);
+                
+                /***
+                Collections.sort(list, new Comparator<Tuple>(){
+                    @Override
+                    public int compare(Tuple t1, Tuple t2)
+                    {
+                        return (t1.x != t2.x) ? t1.x - t2.x : t1.node.val - t2.node.val; 
+                    }
+                });
             
-            result.add(nums);
+                List<Integer> nums = new LinkedList<>();
+            
+                for (Tuple t : list)
+                {
+                    nums.add(t.node.val);
+                }
+            
+                result.add(nums);
+                ***/
+            }
         }
         
         return result;
@@ -120,9 +119,9 @@ public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
     
     class Tuple
     {
-        TreeNode node;
-        int x;
-        int y;
+        public int x;
+        public int y;
+        public TreeNode node;
         
         public Tuple(TreeNode node, int x, int y)
         {

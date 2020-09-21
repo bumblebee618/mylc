@@ -60,7 +60,6 @@ public class Q621_Task_Scheduler {
             int time = 0;
             List<Integer> list = new LinkedList<>();
             
-            // one period
             while (time <= n)
             {
                 if (!maxHeap.isEmpty())

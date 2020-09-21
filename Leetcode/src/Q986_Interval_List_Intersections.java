@@ -74,14 +74,6 @@ public class Q986_Interval_List_Intersections {
             }
         }
         
-        int[][] result = new int[list.size()][2];
-        int index = 0;
-        
-        for (int[] inter : list)
-        {
-            result[index++] = inter;
-        }
-        
-        return result;
+        return list.toArray(new int[list.size()][]);
     }
 }
