@@ -16,23 +16,29 @@ For the purpose of this problem, we define empty string as valid palindrome.
 
 public class Q125_Valid_Palindrome {
 	public boolean isPalindrome(String s) {
-        if(s == null || s.length() <= 1) {
+        if (s == null || s.length() == 0)
+        {
             return true;
         }
         
-        int left = 0, right = s.length() - 1;
-        s = s.toLowerCase();
+        int left = 0, right = s.length()-1;
+        String str = s.toLowerCase();
+        char[] letters = str.toCharArray();
         
-        while(left < right) {
-            while(left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+        while (left < right)
+        {
+            while (left < right && !Character.isLetterOrDigit(letters[left]))
+            {
                 left++;
             }
             
-            while(left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+            while (left < right && !Character.isLetterOrDigit(letters[right]))
+            {
                 right--;
             }
             
-            if(s.charAt(left) != s.charAt(right)) {
+            if (left < right && letters[left] != letters[right])
+            {
                 return false;
             }
             

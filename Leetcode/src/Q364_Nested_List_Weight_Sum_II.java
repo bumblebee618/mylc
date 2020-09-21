@@ -18,8 +18,59 @@ Example 2:
  * */
 
 public class Q364_Nested_List_Weight_Sum_II {
-	// solution 1: using iterator
-	public int depthSumInverse(List<NestedInteger> nestedList) {
+	// solution 1:
+	private Map<Integer, List<Integer>> map = new HashMap<>();
+    private int totalDepth = 0;
+    
+    public int depthSumInverse(List<NestedInteger> nestedList) {
+        if (nestedList == null || nestedList.size() == 0)
+        {
+            return 0;
+        }
+        
+        for (NestedInteger node : nestedList)
+        {
+            bfs(node, 1);
+        }
+        
+        int result = 0;
+        
+        for (int level = 1; level <= totalDepth; level++)
+        {
+            if (map.containsKey(level))
+            {
+                for (int node : map.get(level))
+                {
+                    result += node * (totalDepth - level + 1);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    private void bfs(NestedInteger node, int level)
+    {
+        if (node.isInteger())
+        {
+            totalDepth = Math.max(totalDepth, level);
+            int val = node.getInteger();
+            map.computeIfAbsent(level, x -> new LinkedList<Integer>()).add(val);
+            return;
+        }
+        
+        for (NestedInteger next : node.getList())
+        {
+            bfs(next, level+1);
+        } 
+    }
+
+	
+    
+    
+	
+	// solution 2: using iterator
+	public int depthSumInverse2(List<NestedInteger> nestedList) {
         if(nestedList == null || nestedList.size() == 0) {
             return 0;
         }
@@ -66,11 +117,11 @@ public class Q364_Nested_List_Weight_Sum_II {
 	
     
     
-	// solution 2: recursion
+	// solution 3: recursion
 	private Stack<Node2> stack = new Stack<Node2>();
     private int totalLevel = 0;
     
-    public int depthSumInverse2(List<NestedInteger> nestedList) {
+    public int depthSumInverse3(List<NestedInteger> nestedList) {
         if(nestedList == null || nestedList.size() == 0){
             return 0;
         }

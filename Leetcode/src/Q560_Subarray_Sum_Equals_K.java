@@ -21,17 +21,15 @@ public class Q560_Subarray_Sum_Equals_K {
             return 0;
         }
         
-        int size = nums.length;
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(0, 1);
-        int sum = 0;
+        Map<Long, Integer> map = new HashMap<>();
+        map.put(0L, 1);
+        long sum = 0;
         int result = 0;
         
-        for (int num : nums)
+        for (int num : nums) 
         {
             sum += num;
-            int time = map.getOrDefault(sum-k, 0);
-            result += time;
+            result += map.getOrDefault(sum-k, 0);
             map.put(sum, map.getOrDefault(sum, 0)+1);
         }
         

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 /********
@@ -26,59 +27,47 @@ A solution is:
 
 public class Q249_Group_Shifted_Strings {
 	public List<List<String>> groupStrings(String[] strings) {
-        List<List<String>> ans = new ArrayList<List<String>>();
+        List<List<String>> result = new LinkedList<>();
         
-        if (strings == null || strings.length == 0) {
-            return ans;
+        if (strings == null || strings.length == 0)
+        {
+            return result;
         }
         
         Map<String, List<String>> map = new HashMap<>();
         
-        for (String word : strings) {
-            String firstShiftedString = getFirstShifted(word);
-            
-            if (map.containsKey(firstShiftedString)) {
-                map.get(firstShiftedString).add(word);
-            } else {
-                List<String> list = new ArrayList<>();
-                list.add(word);
-                map.put(firstShiftedString, list);
-            }
+        for (String string : strings)
+        {
+            String originalStr = getOriginalStr(string);
+            map.computeIfAbsent(originalStr, x -> new LinkedList<String>()).add(string);
         }
         
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) 
+        {
             List<String> list = entry.getValue();
             Collections.sort(list);
-            ans.add(list);
+            result.add(list);
         }
         
-        return ans;
+        return result;
     }
     
-    public String getFirstShifted(String target){
-        char[] letters = target.toCharArray();
-        int len = letters.length;
+    private String getOriginalStr(String word)
+    {
+        char[] letters = word.toCharArray();
+        int size = word.length();
         int diff = letters[0] - 'a';
         
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < size; i++)
+        {
             int curDiff = letters[i] - 'a' - diff;
-            
-            if (curDiff >= 0) {
-                letters[i] -= diff;
-            } else {
-                letters[i] = (char) (curDiff + 26 + 'a');
-            }
+            letters[i] = curDiff >= 0 ? (char) (letters[i] - diff) : (char) (26 + curDiff + 'a');
         }
         
         return new String(letters);
     }
-    
-    
-    
-    
-    
-    
-    
+
+	
     
     
     

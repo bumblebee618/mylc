@@ -46,25 +46,29 @@ public class Q238_Product_of_Array_Except_Self {
 	
 	
 	// follow up: using DP, time is O(n), space is O(1)
-		public int[] productExceptSelf2(int[] nums) {
-			if (nums == null || nums.length == 0) {
-	            return new int[0];
-	        }
-	        
-	        int len = nums.length;
-	        int[] result = new int[len];
-	        result[0] = 1;
-	        int right = 1;
-	        
-	        for (int i = 1; i < len; i++) {
-	            result[i] = result[i-1] * nums[i-1];
-	        }
-	        
-	        for (int i = len-2; i >= 0; i--) {
-	            right *= nums[i+1];
-	            result[i] *= right;
-	        }
-	        
-	        return result;
-	    }
+	public int[] productExceptSelf2(int[] nums) {
+        if (nums == null || nums.length == 0)
+        {
+            return new int[0];
+        }
+        
+        int size = nums.length;
+        int[] result = new int[size];
+        result[0] = 1;
+        
+        for (int i = 1; i < size; i++)
+        {
+            result[i] = result[i-1] * nums[i-1];
+        }
+        
+        int right = 1;
+        
+        for (int i = size-2; i >= 0; i--)
+        {
+            right *= nums[i+1];
+            result[i] *= right;
+        }
+        
+        return result;
+    }
 }

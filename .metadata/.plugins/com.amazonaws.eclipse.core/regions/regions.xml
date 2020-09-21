@@ -689,7 +689,7 @@
             <service name="ElasticBeanstalk" authregion="us-gov-east-1">https://elasticbeanstalk.us-gov-east-1.amazonaws.com</service>
             <service name="IAM" authregion="us-gov-west-1">https://iam.us-gov.amazonaws.com</service>
             <service name="KMS">https://kms.us-gov-east-1.amazonaws.com</service>
-            <service name="Kinesis">https://kinesis.us-gov-east-1.amazonaws.com</service>
+            <service name="Kinesis" authregion="us-gov-east-1">https://kinesis.us-gov-east-1.amazonaws.com</service>
             <service name="Lambda">https://lambda.us-gov-east-1.amazonaws.com</service>
             <service name="Logs" authregion="us-gov-east-1">https://logs.us-gov-east-1.amazonaws.com</service>
             <service name="RDS">https://rds.us-gov-east-1.amazonaws.com</service>
@@ -721,7 +721,7 @@
             <service name="ElasticBeanstalk" authregion="us-gov-west-1">https://elasticbeanstalk.us-gov-west-1.amazonaws.com</service>
             <service name="IAM" authregion="us-gov-west-1">https://iam.us-gov.amazonaws.com</service>
             <service name="KMS">https://kms.us-gov-west-1.amazonaws.com</service>
-            <service name="Kinesis">https://kinesis.us-gov-west-1.amazonaws.com</service>
+            <service name="Kinesis" authregion="us-gov-west-1">https://kinesis.us-gov-west-1.amazonaws.com</service>
             <service name="Lambda">https://lambda.us-gov-west-1.amazonaws.com</service>
             <service name="Logs" authregion="us-gov-west-1">https://logs.us-gov-west-1.amazonaws.com</service>
             <service name="RDS">https://rds.us-gov-west-1.amazonaws.com</service>

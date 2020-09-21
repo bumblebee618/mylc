@@ -32,7 +32,7 @@ public class Q721_Accounts_Merge {
         {
             return result;
         }
-
+        
         Map<String, List<String>> graph = new HashMap<>();
         Map<String, String> emailToName = new HashMap<>();
         
@@ -41,8 +41,10 @@ public class Q721_Accounts_Merge {
         {
             String name = account.get(0);
             String firstEmail = account.get(1);
-
-            for (int i = 1; i < account.size(); i++)
+            emailToName.put(firstEmail, name);
+            graph.computeIfAbsent(firstEmail, x -> new ArrayList<String>()).add(firstEmail);
+            
+            for (int i = 2; i < account.size(); i++)
             {
                 String email = account.get(i);
                 graph.computeIfAbsent(email, x -> new ArrayList<String>()).add(firstEmail);
@@ -51,14 +53,14 @@ public class Q721_Accounts_Merge {
             }
         }
         
-        // start dfs
+        // start bfs
         Set<String> visited = new HashSet<>();
 
         for (String email : graph.keySet())
         {
             if (!visited.contains(email))
             {
-                List<String> list = dfs(graph, email, visited);
+                List<String> list = bfs(graph, email, visited);
                 Collections.sort(list);
                 String name = emailToName.get(email);
                 list.add(0, name);
@@ -68,24 +70,24 @@ public class Q721_Accounts_Merge {
 
         return result;
     }
-    
-    private List<String> dfs(Map<String, List<String>> graph, String email, Set<String> visited)
-    {
-        Stack<String> stack = new Stack();
-        stack.push(email);
-        visited.add(email);
-        List<String> list = new LinkedList();
 
-        while (!stack.isEmpty())
+    private List<String> bfs(Map<String, List<String>> graph, String email, Set<String> visited)
+    {
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(email);
+        visited.add(email);
+        List<String> list = new LinkedList<>();
+
+        while (!queue.isEmpty())
         {
-            String node = stack.pop();
+            String node = queue.poll();
             list.add(node);
 
             for (String next : graph.get(node))
             {
                 if (!visited.contains(next))
                 {
-                    stack.push(next);
+                    queue.offer(next);
                     visited.add(next);
                 }
             }

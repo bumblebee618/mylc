@@ -49,46 +49,53 @@ public class Q1021_Remove_Outermost_Parentheses {
             return s;
         }
         
-        StringBuilder builder = new StringBuilder();
         int index = 0;
         int size = s.length();
+        StringBuilder builder = new StringBuilder();
         
         while (index < size)
         {
-            if (s.charAt(index) == '(')
+            if (s.charAt(index) != '(')
             {
-                int end = findPos(s, index);
-                builder.append(s.substring(index+1, end));
-                index = end+1;
+                index++;
+                continue;
             }
+            
+            int pos = findPosition(s, index);
+                
+            if (pos == -1)
+            {
+                return "";
+            }
+            
+            builder.append(s.substring(index+1, pos));
+            index = pos+1;
         }
         
         return builder.toString();
     }
     
-    private int findPos(String s, int index)
+    private int findPosition(String s, int start)
     {
         int count = 0;
         
-        while (index < s.length())
+        for (int i = start; i < s.length(); i++)
         {
-            if (s.charAt(index) == '(')
+            char c = s.charAt(i);
+            
+            switch (c)
             {
-                count++;
-            }
-            else
-            {
-                count--;
+                case '(': count++; break;
+                case ')': count--; break;
+                default: ;
             }
             
             if (count == 0)
             {
-                break;
+                return i;
             }
-            
-            index++;
         }
         
-        return index;
+        return -1;
     }
 }

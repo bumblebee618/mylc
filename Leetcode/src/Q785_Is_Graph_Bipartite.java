@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 /***
  * 
@@ -42,43 +41,44 @@ The graph is undirected: if any element j is in graph[i], then i will be in grap
  */
 public class Q785_Is_Graph_Bipartite {
 	public boolean isBipartite(int[][] graph) {
-        if (graph == null)
+        if (graph == null || graph.length == 0)
         {
             return false;
         }
         
         int n = graph.length;
-        int[] setTags = new int[n];
-        Arrays.fill(setTags, -1);
+        int[] setTag = new int[n];
+        Arrays.fill(setTag, -1);
         
         for (int i = 0; i < n; i++)
         {
-            if (setTags[i] != -1)
+            if (setTag[i] != -1)
             {
                 continue;
             }
             
-            Stack<Integer> stack = new Stack<>();
-            stack.push(i);
-            setTags[i] = 0;
+            // bfs
+            Queue<Integer> queue = new LinkedList<>();
+            queue.offer(i);
+            setTag[i] = 0;
             
-            while (!stack.isEmpty())
+            while (!queue.isEmpty())
             {
-                int node = stack.pop();
+                int node = queue.poll();
                 
                 for (int neighbor : graph[node])
                 {
-                    if (setTags[neighbor] == -1)
+                    if (setTag[neighbor] == -1)
                     {
-                        stack.push(neighbor);
-                        setTags[neighbor] = setTags[node] ^ 1;
+                        setTag[neighbor] = setTag[node] ^ 1;
+                        queue.offer(neighbor);
                     }
-                    else if (setTags[neighbor] == setTags[node])
+                    else if (setTag[node] == setTag[neighbor])
                     {
                         return false;
                     }
                 }
-            }
+            } 
         }
         
         return true;

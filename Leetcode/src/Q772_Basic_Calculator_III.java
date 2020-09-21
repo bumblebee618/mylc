@@ -35,8 +35,9 @@ public class Q772_Basic_Calculator_III {
         }
         
         Stack<Integer> stack = new Stack<>();
-        char prevSign = ' ';
+        char prevOper = ' ';
         int num = 0;
+        int result = 0;
         int size = s.length();
         
         for (int i = 0; i < size; i++)
@@ -68,64 +69,54 @@ public class Q772_Basic_Calculator_III {
             
             if (!Character.isDigit(c) || i == size-1)
             {
-                if (prevSign == '+')
+                switch (prevOper)
                 {
-                    stack.push(num);
-                }
-                else if (prevSign == '-')
-                {
-                    stack.push(-num);
-                }
-                else if (prevSign == '*')
-                {
-                    if (!stack.isEmpty())
-                    {
-                        stack.push(stack.pop()*num);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                else if (prevSign == '/')
-                {
-                    if (!stack.isEmpty())
-                    {
-                        stack.push(stack.pop()/num);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                else if (prevSign == ' ')
-                {
-                    stack.push(num);
+                    case '+': stack.push(num); break;
+                    case '-': stack.push(-num); break;
+                    case '*': 
+                        {
+                            if (stack.isEmpty())
+                            {
+                                return -1;
+                            }
+                    
+                            stack.push(stack.pop() * num);
+                            break;
+                        }
+                    case '/': 
+                        {
+                            if (stack.isEmpty())
+                            {
+                                return -1;
+                            }
+                    
+                            stack.push(stack.pop() / num);
+                            break;
+                        }
+                    case ' ': stack.push(num); break;
                 }
                 
-                prevSign = c;
                 num = 0;
+                prevOper = c;
             }
         }
-        
-        int result = 0;
         
         while (!stack.isEmpty())
         {
             result += stack.pop();
         }
-        
+            
         return result;
     }
     
     private int findClosePos(String s, int start)
     {
         int count = 0;
-        
+            
         for (int i = start; i < s.length(); i++)
         {
-            char c = s.charAt(i);
-            
+            int c = s.charAt(i);
+                
             if (c == '(')
             {
                 count++;
@@ -134,15 +125,22 @@ public class Q772_Basic_Calculator_III {
             {
                 count--;
             }
-            
+                
             if (count == 0)
             {
                 return i;
             }
         }
-        
+            
         return -1;
     }
+
+    
+    
+    
+    
+    
+    
 
     
     public static void main(String[] args)

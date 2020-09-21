@@ -46,4 +46,47 @@ public class Q670_Maximum_Swap {
         
         return num;
     }
+	
+	
+	// solution 2:
+	public int maximumSwap2(int num) {
+        if (num <= 0)
+        {
+            return 0;
+        }
+        
+        char[] digits = Integer.toString(num).toCharArray();
+        int[] index = new int[digits.length];
+        int maxValueIndex = -1;
+        
+        for (int i = digits.length-1; i >= 0; i--)
+        {
+            if (maxValueIndex == -1 || digits[maxValueIndex] < digits[i])
+            {
+                maxValueIndex = i;
+                index[i] = -1;
+            }
+            else if (digits[maxValueIndex] == digits[i])
+            {
+                index[i] = -1;
+            }
+            else
+            {
+                index[i] = maxValueIndex;
+            }
+        }
+        
+        for (int i = 0; i < digits.length; i++)
+        {
+            if (index[i] != -1)
+            {
+                char temp = digits[i];
+                digits[i] = digits[index[i]];
+                digits[index[i]] = temp;
+                return Integer.parseInt(new String(digits));
+            }
+        }
+        
+        return num;
+    }
 }

@@ -37,38 +37,47 @@ Note:
  *
  */
 public class Q973_K_Closest_Points_to_Origin {
-	public int[][] kClosest(int[][] points, int k) {
-        if (points == null || points.length == 0 || points[0].length == 0 || k <= 0)
+	public int[][] kClosest(int[][] points, int K) {
+        if (points == null || points.length == 0 || points[0].length != 2 || K <= 0)
         {
             return new int[0][0];
         }
         
-        int[][] result = new int[k][2];
-        
-        Queue<Tuple> maxHeap = new PriorityQueue<>(k+1, new Comparator<Tuple>(){
+        Queue<Tuple> heap = new PriorityQueue<>(K+1, new Comparator<Tuple>(){
             @Override
             public int compare(Tuple t1, Tuple t2)
             {
-                return t2.distance - t1.distance;
+                if (t1.distance - t2.distance < 0)
+                {
+                    return 1;
+                }
+                else if (t1.distance - t2.distance > 0)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         });
         
         for (int[] point : points)
         {
-            maxHeap.offer(new Tuple(point));
+            heap.offer(new Tuple(point));
             
-            if (maxHeap.size() > k)
+            if (heap.size() > K)
             {
-                maxHeap.poll();
+                heap.poll();
             }
         }
         
         int index = 0;
+        int[][] result = new int[heap.size()][2];
         
-        while (!maxHeap.isEmpty())
+        while (!heap.isEmpty())
         {
-            Tuple t = maxHeap.poll();
-            result[index++] = t.point;
+            result[index++] = heap.poll().point;
         }
         
         return result;
@@ -76,9 +85,9 @@ public class Q973_K_Closest_Points_to_Origin {
     
     class Tuple
     {
-        int[] point;
-        int distance;
-        
+        public int[] point;
+        public long distance;
+
         public Tuple(int[] point)
         {
             this.point = point;
