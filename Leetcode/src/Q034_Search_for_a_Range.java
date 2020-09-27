@@ -21,68 +21,68 @@ public class Q034_Search_for_a_Range {
     // 		nums do not contain target element
 	
 	// using binary search
-    public int[] searchRange(int[] nums, int target) {
-        if(nums == null || nums.length == 0) {
+	public int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length == 0)
+        {
             return new int[] {-1, -1};
         }
         
-        int[] ans = new int[2];
-        ans[0] = searchForBound(nums, target, 0, true);
+        int[] result = new int[] {-1, -1};
+        result[0] = binarySearch(nums, target, 0, nums.length - 1, true);
         
-        if(ans[0] == -1) {
-            return new int[]{-1, -1};
-        } else {
-            ans[1] = searchForBound(nums, target, ans[0], false);
-            return ans;
+        if (result[0] == -1)
+        {
+            return result;
         }
+        
+        result[1] = binarySearch(nums, target, result[0], nums.length - 1, false);
+        return result;
     }
     
-    private int searchForBound(int[] nums, int target, int start, boolean isLeft) {
-    	int left = start, right = nums.length - 1;
-        
-        while(left + 1 < right) {
-            int mid = left + (right - left) / 2;
+    private int binarySearch(int[] nums, int target, int start, int end, boolean findLeftBound)
+    {
+        while (start + 1 < end)
+        {
+            int mid = start + (end - start) / 2;
             
-            if (isLeft)
+            if (findLeftBound)
             {
-            	if(nums[mid] < target) {
-                    left = mid;
-                } else {
-                    right = mid;
+                if (nums[mid] < target)
+                {
+                    start = mid;
+                }
+                else
+                {
+                    end = mid;
                 }
             }
             else
             {
-            	if(nums[mid] > target) {
-                    right = mid;
-                } else {
-                    left = mid;
+                if (nums[mid] > target)
+                {
+                    end = mid;
+                }
+                else
+                {
+                    start = mid;
                 }
             }
         }
         
-        if (nums[left] != target && nums[right] != target)
+        if (nums[start] == target || nums[end] == target)
         {
-        	return -1;
-        }
-        
-        if (isLeft)
-        {
-        	if(nums[left] == target) {
-                return left;
-            } 
-        	else {
-                return right;
-            } 
+            if (findLeftBound)
+            {
+                return nums[start] == target ? start : end;
+            }
+            else
+            {
+                return nums[end] == target ? end : start;
+            }
         }
         else
         {
-        	if(nums[right] == target) {
-                return right;
-            } 
-        	else {
-                return left;
-            } 
+            return -1;
         }
     }
     

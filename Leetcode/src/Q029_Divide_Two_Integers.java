@@ -7,7 +7,55 @@ If it is overflow, return MAX_INT.
  * */
 
 public class Q029_Divide_Two_Integers {	
+	// solution 1: binary search
 	public int divide(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1)
+        {
+            return Integer.MAX_VALUE;
+        }
+        else if (divisor == 0)
+        {
+            return Integer.MAX_VALUE;
+        }
+        
+        int flag = (long) dividend * divisor > 0 ? 1 : -1;
+        long divd = Math.abs((long) dividend);
+        long divs = Math.abs((long) divisor);
+        long result = binarySearch(divd, divs) * flag;
+        return result > Integer.MAX_VALUE || result < Integer.MIN_VALUE ? Integer.MAX_VALUE : (int) result;   
+    }
+    
+    private long binarySearch(long divd, long divs)
+    {
+        long left = 1, right = divd;
+        
+        while (left < right)
+        {
+            long mid = left + (right - left) / 2;
+            long result = mid * divs;
+            
+            if (result > divd)
+            {
+                right = mid - 1;
+            }
+            else if (result < divd)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                return mid;
+            }
+        }
+        
+        return left * divs > divd ? left - 1 : left;
+    }
+
+	
+    
+	
+	// solution 2:
+	public int divide2(int dividend, int divisor) {
 		if (dividend == Integer.MIN_VALUE && divisor == -1){
 			return Integer.MAX_VALUE;
 		}
@@ -34,7 +82,6 @@ public class Q029_Divide_Two_Integers {
 			return -ret;
 		}
 	}
-	
 	
 	
 	

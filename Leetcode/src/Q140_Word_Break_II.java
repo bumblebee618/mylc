@@ -30,17 +30,18 @@ public class Q140_Word_Break_II {
 	 * 自底向上，用memoSearch记录已经求过的答案，减少重复计算
 	 * 
 	 ********************************************************************************************************/
-	private List<String> result = new LinkedList<>();
+	private Set<String> wordDict;
     private int maxWordLen = 0;
-    private Set<String> wordSet; 
     
-    public List<String> wordBreak(String s, List<String> wordDict) {
-        if(s == null || s.length() == 0 || wordDict.size() == 0){
-            return new LinkedList<String>();
+    public List<String> wordBreak(String s, List<String> wordList) {
+        if (s == null || s.length() == 0 || wordList == null || wordList.size() == 0)
+        {
+            return new LinkedList<>();
         }
-
-        init(wordDict);
-        List<String>[] memo = new List[s.length()];
+        
+        int size = s.length();
+        List<String>[] memo = new List[size];
+        initDict(wordList);
         return backtrack(s, 0, memo);
     }
     
@@ -60,40 +61,43 @@ public class Q140_Word_Break_II {
         
         for (int end = start; end < s.length() && end-start+1 <= maxWordLen; end++)
         {
-            String nextWord = s.substring(start, end+1);
+            String curWord = s.substring(start, end+1);
             
-            if (wordSet.contains(nextWord))
+            if (!wordDict.contains(curWord))
             {
-                List<String> list = backtrack(s, end+1, memo);
-                
-                for (String str : list)
+                continue;
+            }
+            
+            List<String> list = backtrack(s, end+1, memo);
+            
+            for (String str : list)
+            {
+                if (str.equals(""))
                 {
-                    if (str.equals(""))
-                    {
-                        result.add(nextWord);
-                    }
-                    else
-                    {
-                        result.add(nextWord + " " + str);
-                    }
+                    result.add(curWord);
+                }
+                else
+                {
+                    result.add(String.format("%s %s", curWord, str));
                 }
             }
         }
         
         memo[start] = result;
-        return result;
+        return memo[start];
     }
     
-    private void init(List<String> wordDict)
+    private void initDict(List<String> wordList)
     {
-    	wordSet = new HashSet<String>();
-
-        for (String word : wordDict)
+        wordDict = new HashSet<>();
+        
+        for (String word : wordList)
         {
-            wordSet.add(word);
+            wordDict.add(word);
             maxWordLen = Math.max(maxWordLen, word.length());
         }
     }
+
 
 
 

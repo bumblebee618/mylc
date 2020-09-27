@@ -20,36 +20,40 @@ Absolute value of elements in the array and x will not exceed 104
 public class Q658_Find_K_Closest_Elements {
 	// Time complexity O(logn)
 	public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        List<Integer> result = new LinkedList<>();
+        List<Integer> result = new ArrayList<>();
         
-        if (arr == null || k <= 0 || arr.length < k)
+        if (arr == null || arr.length == 0 || k <= 0 || k > arr.length)
         {
-            return result;
+            return result;            
         }
         
-        int left = 0, right = arr.length - k;
+        int left = 0, right = arr.length-k;
         
-        while (left < right) 
+        while (left < right)
         {
-            int mid = left+(right-left)/2;
-        
-            if (Math.abs(arr[mid]-x) > Math.abs(arr[mid+k]-x))
+            int mid = left + (right - left) / 2;
+            
+            if (x - arr[mid] > arr[mid + k] - x)
             {
                 left = mid + 1;
             }
             else
             {
-                right = mid; 
+                 right = mid;
             }
         }
-    
-        for (int i = left; i < right+k; i++)
+        
+        for (int i = 0; i < k; i++)
         {
-            result.add(arr[i]);
+            result.add(arr[left+i]);
         }
         
         return result;
-     }
+    }
+
+	
+	
+	
     
 	
 	// Time complexity O(n-k)

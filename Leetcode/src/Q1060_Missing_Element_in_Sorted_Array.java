@@ -33,16 +33,22 @@ Note:
  *
  */
 public class Q1060_Missing_Element_in_Sorted_Array {
-	// method 1, using binary search and time complexity is O(logn)
+	// solution 1, using binary search and time complexity is O(logn)
 	public int missingElement(int[] nums, int k) {
         if (nums == null || nums.length == 0 || k <= 0)
         {
             return -1;
         }
-
-        if (k > findMissingNumber(nums, nums.length-1))
+        
+        /***
+        int total = nums[nums.length-1]-nums[0]+1;
+        int missing = total - nums.length;
+        ***/
+        int missing = findMissingNumber(nums, nums.length-1);
+        
+        if (k > missing)
         {
-            return nums[nums.length-1] + k - findMissingNumber(nums, nums.length-1);
+            return nums[nums.length-1] + k - missing;
         }
         
         int left = 0, right = nums.length-1;
@@ -75,9 +81,14 @@ public class Q1060_Missing_Element_in_Sorted_Array {
     {
         return nums[pos] - nums[0] - pos;
     }
+
     
     
-    // method 2, time complexity is O(n)
+    
+    
+    
+    
+    // solution 2, time complexity is O(n)
     public int missingElement2(int[] nums, int k) {
         if (nums == null || nums.length == 0 || k <= 0)
         {

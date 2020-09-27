@@ -34,36 +34,35 @@ public class Q139_Word_Break {
 	 ********************************************************************************************************/
 	
 	// using DP, time is O(n), space is O(n)
-	private int maxLen = 0;
+	private int maxWordLen = 0;
     private Set<String> wordDict;
     
     public boolean wordBreak(String s, List<String> wordList) {
         if (s == null || s.length() == 0)
         {
-            return false;
+            return true;
         }
         else if (wordList == null || wordList.size() == 0)
         {
             return false;
         }
         
-        
-        init(wordList);
         int size = s.length();
         boolean[] canSplit = new boolean[size+1];
         canSplit[0] = true;
+        initDict(wordList);
         
-        for (int i = 1; i <= size; i++)
+        for (int end = 1; end <= size; end++)
         {
-            for (int wordLen = 1; wordLen <= maxLen && i - wordLen >= 0; wordLen++)
+            for (int length = 1; end-length >= 0 && length <= maxWordLen; length++)
             {
-                if (canSplit[i-wordLen])
+                if (canSplit[end-length])
                 {
-                    String word = s.substring(i-wordLen, i);
+                    String lastWord = s.substring(end-length, end);
                     
-                    if (wordDict.contains(word))
+                    if (wordDict.contains(lastWord))
                     {
-                        canSplit[i] = true;
+                        canSplit[end] = true;
                         break;
                     }
                 }
@@ -73,27 +72,17 @@ public class Q139_Word_Break {
         return canSplit[size];
     }
     
-    private void init(List<String> wordList)
+    private void initDict(List<String> wordList)
     {
         wordDict = new HashSet<>();
         
         for (String word : wordList)
         {
             wordDict.add(word);
-            maxLen = Math.max(maxLen, word.length());
+            maxWordLen = Math.max(maxWordLen, word.length());
         }
     }
 
-    
-    public int getMaxWordLength(Set<String> wordDict){
-        int maxLen = 0;
-        
-        for(String str : wordDict){
-            maxLen = Math.max(maxLen, str.length());
-        }
-        
-        return maxLen;
-    }
     
     
     
@@ -105,7 +94,6 @@ public class Q139_Word_Break {
             return true;
         }
     	
-    	int maxWordLen = getMaxWordLength(wordDict);
     	return backtrack(s, 0, wordDict, maxWordLen);
     }
     

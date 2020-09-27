@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -29,41 +30,51 @@ public class Q057_Insert_Interval {
     // newInterval == null
 	
 	// solution 1: using sort, time complexity is O(nlogn)
-		public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-			List<Interval> ans = new ArrayList<>();
-			intervals.add(newInterval);
+	public int[][] insert(int[][] intervals, int[] newInterval) {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0)
+        {
+            return new int[][] { newInterval };
+        }
+        else if (newInterval == null || newInterval.length == 0)
+        {
+            return intervals;
+        }
+        
+        Arrays.sort(intervals, (a, b) -> (a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]));
+        int start = newInterval[0];
+        int end = newInterval[1];
+        List<int[]> list = new LinkedList<>();
+        int index = 0;
+        
+        while (index < intervals.length)
+        {
+            if (intervals[index][1] < start)
+            {
+                list.add(intervals[index]);
+            }
+            else if (intervals[index][0] > end)
+            {
+                break;
+            }
+            else
+            {
+                start = Math.min(start, intervals[index][0]);
+                end = Math.max(end, intervals[index][1]);
+            }
+            
+            index++;
+        }
+        
+        list.add(new int[] {start, end});
+        
+        while (index < intervals.length)
+        {
+            list.add(intervals[index++]);
+        }
+        
+        return list.toArray(new int[list.size()][]);
+    }
 
-			Collections.sort(intervals, new Comparator<Interval>() {
-				public int compare(Interval inter1, Interval inter2) {
-					if (inter1.start != inter2.start) {
-						return inter1.start - inter2.start;
-					} else {
-						return inter1.end - inter2.end;
-					}
-				}
-			});
-
-			Integer startPos = null, endPos = null;
-
-			for (Interval inter : intervals) {
-				if (startPos == null) {
-					startPos = inter.start;
-					endPos = inter.end;
-					continue;
-				}
-
-				if (endPos >= inter.start) {
-					endPos = Math.max(endPos, inter.end);
-				} else {
-					ans.add(new Interval(startPos, endPos));
-					startPos = inter.start;
-					endPos = inter.end;
-				}
-			}
-
-			ans.add(new Interval(startPos, endPos));
-			return ans;
-		}
 
 		
 		
@@ -121,11 +132,11 @@ public class Q057_Insert_Interval {
     
     public static void main(String[] args){
     	Q057_Insert_Interval t = new Q057_Insert_Interval();
-    	List<Interval> intervals = new ArrayList<Interval>();
-    	intervals.add(new Interval(1, 5));
-    	intervals.add(new Interval(6, 9));
-    	Interval newInterval = new Interval(5, 6);
-    	List<Interval> ans = t.insert(intervals, newInterval);
-    	System.out.println(ans.get(0).start + ", " + ans.get(0).end);
+    	
+    	int[][] intervals = {{1, 5}, {6, 9}};
+    	int[] newInterval = new int[] {5, 6};
+    	
+    	int[][] ans = t.insert(intervals, newInterval);
+    	System.out.println(ans[0][0] + ", " + ans[0][1]);
     }
 }

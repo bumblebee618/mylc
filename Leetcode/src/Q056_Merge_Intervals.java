@@ -21,49 +21,41 @@ public class Q056_Merge_Intervals {
     // invalid input: interval.start >= intervals.end
 	
 	public int[][] merge(int[][] intervals) {
-        List<int[]> list = new ArrayList<>();
-
-        if(intervals == null || intervals.length == 0) 
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0)
         {
             return new int[0][0];
         }
         
-        Arrays.sort(intervals, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : a[1] - b[1]);
-        Integer startPos = null;
-        Integer endPos = null;
-
-        for(int[] node : intervals) 
+        Arrays.sort(intervals, (a, b) -> (a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]));
+        Integer start = null, end = null;
+        List<int[]> list = new ArrayList<>();
+        
+        for (int[] interval : intervals)
         {
-            if(startPos == null) 
+            if (start == null && end == null)
             {
-                startPos = node[0];
-                endPos = node[1];
+                start = interval[0];
+                end = interval[1];
                 continue;
             }
-
-            if(endPos >= node[0]) 
+            
+            if (interval[0] <= end)
             {
-                endPos = Math.max(endPos, node[1]);
-            } 
-            else 
+                start = Math.min(start, interval[0]);
+                end = Math.max(end, interval[1]);
+            }
+            else
             {
-                list.add(new int[]{startPos, endPos});
-                startPos = node[0];
-                endPos = node[1];
+                list.add(new int[] {start, end});
+                start = interval[0];
+                end = interval[1];
             }
         }
-
-        list.add(new int[] {startPos, endPos});
-        int[][] result = new int[list.size()][2];
-        int index = 0;
         
-        for (int[] elem : list)
-        {
-            result[index++] = elem;
-        }
-        
-        return result;
+        list.add(new int[] {start, end});
+        return list.toArray(new int[list.size()][]);
     }
+
 
 	
     

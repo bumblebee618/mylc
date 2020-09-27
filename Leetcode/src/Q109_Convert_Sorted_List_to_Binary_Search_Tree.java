@@ -12,7 +12,41 @@ public class Q109_Convert_Sorted_List_to_Binary_Search_Tree {
 	 * Given a singly linked list where elements are sorted in 
 	 * ascending order, convert it to a height balanced BST.
 	 ****************************************************************/
-	public TreeNode sortedListToBST(ListNode head) {
+	// solution 1: doesn't modify list
+    public TreeNode sortedListToBST(ListNode head) {
+        return buildTree(head, null);
+    }
+    
+    private TreeNode buildTree(ListNode head, ListNode tail)
+    {
+        if (head == tail)
+        {
+            return null;
+        }
+        else if (head.next == tail)
+        {
+            return new TreeNode(head.val);
+        }
+        
+        ListNode faster = head, slower = head;
+        
+        while (faster != tail && faster.next != tail)
+        {
+            faster = faster.next.next;
+            slower = slower.next;
+        }
+        
+        TreeNode root = new TreeNode(slower.val);
+        root.left = buildTree(head, slower);
+        root.right = buildTree(slower.next, tail);
+        return root;
+    }
+
+    
+    
+    
+    // solution 2
+	public TreeNode sortedListToBST2(ListNode head) {
         if(head == null){
             return null;
         } 
@@ -38,8 +72,10 @@ public class Q109_Convert_Sorted_List_to_Binary_Search_Tree {
     }
 	
 	
-	// by other
-	public TreeNode sortedListToBST2(ListNode head) {
+	
+	
+	// solution 3: by other
+	public TreeNode sortedListToBST3(ListNode head) {
         if(head == null)
             return null;
         ListNode slow = head;

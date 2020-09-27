@@ -1,3 +1,5 @@
+import java.util.*;
+
 /*******
  * 
 Design a Tic-tac-toe game that is played between two players on a n x n grid.
@@ -55,15 +57,22 @@ Could you do better than O(n2) per move() operation?
 public class Q348_Design_Tic_Tac_Toe {
 	private int[] rowStatus;
     private int[] colStatus;
-    private int diagonal = 0;
-    private int anti_diagonal = 0;
+    private int diag = 0;
+    private int antidiag = 0;
     private int size = 0;
+    private Set<Integer> visited;
     
     /** Initialize your data structure here. */
     public Q348_Design_Tic_Tac_Toe(int n) {
+        if (n <= 0)
+        {
+            return;
+        }
+        
+        size = n;
         rowStatus = new int[n];
         colStatus = new int[n];
-        size = n;
+        visited = new HashSet<>();
     }
     
     /** Player {player} makes a move at ({row}, {col}).
@@ -75,22 +84,36 @@ public class Q348_Design_Tic_Tac_Toe {
                 1: Player 1 wins.
                 2: Player 2 wins. */
     public int move(int row, int col, int player) {
-        int step = (player == 1) ? 1 : -1;
+        if (row < 0 || row >= size || col < 0 || col >= size)
+        {
+            return 0;
+        }
+        else if (visited.contains(row * size + col))
+        {
+            return 0;
+        }
         
+        visited.add(row * size + col);
+        int step = player == 1 ? 1 : -1;
         rowStatus[row] += step;
         colStatus[col] += step;
         
-        if(col == row){
-            diagonal += step;
-        } 
-        
-        if(col + row == size - 1){
-            anti_diagonal += step;
+        if (row == col)
+        {
+            diag += step;
         }
         
-        if(Math.abs(rowStatus[row]) == size || Math.abs(colStatus[col]) == size || Math.abs(diagonal) == size || Math.abs(anti_diagonal) == size){
+        if (row+col == size-1)
+        {
+            antidiag += step;
+        }
+        
+        if (Math.abs(rowStatus[row]) == size || Math.abs(colStatus[col]) == size || Math.abs(diag) == size || Math.abs(antidiag) == size)
+        {
             return player;
-        } else {
+        }
+        else
+        {
             return 0;
         }
     }

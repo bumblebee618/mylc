@@ -36,52 +36,53 @@ L + M <= A.length <= 1000
  * 
  */
 public class Q1031_Maximum_Sum_of_Two_Non_Overlapping_Subarrays {
+	// solution 1
 	public int maxSumTwoNoOverlap(int[] nums, int L, int M) {
-        if (nums == null || nums.length == 0 || L <= 0 || L > nums.length || M <= 0 || M > nums.length || L+M > nums.length)
+        if (nums == null || nums.length == 0 || L <= 0 || M <= 0 || L+M > nums.length)
         {
             return 0;
         }
-    
+        
         return Math.max(nonOverlappedSum(nums, L, M), nonOverlappedSum(nums, M, L));
     }
     
-    private int nonOverlappedSum(int[] nums, int L, int M) 
+    private int nonOverlappedSum(int[] nums, int L, int M)
     {
-        int l_sum = 0, m_sum = 0;
-        int l_maxSum = 0, result = 0;
+        int leftSum = 0, rightSum = 0;
         
         for (int i = 0; i < L; i++)
         {
-            l_sum += nums[i];
-            result += nums[i];
+            leftSum += nums[i];
         }
-        
-        l_maxSum = l_sum;
         
         for (int i = L; i < L+M; i++)
         {
-            m_sum += nums[i];
-            result += nums[i];
+            rightSum += nums[i];
         }
+        
+        int leftMax = leftSum, result = leftMax + rightSum;
         
         for (int i = L+M; i < nums.length; i++)
         {
-            m_sum += nums[i];
-            m_sum -= nums[i-M];
-            l_sum += nums[i-M];
-            l_sum -= nums[i-M-L];
-            l_maxSum = Math.max(l_maxSum, l_sum);
-            result = Math.max(result, l_maxSum + m_sum);
+            leftSum -= nums[i-L-M];
+            leftSum += nums[i-M];
+            
+            rightSum -= nums[i-M];
+            rightSum += nums[i];
+            
+            leftMax = Math.max(leftMax, leftSum);
+            result = Math.max(result, leftMax+rightSum);
         }
         
         return result;
     }
+
     
     
     
     
     
-    
+    // solution 2
     public int maxSumTwoNoOverlap2(int[] nums, int L, int M) {
         if (nums == null || nums.length == 0 || L <= 0 || L > nums.length || M <= 0 || M > nums.length || L+M > nums.length)
         {
