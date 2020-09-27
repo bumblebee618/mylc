@@ -102,24 +102,22 @@ public class Q1254_Number_of_Closed_Islands {
     
     private void bfs(int[][] grid, boolean[][] visited, int x, int y)
     {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(x*col + y);
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] {x, y});
         visited[x][y] = true;
         
         while (!queue.isEmpty())
         {
-            int node = queue.poll();
-            int curX = node/col;
-            int curY = node%col;
+            int[] node = queue.poll();
             
             for (int i = 0; i < dx.length; i++)
             {
-                int newX = curX + dx[i];
-                int newY = curY + dy[i];
+                int newX = node[0] + dx[i];
+                int newY = node[1] + dy[i];
                 
                 if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && !visited[newX][newY])
                 {
-                    queue.offer(newX*col + newY);
+                    queue.offer(new int[] {newX, newY});
                     visited[newX][newY] = true;
                 }
             }

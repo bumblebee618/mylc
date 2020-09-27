@@ -59,7 +59,10 @@ The given maze does not contain border (like the red rectangle in the example pi
 The maze contains at least 2 empty spaces, and both the width and height of the maze won't exceed 100.
  */
 public class Q505_The_Maze_II {
-	public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
         if (maze == null || maze.length == 0 || maze[0].length == 0)
         {
             return -1;
@@ -69,8 +72,6 @@ public class Q505_The_Maze_II {
             return -1;
         }
         
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
         Queue<int[]> queue = new LinkedList<>();
         queue.add(start);
         int row = maze.length;
@@ -84,7 +85,8 @@ public class Q505_The_Maze_II {
         
         distance[start[0]][start[1]] = 0;
         
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             int[] current = queue.remove();
             
             if (current[0] == destination[0] && current[1] == destination[1])
@@ -104,10 +106,15 @@ public class Q505_The_Maze_II {
                     count++;
                 }
                 
-                if (distance[current[0]][current[1]] + count < distance[newX-dx[i]][newY-dy[i]]) 
+                // remove back one step
+                newX -= dx[i];
+                newY -= dy[i];
+                
+                // update distance
+                if (distance[current[0]][current[1]] + count < distance[newX][newY]) 
                 {
-                    distance[newX - dx[i]][newY - dy[i]] = distance[current[0]][current[1]] + count;
-                    queue.add(new int[] {newX - dx[i], newY - dy[i]});
+                    distance[newX][newY] = distance[current[0]][current[1]] + count;
+                    queue.add(new int[] {newX, newY});
                 }
             }
         }

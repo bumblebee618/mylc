@@ -65,7 +65,8 @@ public class Q934_Shortest_Bridge {
                 }
             }
         }
-         
+        
+        // bfs
         int step = 0;
         
         while (!queue.isEmpty())

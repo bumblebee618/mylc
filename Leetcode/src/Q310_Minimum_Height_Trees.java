@@ -52,8 +52,92 @@ return [3, 4]
 
 
 public class Q310_Minimum_Height_Trees {
-	// Prune the leaves, 剪枝法
+	// Solution 1:Prune leaves
 	public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+	        List<Integer> result = new LinkedList<>();
+	        
+	        if (n <= 0 || edges == null)
+	        {
+	            return result;
+	        }
+	        else if (n == 1)
+	        {
+	            result.add(0);
+	            return result;
+	        }
+	        
+	        Set<Integer>[] graph = new Set[n];
+	        
+	        // Construct adjencent graph        
+	        for (int[] edge : edges)
+	        {
+	            if (graph[edge[0]] == null)
+	            {
+	                graph[edge[0]] = new HashSet<>();
+	            }
+	            
+	            graph[edge[0]].add(edge[1]);
+	            
+	            if (graph[edge[1]] == null)
+	            {
+	                graph[edge[1]] = new HashSet<>();
+	            }
+	            
+	            graph[edge[1]].add(edge[0]);
+	        }
+	        
+	        // Prune the leaves(剪枝法), start from leaves
+	        Queue<Integer> queue = new LinkedList<>();
+	        
+	        for (int i = 0; i < n; i++)
+	        {
+	            if (graph[i].size() == 1)
+	            {
+	                queue.offer(i);
+	            }
+	        }
+	        
+	        while (n > 2)
+	        {
+	            int size = queue.size();
+	            
+	            for (int i = 0; i < size; i++)
+	            {
+	                n--;
+	                int leave = queue.poll();
+	                
+	                if (graph[leave] == null)
+	                {
+	                    continue;
+	                }
+	                
+	                for (int next : graph[leave])
+	                {
+	                    graph[next].remove(leave);
+	                    
+	                    if (graph[next].size() == 1)
+	                    {
+	                        queue.offer(next);
+	                    }
+	                }
+	            }
+	        }
+	        
+	        while (!queue.isEmpty())
+	        {
+	            result.add(queue.poll());
+	        }
+	        
+	        return result;
+	    }
+
+	
+	
+	
+	
+	
+	// solution 2: Prune the leaves, 剪枝法
+	public List<Integer> findMinHeightTrees2(int n, int[][] edges) {
         List<Integer> result = new LinkedList<>();
         
         if (n <= 0 || edges == null)

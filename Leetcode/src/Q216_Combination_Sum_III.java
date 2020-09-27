@@ -14,29 +14,38 @@ public class Q216_Combination_Sum_III {
 /*****************************************************/
 	// by Jackie using backtrack
 	public List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        if(k <= 0 || n <= 0){
-            return ans;
+        List<List<Integer>> result = new LinkedList<List<Integer>>();
+        
+        if(k <= 0 || n <= 0)
+        {
+            return result;
         }
         
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        helper(ans, list, 1, k, n);
-        return ans;
+        List<Integer> list = new LinkedList<Integer>();
+        backtrack(result, list, 1, k, n);
+        return result;
     }
     
-    public void helper(List<List<Integer>> ans, ArrayList<Integer> list, int start, int k ,int n){
-        if(list.size() == k){
-            if(n == 0){
-                ans.add(new ArrayList<Integer>(list));
+    public void backtrack(List<List<Integer>> result, List<Integer> list, int start, int k, int target)
+    {
+        if (list.size() == k)
+        {
+            if(target == 0)
+            {
+                result.add(new LinkedList<Integer>(list));
             }
+            
             return;
-        } else if(n < start){
+        } 
+        else if (target < start)
+        {
             return;
         }
         
-        for(int i = start; i <= 9; ++i){
+        for (int i = start; i <= 9; ++i)
+        {
             list.add(i);
-            helper(ans, list, i + 1, k, n - i);
+            backtrack(result, list, i + 1, k, target - i);
             list.remove(list.size() - 1);
         }
     }

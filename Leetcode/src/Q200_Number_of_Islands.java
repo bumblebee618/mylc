@@ -34,8 +34,12 @@ public class Q200_Number_of_Islands {
 	 *******************************************************************/
 
 	// solution 1: using DFS, no need to change the grid[][], time complexity O(n^m), space O(n^m)
+    private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
 	public int numIslands(char[][] grid) {
-        if(grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0){
+        if (grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0)
+        {
             return 0;
         }
     
@@ -44,9 +48,13 @@ public class Q200_Number_of_Islands {
         boolean[][] visited = new boolean[row][col];
         int count = 0;
         
-        for(int i = 0; i < row; ++i){
-            for(int j = 0; j < col; ++j){
-                if(grid[i][j] == '1' && visited[i][j] != true){
+        for (int i = 0; i < row; ++i)
+        {
+            for (int j = 0; j < col; ++j)
+            {
+                if (grid[i][j] == '1' && visited[i][j] != true)
+                {
+                    visited[i][j] = true;
                     bfs(grid, visited, i, j);
                     count++;
                 }
@@ -56,26 +64,24 @@ public class Q200_Number_of_Islands {
         return count;
     }
     
-    public void bfs(char[][] grid, boolean[][] visited, int x, int y){
-        if(visited[x][y] == true){
-            return;
-        }
+    public void bfs(char[][] grid, boolean[][] visited, int x, int y)
+    {        
         
-        visited[x][y] = true;
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
         int row = grid.length;
         int col = grid[0].length; 
         
-        for(int i = 0; i < 4; ++i){
+        for (int i = 0; i < 4; ++i)
+        {
             int newX = x + dx[i];
             int newY = y + dy[i];
             
-            if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == '1'){
+            if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == '1' && !visited[newX][newY]){
+                visited[newX][newY] = true;
                 bfs(grid, visited, newX, newY);
             }
         }
     }
+
     
     
     

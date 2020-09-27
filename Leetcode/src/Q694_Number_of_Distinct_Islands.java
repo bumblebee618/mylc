@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /***
  * 
@@ -47,19 +48,24 @@ public class Q694_Number_of_Distinct_Islands {
         
         this.grid = grid;
         visited = new boolean[grid.length][grid[0].length];
-        Set<List<Integer>> shapes = new HashSet();
+        Set<List<Integer>> shapes = new HashSet<>();
 
-        for (int x = 0; x < grid.length; x++) {
-            for (int y = 0; y < grid[0].length; y++) {
-                List<Integer> shape = new LinkedList<Integer>();
-                
+        for (int x = 0; x < grid.length; x++) 
+        {
+            for (int y = 0; y < grid[0].length; y++) 
+            {
                 if (grid[x][y] == 1 && !visited[x][y])
                 {
+                    List<Integer> shape = new LinkedList<>();
                     dfs(x, y, 0, shape);
-                }
- 
-                if (!shape.isEmpty()) {
-                    shapes.add(shape);
+                    
+                    // for test
+                    // printList(shape);
+                    
+                    if (!shape.isEmpty()) 
+                    {
+                        shapes.add(shape);
+                    }
                 }
             }
         }
@@ -83,5 +89,27 @@ public class Q694_Number_of_Distinct_Islands {
         }
         
         shape.add(0);
+    }
+    
+    
+    
+    /*****************************************************************************************/
+    
+    private void printList(List<Integer> list)
+    {
+    	for (int num : list)
+    	{
+    		System.out.print(num + ", ");
+    	}
+    	
+    	System.out.println();
+    }
+    
+    
+    public static void main(String[] args)
+    {
+    	Q694_Number_of_Distinct_Islands test = new Q694_Number_of_Distinct_Islands();
+    	int[][] grid = {{1,1,0}, {0,1,1}, {0,0,0}, {1,1,1}, {0,1,0}};
+    	test.numDistinctIslands(grid);
     }
 }

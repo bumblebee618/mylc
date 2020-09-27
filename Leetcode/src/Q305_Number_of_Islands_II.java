@@ -52,40 +52,47 @@ Can you do it in time complexity O(k log mn), where k is the length of the posit
 
 public class Q305_Number_of_Islands_II {
 	// using Union Find time complexity is O(n*m + k), space O(n*m)
-	
-	public List<Integer> numIslands2(int m, int n, int[][] positions) {
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public List<Integer> numIslands2(int m, int n, int[][] positions) 
+    {
         List<Integer> ans = new LinkedList<>();
         
-        if (m <=0 || n <= 0) {
+        if (m <=0 || n <= 0) 
+        {
             return ans;
         }
         
         UnionFind uf = new UnionFind(m, n);
         int count = 0;
         int[][] island = new int[m][n];
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
         int len = positions.length;
         
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) 
+        {
             int x = positions[i][0];
             int y = positions[i][1];
             
-            if (island[x][y] == 0) {
+            if (island[x][y] == 0) 
+            {
                 count++;
                 island[x][y] = 1;
                 int currentId = convertToId(x, y, n);
                 
-                for (int j = 0; j < 4; j++) {
+                for (int j = 0; j < 4; j++) 
+                {
                     int newX = x + dx[j];
                     int newY = y + dy[j];
                     
-                    if (newX >= 0 && newX < m && newY >= 0 && newY < n && island[newX][newY] == 1) {
+                    if (newX >= 0 && newX < m && newY >= 0 && newY < n && island[newX][newY] == 1) 
+                    {
                         int newId = convertToId(newX, newY, n);
                         int currentParent = uf.Find(currentId);
                         int newParent = uf.Find(newId);
                         
-                        if (currentParent != newParent) {
+                        if (currentParent != newParent) 
+                        {
                             count--;
                             uf.Union(currentParent, newParent);
                         }
@@ -99,30 +106,37 @@ public class Q305_Number_of_Islands_II {
         return ans;
     }
     
-    public int convertToId(int x, int y, int col) {
+    public int convertToId(int x, int y, int col) 
+    {
         return x * col + y;
     }
     
-    class UnionFind {
+    class UnionFind 
+    {
         Map<Integer, Integer> father = new HashMap<>();
         
-        public UnionFind(int row, int col) {
-            for (int i = 0; i < row * col; i++) {
+        public UnionFind(int row, int col) 
+        {
+            for (int i = 0; i < row * col; i++) 
+            {
                 father.put(i, i);
             }
         }
         
-        public int Find(int x) {
+        public int Find(int x) 
+        {
             int parent = father.get(x);
             
-            while (parent != father.get(parent)) {
+            while (parent != father.get(parent)) 
+            {
                 parent = father.get(parent);
             }
             
             int tempParent = -1;
             int fa = x;
             
-            while (fa != father.get(fa)) {
+            while (fa != father.get(fa)) 
+            {
                 tempParent = father.get(fa);
                 father.put(fa, parent);
                 fa = tempParent;
@@ -131,11 +145,13 @@ public class Q305_Number_of_Islands_II {
             return parent;
         }
         
-        public void Union(int x, int y) { 
+        public void Union(int x, int y) 
+        { 
             int parentX = father.get(x);
             int parentY = father.get(y);
             
-            if (parentX != parentY) {
+            if (parentX != parentY) 
+            {
                 father.put(parentX, parentY);
             }
         }

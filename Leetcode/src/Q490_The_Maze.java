@@ -57,7 +57,10 @@ The maze contains at least 2 empty spaces, and both the width and height of the 
  *
  */
 public class Q490_The_Maze {
-	public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+        
+    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
         if (maze == null || maze.length == 0 || maze[0].length == 0)
         {
             return false;
@@ -66,15 +69,14 @@ public class Q490_The_Maze {
         {
             return false;
         }
-        
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
+
         Queue<int[]> queue = new LinkedList<>();
         queue.add(start);
         boolean[][] visited = new boolean[maze.length][maze[0].length];
         visited[start[0]][start[1]] = true;
         
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             int[] current = queue.poll();
             
             if (current[0] == destination[0] && current[1] == destination[1])
@@ -87,14 +89,20 @@ public class Q490_The_Maze {
                 int newX = current[0] + dx[i];
                 int newY = current[1] + dy[i];
                 
-                while (newX >= 0 && newY >= 0 && newX < maze.length && newY < maze[0].length && maze[newX][newY] == 0) {
+                while (newX >= 0 && newY >= 0 && newX < maze.length && newY < maze[0].length && maze[newX][newY] == 0) 
+                {
                     newX += dx[i];
                     newY += dy[i];
                 }
                 
-                if (!visited[newX - dx[i]][newY - dy[i]]) {
-                    queue.add(new int[] {newX - dx[i], newY - dy[i]});
-                    visited[newX - dx[i]][newY - dy[i]] = true;
+                // remove back one step
+                newX -= dx[i];
+                newY -= dy[i];
+                
+                if (!visited[newX][newY]) 
+                {
+                    queue.add(new int[] {newX, newY});
+                    visited[newX][newY] = true;
                 }
             }
         }

@@ -48,7 +48,7 @@ public class Q721_Accounts_Merge {
             {
                 String email = account.get(i);
                 graph.computeIfAbsent(email, x -> new ArrayList<String>()).add(firstEmail);
-                graph.computeIfAbsent(firstEmail, x -> new ArrayList<String>()).add(email);
+                graph.get(firstEmail).add(email);
                 emailToName.put(email, name);
             }
         }

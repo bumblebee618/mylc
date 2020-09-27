@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /************
  * 
 You are given a m x n 2D grid initialized with these three possible values.
@@ -24,7 +27,63 @@ After running your function, the 2D grid should be:
  * */
 
 public class Q286_Walls_and_Gates {
-	public void wallsAndGates(int[][] rooms) {
+	// solution 1: bfs
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public void wallsAndGates(int[][] rooms) {
+        if (rooms == null || rooms.length == 0 || rooms[0].length == 0)
+        {
+            return ;
+        }
+        
+        int row = rooms.length;
+        int col = rooms[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+            	if (rooms[i][j] == 0)
+                {
+            		queue.offer(new int[] {i, j});
+            	}              
+            }
+        }
+        
+        int distance = 1;
+        
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
+            
+            for (int i = 0; i < size; i++)
+            {
+                int[] index = queue.poll();
+                
+                for(int j = 0; j < dx.length; j++)
+                {
+                    int newX = index[0] + dx[j];
+                    int newY = index[1] + dy[j];
+            
+                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && rooms[newX][newY] == Integer.MAX_VALUE)
+                    {
+            	        rooms[newX][newY] = distance;
+                        queue.offer(new int[] {newX, newY});
+                    }
+                }
+            }
+            
+            distance++;
+        }
+    }
+
+    
+    
+	
+	// solution 2:
+	public void wallsAndGates2(int[][] rooms) {
         if(rooms == null || rooms.length == 0 || rooms[0].length == 0){
             return ;
         }
