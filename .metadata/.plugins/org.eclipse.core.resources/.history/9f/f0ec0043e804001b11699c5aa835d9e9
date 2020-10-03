@@ -1,0 +1,52 @@
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ParkingLot 
+{
+	private Map<String, ParkingLevel> parkingLevelMap;
+	
+	public ParkingLot(int levelNum, List<Integer> slotSizes, List<Integer> Capacities)
+	{
+		parkingLevelMap = new HashMap<>();
+		System.out.println(slotSizes.size() + ", " + capacities.size());
+		
+		for (int i = 0; i < levelNum; i++)
+		{
+			String levelId = Utils.generateGuid();
+			parkingLevelMap.put(levelId, new ParkingLevel(levelId, slotSizes, Capacities));
+		}
+	}
+	
+	public int getAvailableSpotsForGivenSize(int vehicleSize)
+	{
+		int count = 0;
+		
+		for (String levelId : parkingLevelMap.keySet())
+		{
+			count += parkingLevelMap.get(levelId).getAvailableSpotsForGivenSize(vehicleSize);
+		}
+		
+		return count;
+	}
+	
+	public ParkingSlot parkVehicle(int vehicleSize)
+	{
+		for (String levelId : parkingLevelMap.keySet())
+		{
+			ParkingSlot slot = parkingLevelMap.get(levelId).parkVehicle(vehicleSize);
+			
+			if (slot != null)
+			{
+				return slot;
+			}
+		}
+		
+		return null;
+	}
+	
+	public boolean unparkVehicle(ParkingSlot slot)
+	{
+		return parkingLevelMap.get(slot.getLevelId()).unparkVehicle(slot);
+	}
+}

@@ -14,6 +14,7 @@ public class Q333_Largest_BST_Subtree {
     
     private Integer[] traverse(TreeNode root)
     {
+    	// minvalue, maxvalue, total count of the subBST
         Integer[] result = new Integer[] {null, null, null};
         
         if (root == null)

@@ -31,10 +31,10 @@ public class Q282_Expression_Add_Operators {
         return result;
     }
     
-    private void backtrack(List<String> result, String num, int startPos, String solution, int target, long sum, long prevSum)
+    private void backtrack(List<String> result, String num, int start, String solution, int target, long sum, long prevSum)
     {
     	// prevNum is used to store the previous valid number 
-        if (startPos == num.length())
+        if (start == num.length())
         {
             if (sum == target)
             {
@@ -44,18 +44,18 @@ public class Q282_Expression_Add_Operators {
             return;
         }
         
-        for (int i = startPos; i < num.length(); i++)
+        for (int i = start; i < num.length(); i++)
         {
-            if (i > startPos && num.charAt(startPos) == '0')   // 注意这里是start，而不是 i  ！！！
+            if (num.charAt(start) == '0' && i > start)         // 注意这里是start，而不是 i  ！！！
             {                                                  // 可以是 "0", 但不可以是"01"之类的 ！！！
                 return;
             }
             
-            long curNum = Long.parseLong(num.substring(startPos, i+1));
+            long curNum = Long.parseLong(num.substring(start, i+1));
             
             if (solution.length() == 0)
             {
-                backtrack(result, num, i+1, num.substring(startPos, i+1), target, curNum, curNum);
+                backtrack(result, num, i+1, num.substring(start, i+1), target, curNum, curNum);
             }
             else
             {

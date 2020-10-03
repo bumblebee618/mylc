@@ -1,0 +1,18 @@
+public abstract class Vihecle {
+	private int plateNum;
+	private int size;
+	
+	public Vihecle(int plateNum)
+	{
+		this.plateNum = plateNum;
+		size = 0;
+	}
+
+	public int getPlateNum() {
+		return plateNum;
+	}
+
+	public int getSize() {
+		return size;
+	}
+}

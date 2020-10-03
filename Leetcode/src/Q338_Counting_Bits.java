@@ -21,25 +21,29 @@ in c++ or in any other language.
 
 public class Q338_Counting_Bits {
 	public int[] countBits(int num) {
-		if (num < 0) {
-            return new int[0];
+        if (num <= 0)
+        {
+            return new int[] {0};
         }
         
-        int[] result = new int[num + 1];
-        result[0] = 0;
-        int start = 0, end = 1;
+        int[] result = new int[num+1];
+        result[1] = 1;
+        int start = 2, index1 = 0, index2 = 2;
         
-        for (int i = 1; i <= num; i++) {
-            result[i] = result[start++] + 1;
+        while (index2 < result.length)
+        {
+            result[index2++] = result[index1++]+1;
             
-            if (start == end) {
-                start = 0;
-                end *= 2;
+            if (index1 == start)
+            {
+                start = index2;
+                index1 = 0;
             }
         }
         
         return result;
     }
+
 	
 	
 	

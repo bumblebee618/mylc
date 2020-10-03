@@ -23,8 +23,44 @@ Example 2:
  *
  * */
 public class Q416_Partition_Equal_Subset_Sum {
-	// solution 1: using backtrack
-	public boolean canPartition(int[] nums) {
+	    // solution 1: using DP
+		public boolean canPartition(int[] nums) 
+		{
+	        if (nums == null || nums.length <= 1) 
+	        {
+	            return false;
+	        }
+	        
+	        int sum = Arrays.stream(nums).sum();
+	        
+	        if (sum % 2 != 0) 
+	        {
+	            return false;
+	        } 
+	        else 
+	        {
+	            sum /= 2;
+	        }
+	        
+	        boolean[] dp = new boolean[sum + 1];
+	        dp[0] = true;
+	        
+	        for (int num : nums) 
+	        {
+	        	// 如果元素不可以重复利用，则必须从大到小遍历; test case: [1,2,5]; 反之可以重复利用，则从小到大遍历，例如518题
+	            for (int index = sum; index >= num; index--) 
+	            {
+	                dp[index] = dp[index] || dp[index - num];
+	            }
+	        }
+	        
+	        return dp[sum];
+	    }
+		
+		
+		
+	// solution 2: using backtrack (ETL)
+	public boolean canPartition2(int[] nums) {
         if(nums == null || nums.length <= 1) {
             return false;
         }
@@ -63,32 +99,6 @@ public class Q416_Partition_Equal_Subset_Sum {
 	}
 	
 	
-	
-	// solution 2: using DP
-	public boolean canPartition2(int[] nums) {
-        if (nums == null || nums.length <= 1) {
-            return false;
-        }
-        
-        int sum = Arrays.stream(nums).sum();
-        
-        if (sum % 2 != 0) {
-            return false;
-        } else {
-            sum /= 2;
-        }
-        
-        boolean[] dp = new boolean[sum + 1];
-        dp[0] = true;
-        
-        for (int num : nums) {
-            for (int index = sum; index >= num; index--) {
-                dp[index] = dp[index] || dp[index - num];
-            }
-        }
-        
-        return dp[sum];
-    }
 	
 	
 	

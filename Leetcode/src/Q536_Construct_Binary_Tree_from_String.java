@@ -48,56 +48,49 @@ public class Q536_Construct_Binary_Tree_from_String {
                 }
                 
                 index++;
-                continue;
             }
-            
-            if (index == 0)
+            else if (index == 0)
             {
-                if (c == '+')
+                switch (c)
                 {
-                    index++;
-                    continue;
-                }
-                else if (c == '-')
-                {
-                    flag = -1;
-                    index++;
-                    continue;
-                }
-                else
-                {
-                   break; 
+                    case '+': index++; continue;
+                    case '-': index++; flag = -1; continue;
+                    default: return null;
                 }
             }
-            
-            int num = Integer.parseInt(builder.toString()) * flag;
-            root = new TreeNode(num);
-            int leftEnd = -1;
-            int rightEnd = -1;
-            
-            if (c != '(')
+            else
             {
+                int num = Integer.parseInt(builder.toString()) * flag;
+                root = new TreeNode(num);
+                int leftEnd = -1;
+                int rightEnd = -1;
+            
+                if (c != '(')
+                {
+                    break;
+                }
+
+                // left subtree
+                leftEnd = findPos(s, index);
+            
+                if (leftEnd != -1)
+                {
+                    root.left = str2tree(s.substring(index+1, leftEnd));
+                }
+
+                // right subtree
+                if (leftEnd != -1 && leftEnd+1 < s.length() && s.charAt(leftEnd+1) == '(')
+                {
+                    rightEnd = findPos(s, leftEnd+1);
+                }
+            
+                if (rightEnd == s.length()-1)
+                {
+                    root.right = str2tree(s.substring(leftEnd+2, rightEnd));
+                }
+            
                 break;
             }
-
-            leftEnd = findPos(s, index);
-            
-            if (leftEnd != -1)
-            {
-                root.left = str2tree(s.substring(index+1, leftEnd));
-            }
-
-            if (leftEnd != -1 && leftEnd+1 < s.length() && s.charAt(leftEnd+1) == '(')
-            {
-                rightEnd = findPos(s, leftEnd+1);
-            }
-            
-            if (rightEnd == s.length()-1)
-            {
-                root.right = str2tree(s.substring(leftEnd+2, rightEnd));
-            }
-            
-            break;
         }
         
         return root;

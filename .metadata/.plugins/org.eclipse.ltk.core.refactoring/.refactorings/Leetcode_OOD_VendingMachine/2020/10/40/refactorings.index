@@ -1,0 +1,18 @@
+1601750173044	Move folder
+1601750188536	Rename compilation unit 'Exception.java'
+1601750194301	Move compilation unit
+1601754851724	Rename type 'VendingMachine'
+1601754867293	Rename type 'VendingMachineImpl'
+1601754944944	Rename type 'VendingMachineTransaction'
+1601754969162	Rename type 'VendingMachineTransactionImpl'
+1601755196968	Rename method 'initialize'
+1601755214655	Rename method 'initInventory'
+1601755224429	Rename method 'getInventory'
+1601755363025	Rename type 'VendingMachine'
+1601755383287	Rename type 'VendingMachineImpl'
+1601755445195	Rename type 'VendingMachineClient'
+1601755494954	Rename type 'VendingMachine'
+1601755504993	Rename type 'VendingMachineClient'
+1601755519081	Rename type 'VendingMachineTransactionImpl'
+1601755553903	Rename type 'VendingMachine'
+1601755564367	Rename type 'VendingMachineTransaction'

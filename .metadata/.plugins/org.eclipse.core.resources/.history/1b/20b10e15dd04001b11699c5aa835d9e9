@@ -1,0 +1,8 @@
+import java.util.UUID;
+
+public static class Utils {
+	public String generateGuid()
+	{
+		return UUID.randomUUID().toString();
+	}
+}

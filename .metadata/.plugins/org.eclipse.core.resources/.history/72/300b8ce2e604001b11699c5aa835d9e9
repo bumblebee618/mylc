@@ -1,0 +1,60 @@
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ParkingManager {
+	private ParkingLot parkingLot;
+	private Map<String, ParkingTicket> parkingTickets;
+	private Map<String, Vehicle> vehicles;
+	
+	public ParkingManager(int parkingLotLevelNum, List<Integer> slotSizes, List<Integer> Capacities)
+	{
+		parkingLot = new ParkingLot(parkingLotLevelNum, slotSizes, Capacities);
+		parkingTickets = new HashMap<>();
+		vehicles = new HashMap<>();
+	}
+	
+	public int hasAvailableSlots(int vehicleSize)
+	{
+		return parkingLot.getAvailableSpotsForGivenSize(vehicleSize);
+	}
+	
+	public String generateParkingTicket(Vehicle vehicle)
+	{
+		if (hasAvailableSlots(vehicle.getSize()) == 0)
+		{
+			return null;
+		}
+		
+		ParkingSlot slot= parkingLot.parkVehicle(vehicle.getSize());
+		
+		if (slot == null)
+		{
+			return null;
+		}
+		
+		ParkingTicket ticket = new ParkingTicket(slot, vehicle.getPlateNum());
+		parkingTickets.put(ticket.getTicketId(), ticket);
+		vehicles.put(vehicle.getPlateNum(), vehicle);
+		return ticket.getTicketId();
+	}
+	
+	public boolean withdrawParkingTicket(String ticketId)
+	{
+		if (!parkingTickets.containsKey(ticketId))
+		{
+			return false;
+		}
+		
+		ParkingTicket ticket = parkingTickets.get(ticketId);
+		
+		if (!parkingLot.unparkVehicle(ticket.getSlot()))
+		{
+			return false;
+		}
+		
+		vehicles.remove(ticket.getVehiclePlateNum());
+		parkingTickets.remove(ticket.getTicketId());
+		return true;
+	}
+}

@@ -80,6 +80,7 @@ public class Q742_Closest_Leaf_in_a_Binary_Tree {
             
             if (node != null) 
             {
+                // if current node is leaf
                 if (graph.get(node).size() <= 1)
                 {
                     return node.val;
@@ -98,22 +99,12 @@ public class Q742_Closest_Leaf_in_a_Binary_Tree {
         
         return -1;
     }
-
-    public void dfs(Map<TreeNode, List<TreeNode>> graph, TreeNode node, TreeNode parent) {
+    
+    private void dfs(Map<TreeNode, List<TreeNode>> graph, TreeNode node, TreeNode parent) {
         if (node != null) 
         {
-            if (!graph.containsKey(node)) 
-            {
-                graph.put(node, new LinkedList<TreeNode>());
-            }
-            
-            if (!graph.containsKey(parent)) 
-            {
-                graph.put(parent, new LinkedList<TreeNode>());
-            }
-            
-            graph.get(node).add(parent);
-            graph.get(parent).add(node);
+            graph.computeIfAbsent(node, x -> new LinkedList<TreeNode>()).add(parent);
+            graph.computeIfAbsent(parent, x -> new LinkedList<TreeNode>()).add(node);
             dfs(graph, node.left, node);
             dfs(graph, node.right, node);
         }

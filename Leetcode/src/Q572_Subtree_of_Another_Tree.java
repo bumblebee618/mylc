@@ -33,8 +33,36 @@ Return false.
  *
  */
 public class Q572_Subtree_of_Another_Tree {
-	// solution 1: time complexity is O(m*n)
+	// test case 1: [12] and [2]
+			
+	// sloution 1: use string as identity for the tree, time complexity is (m*n).  
 	public boolean isSubtree(TreeNode s, TreeNode t) {
+	        String sResult = dfs(s, true);
+	        String tResult = dfs(t, true);
+	        return sResult.indexOf(tResult) >= 0;
+	    }
+	    
+	    private String dfs(TreeNode node, boolean isLeft)
+	    {
+	        if (node == null)
+	        {
+	            return isLeft ? "lnull" : "rnull";
+	        }
+	        
+	        StringBuilder builder = new StringBuilder()
+	            .append("#")
+	            .append(node.val)
+	            .append("#")
+	            .append(dfs(node.left, true))
+	            .append("#")
+	            .append(dfs(node.right, false));
+	        
+	        return builder.toString();
+	    }
+
+	
+	// solution 2: time complexity is O(m*n)
+	public boolean isSubtree2(TreeNode s, TreeNode t) {
 		if (s == null)
 		{
 			return false;
@@ -55,21 +83,4 @@ public class Q572_Subtree_of_Another_Tree {
             
         return x.val == y.val && isSameTree(x.left, y.left) && isSameTree(x.right, y.right);
     }
-    
-    
-    // solution 2: time complexity is O(m+n)
-    public boolean isSubtree2(TreeNode s, TreeNode t) {
-        String sResult = preorder(s, true);
-        String tResult = preorder(t, true);
-        return sResult.indexOf(tResult) >= 0;
-    } 
-    
-    private String preorder(TreeNode node, boolean isLeft) {
-        if (node == null) {
-        	return isLeft ? "lnull" : "rnull";
-        }
-        
-        return "#" + node.val + "#" + preorder(node.left, true) + "#" + preorder(node.right, false);
-    }
-    
 }

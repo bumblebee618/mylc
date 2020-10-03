@@ -57,8 +57,45 @@ public class Q392_Is_Subsequence {
         return index1 == size1;
     }
 	
-	// solution 2: using str.indexOf(), time O(n*m), space O(1)
-	public boolean isSubsequence2(String s, String t) {
+	
+	
+	
+	// solution 2: using DP, time O(n*m), space O(n*m)
+		public boolean isSubsequence2(String s, String t) {
+	        if(s == null || s.length() == 0) {
+	            return true;
+	        } else if(t == null || t.length() == 0) {
+	            return false;
+	        }
+	        
+	        int sLen = s.length();
+	        int tLen = t.length();
+	        boolean[][] dp = new boolean[sLen+1][tLen+1];
+	        dp[0][0] = true;
+	        
+	        for(int i = 1; i <= tLen; i++) {
+	            dp[0][i] = true;
+	        }
+	        
+	        for(int i = 1; i <= sLen; i++) {
+	            for(int j = 1; j <= tLen; j++) {
+	                if(s.charAt(i-1) == t.charAt(j-1)) {
+	                    dp[i][j] = dp[i-1][j-1] || dp[i][j-1];
+	                } else {
+	                    dp[i][j] = dp[i][j-1];
+	                }
+	            }
+	        }
+	        
+	        return dp[sLen][tLen];
+	    }
+	
+		
+		
+		
+		
+	// solution 3: using str.indexOf(), time O(n*m), space O(1)
+	public boolean isSubsequence3(String s, String t) {
         if(s == null || s.length() == 0) {
             return true;
         } else if(t == null || t.length() == 0) {
@@ -82,35 +119,7 @@ public class Q392_Is_Subsequence {
 	
 	
 	
-	// solution 3: using DP, time O(n*m), space O(n*m)
-	public boolean isSubsequence3(String s, String t) {
-        if(s == null || s.length() == 0) {
-            return true;
-        } else if(t == null || t.length() == 0) {
-            return false;
-        }
-        
-        int sLen = s.length();
-        int tLen = t.length();
-        boolean[][] dp = new boolean[sLen+1][tLen+1];
-        dp[0][0] = true;
-        
-        for(int i = 1; i <= tLen; i++) {
-            dp[0][i] = true;
-        }
-        
-        for(int i = 1; i <= sLen; i++) {
-            for(int j = 1; j <= tLen; j++) {
-                if(s.charAt(i-1) == t.charAt(j-1)) {
-                    dp[i][j] = dp[i-1][j-1] || dp[i][j-1];
-                } else {
-                    dp[i][j] = dp[i][j-1];
-                }
-            }
-        }
-        
-        return dp[sLen][tLen];
-    }
+	
 	
 	
 	

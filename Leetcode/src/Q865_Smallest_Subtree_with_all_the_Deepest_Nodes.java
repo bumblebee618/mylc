@@ -59,7 +59,7 @@ public class Q865_Smallest_Subtree_with_all_the_Deepest_Nodes {
         
         if (left != null && right != null)
         {
-            return left == right ? left : node;
+            return node;
         }
         else if (left != null)
         {

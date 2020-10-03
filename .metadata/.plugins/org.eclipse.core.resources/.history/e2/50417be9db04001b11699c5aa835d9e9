@@ -1,0 +1,8 @@
+public class Vehicle_Motorcycle extends Vehicle
+{
+	public Vehicle_Motorcycle(int plateNum) 
+	{
+		super(plateNum);
+		size = 1;
+	}
+}

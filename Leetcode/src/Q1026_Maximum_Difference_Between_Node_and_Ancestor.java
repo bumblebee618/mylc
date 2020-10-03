@@ -28,57 +28,55 @@ The number of nodes in the tree is between 2 and 5000.
 Each node will have value between 0 and 100000.
  */
 public class Q1026_Maximum_Difference_Between_Node_and_Ancestor {
-private int maxDiff = 0;
+private int maxDiff = Integer.MIN_VALUE;
     
     public int maxAncestorDiff(TreeNode root) {
         if (root == null)
         {
-            return maxDiff;
+            return 0;
         }
         
-        dfs(root);
+        travese(root);
         return maxDiff;
     }
     
-    private Integer[] dfs(TreeNode root)
+    private Integer[] travese(TreeNode node)
     {
-        if (root == null)
+    	// array[0]: maxValue, array[1]: minValue
+        Integer[] current = new Integer[] {null, null}; 
+        
+        if (node == null)
         {
-            return new Integer[] {null, null};
+            return current; 
         }
         
-        Integer[] left = dfs(root.left);
-        Integer[] right = dfs(root.right);
-        Integer[] result = new Integer[] {root.val, root.val};
+        Integer[] left = travese(node.left);
+        Integer[] right = travese(node.right);
         
         if (left[0] != null && right[0] != null)
         {
-            result[0] = Math.max(result[0], Math.max(left[0], right[0]));    
+            current[0] = Math.max(left[0], right[0]);
+            current[1] = Math.min(left[1], right[1]);
         }
-        else if (left[0] != null && right[0] == null)
+        else if (left[0] != null)
         {
-            result[0] = Math.max(result[0], left[0]);  
+            current[0] = left[0];
+            current[1] = left[1];
         }
-        else if (left[0] == null && right[0] != null)
+        else if (right[0] != null)
         {
-            result[0] = Math.max(result[0], right[0]);  
+            current[0] = right[0];
+            current[1] = right[1];
+        }
+        else
+        {
+            current[0] = current[1] = node.val;
         }
         
-        if (left[1] != null && right[1] != null)
-        {
-            result[1] = Math.min(result[1], Math.min(left[1], right[1]));    
-        }
-        else if (left[1] != null && right[1] == null)
-        {
-            result[1] = Math.min(result[1], left[1]);  
-        }
-        else if (left[1] == null && right[1] != null)
-        {
-            result[1] = Math.min(result[1], right[1]);  
-        }
-        
-        maxDiff = Math.max(maxDiff, Math.max(Math.abs(root.val-result[0]), Math.abs(root.val-result[1])));
-        
-        return result;
+        int localMaxDiff = Math.max(Math.abs(node.val-current[0]), Math.abs(node.val-current[1]));
+        maxDiff = Math.max(maxDiff, localMaxDiff);
+        current[0] = Math.max(current[0], node.val);
+        current[1] = Math.min(current[1], node.val);
+        return current;
     }
 }

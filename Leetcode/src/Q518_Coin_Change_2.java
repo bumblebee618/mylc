@@ -48,6 +48,7 @@ public class Q518_Coin_Change_2 {
 
         for (int coin : coins) 
         {
+        	// 如果元素可以重复利用，则必须从小到大遍历; test case: [1,2,5]; 反之不可以重复利用，则从大到小遍历，例如416题
             for (int x = coin; x <= amount; x++) 
             {
                 dp[x] += dp[x - coin];

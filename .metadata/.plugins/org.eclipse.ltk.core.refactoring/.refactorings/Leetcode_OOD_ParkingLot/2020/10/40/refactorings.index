@@ -1,0 +1,8 @@
+1601661064356	Rename type 'ParkingSystem'
+1601661277690	Rename type 'Vihecle'
+1601661498721	Encapsulate field 'size'
+1601661779349	Rename type 'Bus'
+1601661791380	Rename type 'Car'
+1601661801112	Rename type 'Motorcycle'
+1601663451164	Rename local variable 'sizes'
+1601667983628	Rename local variable 'spotSize'

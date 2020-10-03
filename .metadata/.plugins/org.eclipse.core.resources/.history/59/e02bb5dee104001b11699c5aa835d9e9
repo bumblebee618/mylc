@@ -1,0 +1,21 @@
+import java.util.List;
+import java.util.Map;
+
+public class ParkingLot 
+{
+	private List<ParkingLevel> parkingLevelList;
+	private Map<String, String> slot2Level;
+	
+	public ParkingLot(int levelNum, List<int> sizes, List<int> capacities)
+	{
+		for (int i = 0; i < levelNum; i++)
+		{
+			int levelId = guid();
+			ParkingLevelList.add(new Level(levelId, sizes, capacities));
+		}
+		
+		slot2Level = new HashMap<>();
+		Slot2v = new HashMap<>();
+	}
+
+}

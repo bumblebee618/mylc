@@ -61,7 +61,7 @@ public class Q1123_Lowest_Common_Ancestor_of_Deepest_Leaves {
         
         if (left != null && right != null)
         {
-            return left == right ? left : node;
+            return node;
         }
         else if (left != null)
         {

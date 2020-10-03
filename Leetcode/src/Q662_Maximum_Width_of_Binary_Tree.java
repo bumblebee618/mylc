@@ -81,9 +81,11 @@ public class Q662_Maximum_Width_of_Binary_Tree {
             
             if (t.node != null)
             {
+            	// 二叉树的位置，从零开始
                 queue.offer(new Tuple(t.node.left, t.pos*2, t.depth+1));
                 queue.offer(new Tuple(t.node.right, t.pos*2+1, t.depth+1));
                 
+                // 另起一行
                 if (curDepth != t.depth)
                 {
                     curDepth = t.depth;

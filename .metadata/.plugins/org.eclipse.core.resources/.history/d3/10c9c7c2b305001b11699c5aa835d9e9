@@ -1,0 +1,7 @@
+public class VendingMachineFactory 
+{ 
+	public static VendingMachineTransaction createVendingMachine() 
+	{ 
+		return new VendingMachineTransactionImpl(); 
+	} 
+}

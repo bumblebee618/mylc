@@ -20,9 +20,44 @@ The given array may contain duplicates, and two equal integers should also be co
  */
 public class Q491_Increasing_Subsequences {
 	// solution 1
+		public List<List<Integer>> findSubsequences(int[] nums) 
+		{
+	        if (nums == null || nums.length == 0) 
+	        {
+	            return new LinkedList<>();
+	        }
+	        
+	        Set<List<Integer>> results = new HashSet<>();
+	        backtrack(nums, 0, new LinkedList<Integer>(), results);
+	        return new LinkedList<>(results);
+	    }
+	    
+	    private void backtrack(int[] nums, int start, List<Integer> list, Set<List<Integer>> results) 
+	    {
+	        if (list.size() >= 2) 
+	        {
+	           results.add(new ArrayList<>(list));
+	        }
+	        
+	        for (int i = start; i < nums.length; i++) 
+	        {
+	            if (list.size() == 0 || nums[i] >= list.get(list.size() - 1)) 
+	            {
+	                list.add(nums[i]);
+	                backtrack(nums, i+1, list, results);
+	                list.remove(list.size() - 1);
+	            }
+	        }
+	    }
+	
+	
+	    
+	    
+	
+	// solution 2
 	private List<List<Integer>> result = new LinkedList<>();
     
-    public List<List<Integer>> findSubsequences(int[] nums) {
+    public List<List<Integer>> findSubsequences2(int[] nums) {
         if (nums == null || nums.length <= 1)
         {
             return result;
@@ -54,34 +89,6 @@ public class Q491_Increasing_Subsequences {
                 list.add(nums[i]); 
                 backtrack(list, nums, i+1);
                 list.remove(list.size()-1);
-            }
-        }
-    }
-
-    
-    
-    
-	// solution 2
-	public List<List<Integer>> findSubsequences2(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return new ArrayList<>();
-        }
-        
-        Set<List<Integer>> results = new HashSet<>();
-        backtrack(nums, 0, new ArrayList<Integer>(), results);
-        return new ArrayList<>(results);
-    }
-    
-    private void backtrack(int[] nums, int start, List<Integer> list, Set<List<Integer>> results) {
-        if (list.size() >= 2) {
-           results.add(new ArrayList<>(list));
-        }
-        
-        for (int i = start; i < nums.length; i++) {
-            if (list.size() == 0 || nums[i] >= list.get(list.size() - 1)) {
-                list.add(nums[i]);
-                backtrack(nums, i+1, list, results);
-                list.remove(list.size() - 1);
             }
         }
     }

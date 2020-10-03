@@ -1,0 +1,56 @@
+import java.util.*;
+
+
+public class Q093_Restore_IP_Addresses {
+	// test case = "0000"
+	public List<String> restoreIpAddresses(String s) {
+        List<String> result = new LinkedList<>();
+        
+        if (s == null || s.length() == 0) 
+        {
+            return result;
+        }
+        
+        backtrack(result, new ArrayList<String>(), s, 0);
+        return result;
+    }
+    
+    public void backtrack(List<String> result, List<String> solution, String s, int start)
+    {
+        if (solution.size() == 4 || start == s.length()) 
+        {
+            if (solution.size() == 4 && start == s.length()) 
+            {
+                StringBuilder builder = new StringBuilder();
+                
+                for (int i = 0; i < 3; i++) 
+                {
+                    builder.append(solution.get(i)).append(".");
+                }
+                
+                builder.append(solution.get(3));
+                result.add(builder.toString());
+            }
+            
+            return;
+        } 
+        
+        for (int i = start; i < s.length() && i < start + 3; i++) 
+        {
+        	if(s.charAt(start) == '0' && i > start) 
+        	{
+                return;
+            }
+        	
+            String str = s.substring(start, i + 1);
+            int num = Integer.parseInt(str);
+            
+            if(num >= 0 && num <= 255) 
+            {
+                solution.add(str);
+                backtrack(result, solution, s, i + 1);
+                solution.remove(solution.size() - 1);
+            }
+        }
+    }
+}

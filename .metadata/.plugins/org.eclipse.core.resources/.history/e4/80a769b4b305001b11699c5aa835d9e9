@@ -1,0 +1,13 @@
+
+public class VendingMachine {
+	public VendingMachine()
+	{
+		
+	}
+	
+	public static void main(String[] args)
+	{
+		VendingMachineTransaction vm = VendingMachineFactory.createVendingMachine();
+		
+	}
+}

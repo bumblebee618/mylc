@@ -1,5 +1,4 @@
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /***
  * 
@@ -35,11 +34,81 @@ The target node is a node in the tree.
 0 <= K <= 1000.
  */
 public class Q863_All_Nodes_Distance_K_in_Binary_Tree {
+	// solution 1: dfs + bfs
+	public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+	        List<Integer> result = new LinkedList<>();
+	        
+	        if (root == null || K < 0)
+	        {
+	            return result;
+	        }
+	        
+	        Map<TreeNode, List<TreeNode>> graph = new HashMap<>();
+	        dfs(graph, root, null);
+	        
+	        if (!graph.containsKey(target))
+	        {
+	            return result;
+	        }
+
+	        Queue<TreeNode> queue = new LinkedList<>();
+	        queue.offer(target);
+	        Set<TreeNode> visited = new HashSet<>();
+	        visited.add(target);
+	        int distance = 0;
+	        
+	        while (!queue.isEmpty())
+	        {
+	            int size = queue.size();
+	            
+	            for (int i = 0; i < size; i++)
+	            {
+	                TreeNode node = queue.poll();
+	                
+	                if (distance == K)
+	                {
+	                    if (node != null)
+	                    {
+	                        result.add(node.val);
+	                    }
+	                    
+	                    continue;
+	                }
+	                
+	                for (TreeNode next : graph.get(node))
+	                {
+	                    if (!visited.contains(next))
+	                    {
+	                        queue.offer(next);
+	                        visited.add(next);
+	                    }
+	                }
+	            }
+	            
+	            distance++;
+	        }
+	        
+	        return result;
+	    }
+	    
+	    private void dfs(Map<TreeNode, List<TreeNode>> graph, TreeNode node, TreeNode parent)
+	    {
+	        if (node != null)
+	        {
+	            graph.computeIfAbsent(node, x -> new LinkedList<>()).add(parent);
+	            graph.computeIfAbsent(parent, x -> new LinkedList<>()).add(node);
+	            dfs(graph, node.left, node);
+	            dfs(graph, node.right, node);
+	        }
+	    }
+
+
+	// solution 2:    
 	private List<Integer> result;
     private TreeNode target;
     private int k;
     
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+    public List<Integer> distanceK2(TreeNode root, TreeNode target, int k) {
         result = new LinkedList<Integer>();
         
         if (root == null || target == null || k < 0)
