@@ -4,9 +4,9 @@ public class VehicleFactory {
 	{
 		switch (type)
 		{
-			case "Motorcycle": return new Vehicle_Motorcycle(plateNum); 
-			case "Car": return new Vehicle_Car(plateNum); 
-			case "Bus": return new Vehicle_Bus(plateNum); 
+			case "Motorcycle": return new Vehicle(plateNum, VehicleType.MOTORCYCLE); 
+			case "Car": return new Vehicle(plateNum, VehicleType.CAR); 
+			case "Bus": return new Vehicle(plateNum, VehicleType.BUS); 
 			default: return null;
 		}
 	}

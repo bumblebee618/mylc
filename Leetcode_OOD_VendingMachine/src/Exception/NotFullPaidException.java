@@ -7,7 +7,8 @@ public class NotFullPaidException extends RuntimeException
 	
 	public NotFullPaidException(String message, long remaining) 
 	{
-		this.message = message; this.remaining = remaining; 
+		this.message = message; 
+		this.remaining = remaining; 
 	} 
 	
 	public long getRemaining()
@@ -16,7 +17,8 @@ public class NotFullPaidException extends RuntimeException
 	} 
 	
 	@Override 
-	public String getMessage() { 
+	public String getMessage() 
+	{ 
 		return message + remaining; 
 	}
 }

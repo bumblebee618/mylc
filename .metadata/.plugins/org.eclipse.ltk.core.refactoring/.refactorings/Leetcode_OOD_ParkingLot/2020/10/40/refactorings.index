@@ -6,3 +6,13 @@
 1601661801112	Rename type 'Motorcycle'
 1601663451164	Rename local variable 'sizes'
 1601667983628	Rename local variable 'spotSize'
+1601760293285	Delete element
+1601760299052	Delete element
+1601760304978	Delete element
+1601765335905	Rename field 'spotSize'
+1601765534225	Rename method 'canFitInSpot'
+1601765613741	Rename method 'park'
+1601765719993	Rename method 'removeVehicle'
+1601765742562	Rename method 'getSpotSize'
+1601768243361	Rename field 'availableSlotNum'
+1601768442452	Rename field 'availableSlotsMap'

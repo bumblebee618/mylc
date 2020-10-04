@@ -1,22 +1,21 @@
-public abstract class Vehicle {
-	protected String plateNum;
-	protected int size;
+public class Vehicle 
+{
+	private String plateNum;
+	private VehicleType type;
 	
-	public Vehicle(String plateNum)
+	public Vehicle(String plateNum, VehicleType type)
 	{
 		this.plateNum = plateNum;
-		setSize(0);
+		this.type = type;
 	}
 
-	public String getPlateNum() {
+	public String getPlateNum() 
+	{
 		return plateNum;
 	}
 
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
+	public int getSize() 
+	{
+		return type.getSize();
 	}
 }

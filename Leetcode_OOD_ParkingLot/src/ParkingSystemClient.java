@@ -4,7 +4,7 @@ public class ParkingSystemClient {
 	
 	public String getParkingTicket(Vehicle vehicle)
 	{
-		return parkingManager.generateParkingTicket(vehicle);
+		return parkingManager.generateParkingTicketId(vehicle);
 	}
 	
 	public boolean withdrawParkingTicket(String ticketId)

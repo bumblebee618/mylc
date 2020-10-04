@@ -1,0 +1,17 @@
+package Exception;
+
+public class VehicleNotFoundException extends RuntimeException
+{
+	private String message;
+	
+	public VehicleNotFoundException(String message)
+	{
+		this.message = message;
+	}
+	
+	@Override
+    public String getMessage()
+    {
+        return message;
+    }
+}

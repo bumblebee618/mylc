@@ -1,0 +1,68 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import Exception.VehicleNotFoundException;
+
+public class ParkingManager {
+	private ParkingLot parkingLot;
+	private Map<String, ParkingTicket> idToTickets;
+	private Map<String, Vehicle> plateNumToVehicles;
+	
+	public ParkingManager()
+	{		
+		parkingLot = new ParkingLot();
+		idToTickets = new HashMap<>();
+		plateNumToVehicles = new HashMap<>();
+	}
+	
+	public int getAvailableSlotNum(int vehicleSize)
+	{
+		return parkingLot.findAvailableSlotNumForGivenVehicleSize(vehicleSize);
+	}
+	
+	public String generateParkingTicketId(Vehicle vehicle)
+	{
+		if (getAvailableSlotNum(vehicle.getSize()) == 0)
+		{
+			return null;
+		}
+		
+		ParkingSlot slot= parkingLot.parkVehicle(vehicle.getSize());
+		
+		if (slot == null)
+		{
+			return null;
+		}
+		
+		ParkingTicket ticket = new ParkingTicket(slot, vehicle.getPlateNum());
+		idToTickets.put(ticket.getTicketId(), ticket);
+		plateNumToVehicles.put(vehicle.getPlateNum(), vehicle);
+		System.out.println(ticket.printTicket());
+		return ticket.getTicketId();
+	}
+	
+	public boolean withdrawParkingTicket(String ticketId)
+	{
+		if (!idToTickets.containsKey(ticketId))
+		{
+			return false;
+		}
+		
+		ParkingTicket ticket = idToTickets.get(ticketId);
+		
+		try
+		{
+			parkingLot.unparkVehicle(ticket.getSlot());
+			plateNumToVehicles.remove(ticket.getVehiclePlateNum());
+			idToTickets.remove(ticket.getTicketId());
+			return true;
+		}
+		catch (VehicleNotFoundException e)
+		{
+			System.out.println(e.getMessage());
+			return false;
+		}		
+	}
+}

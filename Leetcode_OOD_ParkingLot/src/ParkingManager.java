@@ -3,38 +3,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import Exception.ResourceNotFoundException;
+
 public class ParkingManager {
 	private ParkingLot parkingLot;
-	private Map<String, ParkingTicket> parkingTickets;
-	private Map<String, Vehicle> vehicles;
-	
-	private int parkingLotLevelNum = 2;
+	private Map<String, ParkingTicket> idToTickets;
+	private Map<String, Vehicle> plateNumToVehicles;
 	
 	public ParkingManager()
-	{
-		List<Integer> slotSizes = new LinkedList<>();
-		slotSizes.add(1);
-		slotSizes.add(2);
-		slotSizes.add(3);
-		
-		List<Integer> capacities = new LinkedList<>();
-		capacities.add(1);
-		capacities.add(1);
-		capacities.add(1);
-		
-		parkingLot = new ParkingLot(parkingLotLevelNum, slotSizes, capacities);
-		parkingTickets = new HashMap<>();
-		vehicles = new HashMap<>();
+	{		
+		parkingLot = new ParkingLot();
+		idToTickets = new HashMap<>();
+		plateNumToVehicles = new HashMap<>();
 	}
 	
-	public int hasAvailableSlots(int vehicleSize)
+	public int getAvailableSlotNum(int vehicleSize)
 	{
-		return parkingLot.getAvailableSpotsForGivenSize(vehicleSize);
+		return parkingLot.findAvailableSlotNumForGivenVehicleSize(vehicleSize);
 	}
 	
-	public String generateParkingTicket(Vehicle vehicle)
+	public String generateParkingTicketId(Vehicle vehicle)
 	{
-		if (hasAvailableSlots(vehicle.getSize()) == 0)
+		if (getAvailableSlotNum(vehicle.getSize()) == 0)
 		{
 			return null;
 		}
@@ -47,28 +37,32 @@ public class ParkingManager {
 		}
 		
 		ParkingTicket ticket = new ParkingTicket(slot, vehicle.getPlateNum());
-		parkingTickets.put(ticket.getTicketId(), ticket);
-		vehicles.put(vehicle.getPlateNum(), vehicle);
+		idToTickets.put(ticket.getTicketId(), ticket);
+		plateNumToVehicles.put(vehicle.getPlateNum(), vehicle);
 		System.out.println(ticket.printTicket());
 		return ticket.getTicketId();
 	}
 	
 	public boolean withdrawParkingTicket(String ticketId)
 	{
-		if (!parkingTickets.containsKey(ticketId))
+		if (!idToTickets.containsKey(ticketId))
 		{
 			return false;
 		}
 		
-		ParkingTicket ticket = parkingTickets.get(ticketId);
+		ParkingTicket ticket = idToTickets.get(ticketId);
 		
-		if (!parkingLot.unparkVehicle(ticket.getSlot()))
+		try
 		{
-			return false;
+			parkingLot.unparkVehicle(ticket.getSlot());
+			plateNumToVehicles.remove(ticket.getVehiclePlateNum());
+			idToTickets.remove(ticket.getTicketId());
+			return true;
 		}
-		
-		vehicles.remove(ticket.getVehiclePlateNum());
-		parkingTickets.remove(ticket.getTicketId());
-		return true;
+		catch (ResourceNotFoundException e)
+		{
+			System.out.println(e.getMessage());
+			return false;
+		}		
 	}
 }

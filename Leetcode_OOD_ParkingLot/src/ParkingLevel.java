@@ -6,13 +6,17 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class ParkingLevel {
+import Exception.NotEnoughSlotException;
+import Exception.ResourceNotFoundException;
+
+public class ParkingLevel 
+{
 	private String levelId;
-	private int availableSpotNum;
+	private int totalAvailableSlotNum;
 	
-	private Map<Integer, Queue<String>> availableSpotsMap;
+	private Map<String, ParkingSlot> slotIdToSlots;
+	private Map<Integer, Queue<String>> availableSlotMap;
 	private Set<String> unavailableSlots;
-	private Map<String, ParkingSlot> allSlots;
 	private List<Integer> slotSizes;
 	
 	public ParkingLevel(String levelId, List<Integer> slotSizes, List<Integer> capacities)
@@ -24,9 +28,9 @@ public class ParkingLevel {
 		
 		this.levelId = levelId;
 		this.slotSizes = slotSizes;
-		availableSpotsMap = new HashMap<>();
+		availableSlotMap = new HashMap<>();
 		unavailableSlots = new HashSet<>();
-		allSlots = new HashMap<>();
+		slotIdToSlots = new HashMap<>();
 		
 		for (int i = 0; i < capacities.size(); i++)
 		{
@@ -36,16 +40,16 @@ public class ParkingLevel {
 			
 			for (int j = 0; j < count; j++)
 			{
-				ParkingSlot slot = new ParkingSlot(slotId, slotSize, levelId);
-				availableSpotsMap.computeIfAbsent(slotSize, x -> new LinkedList<String>()).add(slotId);
-				allSlots.put(slotId, slot);
+				ParkingSlot slot = new ParkingSlot(levelId, slotId, slotSize);
+				availableSlotMap.computeIfAbsent(slotSize, x -> new LinkedList<String>()).add(slotId);
+				slotIdToSlots.put(slotId, slot);
 			}
 			
-			availableSpotNum += count;
+			totalAvailableSlotNum += count;
 		}
 	}
 	
-	public int getAvailableSpotsForGivenSize(int vehicleSize)
+	public int findAvailableSpotNumForGivenVehicleSize(int vehicleSize)
 	{
 		int count = 0;
 		
@@ -56,7 +60,7 @@ public class ParkingLevel {
 				continue;
 			}
 		
-			count += availableSpotsMap.get(slotSize).size();
+			count += availableSlotMap.get(slotSize).size();
 		}
 		
 		return count;
@@ -72,37 +76,41 @@ public class ParkingLevel {
 				continue;
 			}
 		
-			if (availableSpotsMap.get(slotSize).size() > 0)
+			if (availableSlotMap.get(slotSize).size() > 0)
 			{
-				ParkingSlot slot = allSlots.get(availableSpotsMap.get(slotSize).poll());
-				unavailableSlots.add(slot.getSlotId());
-				slot.park(vehicleSize);
-				availableSpotNum--;
-				return slot;
+				ParkingSlot slot = slotIdToSlots.get(availableSlotMap.get(slotSize).poll());
+				
+				if (slot.tryParkVehicle(vehicleSize))
+				{
+					unavailableSlots.add(slot.getSlotId());
+					totalAvailableSlotNum--;
+					return slot;
+				}
 			}
 		}
 		
 		return null;
 	}
 	
-	public boolean unparkVehicle(ParkingSlot slot)
+	public void unparkVehicle(ParkingSlot slot) throws ResourceNotFoundException 
 	{
 		if (!unavailableSlots.contains(slot.getSlotId()))
 		{
-			return false;
+			throw new ResourceNotFoundException(String.format("Cannot find the slot id %s in the target level", slot.getSlotId()));
 		}
-		
-		availableSpotsMap.get(slot.getSpotSize()).offer(slot.getSlotId());
+		slot.removeVehicle();
+		availableSlotMap.get(slot.getSlotSize()).offer(slot.getSlotId());
 		unavailableSlots.remove(slot.getSlotId());
-		availableSpotNum++;
-		return slot.removeVehicle();
+		totalAvailableSlotNum++;
 	}
 	
-	public String getLevelId() {
+	public String getLevelId() 
+	{
 		return levelId;
 	}
 
-	public int getAvailableSpotNum() {
-		return availableSpotNum;
+	public int getAvailableSpotNum() 
+	{
+		return totalAvailableSlotNum;
 	}
 }

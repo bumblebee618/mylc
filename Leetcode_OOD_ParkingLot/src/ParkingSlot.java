@@ -1,27 +1,29 @@
+import Exception.NotEnoughSlotException;
+import Exception.ResourceNotFoundException;
 
 public class ParkingSlot 
 {
-	private String slotId;
-	private int spotSize;
 	private String levelId;
+	private String slotId;
+	private int slotSize;
 	private boolean isAvailable;
 	
-	public ParkingSlot(String slotId, int spotSize, String levelId)
+	public ParkingSlot(String levelId, String slotId, int slotSize)
 	{
-		this.slotId = slotId;
-		this.spotSize = spotSize;
 		this.levelId = levelId;
+		this.slotId = slotId;
+		this.slotSize = slotSize;
 		isAvailable = true;
 	}
 	
-	public boolean canFitInSpot(int vehicleSize)
+	public boolean canFitInSlot(int vehicleSize)
 	{
-		return vehicleSize <= spotSize;
+		return vehicleSize <= slotSize;
 	}
 	
-	public boolean park(int vehicleSize)
+	public boolean tryParkVehicle(int vehicleSize)
 	{
-		if (!canFitInSpot(vehicleSize))
+		if (!canFitInSlot(vehicleSize))
 		{
 			return false;
 		}
@@ -30,32 +32,35 @@ public class ParkingSlot
 		return true;
 	}
 	
-	public boolean removeVehicle()
+	public void removeVehicle() throws ResourceNotFoundException
 	{
 		if (isAvailable == true)
 		{
-			return false;
+			throw new ResourceNotFoundException("Cannot find any vehicle parking on the slot");
 		} 
 		else
 		{
 			isAvailable = true;
-			return true;
 		}
 	}
 	
-	public String getSlotId() {
+	public String getLevelId() 
+	{
+		return levelId;
+	}
+	
+	public String getSlotId() 
+	{
 		return slotId;
 	}
 
-	public int getSpotSize() {
-		return spotSize;
+	public int getSlotSize() 
+	{
+		return slotSize;
 	}
 
-	public String getLevelId() {
-		return levelId;
-	}
-
-	public boolean isAvailable() {
+	public boolean isAvailable() 
+	{
 		return isAvailable;
 	}
 }

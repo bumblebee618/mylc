@@ -1,0 +1,61 @@
+
+public class ParkingSlot 
+{
+	private String slotId;
+	private int slotSize;
+	private String levelId;
+	private boolean isAvailable;
+	
+	public ParkingSlot(String slotId, int spotSize, String levelId)
+	{
+		this.slotId = slotId;
+		this.slotSize = spotSize;
+		this.levelId = levelId;
+		isAvailable = true;
+	}
+	
+	public boolean canFitInSpot(int vehicleSize)
+	{
+		return vehicleSize <= slotSize;
+	}
+	
+	public boolean park(int vehicleSize)
+	{
+		if (!canFitInSpot(vehicleSize))
+		{
+			return false;
+		}
+		
+		isAvailable = false;
+		return true;
+	}
+	
+	public boolean removeVehicle()
+	{
+		if (isAvailable == true)
+		{
+			return false;
+		} 
+		else
+		{
+			isAvailable = true;
+			return true;
+		}
+	}
+	
+	public String getSlotId() {
+		return slotId;
+	}
+
+	public int getSpotSize() {
+		return slotSize;
+	}
+
+	public String getLevelId() {
+		return levelId;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+}
