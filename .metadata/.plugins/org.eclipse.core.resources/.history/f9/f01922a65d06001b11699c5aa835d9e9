@@ -1,0 +1,125 @@
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class ElevatorManager implements Runnable
+{
+	private Queue<Integer> upRequestsQueue1;
+	private Queue<Integer> upRequestsQueue2;
+	
+	private Queue<Integer> downRequestsQueue1;
+	private Queue<Integer> downRequestsQueue2;
+	
+	private Elevator elevator;
+	private boolean isUp;
+	
+	public ElevatorManager()
+	{
+		upRequestsQueue1 = new PriorityQueue<Integer>(1, (a, b) -> a - b);
+		upRequestsQueue2 = new PriorityQueue<Integer>(1, (a, b) -> a - b);
+		
+		downRequestsQueue1 = new PriorityQueue<Integer>(1, (a, b) -> b - a);
+		downRequestsQueue2 = new PriorityQueue<Integer>(1, (a, b) -> b - a);
+		
+		elevator = new Elevator();
+		isUp = true;
+	}
+	
+	public void run() 
+	{
+		while (true) 
+		{
+			
+			
+			processRequest(upRequestsQueue1, true);
+			processRequest(downRequestsQueue1, false);
+			processRequest(upRequestsQueue2, true);
+			processRequest(downRequestsQueue2, false);
+		}
+	}
+	
+	public void pressButton(int fromFloor, int toFloor)
+	{
+		System.out.println("Receive request: " + "from " + fromFloor + " to " + toFloor);
+		addRequest(new Request(fromFloor, toFloor));
+	}
+	
+	private void processRequest(Queue<Integer> requestsQueue, boolean isUp)
+	{
+		this.isUp = isUp;
+		
+		while (!requestsQueue.isEmpty())
+		{
+			synchronized (requestsQueue)
+			{
+				Integer targetFloor = null;
+				
+				if (!requestsQueue.isEmpty())
+				{
+					targetFloor = requestsQueue.poll();
+				}
+				
+				if (targetFloor != null)
+				{
+					elevator.moveToTargetFloor(targetFloor);
+				}
+				
+				processingTime(1000);
+			}
+		}
+	}
+	
+	private void addRequest(Request request)
+	{
+		if (request.isUp())
+		{
+			if (request.getFromFloor() > elevator.getCurrentFloor())
+			{
+				synchronized(upRequestsQueue1)
+				{
+					upRequestsQueue1.add(request.getFromFloor());
+					upRequestsQueue1.add(request.getToFloor());
+				}
+			}
+			else
+			{
+				synchronized(upRequestsQueue2)
+				{
+					upRequestsQueue2.add(request.getFromFloor());
+					upRequestsQueue2.add(request.getToFloor());
+				}
+			}
+		}
+		else
+		{
+			if (request.getFromFloor() < elevator.getCurrentFloor())
+			{
+				synchronized(downRequestsQueue1)
+				{
+					downRequestsQueue1.add(request.getFromFloor());
+					downRequestsQueue1.add(request.getToFloor());
+				}
+			}
+			else
+			{
+				synchronized(downRequestsQueue2)
+				{
+					downRequestsQueue2.add(request.getFromFloor());
+					downRequestsQueue2.add(request.getToFloor());
+				}
+			}
+		}
+	}
+	
+	private void processingTime(int time)
+	{
+		try 
+		{
+			Thread.sleep(time);
+			System.out.println("Move " + (isUp ? "up" : "down") + " to " + elevator.getCurrentFloor() + " floor");
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+}

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import Exception.NotEnoughSlotException;
 import Exception.ResourceNotFoundException;
 
 public class ParkingLevel 
@@ -98,6 +97,7 @@ public class ParkingLevel
 		{
 			throw new ResourceNotFoundException(String.format("Cannot find the slot id %s in the target level", slot.getSlotId()));
 		}
+		
 		slot.removeVehicle();
 		availableSlotMap.get(slot.getSlotSize()).offer(slot.getSlotId());
 		unavailableSlots.remove(slot.getSlotId());

@@ -1,0 +1,22 @@
+public class ElevatorManager {
+	
+	public ElevatorManager()
+	{
+		
+	}
+	
+	public void pressButton(int fromFloor, int toFloor)
+	{
+		addRequest(new Request(fromFloor, toFloor));
+	}
+	
+	private void addRequest(Request request)
+	{
+		
+	}
+	
+	private void removeRequest(Request request)
+	{
+		
+	}
+}

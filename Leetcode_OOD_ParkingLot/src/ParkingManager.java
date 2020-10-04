@@ -43,26 +43,16 @@ public class ParkingManager {
 		return ticket.getTicketId();
 	}
 	
-	public boolean withdrawParkingTicket(String ticketId)
+	public void withdrawParkingTicket(String ticketId)
 	{
 		if (!idToTickets.containsKey(ticketId))
 		{
-			return false;
+			throw new ResourceNotFoundException(String.format("Cannot find ticket %s", ticketId));
 		}
 		
 		ParkingTicket ticket = idToTickets.get(ticketId);
-		
-		try
-		{
-			parkingLot.unparkVehicle(ticket.getSlot());
-			plateNumToVehicles.remove(ticket.getVehiclePlateNum());
-			idToTickets.remove(ticket.getTicketId());
-			return true;
-		}
-		catch (ResourceNotFoundException e)
-		{
-			System.out.println(e.getMessage());
-			return false;
-		}		
+		parkingLot.unparkVehicle(ticket.getSlot());
+		plateNumToVehicles.remove(ticket.getVehiclePlateNum());
+		idToTickets.remove(ticket.getTicketId());		
 	}
 }

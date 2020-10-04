@@ -1,0 +1,20 @@
+public class ElevatorFactory 
+{
+	private static Elevator elevatorInstance;
+	
+	public static Elevator getElevator()
+	{
+		if (elevatorInstance == null)
+		{
+			synchronized (Elevator.class) 
+			{
+				if (elevatorInstance == null)
+				{
+					elevatorInstance = new Elevator();
+				}
+			}
+		}
+		
+		return elevatorInstance;
+	}
+}

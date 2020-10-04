@@ -8,8 +8,17 @@ public class ParkingSystemClient {
 	}
 	
 	public boolean withdrawParkingTicket(String ticketId)
-	{
-		return parkingManager.withdrawParkingTicket(ticketId);
+	{	
+		try
+		{
+			parkingManager.withdrawParkingTicket(ticketId);
+			return true;
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 	
 	public static void  main(String[] args)

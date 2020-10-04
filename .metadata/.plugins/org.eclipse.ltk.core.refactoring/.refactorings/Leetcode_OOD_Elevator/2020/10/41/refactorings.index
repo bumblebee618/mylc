@@ -1,0 +1,13 @@
+1601792947940	Delete element
+1601792968570	Rename compilation unit 'ElevatorImpl.java'
+1601796687324	Rename field 'upRequests'
+1601796706520	Rename field 'pendingUpRequests'
+1601796728485	Rename field 'downRequests'
+1601796746531	Rename field 'pendingDownRequests'
+1601828404986	Rename field 'elevatorInstance'
+1601828432962	Rename method 'getElevator'
+1601829294560	Rename field 'upRequestsQueue1'
+1601829320290	Rename field 'upRequestsQueue2'
+1601829337728	Rename field 'downRequestsQueue1'
+1601829354043	Rename field 'downRequestsQueue2'
+1601829376185	Rename local variable 'requestsQueue'

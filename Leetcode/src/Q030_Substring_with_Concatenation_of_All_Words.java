@@ -47,12 +47,11 @@ public class Q030_Substring_with_Concatenation_of_All_Words {
                 continue;
             }
             
-            int index = start+wordLen;
             Map<String, Integer> map = new HashMap<>(wordMap);
-            updateMap(map, word);
             
-            for (int i = 1; i < wordNum; i++)
+            for (int i = 0; i < wordNum; i++)
             {
+                int index = start + i*wordLen;
                 String nextWord = s.substring(index, index+wordLen);
                 index += wordLen;
                 
