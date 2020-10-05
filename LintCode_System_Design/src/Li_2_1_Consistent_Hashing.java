@@ -18,21 +18,29 @@ public class Li_2_1_Consistent_Hashing {
 	 * 
 	 ******************************************************************************************************/
 	
-	public List<List<Integer>> consistentHashing(int n) {
+	// This method indicates how to update consistent hashing when adding n new machines to existing system
+	public List<List<Integer>> consistentHashing(int n) 
+	{
         List<List<Integer>> results = new ArrayList<List<Integer>>();
+        
+        // each machine item contains 3 parameters: startIndex, endIndex and machine number/id
         List<Integer> machine = new ArrayList<Integer>();
         machine.add(0);
         machine.add(359);
         machine.add(1);
         results.add(machine);
         
-        for (int i = 1; i < n; ++i) {
+        for (int i = 1; i < n; ++i) 
+        {
             List<Integer> new_machine = new ArrayList<Integer>();
             int index = 0;
             
-            for (int j = 1; j < i; ++j) {
+            // find a machine which has the largest hash range
+            for (int j = 1; j < i; ++j) 
+            {
                 if (results.get(j).get(1) - results.get(j).get(0) + 1 >
-                    results.get(index).get(1) - results.get(index).get(0) + 1) {
+                    results.get(index).get(1) - results.get(index).get(0) + 1) 
+                {
                     index = j;
                 }
             }

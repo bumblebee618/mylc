@@ -11,3 +11,4 @@
 1601829337728	Rename field 'downRequestsQueue1'
 1601829354043	Rename field 'downRequestsQueue2'
 1601829376185	Rename local variable 'requestsQueue'
+1601859919771	Rename type 'ElevatorClient'

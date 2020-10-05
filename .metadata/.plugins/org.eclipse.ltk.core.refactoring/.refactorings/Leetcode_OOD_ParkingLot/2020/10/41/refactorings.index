@@ -15,3 +15,4 @@
 1601776571018	Rename method 'tryRemoveVehicle'
 1601776749912	Rename method 'tryParkVehicle'
 1601777223680	Rename method 'parkVehicle'
+1601859939060	Rename type 'ParkingSystemClient'

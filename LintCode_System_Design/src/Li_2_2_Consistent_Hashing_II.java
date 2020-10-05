@@ -28,25 +28,33 @@ public class Li_2_2_Consistent_Hashing_II {
     // @param n a positive integer
     // @param k a positive integer
     // @return a Solution object
-    public static Li_2_2_Consistent_Hashing_II create(int n, int k) {
+    public static Li_2_2_Consistent_Hashing_II create(int n, int k) 
+    {
         // Write your code here
     	Li_2_2_Consistent_Hashing_II solution = new Li_2_2_Consistent_Hashing_II();
         solution.n = n;
         solution.k = k;
         solution.ids = new ArrayList<Integer>();
         solution.machines = new HashMap<Integer, List<Integer>>();
+        
         for (int i = 0; i < n; ++i)
+        {
             solution.ids.add(i);
+        }
+        
         return solution;
     }
 
     // @param machine_id an integer
     // @return a list of shard ids
-    public List<Integer> addMachine(int machine_id) {
+    public List<Integer> addMachine(int machine_id) 
+    {
         // Write your code here
         Random ra =new Random();
         List<Integer> random_nums = new ArrayList<Integer>();
-        for (int i = 0; i < k; ++i) {
+        
+        for (int i = 0; i < k; ++i) 
+        {
             int index = ra.nextInt(ids.size());
             random_nums.add(ids.get(index));
             ids.remove(index);
@@ -59,23 +67,34 @@ public class Li_2_2_Consistent_Hashing_II {
 
     // @param hashcode an integer
     // @return a machine id
-    public int getMachineIdByHashCode(int hashcode) {
+    public int getMachineIdByHashCode(int hashcode) 
+    {
         // Write your code here
         int distance = n + 1;
         int machine_id = 0;
-        for (Map.Entry<Integer, List<Integer>> entry : machines.entrySet()) {
+        
+        for (Map.Entry<Integer, List<Integer>> entry : machines.entrySet()) 
+        {
             int key = entry.getKey();
             List<Integer> random_nums = entry.getValue();
-            for (Integer num : random_nums) {
+            
+            for (Integer num : random_nums) 
+            {
                 int d = num - hashcode;
+                
                 if (d < 0)
+                {
                     d += n;
-                if (d < distance) {
+                }
+                
+                if (d < distance) 
+                {
                     distance = d;
                     machine_id = key;
                 }
             }
         }
+        
         return machine_id;
     }
 }

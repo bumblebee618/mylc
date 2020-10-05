@@ -1,0 +1,17 @@
+
+public enum Pizza 
+{
+	PINEAPPLE(1), PEPPER(2), BEEF(3);
+	
+	private int id;
+	
+	Pizza(int id)
+	{
+		this.id = id;
+	}
+	
+	public int getId()
+	{
+		return id;
+	}
+}

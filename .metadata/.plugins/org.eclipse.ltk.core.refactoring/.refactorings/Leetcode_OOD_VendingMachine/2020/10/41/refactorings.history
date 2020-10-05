@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;VendingMachineClient&apos; to &apos;Z_VendingMachineClient&apos;&#x0A;- Original project: &apos;Leetcode_OOD_VendingMachine&apos;&#x0A;- Original element: &apos;VendingMachineClient&apos;&#x0A;- Renamed element: &apos;Z_VendingMachineClient&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;VendingMachineClient&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{VendingMachineClient.java[VendingMachineClient" matchStrategy="1" name="Z_VendingMachineClient" qualified="false" references="true" similarDeclarations="false" stamp="1601859991560" textual="true" version="1.0"/>
+</session>

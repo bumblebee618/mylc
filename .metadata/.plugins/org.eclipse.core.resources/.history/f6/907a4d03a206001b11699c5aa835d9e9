@@ -1,0 +1,7 @@
+public class Pizza 
+{
+	private PizzaFlavor flavor;
+	private int price;
+	
+	
+}
