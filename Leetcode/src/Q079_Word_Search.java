@@ -40,7 +40,7 @@ public class Q079_Word_Search {
         {
             for (int j = 0; j < col; j++)
             {
-                if (bfs(board, visited, i, j, word, 0))
+                if (dfs(board, visited, i, j, word, 0))
                 {
                     return true;
                 }
@@ -50,7 +50,7 @@ public class Q079_Word_Search {
         return false;
     }
     
-    private boolean bfs(char[][] board, boolean[][] visited, int x, int y, String word, int index)
+    private boolean dfs(char[][] board, boolean[][] visited, int x, int y, String word, int index)
     {
         if (board[x][y] != word.charAt(index))
         {
@@ -71,7 +71,7 @@ public class Q079_Word_Search {
             
             if (newX >= 0 && newX < board.length && newY >= 0 && newY < board[0].length && !visited[newX][newY])
             {
-                if (bfs(board, visited, newX, newY, word, index+1))
+                if (dfs(board, visited, newX, newY, word, index+1))
                 {
                     result = true;
                     break;

@@ -28,40 +28,8 @@ You may assume the sum of all the numbers is in the range of a signed 32-bit int
 Accepted
  */
 public class Q523_Continuous_Subarray_Sum {
-	// Time complexity O(n^2), space complexity O(n)
+	// solution 1: time complexity is O(n), space complexity is O(n)
 	public boolean checkSubarraySum(int[] nums, int k) {
-        if (nums == null || nums.length == 0)
-        {
-            return k == 0 ? true : false;
-        }
-        
-        int len = nums.length;
-        int[] sum = new int[len];
-        sum[0] = nums[0];
-        
-        for (int i = 1; i < len; i++)
-        {
-            sum[i] = sum[i-1] + nums[i];
-        }
-        
-        for (int start = 0; start < len-1; start++)
-        {
-            for (int end = start+1; end < len; end++)
-            {
-                int tempSum = sum[end]-sum[start]+nums[start];
-                
-                if (tempSum == k || (k != 0 && tempSum % k == 0))
-                {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
-    }
-	
-	// time complexity is O(n), space complexity is O(n)
-	public boolean checkSubarraySum2(int[] nums, int k) {
         if (nums == null || nums.length == 0)
         {
             return k == 0 ? true : false;
@@ -91,6 +59,41 @@ public class Q523_Continuous_Subarray_Sum {
             else
             {
                 map.put(sum, i);
+            }
+        }
+        
+        return false;
+    }
+	
+	
+	
+	
+	// Solution 2: Time complexity O(n^2), space complexity O(n)
+	public boolean checkSubarraySum2(int[] nums, int k) {
+        if (nums == null || nums.length == 0)
+        {
+            return k == 0 ? true : false;
+        }
+        
+        int len = nums.length;
+        int[] sum = new int[len];
+        sum[0] = nums[0];
+        
+        for (int i = 1; i < len; i++)
+        {
+            sum[i] = sum[i-1] + nums[i];
+        }
+        
+        for (int start = 0; start < len-1; start++)
+        {
+            for (int end = start+1; end < len; end++)
+            {
+                int tempSum = sum[end]-sum[start]+nums[start];
+                
+                if (tempSum == k || (k != 0 && tempSum % k == 0))
+                {
+                    return true;
+                }
             }
         }
         

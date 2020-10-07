@@ -54,7 +54,7 @@ public class Q336_Palindrome_Pairs {
                     }
                 }
                 
-                if(isPalindrome(part2) && part2.length() != 0){  // 必须有 part2.length() != 0, 防止test case ["abcd","dcba"]被重复计算2次 ！！！
+                if(isPalindrome(part2) && part2.length() != 0){  // 必须有 part2.length() != 0, 防止test case ["a",""]被重复计算2次 ！！！
                     String part1_reverse = new StringBuffer(part1).reverse().toString();
                     
                     if(map.containsKey(part1_reverse) && map.get(part1_reverse) != i){  

@@ -63,13 +63,6 @@ public class Q884_Uncommon_Words_from_Two_Sentences {
         }
         
         String[] result = new String[list.size()];
-        int index = 0;
-        
-        for (String str : list)
-        {
-            result[index++] = str;
-        }
-        
-        return result;
+        return list.toArray(result);
     }
 }

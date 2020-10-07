@@ -37,8 +37,13 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	 * 
 	 ****************************************************************************************************************/
 	
-	public int shortestDistance(int[][] grid) {
-		if(grid == null || grid.length == 0 || grid[0].length == 0) {
+	private int[] dx = {1, 0, -1, 0};
+	private int[] dy = {0, 1, 0, -1};
+	
+	public int shortestDistance(int[][] grid) 
+	{
+		if(grid == null || grid.length == 0 || grid[0].length == 0) 
+		{
 			return 0;
 		}
 		
@@ -49,25 +54,32 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	    // Initialize building list and accessibility matrix `grid`
 	    // record how many buildings it can reach for each "0"
 	    // put 1 and 2 to -1 and -2
-	    for (int i = 0; i < row; ++i) {
-	        for (int j = 0; j < col; ++j) {
-	            if (grid[i][j] == 1) {
+	    for (int i = 0; i < row; ++i) 
+	    {
+	        for (int j = 0; j < col; ++j) 
+	        {
+	            if (grid[i][j] == 1) 
+	            {
 	                buildings.add(new Tuple(i, j, 0));
 	            }
+	            
 	            grid[i][j] = -grid[i][j];
 	        }
 	    }
 	    
 	    // BFS from every building
-	    for (int k = 0; k < buildings.size(); ++k) {
+	    for (int k = 0; k < buildings.size(); ++k) 
+	    {
 	        bfs(buildings.get(k), k, dist, grid, row, col);
 	    }
 	    
 	    // Find the minimum distance
 	    int ans = Integer.MAX_VALUE;
 	    
-	    for (int i = 0; i < row; ++i) {
-	        for (int j = 0; j < col; ++j) {
+	    for (int i = 0; i < row; ++i) 
+	    {
+	        for (int j = 0; j < col; ++j) 
+	        {
 	            if (grid[i][j] == buildings.size())
 	            {
 	                ans = Math.min(ans, dist[i][j]);
@@ -79,21 +91,23 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	}
 	
 	// BFS, k means currently how many building it can reach
-	public void bfs(Tuple root, int visitedNum, int[][] dist, int[][] grid, int row, int col) {
-		int[] dx = {1, 0, -1, 0};
-		int[] dy = {0, 1, 0, -1};
+	public void bfs(Tuple root, int visitedNum, int[][] dist, int[][] grid, int row, int col) 
+	{
 	    Queue<Tuple> queue = new LinkedList<>();
 	    queue.add(root);
 	    
-	    while (!queue.isEmpty()) {
+	    while (!queue.isEmpty()) 
+	    {
 	        Tuple t = queue.poll();
-	        dist[t.y][t.x] += t.distance;
+	        dist[t.x][t.y] += t.distance;
 	        
-	        for (int i = 0; i < 4; ++i) {
+	        for (int i = 0; i < 4; ++i) 
+	        {
 	            int newX = t.x + dx[i];
 	            int newY = t.y + dy[i];
 	            
-	            if (newX >= 0 && newX < col && newY >= 0 && newY < row && grid[newY][newX] == visitedNum) {
+	            if (newX >= 0 && newX < col && newY >= 0 && newY < row && grid[newY][newX] == visitedNum) 
+	            {
 	                grid[newY][newX] = visitedNum + 1;
 	                queue.add(new Tuple(newY, newX, t.distance + 1));
 	            }
@@ -101,12 +115,14 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	    }
 	}
 	
-	class Tuple {
+	class Tuple 
+	{
 	    public int y;
 	    public int x;
 	    public int distance;
 
-	    public Tuple(int y, int x, int distance) {
+	    public Tuple(int y, int x, int distance) 
+	    {
 	        this.y = y;
 	        this.x = x;
 	        this.distance = distance;

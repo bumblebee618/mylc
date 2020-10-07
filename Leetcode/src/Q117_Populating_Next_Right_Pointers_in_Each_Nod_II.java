@@ -26,10 +26,13 @@ After calling your function, the tree should look like:
  * 
  * */
 
-public class Q117_Populating_Next_Right_Pointers_in_Each_Nod_II {
+public class Q117_Populating_Next_Right_Pointers_in_Each_Nod_II 
+{
 	// by other, 在树的结构上实现，space O(1)
-		public void connect(TreeLinkNode root) {
-	        if(root == null){
+		public void connect(TreeLinkNode root) 
+		{
+	        if (root == null)
+	        {
 	            return;
 	        }
 	    
@@ -38,23 +41,35 @@ public class Q117_Populating_Next_Right_Pointers_in_Each_Nod_II {
 	        TreeLinkNode current = root;
 	        root.next = null;
 	        
-	        while(current != null){
-	            while(current != null){
-	                if(current.left != null){
-	                    if(nextElement == null){
+	        while (current != null)
+	        {
+	            while (current != null)
+	            {
+	                if (current.left != null)
+	                {
+	                    if (nextElement == null)
+	                    {
 	                        nextHead = current.left;
-	                    } else {
+	                    } 
+	                    else 
+	                    {
 	                        nextElement.next = current.left;
 	                    } 
+	                    
 	                    nextElement = current.left;
 	                }
 	                
-	                if(current.right != null){
-	                    if(nextElement == null){
+	                if (current.right != null)
+	                {
+	                    if (nextElement == null) 
+	                    {
 	                        nextHead = current.right;
-	                    } else {
+	                    } 
+	                    else 
+	                    {
 	                        nextElement.next = current.right;
 	                    } 
+	                    
 	                    nextElement = current.right;
 	                }
 	                
@@ -69,8 +84,10 @@ public class Q117_Populating_Next_Right_Pointers_in_Each_Nod_II {
 		
 		
 		// by Jackie, 使用层序遍历实现，space O(n)
-		public void connect2(TreeLinkNode root) {
-	        if(root == null){
+		public void connect2(TreeLinkNode root) 
+		{
+	        if (root == null)
+	        {
 	            return;
 	        }
 	        
@@ -78,18 +95,27 @@ public class Q117_Populating_Next_Right_Pointers_in_Each_Nod_II {
 	        q.offer(root);
 	        int size = 1;
 	        
-	        while(!q.isEmpty()){
+	        while (!q.isEmpty())
+	        {
 	            TreeLinkNode node = q.poll();
-	            if(node.left != null){
+	            
+	            if (node.left != null)
+	            {
 	                q.offer(node.left);
 	            }
-	            if(node.right != null){
+	            
+	            if (node.right != null)
+	            {
 	                q.offer(node.right);
 	            }
-	            if(--size == 0){
+	            
+	            if (--size == 0)
+	            {
 	                size = q.size();
 	                node.next = null;
-	            } else {
+	            } 
+	            else 
+	            {
 	                node.next = q.peek();
 	            }
 	        }

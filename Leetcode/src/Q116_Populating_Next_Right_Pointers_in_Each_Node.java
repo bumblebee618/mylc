@@ -34,20 +34,27 @@ After calling your function, the tree should look like:
  * 
  * */
 
-public class Q116_Populating_Next_Right_Pointers_in_Each_Node {
-	public void connect(TreeLinkNode root) {
-        if(root == null){
+public class Q116_Populating_Next_Right_Pointers_in_Each_Node 
+{
+	// solution 1:
+	public void connect(TreeLinkNode root) 
+	{
+        if (root == null)
+        {
             return;
         }
         
         root.next = null;
         TreeLinkNode nextHead = root.left;
         
-        while(nextHead != null){
-            while(root != null){
+        while (nextHead != null)
+        {
+            while (root != null)
+            {
                 root.left.next = root.right;
                 
-                if(root.next != null){
+                if (root.next != null)
+                {
                     root.right.next = root.next.left;
                 }
                 
@@ -59,7 +66,44 @@ public class Q116_Populating_Next_Right_Pointers_in_Each_Node {
         }
 	}
 	
-	
+	// solution 2:// by Jackie
+		public void connect2(TreeLinkNode root) 
+		{
+	        if (root == null) 
+	        {
+	        	return;
+	        }
+	        
+	        int levelNum = 1;
+	        Queue<TreeLinkNode> q = new LinkedList<TreeLinkNode>();
+	        q.add(root);
+	        
+	        while (!q.isEmpty())
+	        {
+	            TreeLinkNode tempNode = q.poll();
+	            TreeLinkNode nextNode = q.peek();
+	            
+	            if (tempNode.left != null)
+	            {
+	                q.add(tempNode.left);
+	            }
+	            
+	            if (tempNode.right != null)
+	            {
+	                q.add(tempNode.right);
+	            }
+	            
+	            if (--levelNum == 0)
+	            {
+	                levelNum = q.size();
+	                tempNode.next = null;
+	            }
+	            else
+	            {
+	                tempNode.next = nextNode;
+	            }
+	        }
+	    }
 	
 	
 	
@@ -67,7 +111,7 @@ public class Q116_Populating_Next_Right_Pointers_in_Each_Node {
 	
 	/*********************************************************/
 	// by other using iterator
-	public void connect2(TreeLinkNode root) {
+	public void connect3(TreeLinkNode root) {
 		if(root == null){
             return;
         }
@@ -89,7 +133,7 @@ public class Q116_Populating_Next_Right_Pointers_in_Each_Node {
 	
 	/*********************************************************/
 	// by other
-	public void connect3(TreeLinkNode root) {
+	public void connect4(TreeLinkNode root) {
 		if (root == null)
 			return;
 		root.next = null;
@@ -111,28 +155,7 @@ public class Q116_Populating_Next_Right_Pointers_in_Each_Node {
     
     
 	/*********************************************************/
-	// by Jackie
-	public void connect4(TreeLinkNode root) {
-        if(root == null) return;
-        int levelNum = 1;
-        Queue<TreeLinkNode> q = new LinkedList<TreeLinkNode>();
-        q.add(root);
-        
-        while(!q.isEmpty()){
-            TreeLinkNode tempNode = q.poll();
-            TreeLinkNode nextNode = q.peek();
-            if(tempNode.left != null)
-                q.add(tempNode.left);
-            if(tempNode.right != null)
-                q.add(tempNode.right);
-            if(--levelNum == 0){
-                levelNum = q.size();
-                tempNode.next = null;
-            }
-            else
-                tempNode.next = nextNode;
-        }
-    }
+	
 	
 	
 	public static void main(String[] args){
