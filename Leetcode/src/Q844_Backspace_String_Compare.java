@@ -37,70 +37,70 @@ Can you solve it in O(N) time and O(1) space?
  */
 public class Q844_Backspace_String_Compare {
 	// Time complexity O(n), space complexity O(1)
-	public boolean backspaceCompare(String S, String T) {
+	public boolean backspaceCompare(String S, String T) 
+    {
         if (S == null || S.length() == 0 || T == null || T.length() == 0)
         {
             return false;
         }
         
-        int i = S.length() - 1, j = T.length() - 1;
-        int skipS = 0, skipT = 0;
-
-        while (i >= 0 || j >= 0) 
-        { 
-            // While there may be chars in build(S) or build (T)
-            while (i >= 0) 
-            { 
-                // Find position of next possible char in build(S)
-                if (S.charAt(i) == '#') 
+        int s_index = S.length()-1;
+        int t_index = T.length()-1;
+        int s_skip = 0, t_skip = 0;
+        
+        while (s_index >= 0 || t_index >= 0)
+        {
+        	// While there may be chars in build(S) or build (T)
+            while (s_index >= 0)
+            {
+                if (S.charAt(s_index) == '#')
                 {
-                    skipS++; 
-                    i--;
+                    s_skip++;
+                    s_index--;
                 }
-                else if (skipS > 0) 
+                else if (s_skip > 0)
                 {
-                    skipS--; 
-                    i--;
+                    s_skip--;
+                    s_index--;
                 }
-                else 
+                else
                 {
                     break;
                 }
             }
             
-            while (j >= 0) 
-            { 
-                // Find position of next possible char in build(T)
-                if (T.charAt(j) == '#') 
+            // Find position of next possible char in build(T)
+            while (t_index >= 0)
+            {
+                if (T.charAt(t_index) == '#')
                 {
-                    skipT++; 
-                    j--;
+                    t_skip++;
+                    t_index--;
                 }
-                else if (skipT > 0) 
+                else if (t_skip > 0)
                 {
-                    skipT--; 
-                    j--;
+                    t_skip--;
+                    t_index--;
                 }
-                else 
+                else
                 {
                     break;
                 }
             }
             
-            // If two actual characters are different
-            if (i >= 0 && j >= 0 && S.charAt(i) != T.charAt(j))
+            if (s_index >= 0 && t_index >= 0 && S.charAt(s_index) != T.charAt(t_index))
             {
                 return false;
             }
-            
-            // If expecting to compare char vs nothing
-            if ((i >= 0) != (j >= 0))
+            else if ((s_index >= 0) != (t_index >= 0))
             {
                 return false;
             }
-            
-            i--; 
-            j--;
+            else
+            {
+                s_index--;
+                t_index--;
+            }
         }
         
         return true;

@@ -44,6 +44,7 @@ public class Q689_Maximum_Sum_of_3_Non_Overlapping_Subarrays {
         
         for (int i = k; i < size; i++)
         {
+        	// Don't need to update when there are multiple answers and get smaller one for lexicographically smaller requirement
             if (leftMax < sum[i+1] - sum[i+1-k])
             {
                 leftMax = sum[i+1] - sum[i+1-k];
@@ -59,8 +60,9 @@ public class Q689_Maximum_Sum_of_3_Non_Overlapping_Subarrays {
         int rightMax = sum[size] - sum[size-k];
         rightStartIndex[size-k] = size - k;
         
-        for (int i = size-k-1; i >= 0; i--)
+        for (int i = size-1-k; i >= 0; i--)
         {
+        	// need to update when there are multiple answers and get smaller one for lexicographically smaller requirement
             if (rightMax <= sum[i+k]-sum[i])
             {
                 rightMax = sum[i+k]-sum[i];

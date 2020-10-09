@@ -31,6 +31,51 @@ and
 Therefore, you need to return above trees' root in the form of a list.
  */
 public class Q652_Find_Duplicate_Subtrees {
+	// solution 1:
+	private List<TreeNode> result = new LinkedList<>();
+    private Map<String, Integer> map;
+    
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) 
+    {
+        if (root == null)
+        {
+            return result;
+        }
+        
+        map = new HashMap<>();
+        dfs(root, true);
+        return result;
+    }
+    
+    private String dfs(TreeNode node, boolean isLeft)
+    {
+        if (node == null)
+        {
+            return isLeft ? "lnull" : "rnull";
+        }
+        
+        StringBuilder builder = new StringBuilder()
+            .append("#")
+            .append(node.val)
+            .append("#")
+            .append(dfs(node.left, true))
+            .append("#")
+            .append(dfs(node.right, false));
+        
+        String str = builder.toString();
+        map.put(str, map.getOrDefault(str, 0)+1);
+        
+        if (map.get(str) == 2)
+        {
+            result.add(node);
+        }
+        
+        return str;
+    }
+
+    
+    
+	/*********************** solution 2 
 	private List<TreeNode> result = new LinkedList<>();
     private Map<String, Integer> map;
     
@@ -64,4 +109,6 @@ public class Q652_Find_Duplicate_Subtrees {
         
         return str;
     }
+    
+    ***************************/
 }

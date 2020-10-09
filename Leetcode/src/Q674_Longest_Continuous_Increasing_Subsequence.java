@@ -22,21 +22,27 @@ public class Q674_Longest_Continuous_Increasing_Subsequence {
             return 0;
         }
         
+        int size = nums.length;
         int maxLen = 1;
-        int pos = 0;
+        int start = 0, end = 0;
         
-        for (int i = 0; i < nums.length; i++)
+        while (end < size)
         {
-            if (i > 0 && nums[i] <= nums[i-1])
+            while (end+1 < size && nums[end] < nums[end+1])
             {
-                pos = i;
+                end++;
             }
             
-            maxLen = Math.max(maxLen, i-pos+1);
+            maxLen = Math.max(maxLen, end-start+1);
+            end = end+1;
+            start = end;
         }
         
         return maxLen;
     }
+	
+	
+	
 
 	// Time complexity is O(n^2)
 	public int findLengthOfLCIS2(int[] nums) {

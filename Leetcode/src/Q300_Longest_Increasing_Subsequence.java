@@ -29,42 +29,47 @@ public class Q300_Longest_Increasing_Subsequence {
             return 0;
         }
         
-        int totalLen = 0;
-
-        for (int element : nums)
+        int size = nums.length;
+        int[] queue = new int[size];
+        int curTail = -1;
+        
+        for (int num : nums)
         {
-            if (totalLen == 0 || element > nums[totalLen - 1])
+            if (curTail == -1 || queue[curTail] < num)
             {
-                nums[totalLen++] = element;
-            } 
-            else 
+                queue[++curTail] = num;
+            }
+            else
             {
-                int index = findPos(nums, 0, totalLen, element);
-                nums[index] = element;
+                int pos = findPos(queue, curTail, num);
+                queue[pos] = num;
             }
         }
-
-        return totalLen;
+        
+        return curTail+1;
     }
-    
-    private int findPos(int[] nums, int left, int right, int target)
+
+    private int findPos(int[] queue, int curTail, int target)
     {
+        int left = 0, right = curTail;
+        
         while (left+1 < right)
         {
-            int mid = left + (right - left) / 2;
+            int mid = left + (right-left)/2;
             
-            if (nums[mid] < target)
+            if (queue[mid] < target)
             {
                 left = mid;
             }
             else
-            {
+            {   
                 right = mid;
             }
         }
         
-        return nums[left] >= target ? left : right;
+        return queue[left] >= target ? left : right;
     }
+
 
     
     

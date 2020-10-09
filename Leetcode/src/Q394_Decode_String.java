@@ -29,37 +29,46 @@ public class Q394_Decode_String {
 	//	s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 	
 	// using DFS
-	public String decodeString(String s) {
-		if(s == null || s.length() == 0) {
+	public String decodeString(String s) 
+	{
+		if (s == null || s.length() == 0) 
+		{
             return "";
         }
         
         Stack<String> stack = new Stack<>();
         
-        for(int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) 
+        {
             char c = s.charAt(i);
             
-            if(c != ']') {
+            if (c != ']') 
+            {
                 stack.push(String.valueOf(c));
-            } else {
+            } 
+            else 
+            {
                 StringBuilder strBuilder = new StringBuilder();
                 
-                while(!stack.isEmpty() && !stack.peek().equals("[")) {
+                while (!stack.isEmpty() && !stack.peek().equals("[")) 
+                {
                     strBuilder.insert(0, stack.pop());
                 }
                 
                 stack.pop();  // pop(): c = '['
-                StringBuilder timeBuilder = new StringBuilder();
+                StringBuilder numBuilderBuilder = new StringBuilder();
                 
                 // is a digit and the length is equal to 1
-                while(!stack.isEmpty() && stack.peek().length() == 1 && Character.isDigit(stack.peek().charAt(0))) {
-                    timeBuilder.insert(0, stack.pop());
+                while (!stack.isEmpty() && stack.peek().length() == 1 && Character.isDigit(stack.peek().charAt(0))) 
+                {
+                    numBuilderBuilder.insert(0, stack.pop());
                 }
                 
-                int time = Integer.parseInt(timeBuilder.toString());
+                int num = Integer.parseInt(numBuilderBuilder.toString());
                 String str = strBuilder.toString();
                 
-                for(int j = 1; j < time; j++) {  // j从1开始 ！！！
+                for (int j = 1; j < num; j++) 
+                {  // j从1开始 ！！！
                     strBuilder.append(str);
                 }
                 
@@ -69,7 +78,8 @@ public class Q394_Decode_String {
         
         StringBuilder sb = new StringBuilder();
 		
-		while (!stack.empty()) {
+		while (!stack.empty()) 
+		{
 		    sb.insert(0, stack.pop());
 		}
 		

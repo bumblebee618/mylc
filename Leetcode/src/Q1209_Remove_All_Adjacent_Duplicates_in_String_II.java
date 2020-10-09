@@ -39,40 +39,42 @@ Constraints:
 2 <= k <= 10^4
 s only contains lower case English letters.
  */
-public class Q1209_Remove_All_Adjacent_Duplicates_in_String_II {
-	public String removeDuplicates(String s, int k) {
+public class Q1209_Remove_All_Adjacent_Duplicates_in_String_II 
+{
+	public String removeDuplicates(String s, int k) 
+	{
         if (s == null || s.length() == 0 || k <= 0 || k > s.length())
         {
             return s;
         }
         
-        Stack<Character> stack1 = new Stack<>();
-        Stack<Integer> stack2 = new Stack<>();
+        Stack<Character> characters = new Stack<>();
+        Stack<Integer> frequency = new Stack<>();
         StringBuilder builder = new StringBuilder();
         
         for (char c : s.toCharArray())
         {
-            if (!stack1.isEmpty() && stack1.peek() == c)
+            if (!characters.isEmpty() && characters.peek() == c)
             {
-                stack2.push(stack2.pop()+1);
+                frequency.push(frequency.pop()+1);
             }
             else
             {
-                stack1.push(c);
-                stack2.push(1);
+                characters.push(c);
+                frequency.push(1);
             }
             
-            if (stack2.peek() == k)
+            if (frequency.peek() == k)
             {
-                stack1.pop();
-                stack2.pop();
+                characters.pop();
+                frequency.pop();
             }
         }
         
-        while (!stack1.isEmpty())
+        while (!characters.isEmpty())
         {
-            char c = stack1.pop();
-            int size = stack2.pop();
+            char c = characters.pop();
+            int size = frequency.pop();
             
             for (int i = 0; i < size; i++)
             {

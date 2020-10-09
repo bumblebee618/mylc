@@ -36,6 +36,7 @@ public class Q414_Third_Maximum_Number {
             return -1;
         }
 
+        // result[0] is max, result[2] is min
         Integer[] result = new Integer[3];
 
         for (int num : nums) 

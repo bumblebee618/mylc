@@ -25,9 +25,12 @@ public class Q301_Remove_Invalid_Parentheses {
 	 *  
 	 *******************************************************************/
 	
-	public List<String> removeInvalidParentheses(String s) {
+	public List<String> removeInvalidParentheses(String s) 
+	{
 		List<String> ans = new ArrayList<String>();
-        if(s == null){
+		
+        if (s == null)
+        {
             return ans;
         }
         
@@ -37,34 +40,38 @@ public class Q301_Remove_Invalid_Parentheses {
         visited.add(s);
         boolean found = false;
         
-        while(!q.isEmpty()){
+        while (!q.isEmpty())
+        {
             int size = q.size();
             
             for (int i = 0; i < size; i++)
             {
                 String tempStr = q.poll();
                 
-                if(isValid(tempStr)){
+                if (isValid(tempStr))
+                {
                     ans.add(tempStr);
                     found = true;
                 }
                 
-                if(found == true){  // 只要找到一个解，则不再往下拆分，只统计当前层里的解
+                if (found == true) // 只要找到一个解，则不再往下拆分，只统计当前层里的解
+                {  
                     continue;
                 }
             
-                int len = tempStr.length();
-            
-                for(int j = 0; j < len; ++j){
+                for (int j = 0; j < tempStr.length(); ++j)
+                {
                     char c = tempStr.charAt(j);  // 需要剔除无效字符
                 
-                    if(c != '(' && c != ')'){
+                    if (c != '(' && c != ')')
+                    {
                         continue;
                     }
                 
                     String newStr = tempStr.substring(0, j) + tempStr.substring(j+1);
                 
-                    if(!visited.contains(newStr)){
+                    if (!visited.contains(newStr))
+                    {
                         visited.add(newStr);
                         q.offer(newStr);
                     }
@@ -80,19 +87,27 @@ public class Q301_Remove_Invalid_Parentheses {
         return ans;
     }
     
-    public boolean isValid(String str){   // 此法验证是否是有效的Parentheses很巧 ！！！
+	// 此法验证是否是有效的Parentheses很巧 ！！！
+    private boolean isValid(String str) 
+    {   
         int count = 0;
         int n = str.length();
         
-        for(int i = 0; i < n; ++i){
+        for (int i = 0; i < n; ++i)
+        {
             char c = str.charAt(i);
-            if(c == '('){
+            
+            if (c == '(')
+            {
                 count++;
-            } else if (c == ')'){
+            } 
+            else if (c == ')')
+            {
                 count--;
             }
             
-            if(count < 0){
+            if (count < 0)
+            {
                 return false;
             }
         }

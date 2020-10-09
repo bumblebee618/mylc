@@ -31,8 +31,10 @@ Note:
 The tree will have between 1 and 100 nodes.
  *
  */
-public class Q958_Check_Completeness_of_a_Binary_Tree {
-	public boolean isCompleteTree(TreeNode root) {
+public class Q958_Check_Completeness_of_a_Binary_Tree 
+{
+	public boolean isCompleteTree(TreeNode root) 
+	{
         if (root == null)
         {
             return true;
@@ -44,37 +46,42 @@ public class Q958_Check_Completeness_of_a_Binary_Tree {
         
         while (!queue.isEmpty())
         {
-            TreeNode node = queue.poll();
+            int size = queue.size();
             
-            if (findNull)
+            for (int i = 0; i < size; i++)
             {
-                if (node.left != null || node.right != null)
+                TreeNode node = queue.poll();
+            
+                if (findNull)
                 {
-                    return false;
-                }
-            }
-            else
-            {
-                if (node.left == null)
-                {
-                    if (node.right != null)
+                    if (node.left != null || node.right != null)
                     {
                         return false;
                     }
-
-                    findNull = true;
                 }
                 else
                 {
-                    queue.offer(node.left);
-                    
-                    if (node.right == null)
+                    if (node.left != null)
                     {
-                        findNull = true;
+                        queue.offer(node.left);
+                    
+                        if (node.right != null)
+                        {
+                            queue.offer(node.right);
+                        }
+                        else
+                        {
+                            findNull = true;
+                        }
                     }
                     else
                     {
-                        queue.offer(node.right);
+                        if (node.right != null)
+                        {
+                            return false;
+                        }
+                    
+                        findNull = true;
                     }
                 }
             }

@@ -34,9 +34,13 @@ public class Q329_Longest_Increasing_Path_in_a_Matrix {
 	 * memoSearch比较适合此题，可以去除重复计算； bfs遍历
 	 *  
 	 *******************************************************************/
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
 	
-	public int longestIncreasingPath(int[][] matrix) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+	public int longestIncreasingPath(int[][] matrix) 
+	{
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
+        {
             return 0;
         }
         
@@ -44,8 +48,10 @@ public class Q329_Longest_Increasing_Path_in_a_Matrix {
         int[][] memo = new int[row][col];
         int maxLen = 0;
         
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < row; i++) 
+        {
+            for (int j = 0; j < col; j++) 
+            {
                 maxLen = Math.max(maxLen, memoSearch(matrix, memo, i, j));
             }
         }
@@ -53,19 +59,20 @@ public class Q329_Longest_Increasing_Path_in_a_Matrix {
         return maxLen;
     }
     
-    public int memoSearch(int[][] matrix, int[][] memo, int x, int y) {
-        if (memo[x][y] > 0) {
+    public int memoSearch(int[][] matrix, int[][] memo, int x, int y) 
+    {
+        if (memo[x][y] > 0) 
+        {
             return memo[x][y];
         }
         
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
-        
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) 
+        {
             int newX = x + dx[i];
             int newY = y + dy[i];
             
-            if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && matrix[x][y] < matrix[newX][newY]) {
+            if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && matrix[x][y] < matrix[newX][newY]) 
+            {
                 memo[x][y] = Math.max(memo[x][y], memoSearch(matrix, memo, newX, newY));
             }
         }

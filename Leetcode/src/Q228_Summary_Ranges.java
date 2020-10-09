@@ -11,7 +11,8 @@ For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
  * */
 
 public class Q228_Summary_Ranges {
-	public List<String> summaryRanges(int[] nums) {
+	public List<String> summaryRanges(int[] nums) 
+    {
         List<String> result = new LinkedList<>();
         
         if (nums == null || nums.length == 0)
@@ -19,20 +20,19 @@ public class Q228_Summary_Ranges {
             return result;
         }
         
-        int size = nums.length;
         int start = 0;
         
-        while (start < size)
+        while (start < nums.length)
         {
-            int end = start+1;
+            int end = start;
             
-            while (end < size && nums[end-1]+1 == nums[end])
+            while (end+1 < nums.length && nums[end]+1 == nums[end+1])
             {
                 end++;
             }
             
-            result.add(getStr(nums[start], nums[end-1]));
-            start = end;
+            result.add(getStr(nums[start], nums[end]));
+            start = end+1;
         }
         
         return result;
@@ -44,6 +44,7 @@ public class Q228_Summary_Ranges {
             ? new StringBuilder().append(num1).toString() 
             : new StringBuilder().append(num1).append("->").append(num2).toString();
     }
+
 
 
 	
