@@ -24,8 +24,58 @@ Note:
  * */
 
 public class Q378_Kth_Smallest_Element_in_a_Sorted_Matrix {
-	// solution 1: Time is O(row*col*logk)
+	// solution 1: time is O(col*logcol + klogk)
 	public int kthSmallest(int[][] matrix, int k) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+        {
+            return 0;
+        }
+        else if (k <= 0 || k > matrix.length * matrix[0].length)
+        {
+            return 0;
+        }
+        
+        int row = matrix.length, col = matrix[0].length;
+        Queue<Tuple> heap = new PriorityQueue<>(col+1, (a, b) -> a.value - b.value);
+        
+        for (int i = 0; i < col; i++)
+        {
+            heap.offer(new Tuple(0, i, matrix[0][i]));
+        }
+        
+        for (int index = 0; index < k-1; index++)
+        {
+            Tuple cur = heap.poll();
+            
+            if (cur.x + 1 < row)
+            {
+                heap.offer(new Tuple(cur.x+1, cur.y, matrix[cur.x+1][cur.y]));
+            }
+        }
+        
+        return heap.peek().value;
+    }
+    
+    class Tuple
+    {
+        public int x;
+        public int y;
+        public int value;
+        
+        public Tuple(int x, int y, int value)
+        {
+            this.x = x;
+            this.y = y;
+            this.value = value;
+        }
+    }
+	
+    
+    
+	
+    
+	// solution 2: Time is O(row*col*klogk)
+	public int kthSmallest2(int[][] matrix, int k) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return 0;
         }
@@ -51,49 +101,5 @@ public class Q378_Kth_Smallest_Element_in_a_Sorted_Matrix {
         }
         
         return heap.poll();
-    }
-	
-	// time is O( (k+col)*log(col) )
-	public int kthSmallest2(int[][] matrix, int k) {
-        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
-            return 0;
-        }
-        
-        Queue<Pair> heap = new PriorityQueue<Pair>(1, new Comparator<Pair>(){
-            public int compare(Pair p1, Pair p2){
-                return p1.val - p2.val;
-            }
-        });
-        
-        int row = matrix.length;
-        int col = matrix[0].length;
-        
-        for(int i = 0; i < col; i++){
-            heap.offer(new Pair(0, i, matrix[0][i]));
-        }
-        
-        for(int i = 0; i < k - 1; i++){
-        	Pair node = heap.poll();
-            
-            if(node.x == row - 1){
-                continue;
-            }
-            
-            heap.offer(new Pair(node.x + 1, node.y, matrix[node.x + 1][node.y]));
-        }
-        
-        return heap.poll().val;
-    }
-    
-    class Pair {
-        int x;
-        int y;
-        int val;
-        
-        public Pair(int x, int y, int val){
-            this.x = x;
-            this.y = y;
-            this.val = val;
-        }
     }
 }
