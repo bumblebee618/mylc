@@ -93,9 +93,8 @@ public class Q1275_Find_Winner_on_a_Tic_Tac_Toe_Game {
         {
             case 1: return "A";
             case -1: return "B"; 
+            default: return moves.length == 9 ? "Draw" : "Pending";
         }
-        
-        return moves.length == 9 ? "Draw" : "Pending";
     }
     
     private int move(int row, int col, int player)

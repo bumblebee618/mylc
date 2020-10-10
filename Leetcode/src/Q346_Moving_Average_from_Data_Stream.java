@@ -14,30 +14,38 @@ For example,
  * 
  * */
 
-public class Q346_Moving_Average_from_Data_Stream {
-	private Queue<Integer> q;
+public class Q346_Moving_Average_from_Data_Stream 
+{
+	private Queue<Integer> queue;
     private int size = 0;
     private double sum = 0;
 
     /** Initialize your data structure here. */
-    public Q346_Moving_Average_from_Data_Stream(int size) {
-        if(size <= 0){
+    public Q346_Moving_Average_from_Data_Stream(int size) 
+    {
+        if (size <= 0)
+        {
             return;
         }
-        q = new LinkedList<Integer>();
+        
+        queue = new LinkedList<Integer>();
         this.size = size;
     }
     
-    public double next(int val) {
-        if(size == 0){
+    public double next(int val) 
+    {
+        if (size == 0)
+        {
             return 0;
         }
         
-        if(q.size() >= size){
-            sum -= q.poll();
+        if (queue.size() >= size)
+        {
+            sum -= queue.poll();
         }
+        
         sum += val;
-        q.offer(val);
-        return sum / q.size();
+        queue.offer(val);
+        return sum / queue.size();
     }
 }

@@ -63,7 +63,8 @@ public class Q348_Design_Tic_Tac_Toe {
     private Set<Integer> visited;
     
     /** Initialize your data structure here. */
-    public Q348_Design_Tic_Tac_Toe(int n) {
+    public Q348_Design_Tic_Tac_Toe(int n) 
+    {
         if (n <= 0)
         {
             return;
@@ -75,15 +76,16 @@ public class Q348_Design_Tic_Tac_Toe {
         visited = new HashSet<>();
     }
     
-    /** Player {player} makes a move at ({row}, {col}).
+    /** Player {player} makes a move at ({row}, {size}).
         @param row The row of the board.
-        @param col The column of the board.
+        @param size The column of the board.
         @param player The player, can be either 1 or 2.
         @return The current winning condition, can be either:
                 0: No one wins.
                 1: Player 1 wins.
                 2: Player 2 wins. */
-    public int move(int row, int col, int player) {
+    public int move(int row, int col, int player) 
+    {
         if (row < 0 || row >= size || col < 0 || col >= size)
         {
             return 0;
@@ -94,7 +96,7 @@ public class Q348_Design_Tic_Tac_Toe {
         }
         
         visited.add(row * size + col);
-        int step = player == 1 ? 1 : -1;
+        int step = (player == 1) ? 1 : -1;
         rowStatus[row] += step;
         colStatus[col] += step;
         
@@ -108,7 +110,10 @@ public class Q348_Design_Tic_Tac_Toe {
             antidiag += step;
         }
         
-        if (Math.abs(rowStatus[row]) == size || Math.abs(colStatus[col]) == size || Math.abs(diag) == size || Math.abs(antidiag) == size)
+        if (Math.abs(rowStatus[row]) == size 
+        		|| Math.abs(colStatus[col]) == size 
+        		|| Math.abs(diag) == size 
+        		|| Math.abs(antidiag) == size)
         {
             return player;
         }

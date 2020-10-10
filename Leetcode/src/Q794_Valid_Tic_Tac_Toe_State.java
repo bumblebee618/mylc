@@ -35,34 +35,45 @@ board is a length-3 array of strings, where each string board[i] has length 3.
 Each board[i][j] is a character in the set {" ", "X", "O"}.
  *
  */
-public class Q794_Valid_Tic_Tac_Toe_State {
-	public boolean validTicTacToe(String[] board) {
-        if (board == null || board.length == 0) {
+public class Q794_Valid_Tic_Tac_Toe_State 
+{
+	public boolean validTicTacToe(String[] board) 
+	{
+        if (board == null || board.length == 0) 
+        {
             return true;
         }
         
         int x_count = 0;
         int o_count = 0;
         int size = 3;
+        
         int[] rowStatus = new int[size];
         int[] colStatus = new int[size];
         int diagonal = 0;
         int anti_diagonal = 0;
+        
         boolean x_win = false;
         boolean o_win = false;
         
-        for (int row = 0; row < size; row++) {
-            if (board[row] == null || board[row].length() != size) {
+        for (int row = 0; row < size; row++) 
+        {
+            if (board[row] == null || board[row].length() != size) 
+            {
                 return false;
             }
             
-            for (int col = 0; col < size; col++) {
+            for (int col = 0; col < size; col++) 
+            {
                 int step = 0;
                 
-                if (board[row].charAt(col) == 'X') {
+                if (board[row].charAt(col) == 'X') 
+                {
                     step = 1;
                     x_count++;
-                } else if (board[row].charAt(col) == 'O') {
+                } 
+                else if (board[row].charAt(col) == 'O') 
+                {
                     step = -1;
                     o_count++;
                 }
@@ -70,35 +81,49 @@ public class Q794_Valid_Tic_Tac_Toe_State {
                 rowStatus[row] += step;
                 colStatus[col] += step;
                 
-                if (row == col) {
+                if (row == col) 
+                {
                     diagonal += step;
                 }
                 
-                if (row + col == size-1) {
+                if (row + col == size-1) 
+                {
                     anti_diagonal += step;
                 }
             }
         }
         
-        for (int i = 0; i < size; i++) {
-            if (rowStatus[i] == size || colStatus[i] == size || diagonal == size || anti_diagonal == size) {
+        for (int i = 0; i < size; i++) 
+        {
+            if (rowStatus[i] == size || colStatus[i] == size || diagonal == size || anti_diagonal == size) 
+            {
                 x_win = true;
             } 
             
-            if (rowStatus[i] == -size || colStatus[i] == -size || diagonal == -size || anti_diagonal == -size) {
+            if (rowStatus[i] == -size || colStatus[i] == -size || diagonal == -size || anti_diagonal == -size) 
+            {
                 o_win = true;
             } 
         }
         
-        if (x_count != o_count && x_count != o_count+1) {
+        if (x_count != o_count && x_count != o_count+1) 
+        {
             return false;
-        } else if (x_win && o_win) {
+        } 
+        else if (x_win && o_win) 
+        {
             return false;
-        } else if (x_win && x_count != o_count+1) {
+        } 
+        else if (x_win && x_count != o_count+1) 
+        {
             return false;
-        } else if (o_win && x_count != o_count) {
+        } 
+        else if (o_win && x_count != o_count) 
+        {
             return false;
-        } else {
+        } 
+        else 
+        {
             return true;
         }
     }
