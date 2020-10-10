@@ -10,24 +10,28 @@ T is "ece" which its length is 3.
 
 public class Q159_Longest_Substring_with_At_Most_Two_Distinct_Characters {
 	// Solution 1: two pointers, time O(n), space O(1)
-	public int lengthOfLongestSubstringTwoDistinct(String s) {
-        if (s == null || s.length() == 0) {
+	public int lengthOfLongestSubstringTwoDistinct(String s) 
+	{
+        if (s == null || s.length() == 0) 
+        {
             return 0;
         }
         
         int[] hash = new int[256];
-        int len = s.length();
-        int back = 0;
         int maxLen = 0;
         int charCount = 0;
         
-        for (int front = 0; front < len; front++) {
-            if (hash[s.charAt(front)]++ == 0) {
+        for (int front = 0, back = 0; front < s.length(); front++) 
+        {
+            if (hash[s.charAt(front)]++ == 0) 
+            {
                 charCount++;
             }
             
-            while(charCount > 2) {
-                if(--hash[s.charAt(back++)] == 0) {
+            while (charCount > 2) 
+            {
+                if (--hash[s.charAt(back++)] == 0) 
+                {
                     charCount--;
                 }
             }

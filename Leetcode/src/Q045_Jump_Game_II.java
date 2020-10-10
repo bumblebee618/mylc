@@ -18,21 +18,25 @@ Note:
 
 public class Q045_Jump_Game_II {
 	// solution 1: using Greedy, time complexity O(n)
-	public int jump(int[] nums) {
-        if(nums == null || nums.length <= 1){
+	public int jump(int[] nums) 
+	{
+        if (nums == null || nums.length <= 1)
+        {
             return 0;
         }
         
         int curFast = nums[0];
         int nextFast = nums[0];
-        int n = nums.length;
+        int size = nums.length;
         int index = 0;
-        int step = 1;              // step = 1 !!!
+        int step = 1;                // step = 1 !!!
         
-        while(curFast < n - 1){    // 只需要到达n - 1, 一旦curFast == n - 1, 表示到达目的地，则停止，否则如果是curFast == n，step就会多加一次 !!!
+        while (curFast < size - 1)   // 只需要到达n - 1, 一旦curFast == n - 1, 表示到达目的地，则停止，否则如果是curFast == n，step就会多加一次 !!!
+        {    
             step++;
             
-            while(index <= curFast){    // 注意有等号 !!!
+            while (index <= curFast) // 注意有等号 !!!
+            {    
                 nextFast = Math.max(nextFast, index + nums[index]);
                 index++;
             }

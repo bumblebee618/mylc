@@ -26,7 +26,7 @@ public class Q487_Max_Consecutive_Ones_II {
     //  [0, 0]
     //  [1, 0, 1, 1, 0]
     
-	// solution 1: use two pointers, time complexity is O(n)
+	// solution 1: use sliding window, time complexity is O(n)
 	public int findMaxConsecutiveOnes(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
@@ -35,13 +35,17 @@ public class Q487_Max_Consecutive_Ones_II {
         int len = nums.length;
         int maxLen = 0, zeroCount = 0;
         
-        for (int front = 0, back = 0; front < len; front++) {
-            if (nums[front] == 0) {
+        for (int front = 0, back = 0; front < len; front++) 
+        {
+            if (nums[front] == 0) 
+            {
                 zeroCount++;
             }
             
-            while (zeroCount > 1) {
-                if (nums[back++] == 0) {
+            while (zeroCount > 1) 
+            {
+                if (nums[back++] == 0) 
+                {
                     zeroCount--;
                 }
             }

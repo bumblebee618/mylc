@@ -13,55 +13,74 @@ For example,
  * */
 
 public class Q253_Meeting_Rooms_II {
-	public int minMeetingRooms(Interval[] intervals) {
-        if(intervals == null || intervals.length == 0){
+	public int minMeetingRooms(Interval[] intervals) 
+	{
+        if (intervals == null || intervals.length == 0)
+        {
             return 0;
         }
         
-        int ans = 0;
+        int result = 0;
         int count = 0;
         
-        Queue<Pair> heap = new PriorityQueue<Pair>(1, new Comparator<Pair>(){
-            public int compare(Pair left, Pair right){
-                if(left.pos != right.pos){
+        Queue<Pair> heap = new PriorityQueue<Pair>(1, new Comparator<Pair>()
+        {
+            public int compare(Pair left, Pair right)
+            {
+                if (left.pos != right.pos)
+                {
                     return left.pos - right.pos;
-                } else {
-                    if(left.isStart == true && right.isStart == false){
+                } 
+                else 
+                {
+                    if (left.isStart == true && right.isStart == false)
+                    {
                         return 1;
-                    } else if(left.isStart == false && right.isStart == true){
+                    } 
+                    else if (left.isStart == false && right.isStart == true)
+                    {
                         return -1;
-                    } else {
+                    } 
+                    else 
+                    {
                         return 0;
                     }
                 }
             }
         });
         
-        for(Interval interval : intervals){
+        for (Interval interval : intervals)
+        {
             heap.offer(new Pair(interval.start, true));
             heap.offer(new Pair(interval.end, false));
         }
         
-        while(!heap.isEmpty()){
+        while (!heap.isEmpty())
+        {
             Pair node = heap.poll();
             
-            if(node.isStart == true){
+            if (node.isStart == true)
+            {
                 count++;
-            } else {
+            } 
+            else 
+            {
                 count--;
             }
             
-            ans = Math.max(ans, count);
+            result = Math.max(result, count);
         }
         
-        return ans;
+        return result;
     }
     
-    class Pair {
+    class Pair 
+    {
         int pos;
         boolean isStart;
         
-        public Pair(int pos, boolean isStart){
+        public Pair(int pos, boolean isStart)
+        {
             this.pos = pos;
             this.isStart = isStart;
         }

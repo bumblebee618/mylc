@@ -24,18 +24,18 @@ public class Q674_Longest_Continuous_Increasing_Subsequence {
         
         int size = nums.length;
         int maxLen = 1;
-        int start = 0, end = 0;
+        int back = 0, front = 0;
         
-        while (end < size)
+        while (front < size)
         {
-            while (end+1 < size && nums[end] < nums[end+1])
+            while (front+1 < size && nums[front] < nums[front+1])
             {
-                end++;
+                front++;
             }
             
-            maxLen = Math.max(maxLen, end-start+1);
-            end = end+1;
-            start = end;
+            maxLen = Math.max(maxLen, front-back+1);
+            front = front+1;
+            back = front;
         }
         
         return maxLen;

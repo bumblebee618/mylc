@@ -12,32 +12,23 @@ import java.util.*;
  * */
 
 public class Q146_LRU_Cache {
-	private class CacheItem{
-        int key;
-        int value;
-        CacheItem prev, next;
-
-        public CacheItem(int key, int value) {
-            this.key = key;
-            this.value = value;
-            this.prev = this.next = null;
-        }
-    }
-
     private int capacity;
     private Map<Integer, CacheItem> map = new HashMap<Integer, CacheItem>();
     private CacheItem head = new CacheItem(-1, -1);
     private CacheItem tail = new CacheItem(-1, -1);
 	
-    public Q146_LRU_Cache(int capacity) {
+    public Q146_LRU_Cache(int capacity) 
+    {
         this.capacity = capacity;
         tail.prev = head;
         head.next = tail;
     }
 
     // @return an integer
-    public int get(int key) {
-        if(!map.containsKey(key)) {
+    public int get(int key) 
+    {
+        if(!map.containsKey(key)) 
+        {
             return -1;
         }
 
@@ -51,13 +42,16 @@ public class Q146_LRU_Cache {
         return current.value;
     }
 
-    public void set(int key, int value) {
-        if(get(key) != -1) {             // 这里必须用get(key)而不是map.containsKey(key)， 因为相当于访问过了，需要做move_to_tail操作
-            map.get(key).value = value;
+    public void set(int key, int value) 
+    {
+        if (get(key) != -1)            // 这里必须用get(key)而不是map.containsKey(key)， 因为相当于访问过了，需要做move_to_tail操作
+        {
+        	map.get(key).value = value;
             return;
         }
 
-        if (map.size() == capacity) {
+        if (map.size() == capacity) 
+        {
             map.remove(head.next.key);    // 必须先remove，否则head.next改变了 ！！！
             head.next = head.next.next;
             head.next.prev = head;
@@ -68,12 +62,33 @@ public class Q146_LRU_Cache {
         move_to_tail(insert);
     }
 
-    private void move_to_tail(CacheItem current) {
-        current.prev = tail.prev;
-        tail.prev = current;
-        current.prev.next = current;
-        current.next = tail;
+    private void move_to_tail(CacheItem node) 
+    {
+    	node.next = tail;
+        node.prev = tail.prev;
+        tail.prev.next = node;
+        tail.prev = node;
+        
     }
+    
+    private class CacheItem
+    {
+        int key;
+        int value;
+        CacheItem prev, next;
+
+        public CacheItem(int key, int value) 
+        {
+            this.key = key;
+            this.value = value;
+            this.prev = this.next = null;
+        }
+    }
+    
+    
+    
+    
+    
     
     
     

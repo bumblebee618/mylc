@@ -50,7 +50,8 @@ public class Q218_The_Skyline_Problem {
         
         int size = buildings.length;   
         
-        Queue<Tuple> heap = new PriorityQueue<>(size * 2, new Comparator<Tuple>() {
+        Queue<Tuple> heap = new PriorityQueue<>(size * 2, new Comparator<Tuple>() 
+        {
             @Override
             public int compare(Tuple p1, Tuple p2) 
             {
@@ -75,7 +76,8 @@ public class Q218_The_Skyline_Problem {
 
         Queue<Integer> curHeight = new PriorityQueue<>(size, (a, b) -> b - a);   
         
-        for (int[] building : buildings) {
+        for (int[] building : buildings) 
+        {
             heap.offer(new Tuple(building[0], building[2], true));
             heap.offer(new Tuple(building[1], building[2], false));
         }
@@ -109,6 +111,7 @@ public class Q218_The_Skyline_Problem {
             
             int height = curHeight.isEmpty() ? 0 : curHeight.peek();
             
+            // result.get(0) 为index, rsult.get(1)为高度
             if (result.size() > 0 && result.get(result.size()-1).get(1) == height)
             {
                 continue;
@@ -140,6 +143,8 @@ public class Q218_The_Skyline_Problem {
 
 	
 	
+    
+    
 	
 	
 	// solution 2: using TreeMap

@@ -21,35 +21,42 @@ Example 2:
  * */
 
 public class Q341_Flatten_Nested_List_Iterator {
-	private Stack<NestedInteger> stack = new Stack<NestedInteger>();
-
-    public Q341_Flatten_Nested_List_Iterator(List<NestedInteger> nestedList) {
-        if(nestedList == null || nestedList.size() == 0){
-            return ;
+private Stack<NestedInteger> stack = new Stack<NestedInteger>();
+    
+    public Q341_Flatten_Nested_List_Iterator(List<NestedInteger> nestedList) 
+    {
+        if (nestedList == null || nestedList.size() == 0)
+        {
+            return;
         }
         
-        for(int i = nestedList.size() - 1; i >= 0; i--){
+        for (int i = nestedList.size() - 1; i >= 0; i--)
+        {
             stack.push(nestedList.get(i));
         }
     }
 
-//    @Override
-    public Integer next() {
+    // @Override
+    public Integer next() 
+    {
         return stack.pop().getInteger();
     }
 
-//    @Override
-    public boolean hasNext() {
-        while(!stack.isEmpty()){
-            NestedInteger current = stack.peek();
-            if(current.isInteger() == true){
+    // @Override
+    public boolean hasNext() 
+    {
+        while (!stack.isEmpty())
+        {
+            if (stack.peek().isInteger())
+            {
                 return true;
             }
             
-            stack.pop();
+            NestedInteger current = stack.pop();
             List<NestedInteger> curList = current.getList();
             
-            for(int i = curList.size() - 1; i >= 0; i--){
+            for (int i = curList.size() - 1; i >= 0; i--)
+            {
                 stack.push(curList.get(i));
             }
         }

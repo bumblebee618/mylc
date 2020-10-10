@@ -17,24 +17,28 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
 
 // Solution 1: two pointers, time O(n), space O(1)
 public class Q003_Longest_Substring_Without_Repeating_Characters {
-	public int lengthOfLongestSubstring(String s) {
-        if(s == null || s.length() == 0) {
+	public int lengthOfLongestSubstring(String s) 
+	{
+        if (s == null || s.length() == 0) 
+        {
             return 0;
         }
         
         int[] hash = new int[256];
-        int back = 0;
-        int len = s.length();
         int maxLen = 0;
         int duplicateCount = 0;
         
-        for(int front = 0; front < len; front++) {
-            if(hash[s.charAt(front)]++ == 1) {
+        for (int front = 0, back = 0; front < s.length(); front++) 
+        {
+            if (hash[s.charAt(front)]++ == 1) 
+            {
                 duplicateCount++;
             }
             
-            while(duplicateCount > 0) {
-            	if(--hash[s.charAt(back++)] == 1) {
+            while (duplicateCount > 0) 
+            {
+            	if (--hash[s.charAt(back++)] == 1) 
+            	{
             		duplicateCount--;
             	}
             }

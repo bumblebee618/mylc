@@ -43,7 +43,7 @@ public class Q621_Task_Scheduler {
         }
         
         // return max first
-        Queue<Integer> maxHeap = new PriorityQueue<>(26, Collections.reverseOrder());
+        Queue<Integer> maxHeap = new PriorityQueue<>(26, (a, b) -> b - a);
         
         for (int frequency : map)
         {

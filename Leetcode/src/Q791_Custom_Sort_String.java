@@ -25,8 +25,51 @@ S and T consist of lowercase letters only.
  *
  */
 public class Q791_Custom_Sort_String {
-	// perfect method! Time O(n), space O(1)
-	public String customSortString(String s, String t) 
+	// solution 1: time is O(s.length + t.length)
+	public String customSortString(String S, String T) 
+    {
+        if (S == null || S.length() == 0 || T == null || T.length() == 0) 
+        {
+            return "";
+        }
+        
+        int[] tCount = new int[256];
+        
+        for (int i = 0; i < T.length(); i++) 
+        {
+            tCount[T.charAt(i)]++;
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        
+        for (int i = 0; i < S.length(); i++)
+        {
+            char c = S.charAt(i);
+            
+            while (tCount[c] > 0)
+            {
+                builder.append(c);
+                tCount[c]--;
+            }
+        }
+        
+        for (int i = 0; i < tCount.length; i++)
+        {
+            while (tCount[i] > 0)
+            {
+                builder.append((char) i);
+                tCount[i]--;
+            }
+        }        
+
+        return builder.toString();
+    }
+	
+	
+	
+	
+	// Solution 2: if only contains lower case letters, perfect method! Time O(n), space O(1)
+	public String customSortString2(String s, String t) 
     {
         if (s == null || s.length() == 0 || t == null || t.length() == 0)
         {
@@ -64,7 +107,10 @@ public class Q791_Custom_Sort_String {
     }
 	
 	
-	public String customSortString2(String S, String T) {
+	
+	
+	// Solution 3:
+	public String customSortString3(String S, String T) {
         if (S == null || S.length() == 0 || T == null || T.length() == 0) {
             return "";
         }

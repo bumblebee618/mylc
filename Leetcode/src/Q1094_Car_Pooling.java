@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /***
  * 
@@ -40,23 +42,16 @@ trips[i].length == 3
 0 <= trips[i][1] < trips[i][2] <= 1000
 1 <= capacity <= 100000
  */
-public class Q1094_Car_Pooling {
-	public boolean carPooling(int[][] trips, int capacity) {
+public class Q1094_Car_Pooling 
+{
+	public boolean carPooling(int[][] trips, int capacity) 
+	{
         if (trips == null || trips.length == 0 || trips[0].length == 0 || capacity <= 0)
         {
             return false;
         }
         
-        Tuple[] tuples = new Tuple[trips.length*2];
-        int index = 0;
-        
-        for (int[] trip : trips)
-        {
-            tuples[index++] = new Tuple(trip[0], trip[1], true);
-            tuples[index++] = new Tuple(trip[0], trip[2], false);
-        }
-
-        Arrays.sort(tuples, new Comparator<Tuple>(){
+        Queue<Tuple> heap = new PriorityQueue<>(trips.length*2, new Comparator<Tuple>(){
             @Override
             public int compare(Tuple t1, Tuple t2)
             {
@@ -79,10 +74,18 @@ public class Q1094_Car_Pooling {
             }
         });
         
+        for (int[] trip : trips)
+        {
+            heap.offer(new Tuple(trip[0], trip[1], true));
+            heap.offer(new Tuple(trip[0], trip[2], false));
+        }
+        
         int curCap = 0;
         
-        for (Tuple t : tuples)
+        while (!heap.isEmpty())
         {
+            Tuple t = heap.poll();
+            
             if (t.isStart)
             {
                 curCap += t.num;

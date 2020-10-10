@@ -25,33 +25,34 @@ public class Q567_Permutation_in_String {
         {
             return false;
         }
+        else if (s2.length() < s1.length())
+        {
+            return false;
+        }
         
-        int len1 = s1.length();
-        int len2 = s2.length();
         int[] hash1 = new int[256];
         int[] hash2 = new int[256];
-        char[] letters = s2.toCharArray();
         
         for (char c : s1.toCharArray())
         {
             hash1[c]++;
         }
         
-        for (int i = 0; i < len2; i++)
+        for (int i = 0; i < s1.length()-1; i++)
         {
-            hash2[letters[i]]++;
-            
-            if (i < len1-1)
-            {
-                continue;
-            }
+            hash2[s2.charAt(i)]++;
+        }
+        
+        for (int i = s1.length()-1; i < s2.length(); i++)
+        {
+            hash2[s2.charAt(i)]++;
             
             if (isValid(hash1, hash2))
             {
                 return true;
             }
             
-            hash2[letters[i-len1+1]]--;
+            hash2[s2.charAt(i-s1.length()+1)]--;
         }
          
         return false;
@@ -72,6 +73,11 @@ public class Q567_Permutation_in_String {
     
     
     
+    
+    
+    
+    
+    /******************************* main **************************************/
     public static void main (String[] args) {
     	Q567_Permutation_in_String test = new Q567_Permutation_in_String();
     	String str1 = "adc";

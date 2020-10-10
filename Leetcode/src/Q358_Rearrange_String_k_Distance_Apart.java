@@ -28,10 +28,13 @@ The same letters are at least distance 2 from each other.
  * 
  * */
 
-public class Q358_Rearrange_String_k_Distance_Apart {
-	// using Greedy, time complexity O(n)
-	public String rearrangeString(String str, int k) {
-        if(str == null || str.length() == 0 || k <= 0){
+public class Q358_Rearrange_String_k_Distance_Apart 
+{
+	// Solution 1: using Greedy, time complexity O(n)
+	public String rearrangeString(String str, int k) 
+	{
+        if (str == null || str.length() == 0 || k <= 0)
+        {
             return str;
         }
         
@@ -40,14 +43,17 @@ public class Q358_Rearrange_String_k_Distance_Apart {
         int[] validIndex = new int[256];
         StringBuilder builder = new StringBuilder();
         
-        for(int i = 0; i < len; i++){
+        for (int i = 0; i < len; i++)
+        {
             frequency[str.charAt(i)]++;
         }
 
-        for(int index = 0; index < len; index++){
+        for (int index = 0; index < len; index++)
+        {
             int candidate = getMaxFrequency(frequency, validIndex, index);
             
-            if(candidate == -1){
+            if (candidate == -1)
+            {
                 return "";
             }
             
@@ -60,13 +66,16 @@ public class Q358_Rearrange_String_k_Distance_Apart {
     }
     
 	// Greedy, find the max frequency character
-    public int getMaxFrequency(int[] letters, int[] valid, int index){
+    private int getMaxFrequency(int[] frequency, int[] validIndex, int curIndex)
+    {
         int maxFrequency = 0;
         int candidate = -1;
         
-        for(int i = 0; i < 256; i++){
-            if(letters[i] > maxFrequency && index >= valid[i]){
-                maxFrequency = letters[i];
+        for (int i = 0; i < 256; i++)
+        {
+            if (frequency[i] > maxFrequency && curIndex >= validIndex[i])
+            {
+                maxFrequency = frequency[i];
                 candidate = i;
             }
         }
@@ -75,9 +84,13 @@ public class Q358_Rearrange_String_k_Distance_Apart {
     }
 	
 	
+    
+    
+    
+    
 	
 	
-	// using backtrack, but TLE
+	// Solution 2: using backtrack, but TLE
 	private String ans = "";
     
     public String rearrangeString2(String str, int k) {

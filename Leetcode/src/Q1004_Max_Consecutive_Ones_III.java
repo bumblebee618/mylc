@@ -34,25 +34,24 @@ A[i] is 0 or 1
 
 
 public class Q1004_Max_Consecutive_Ones_III {
-	public int longestOnes(int[] nums, int target) {
-        if (nums == null || nums.length == 0 || target < 0)
+	public int longestOnes(int[] nums, int k) 
+	{
+        if (nums == null || nums.length == 0 || k < 0)
         {
         	return 0;
         }
         
-        int size = nums.length;
-        int back = 0;
         int count = 0;
         int maxLen = 0;
         
-        for (int front = 0; front < size; front++)
+        for (int front = 0, back = 0; front < nums.length; front++)
         {
         	if (nums[front] == 0)
         	{
         		count++;
         	}
         	
-        	while (count > target)
+        	while (count > k)
         	{
         		if (nums[back++] == 0)
         		{

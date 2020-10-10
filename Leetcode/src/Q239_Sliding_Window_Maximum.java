@@ -33,8 +33,46 @@ Could you solve it in linear time?
 
 
 public class Q239_Sliding_Window_Maximum {
-	// solution 1: using priority queue, time is O(n^2), space O(n)
-	public int[] maxSlidingWindow(int[] nums, int k) {
+	// solution 1: using deque, time is O(n), space O(n)
+    public int[] maxSlidingWindow(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k <= 0 || k > nums.length) 
+        {
+            return new int[0];
+        }
+        
+        Deque<Integer> dq = new LinkedList<>();
+        int[] ans = new int[nums.length - k + 1];
+        int index = 0;
+        
+        for (int i = 0; i < nums.length; i++) 
+        {
+            while (!dq.isEmpty() && nums[i] >= nums[dq.peekLast()]) 
+            {
+                dq.pollLast();
+            }
+            
+            dq.offer(i);
+            
+            while (i - dq.peekFirst() + 1 > k) 
+            {
+                dq.pollFirst();
+            }
+            
+            if (i + 1 >= k)
+            {
+                ans[index++] = nums[dq.peekFirst()];
+            }
+        }
+        
+        return ans;
+    }
+	
+    
+    
+	
+	// solution 2: using priority queue, time is O(n^2), space O(n)
+	public int[] maxSlidingWindow2(int[] nums, int k) {
         if(nums == null || nums.length == 0 || k <= 0 || k > nums.length) {
             return new int[0];
         }
@@ -64,41 +102,6 @@ public class Q239_Sliding_Window_Maximum {
         
         return ans;
     }
-    
-    
-	
-	// solution 2: using deque, time is O(n), space O(n)
-    public int[] maxSlidingWindow2(int[] nums, int k) {
-        if(nums == null || nums.length == 0 || k <= 0 || k > nums.length) {
-            return new int[0];
-        }
-        
-        Deque<Integer> dq = new LinkedList<>();
-        int len = nums.length;
-        int[] ans = new int[len - k + 1];
-        int index = 0;
-        
-        for(int i = 0; i < len; i++) {
-            while(!dq.isEmpty() && nums[i] >= nums[dq.peekLast()]) {
-                dq.pollLast();
-            }
-            
-            dq.offer(i);
-            
-            while(i - dq.peekFirst() + 1 > k) {
-                dq.pollFirst();
-            }
-            
-            if(i + 1 >= k) {
-                ans[index++] = nums[dq.peekFirst()];
-            }
-        }
-        
-        return ans;
-    }
-	
-
-	
     
     
     

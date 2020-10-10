@@ -21,31 +21,43 @@ public class Q485_Max_Consecutive_Ones {
     //      nums = [0,0], nums = [1,0]
     //      nums = [1,0,1,1,0,1]
     
-    // using tow pointers, time is O(n)
-    public int findMaxConsecutiveOnes(int[] nums) {
-    	if (nums == null || nums.length == 0) {
+    // time is O(n)
+	public int findMaxConsecutiveOnes(int[] nums) 
+    {
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
         int len = nums.length;
-        int maxLen = 0, zeroCount = 0;
+        int maxLen = 0;
+        int index = 0;
         
-        for (int front = 0, back = 0; front < len; front++) {
-            if (nums[front] == 0) {
-                zeroCount++;
+        while (index < len)
+        {
+            if (nums[index] == 0)
+            {
+                index++;
+                continue;
             }
             
-            while (zeroCount > 0) {
-                if (nums[back++] == 0) {
-                    zeroCount--;
-                }
+            int count = 0;
+            
+            while (index < len && nums[index] == 1)
+            {
+                index++;
+                count++;
             }
             
-            maxLen = Math.max(maxLen, front - back + 1);
+            maxLen = Math.max(maxLen, count);
         }
         
         return maxLen;
     }
+	
+	
+	
+	
     
     
     // two pointers, time O(n)
