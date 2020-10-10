@@ -5,15 +5,21 @@
  * */
 
 
-public class Q206_Reverse_Linked_List {
-	public ListNode reverseList(ListNode head) {
-        if(head == null || head.next == null) {
+public class Q206_Reverse_Linked_List 
+{
+	public ListNode reverseList(ListNode head) 
+	{
+        if (head == null || head.next == null) 
+        {
         	return head;
         }
         
-        ListNode current = head, curNext = current.next, curNextNext = curNext.next;
+        ListNode current = head;
+        ListNode curNext = current.next;
+        ListNode curNextNext = curNext.next;
         
-        while(curNextNext != null){
+        while (curNextNext != null)
+        {
         	curNext.next = current;
         	current = curNext;
         	curNext = curNextNext;

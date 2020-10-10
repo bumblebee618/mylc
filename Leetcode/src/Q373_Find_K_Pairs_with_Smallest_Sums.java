@@ -53,7 +53,8 @@ public class Q373_Find_K_Pairs_with_Smallest_Sums {
 	 ********************************************************************************************************************/
 	
 	// time complexity O( (n+k) * logn)
-	public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+	public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) 
+	{
         List<List<Integer>> result = new LinkedList<>();
         
         if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || k <= 0)
@@ -63,7 +64,8 @@ public class Q373_Find_K_Pairs_with_Smallest_Sums {
         
         int size1 = nums1.length, size2 = nums2.length;
 
-        Queue<int[]> heap = new PriorityQueue<>(2, new Comparator<int[]>(){
+        Queue<int[]> heap = new PriorityQueue<>(size1, new Comparator<int[]>()
+        {
             @Override
             public int compare(int[] pair1, int[] pair2)
             {

@@ -23,52 +23,56 @@ Show Similar Problems
  * */
 
 public class Q025_Reverse_Nodes_in_kGroup {
-	public ListNode reverseKGroup(ListNode head, int k) {
-		if(head == null || head.next == null || k == 1){
+	public ListNode reverseKGroup(ListNode head, int k) 
+    {
+        if (head == null || head.next == null || k == 1)
+        {
             return head;
         }
         
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode node = dummy;
+        ListNode curNode = dummy;
         ListNode front = dummy;
-        ListNode nextStart = null;
-        int count = 0;
+        ListNode nextFront = null;
         
-        while(front != null){
-            count = 0;
+        while (front != null)
+        {
+            int count = 0;
             
-            while(front != null && count < k){
+            while (front != null && count < k)
+            {
                 count++;
                 front = front.next;
             }
             
-            if(front == null){
+            if (front == null)
+            {
                 break;
             }
             
-            nextStart = front.next;
-            front.next = null;
-            ListNode nodeNext = node.next;
-            node.next = reverseList(node.next, nextStart);
-            node = nodeNext;
-            front = node;             // 每次front 都是从 node开始 ！！！
+            ListNode curNodeNext = curNode.next;
+            nextFront = front.next;
+            curNode.next = reverseList(curNodeNext, nextFront);
+            curNode = curNodeNext;
+            front = curNode;             // 每次front 都是从 node开始 ！！！
         }
         
         return dummy.next;
     }
     
-    public ListNode reverseList(ListNode node, ListNode tail){     
-        if(node.next == null){
-            node.next = tail;
-            return node;
+    private ListNode reverseList(ListNode head, ListNode tail){     
+        if (head == null || head.next == tail)
+        {
+            return head;
         }
         
-        ListNode current = node;
+        ListNode current = head;
         ListNode curNext = current.next;
         ListNode curNextNext = curNext.next;
         
-        while(curNextNext != null){
+        while (curNextNext != tail)
+        {
             curNext.next = current;
             current = curNext;
             curNext = curNextNext;
@@ -76,7 +80,7 @@ public class Q025_Reverse_Nodes_in_kGroup {
         }
         
         curNext.next = current;
-        node.next = tail;
+        head.next = tail;
         return curNext;
     }
     

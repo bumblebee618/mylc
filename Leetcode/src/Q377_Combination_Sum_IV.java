@@ -33,17 +33,23 @@ What limitation we need to add to the question to allow negative numbers?
 
 
 public class Q377_Combination_Sum_IV {
-	public int combinationSum4(int[] nums, int target) {
-        if(nums == null || nums.length == 0) {
+	public int combinationSum4(int[] nums, int target) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
         int[] ways = new int[target + 1];
         ways[0] = 1;
         
-        for(int i = 1; i <= target; i++) {
-            for(int num : nums) {
-                if(i >= num) {
+        // Permutation, 因此需要从x开始，不同于518 coin change2 的Combination需要从y开始
+        for (int i = 1; i <= target; i++) 
+        {
+            for (int num : nums) 
+            {
+                if (i >= num) 
+                {
                     ways[i] += ways[i - num];
                 }
             }

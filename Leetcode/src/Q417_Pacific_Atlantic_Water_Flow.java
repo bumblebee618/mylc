@@ -34,14 +34,18 @@ Return:
  * 
  * */
 
-
 public class Q417_Pacific_Atlantic_Water_Flow {
 	// using DFS
-	public List<int[]> pacificAtlantic(int[][] matrix) {
-		List<int[]> ans = new ArrayList<>();
+	private int[] dx = {-1, 0, 0, 1};
+	private	int[] dy = {0, -1, 1, 0};
+    
+    public List<List<Integer>> pacificAtlantic(int[][] matrix) 
+    {
+        List<List<Integer>> result = new LinkedList<>();
 
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-			return ans;
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
+        {
+			return result;
 		}
 
 		int row = matrix.length;
@@ -49,38 +53,46 @@ public class Q417_Pacific_Atlantic_Water_Flow {
 		boolean[][] visitedAtlantic = new boolean[row][col];
 		boolean[][] visitedPacific = new boolean[row][col];
 
-		for (int i = 0; i < row; i++) {
-			canFlow(matrix, visitedPacific, 0, i, 0);
-			canFlow(matrix, visitedAtlantic, 0, i, col - 1);
+		for (int i = 0; i < row; i++) 
+        {
+			dfs(matrix, visitedPacific, 0, i, 0);
+			dfs(matrix, visitedAtlantic, 0, i, col - 1);
 		}
 
-		for (int j = 0; j < col; j++) {
-			canFlow(matrix, visitedPacific, 0, 0, j);
-			canFlow(matrix, visitedAtlantic, 0, row - 1, j);
+		for (int j = 0; j < col; j++) 
+        {
+			dfs(matrix, visitedPacific, 0, 0, j);
+			dfs(matrix, visitedAtlantic, 0, row - 1, j);
 		}
 
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				if (visitedAtlantic[i][j] && visitedPacific[i][j]) {
-					ans.add(new int[] {i, j});
+		for (int i = 0; i < row; i++) 
+        {
+			for (int j = 0; j < col; j++) 
+            {
+				if (visitedAtlantic[i][j] && visitedPacific[i][j]) 
+                {
+                    List<Integer> list = new LinkedList<>();
+                    list.add(i);
+                    list.add(j);
+					result.add(list);
 				}
 			}
 		}
 
-		return ans;
-	}
-
-	public void canFlow(int[][] matrix, boolean[][] visited, int height, int x, int y) {
-		int[] dx = { -1, 0, 0, 1 };
-		int[] dy = { 0, -1, 1, 0 };
+		return result;
+    }
+    
+    private void dfs(int[][] matrix, boolean[][] visited, int height, int x, int y) 
+    {
 		visited[x][y] = true;
 
 		for (int i = 0; i < 4; i++) {
 		    int newX = x + dx[i];
 		    int newY = y + dy[i];
 		    
-		    if(newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && !visited[newX][newY] && matrix[newX][newY] >= matrix[x][y]) {
-		        canFlow(matrix, visited, matrix[newX][newY], newX, newY);
+		    if(newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && !visited[newX][newY] && matrix[newX][newY] >= matrix[x][y]) 
+            {
+		        dfs(matrix, visited, matrix[newX][newY], newX, newY);
 		    }
 		}
 	}
@@ -99,16 +111,6 @@ public class Q417_Pacific_Atlantic_Water_Flow {
 	
 	
 	/**************************** main function *****************************/
-	public void print(int[][] array) {
-		for (int i = 0; i < array.length; i++) {
-			for (int j = 0; j < array[i].length; j++) {
-				System.out.print(array[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
-
 	public static void main(String[] args) {
 		int[][] matrix = { { 1, 2, 2, 3, 5 }, { 3, 2, 3, 4, 4 },
 				{ 2, 4, 5, 3, 1 }, { 6, 7, 1, 4, 5 }, { 5, 1, 1, 2, 4 } };
@@ -120,10 +122,11 @@ public class Q417_Pacific_Atlantic_Water_Flow {
 		// };
 
 		Q417_Pacific_Atlantic_Water_Flow t = new Q417_Pacific_Atlantic_Water_Flow();
-		List<int[]> ans = t.pacificAtlantic(matrix);
+		List<List<Integer>> result = t.pacificAtlantic(matrix);
 
-		for (int[] array : ans) {
-			System.out.println(array[0] + ", " + array[1]);
+		for (List<Integer> list : result) 
+		{
+			System.out.println(list.get(0) + ", " + list.get(1));
 		}
 	}
 }

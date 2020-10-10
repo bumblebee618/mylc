@@ -42,7 +42,7 @@ public class Q234_Palindrome_Linked_List {
     }
 	
 	
-	// solution 2: reverse part of the list, time O(n), space O(1)
+	// follow up: reverse part of the list, time O(n), space O(1)
 	public boolean isPalindrome2(ListNode head) {
         if(head == null || head.next == null) {
             return true;

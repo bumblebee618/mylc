@@ -1,76 +1,58 @@
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
+/***
+ * 
+ * @author jackie
+ * 
+ * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Example 1:
+
+Given 1->2->3->4, reorder it to 1->4->2->3.
+Example 2:
+
+Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+ */
 
 
 public class Q143_Reorder_List {
-	/***********************************************/
-	// by Jackie using stack
-	public void reorderList(ListNode head) {
-        if(head == null || head.next == null){
-            return ;
-        }
-        
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode fast = dummy, slow = dummy;
-        
-        while(fast != null && fast.next != null){
-            fast = fast.next.next;
-            slow = slow.next;
-        }
-        
-        Stack<ListNode> s = new Stack<ListNode>();
-        ListNode start = head;
-        slow = slow.next;
-        
-        while(slow != null){
-            s.push(slow);
-            slow = slow.next;
-        }
-        
-        while(!s.isEmpty()){
-            ListNode temp = s.pop();
-            temp.next = start.next;
-            start.next = temp;
-            start = start.next.next;
-        }
-
-        start.next = null;
-    }
-	
-
-	
-	/************************************************/
-	// by Jackie using reverse list
-	public void reorderList2(ListNode head) {
-        if(head == null || head.next == null){
+	// Solution 1: using reverse list, time O(n), space (1)
+	public void reorderList(ListNode head) 
+    {
+        if (head == null || head.next == null)
+        {
             return;
         }
         
         ListNode faster = head, slower = head;
         
-        while(faster != null && faster.next != null){
+        while (faster != null && faster.next != null)
+        {
             faster = faster.next.next;
             slower = slower.next;
         }
         
         ListNode secondHead = reverse(slower);
-        ListNode start = head;
         
-        while(secondHead != null){
-            ListNode record = secondHead;
+        while (secondHead != null)
+        {      
+            ListNode insertNode = secondHead;
             secondHead = secondHead.next;
-            record.next = start.next;
-            start.next = record;
-            start = start.next.next;
+            
+            insertNode.next = head.next;
+            head.next = insertNode;
+            head = head.next.next;
         }
         
-        start.next = null;
+        head.next = null;
     }
     
-    public ListNode reverse(ListNode node){
-        if(node == null || node.next == null){
+    private ListNode reverse(ListNode node)
+    {
+        if (node == null || node.next == null)
+        {
             return node;
         }
         
@@ -78,7 +60,8 @@ public class Q143_Reorder_List {
         ListNode nextNode = node.next;
         ListNode nextNextNode = node.next.next;
         
-        while(nextNextNode != null){
+        while (nextNextNode != null)
+        {
             nextNode.next = currentNode;
             currentNode = nextNode;
             nextNode = nextNextNode;
@@ -89,6 +72,51 @@ public class Q143_Reorder_List {
         node.next = null;
         return nextNode;
     }
+    
+    
+    
+    
+    
+    // Solution 2: using stack, , time O(n), space (n)
+ 	public void reorderList2(ListNode head) 
+ 	{
+         if (head == null || head.next == null)
+         {
+             return ;
+         }
+         
+         ListNode dummy = new ListNode(0);
+         dummy.next = head;
+         ListNode fast = dummy, slow = dummy;
+         
+         while (fast != null && fast.next != null)
+         {
+             fast = fast.next.next;
+             slow = slow.next;
+         }
+         
+         Stack<ListNode> s = new Stack<ListNode>();
+         ListNode start = head;
+         slow = slow.next;
+         
+         while (slow != null)
+         {
+             s.push(slow);
+             slow = slow.next;
+         }
+         
+         while (!s.isEmpty())
+         {
+             ListNode temp = s.pop();
+             temp.next = start.next;
+             start.next = temp;
+             start = start.next.next;
+         }
+
+         start.next = null;
+     }
+    
+    
 	
     
 	

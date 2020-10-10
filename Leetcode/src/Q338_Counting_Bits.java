@@ -28,16 +28,16 @@ public class Q338_Counting_Bits {
         
         int[] result = new int[num+1];
         result[1] = 1;
-        int start = 2, index1 = 0, index2 = 2;
+        int end = 2, curIndex = 2, reference = 0;
         
-        while (index2 < result.length)
+        while (curIndex < result.length)
         {
-            result[index2++] = result[index1++]+1;
+            result[curIndex++] = result[reference++]+1;
             
-            if (index1 == start)
+            if (reference == end)
             {
-                start = index2;
-                index1 = 0;
+                end = curIndex;
+                reference = 0;
             }
         }
         

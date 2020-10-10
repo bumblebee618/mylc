@@ -57,13 +57,13 @@ public class Q403_Frog_Jump {
         
         for (int stone : stones)
         {
-            for (int k : map.get(stone))
+            for (int prevStep : map.get(stone))
             {
-                for (int step = k-1; step <= k+1; step++)
+                for (int curStep = prevStep-1; curStep <= prevStep+1; curStep++)
                 {
-                    if (step > 0 && map.containsKey(stone+step))
+                    if (curStep > 0 && map.containsKey(stone+curStep))
                     {
-                        map.get(stone+step).add(step);
+                        map.get(stone+curStep).add(curStep);
                     }
                 }
             }

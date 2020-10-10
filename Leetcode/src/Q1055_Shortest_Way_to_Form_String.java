@@ -29,17 +29,19 @@ Constraints:
 Both the source and target strings consist of only lowercase English letters from "a"-"z".
 The lengths of source and target string are between 1 and 1000.
  */
-public class Q1055_Shortest_Way_to_Form_String {
-	public int shortestWay(String source, String target) {
+public class Q1055_Shortest_Way_to_Form_String 
+{
+	public int shortestWay(String source, String target) 
+	{
         if (source == null || source.length() == 0 || target == null || target.length() == 0)
         {
             return -1;
         }
         
         int s_index = 0, t_index = 0;
-        int count = 0;
+        int step = 0;
         
-        while (t_index < target.length() && count <= t_index)
+        while (t_index < target.length() && step <= t_index)
         {
             while (s_index < source.length() && source.charAt(s_index) != target.charAt(t_index))
             {
@@ -54,10 +56,10 @@ public class Q1055_Shortest_Way_to_Form_String {
             else
             {
                 s_index = 0;
-                count++;
+                step++;
             }
         }
         
-        return count <= t_index ? count+1 : -1;
+        return step <= t_index ? step+1 : -1;
     }
 }

@@ -1,3 +1,8 @@
 1602134741044	Rename local variable 'time'
 1602138113649	Rename local variable 'stack1'
 1602138122864	Rename local variable 'stack2'
+1602261378247	Rename local variable 'index2'
+1602261390258	Rename local variable 'index1'
+1602262129279	Rename local variable 'step'
+1602262138403	Rename local variable 'curstep'
+1602269562552	Rename local variable 'count'
