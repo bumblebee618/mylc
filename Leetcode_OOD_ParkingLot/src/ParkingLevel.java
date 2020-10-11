@@ -17,12 +17,10 @@ public class ParkingLevel
 	private Map<String, ParkingSlot> slotIdToSlots;
 	private Map<Integer, Queue<String>> availableSlotMap;
 	private Set<String> unavailableSlots;
-	private List<Integer> slotSizes;
 	
 	public ParkingLevel(String levelId, Map<Integer, Integer> slotCapacityMap)
 	{
 		this.levelId = levelId;
-		slotSizes = slotCapacityMap.keySet().stream().collect(Collectors.toList());
 		availableSlotMap = new HashMap<>();
 		unavailableSlots = new HashSet<>();
 		slotIdToSlots = new HashMap<>();
@@ -48,7 +46,7 @@ public class ParkingLevel
 	{
 		int count = 0;
 		
-		for (int slotSize : slotSizes)
+		for (int slotSize : availableSlotMap.keySet())
 		{
 			if (slotSize < vehicleSize)
 			{
@@ -63,7 +61,7 @@ public class ParkingLevel
 
 	public ParkingSlot parkVehicle(int vehicleSize)
 	{
-		for (int slotSize : slotSizes)
+		for (int slotSize : availableSlotMap.keySet())
 		{
 			if (slotSize < vehicleSize)
 			{
@@ -72,13 +70,16 @@ public class ParkingLevel
 		
 			if (availableSlotMap.get(slotSize).size() > 0)
 			{
-				ParkingSlot slot = slotIdToSlots.get(availableSlotMap.get(slotSize).poll());
-				
-				if (slot.tryParkVehicle(vehicleSize))
+				synchronized (this) 
 				{
-					unavailableSlots.add(slot.getSlotId());
-					totalAvailableSlotNum--;
-					return slot;
+					ParkingSlot slot = slotIdToSlots.get(availableSlotMap.get(slotSize).poll());
+					
+					if (slot.tryParkVehicle(vehicleSize))
+					{
+						unavailableSlots.add(slot.getSlotId());
+						totalAvailableSlotNum--;
+						return slot;
+					}
 				}
 			}
 		}
@@ -93,10 +94,13 @@ public class ParkingLevel
 			throw new ResourceNotFoundException(String.format("Cannot find the slot id %s in the target level", slot.getSlotId()));
 		}
 		
-		slot.removeVehicle();
-		availableSlotMap.get(slot.getSlotSize()).offer(slot.getSlotId());
-		unavailableSlots.remove(slot.getSlotId());
-		totalAvailableSlotNum++;
+		synchronized (this) 
+		{
+			slot.removeVehicle();
+			availableSlotMap.get(slot.getSlotSize()).offer(slot.getSlotId());
+			unavailableSlots.remove(slot.getSlotId());
+			totalAvailableSlotNum++;
+		}
 	}
 	
 	public String getLevelId() 
