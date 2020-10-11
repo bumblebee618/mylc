@@ -56,10 +56,11 @@ Please remember to RESET your class variables declared in class AutocompleteSyst
  */
 public class Q642_Design_Search_Autocomplete_System {
 	private Trie root;
-    private String cur_sent = "";
+    private String curSentence = "";
     private int size = 3;
     
-    public Q642_Design_Search_Autocomplete_System(String[] sentences, int[] times) {
+    public Q642_Design_Search_Autocomplete_System(String[] sentences, int[] times) 
+    {
         if (sentences == null || sentences.length == 0 || times == null || times.length == 0 || sentences.length != times.length) {
             return;
         }
@@ -72,27 +73,28 @@ public class Q642_Design_Search_Autocomplete_System {
         }
     }
     
-    public List<String> input(char c) {
-        List<String> res = new ArrayList<>();
+    public List<String> input(char c) 
+    {
+        List<String> result = new ArrayList<>();
     
         if (c == '#') 
         {
-            insert(cur_sent, 1);
-            cur_sent = "";
+            insert(curSentence, 1);
+            curSentence = "";
         } 
         else 
         {
-            cur_sent += c;
-            List<Node> list = lookup(cur_sent);
-            Collections.sort(list, (a, b) -> a.times == b.times ? a.sentence.compareTo(b.sentence) : b.times - a.times);
+            curSentence += c;
+            List<Node> list = lookup(curSentence);
+            Collections.sort(list, (a, b) -> a.times != b.times ? b.times - a.times : a.sentence.compareTo(b.sentence));
       
             for (int i = 0; i < Math.min(size, list.size()); i++)  
             {
-                res.add(list.get(i).sentence);
+                result.add(list.get(i).sentence);
             }
         }
         
-        return res;
+        return result;
     }
     
     private void insert(String sentence, int times) 
@@ -157,7 +159,8 @@ public class Q642_Design_Search_Autocomplete_System {
         return c == ' ' ? 26 : c - 'a';
     }
     
-    class Trie {
+    class Trie 
+    {
         public int times;
         public Trie[] children;
         

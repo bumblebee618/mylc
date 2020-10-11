@@ -53,18 +53,14 @@ public class Q1528_Shuffle_String {
         char[] letters = new char[size];
         boolean[] flag = new boolean[size];
         
-        for (int indice : indices)
+        for (int i = 0; i < size; i++)
         {
-            if (indice >= size || flag[indice])
+            if (indices[i] >= size || flag[indices[i]])
             {
                 return "";
             }
             
-            flag[indice] = true;
-        }
-        
-        for (int i = 0; i < size; i++)
-        {
+            flag[indices[i]] = true;
             letters[indices[i]] = s.charAt(i);
         }
         

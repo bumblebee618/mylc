@@ -40,11 +40,12 @@ public class Q622_Design_Circular_Queue {
 	private int[] queue;
     private int capacity = 0;
     private int curSize = 0;
-    private int head = 0;
+    private int head = 0;  // head和tail必须不相等但需要相连
     private int tail = -1;
     
     /** Initialize your data structure here. Set the size of the queue to be k. */
-    public Q622_Design_Circular_Queue(int k) {
+    public Q622_Design_Circular_Queue(int k) 
+    {
         if (k <= 0)
         {
             return;
@@ -55,7 +56,8 @@ public class Q622_Design_Circular_Queue {
     }
     
     /** Insert an element into the circular queue. Return true if the operation is successful. */
-    public boolean enQueue(int value) {
+    public boolean enQueue(int value) 
+    {
         if (curSize == capacity)
         {
             return false;   
@@ -68,7 +70,8 @@ public class Q622_Design_Circular_Queue {
     }
     
     /** Delete an element from the circular queue. Return true if the operation is successful. */
-    public boolean deQueue() {
+    public boolean deQueue() 
+    {
         if (curSize == 0)
         {
             return false;
@@ -80,22 +83,26 @@ public class Q622_Design_Circular_Queue {
     }
     
     /** Get the front item from the queue. */
-    public int Front() {
+    public int Front() 
+    {
         return (curSize == 0) ? -1 : queue[head];
     }
     
     /** Get the last item from the queue. */
-    public int Rear() {
+    public int Rear() 
+    {
         return (curSize == 0) ? -1 : queue[tail];
     }
     
     /** Checks whether the circular queue is empty or not. */
-    public boolean isEmpty() {
+    public boolean isEmpty() 
+    {
         return curSize == 0;
     }
     
     /** Checks whether the circular queue is full or not. */
-    public boolean isFull() {
+    public boolean isFull() 
+    {
         return curSize == capacity;
     }
 }

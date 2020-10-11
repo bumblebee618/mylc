@@ -18,52 +18,10 @@ Follow Up:
  * */
 
 public class Q324_Wiggle_Sort_II {	
-	// solution 1: 
-	public void wiggleSort(int[] nums) {
-		if(nums == null || nums.length == 0) 
-		{
-			return;
-		}
-		
-        int len = (nums.length % 2 == 0) ? nums.length/2 : nums.length/2+1;
-        Arrays.sort(nums);
-        int[] arraySmall = new int[len];
-        int[] arrayLarge = new int[nums.length-len];
-        
-        for(int i = 0, n = nums.length, len1 = arraySmall.length; i < n; ++i)
+	public void wiggleSort(int[] nums) 
+	{
+        if (nums == null || nums.length == 0)
         {
-            if(i <= len1-1) 
-            {
-                arraySmall[i] = nums[i];
-            } 
-            else 
-            {
-                arrayLarge[i-len1] = nums[i];
-            }
-        }
-        
-        int flag = 0;
-        int index1 = 0, index2 = 0;
-        
-        for(int i = 0, n = nums.length; i < n; ++i)
-        {
-            if(flag++ % 2 == 0) 
-            {
-                nums[i] = arraySmall[index1++];
-            } 
-            else 
-            {
-                nums[i] = arrayLarge[index2++];
-            }
-        }
-        
-        return;
-    }
-	
-	
-	// solution 2: time is O(nlogn)
-	public void wiggleSort2(int[] nums) {
-		if(nums == null || nums.length == 0){
             return ;
         }
         
@@ -73,10 +31,12 @@ public class Q324_Wiggle_Sort_II {
         int index = 0;
         int[] temp = new int[len];
         
-        for(int i = 0; i <= mid; i++){
+        for (int i = 0; i <= mid; i++)
+        {
             temp[index] = nums[mid - i];
             
-            if(index + 1 < len){
+            if (index + 1 < len)
+            {
                 temp[index + 1] = nums[len - 1 - i];
             }
             
@@ -84,7 +44,7 @@ public class Q324_Wiggle_Sort_II {
         }
         
         System.arraycopy(temp, 0, nums, 0, len);
-	}
+    }
 	
 	
 	

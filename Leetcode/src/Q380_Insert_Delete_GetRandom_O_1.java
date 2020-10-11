@@ -43,12 +43,13 @@ randomSet.getRandom();
 public class Q380_Insert_Delete_GetRandom_O_1 {
 	private ArrayList<Integer> list;
     private HashMap<Integer, Integer> map;
-    private Random rand = new Random();
+    private Random rand;
 
     /** Initialize your data structure here. */
     public Q380_Insert_Delete_GetRandom_O_1() {
         list = new ArrayList<Integer>();
         map = new HashMap<Integer, Integer>();
+        rand = new Random();
     }
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */

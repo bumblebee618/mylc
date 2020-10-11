@@ -31,8 +31,10 @@ public class Q207_Course_Schedule {
 	 * (2). 拓扑排序
 	 *  
 	 *******************************************************************/
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if(numCourses <= 0) {
+	public boolean canFinish(int numCourses, int[][] prerequisites) 
+	{
+        if (numCourses <= 0) 
+        {
             return true;
         }
         
@@ -40,41 +42,53 @@ public class Q207_Course_Schedule {
         Map<Integer, Integer> map = new HashMap<>();
         Queue<Integer> queue = new LinkedList<>();
         
-        for(int[] prerequisite : prerequisites) {
-            if(graph[prerequisite[1]] == null) {
+        for (int[] prerequisite : prerequisites) 
+        {
+            if (graph[prerequisite[1]] == null) 
+            {
                 graph[prerequisite[1]] = new HashSet<Integer>();
             }
             
-            if(!graph[prerequisite[1]].contains(prerequisite[0])) {
+            if (!graph[prerequisite[1]].contains(prerequisite[0])) 
+            {
                 graph[prerequisite[1]].add(prerequisite[0]);
                 map.put(prerequisite[0], map.getOrDefault(prerequisite[0], 0) + 1);
             }
         }
         
-        for(int i = 0; i < numCourses; i++) {
-            if(!map.containsKey(i)) {
+        for (int i = 0; i < numCourses; i++) 
+        {
+            if (!map.containsKey(i)) 
+            {
                 queue.offer(i);
             }
         }
         
-        if(queue.isEmpty()){
+        if (queue.isEmpty())
+        {
             return false;
         }
         
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             int node = queue.poll();
             
-            if(graph[node] == null) {
+            if (graph[node] == null) 
+            {
                 continue;
             }
             
-            for(int next : graph[node]) {
+            for (int next : graph[node]) 
+            {
                 int count = map.get(next);
                 
-                if(count == 1) {
+                if (count == 1) 
+                {
                     map.remove(next);
                     queue.offer(next);
-                } else {
+                } 
+                else 
+                {
                     map.put(next, count - 1);
                 }
             }
@@ -83,6 +97,11 @@ public class Q207_Course_Schedule {
         return map.size() == 0;
     }
 	
+	
+	
+	
+	
+	/****************************** main ***********************************/
 	
 	public boolean canFinish2(int numCourses, int[][] prerequisites) {
         if(prerequisites == null || prerequisites.length == 0 || prerequisites[0] == null || prerequisites.length == 0 || numCourses <= 0){
