@@ -73,7 +73,7 @@ public class Q269_Alien_Dictionary {
                     if (!graph[c1].contains(c2))
                     {
                         graph[c1].add(c2);
-                        map.put(c2, map.get(c2) + 1);
+                        map.put(c2, map.getOrDefault(c2, 0) + 1);
                     }
                     
                     break;
