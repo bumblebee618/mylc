@@ -66,31 +66,31 @@ public class Q488_Zuma_Game {
         }
         
         int result = Integer.MAX_VALUE; 
-        int index = 0;
+        int end = 0;
         
-        while (index < board.length())
+        while (end < board.length())
         {
-            int start = index;
+            int start = end;
             
-            while (index < board.length() && board.charAt(index) == board.charAt(start))
+            while (end < board.length() && board.charAt(end) == board.charAt(start))
             {
-                index++;
+                end++;
             }
             
-            int needed = 3 - (index - start);
+            int needed = 3 - (end - start);
             
             if (count[board.charAt(start)] >= needed)
             {
-                int used = needed <= 0 ? 0 : needed;
-                count[board.charAt(start)] -= used;
-                int nextNum = backtrack(board.substring(0, start) + board.substring(index), count);
+                int curUsed = needed <= 0 ? 0 : needed;
+                count[board.charAt(start)] -= curUsed;
+                int nextUsed = backtrack(board.substring(0, start) + board.substring(end), count);
                 
-                if (nextNum >= 0)
+                if (nextUsed >= 0)
                 {
-                    result = Math.min(result, used + nextNum);
+                    result = Math.min(result, curUsed + nextUsed);
                 }
                 
-                count[board.charAt(start)] += used;
+                count[board.charAt(start)] += curUsed;
             }
         }
         
