@@ -1,4 +1,3 @@
-import Exception.NotEnoughSlotException;
 import Exception.ResourceNotFoundException;
 
 public class ParkingSlot 

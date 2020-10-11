@@ -8,29 +8,23 @@ import Exception.ResourceNotFoundException;
 public class ParkingLot 
 {
 	private Map<String, ParkingLevel> levelIdToLevel;
+	private Map<Integer, Integer> slotCapacityMap;
 	
 	private int levelNum = 2;
-	private List<Integer> slotSizes;
-	private List<Integer> capacities;
 	
 	public ParkingLot()
 	{
-		slotSizes = new LinkedList<>();
-		slotSizes.add(1);
-		slotSizes.add(2);
-		slotSizes.add(3);
-		
-		capacities = new LinkedList<>();
-		capacities.add(1);
-		capacities.add(1);
-		capacities.add(1);
+		slotCapacityMap = new HashMap<>();
+		slotCapacityMap.put(1, 1);
+		slotCapacityMap.put(2, 1);
+		slotCapacityMap.put(3, 1);
 		
 		levelIdToLevel = new HashMap<>();
 		
 		for (int i = 0; i < levelNum; i++)
 		{
 			String levelId = Integer.toString(i);
-			levelIdToLevel.put(levelId, new ParkingLevel(levelId, slotSizes, capacities));
+			levelIdToLevel.put(levelId, new ParkingLevel(levelId, slotCapacityMap));
 		}
 	}
 	

@@ -9,9 +9,12 @@ import Exception.SoldOutException;
 
 public class VendingMachineImpl implements VendingMachine 
 {   
+	// vending machine status
     private Inventory<Coin> cashInventory;
     private Inventory<Item> itemInventory;  
     private long totalSales;
+    
+    // customer status
     private Item currentItem;
     private long currentBalance; 
    

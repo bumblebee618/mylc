@@ -10,11 +10,29 @@ public class ParkingManager {
 	private Map<String, ParkingTicket> idToTickets;
 	private Map<String, Vehicle> plateNumToVehicles;
 	
-	public ParkingManager()
+	public static ParkingManager instance;
+	
+	private ParkingManager()
 	{		
 		parkingLot = new ParkingLot();
 		idToTickets = new HashMap<>();
 		plateNumToVehicles = new HashMap<>();
+	}
+	
+	public static ParkingManager getInstance()
+	{
+		if (instance == null)
+		{
+			synchronized (ParkingManager.class)
+			{
+				if (instance == null)
+				{
+					instance = new ParkingManager();
+				}
+			}
+		}
+		
+		return instance;
 	}
 	
 	public int getAvailableSlotNum(int vehicleSize)

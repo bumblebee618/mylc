@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import Exception.ResourceNotFoundException;
 
@@ -18,24 +19,19 @@ public class ParkingLevel
 	private Set<String> unavailableSlots;
 	private List<Integer> slotSizes;
 	
-	public ParkingLevel(String levelId, List<Integer> slotSizes, List<Integer> capacities)
+	public ParkingLevel(String levelId, Map<Integer, Integer> slotCapacityMap)
 	{
-		if (slotSizes.size() != capacities.size())
-		{
-			return;
-		}
-		
 		this.levelId = levelId;
-		this.slotSizes = slotSizes;
+		slotSizes = slotCapacityMap.keySet().stream().collect(Collectors.toList());
 		availableSlotMap = new HashMap<>();
 		unavailableSlots = new HashSet<>();
 		slotIdToSlots = new HashMap<>();
+		int index = 0;
 		
-		for (int i = 0; i < capacities.size(); i++)
+		for (int slotSize : slotCapacityMap.keySet())
 		{
-			String slotId = Integer.toString(i);
-			int slotSize = slotSizes.get(i);
-			int count = capacities.get(i);
+			String slotId = Integer.toString(index);
+			int count = slotCapacityMap.get(slotSize);
 			
 			for (int j = 0; j < count; j++)
 			{
@@ -65,7 +61,6 @@ public class ParkingLevel
 		return count;
 	}
 
-	
 	public ParkingSlot parkVehicle(int vehicleSize)
 	{
 		for (int slotSize : slotSizes)

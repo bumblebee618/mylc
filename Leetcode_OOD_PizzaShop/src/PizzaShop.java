@@ -12,11 +12,7 @@ public class PizzaShop
 	private PizzaShop()
 	{
 		orderIdToOrder = new HashMap<>();
-		
-		flavorToprice = new HashMap<PizzaFlavor, Double>();
-		flavorToprice.put(PizzaFlavor.PINEAPPLE, 5.99);
-		flavorToprice.put(PizzaFlavor.PEPPER, 6.99);
-		flavorToprice.put(PizzaFlavor.BEEF, 7.99);
+		initPriceInfo();
 	}
 	
 	public static PizzaShop getInstance()
@@ -52,5 +48,13 @@ public class PizzaShop
 	public CustomerOrder checkOrder(String orderId)
 	{
 		return orderIdToOrder.getOrDefault(orderId, null);
+	}
+	
+	private void initPriceInfo()
+	{
+		flavorToprice = new HashMap<PizzaFlavor, Double>();
+		flavorToprice.put(PizzaFlavor.PINEAPPLE, 5.99);
+		flavorToprice.put(PizzaFlavor.PEPPER, 6.99);
+		flavorToprice.put(PizzaFlavor.BEEF, 7.99);
 	}
 }
