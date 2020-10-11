@@ -1,26 +1,61 @@
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
+/***
+ * 
+ * @author jackie
+ *
+ * Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.
 
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1
+Output: true
+Example 3:
+
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+ */
 
 public class Q219_Contains_Duplicate_II {
-	public boolean containsNearbyDuplicate(int[] nums, int k) {
-        if(nums == null || k <= 0){
+	public boolean containsNearbyDuplicate(int[] nums, int k) 
+	{
+        if (nums == null || k <= 0)
+        {
         	return false;
         }
         
         int len = nums.length;
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> map = new HashMap<>();
         
-        for(int i = 0; i < len; ++i){
-            if(map.containsKey(nums[i])){
-                if(i - map.get(nums[i]) <= k)
+        for (int i = 0; i < len; ++i)
+        {
+            if (map.containsKey(nums[i]))
+            {
+                if (i - map.get(nums[i]) <= k)
+                {
                     return true;
+                }
             }
+            
             map.put(nums[i], i);
         }
+        
         return false;
     }
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public boolean containsNearbyDuplicate2(int[] nums, int k) {
         if(nums == null || nums.length == 0){

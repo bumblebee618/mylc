@@ -6,18 +6,29 @@
 
 public class Q161_One_Edit_Distance {
 	// solution 1:
-	public boolean isOneEditDistance(String s, String t) {
-		if(s == null || t == null){
-            if(s == null && t != null && t.length() == 1){
+	public boolean isOneEditDistance(String s, String t) 
+	{
+		if (s == null || t == null)
+		{
+            if (s == null && t != null && t.length() == 1)
+            {
                 return true;
-            } else if(t == null && s != null && s.length() == 1){
+            } 
+            else if (t == null && s != null && s.length() == 1)
+            {
                 return true;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
-        } else if(t.equals(s) == true){
+        } 
+		else if (t.equals(s) == true)
+		{
             return false;
-        } else if(Math.abs(t.length() - s.length()) > 1){
+        } 
+		else if (Math.abs(t.length() - s.length()) > 1)
+		{
             return false;
         }
         
@@ -25,19 +36,28 @@ public class Q161_One_Edit_Distance {
         int len = Math.min(sLen, tLen);
         int index = 0;
         
-        while(index < len){
-            if(s.charAt(index) != t.charAt(index)){
+        while (index < len)
+        {
+            if (s.charAt(index) != t.charAt(index))
+            {
                 break;
-            } else {
+            } 
+            else 
+            {
                 index++;
             }
         }
 
-        if(sLen == tLen){
+        if (sLen == tLen)
+        {
             return s.substring(index + 1).equals(t.substring(index + 1));
-        } else if(sLen > tLen){
+        } 
+        else if (sLen > tLen)
+        {
             return s.substring(index + 1).equals(t.substring(index));
-        } else {
+        } 
+        else 
+        {
             return s.substring(index).equals(t.substring(index + 1));
         }
     }

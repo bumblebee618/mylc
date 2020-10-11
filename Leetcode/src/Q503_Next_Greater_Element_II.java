@@ -16,7 +16,8 @@ Note: The length of given array won't exceed 10000.
 
  */
 public class Q503_Next_Greater_Element_II {
-	public int[] nextGreaterElements(int[] nums) {
+	public int[] nextGreaterElements(int[] nums) 
+	{
         if (nums == null || nums.length == 0)
         {
             return new int[0];
@@ -28,7 +29,7 @@ public class Q503_Next_Greater_Element_II {
 
         for (int i = size*2-1; i >= 0; i--)
         {
-            while (!stack.empty() && stack.peek() <= nums[i % size])
+            while (!stack.empty() && nums[i % size] >= stack.peek())
             {
                 stack.pop();
             }

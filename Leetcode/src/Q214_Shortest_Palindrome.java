@@ -12,15 +12,19 @@ For example:
 
 public class Q214_Shortest_Palindrome {
 	// solution 1: navie method, time is O(n^2)
-	public String shortestPalindrome(String s) {
-        if (s == null || s.length() == 0) {
+	public String shortestPalindrome(String s) 
+	{
+        if (s == null || s.length() == 0) 
+        {
             return s;
         }
         
         int len = s.length();
         
-        for(int i = len - 1; i >= 0; i--) {
-            if(isPalindrome(s, 0, i) == true) {
+        for (int i = len - 1; i >= 0; i--) 
+        {
+            if (isPalindrome(s, 0, i) == true) 
+            {
                 String suffix = s.substring(i + 1, len);
                 return new StringBuilder(suffix).reverse().toString() + s;
             }
@@ -30,9 +34,12 @@ public class Q214_Shortest_Palindrome {
         return new StringBuilder(suffix).reverse().toString() + s;
     }
     
-    public boolean isPalindrome(String s, int start, int end) {
-        while(start < end) {
-            if(s.charAt(start) != s.charAt(end)) {
+    private boolean isPalindrome(String s, int start, int end) 
+    {
+        while (start < end) 
+        {
+            if (s.charAt(start) != s.charAt(end))
+            {
                 return false;
             } 
             
@@ -42,11 +49,37 @@ public class Q214_Shortest_Palindrome {
         
         return true;
     }
+    
+    
+    // follow up: to find min Palindrome either from left or right side
+ 	public String shortestPalindrome_follow_up(String s) 
+ 	{
+ 		int j = 0;
+ 		
+ 	    for (int i = s.length() - 1; i >= 0; i--) 
+ 	    {
+ 	        if (s.charAt(i) == s.charAt(j)) 
+ 	        { 
+ 	        	j++; 
+ 	        }
+ 	    }
+ 	    
+ 	    if (j == s.length()) 
+ 	    {
+ 	    	return s; 
+ 	    }
+ 	    
+ 	    String suffix = s.substring(j);
+ 	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;   // 注意这里继续递归 ！！！
+     }
 	
 	
     
+ 	
+ 	
     // solution 2: time is O(n^2)
-	public String shortestPalindrome2(String s) {
+	public String shortestPalindrome2(String s) 
+	{
         if(s == null || s.length() == 0){
             return "";
         }
@@ -79,22 +112,7 @@ public class Q214_Shortest_Palindrome {
     
     
     
-    // solution 3: follow up: to find min Palindrome either from left or right side
-	public String shortestPalindrome_follow_up(String s) {
-		int j = 0;
-	    for (int i = s.length() - 1; i >= 0; i--) {
-	        if (s.charAt(i) == s.charAt(j)) { 
-	        	j++; 
-	        }
-	    }
-	    
-	    if (j == s.length()) {
-	    	return s; 
-	    }
-	    
-	    String suffix = s.substring(j);
-	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;   // 注意这里继续递归 ！！！
-    }
+    
 	
 	
 	

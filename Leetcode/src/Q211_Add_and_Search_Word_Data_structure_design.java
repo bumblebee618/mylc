@@ -20,67 +20,85 @@ Note:
  * 
  * */
 
-public class Q211_Add_and_Search_Word_Data_structure_design {
-	private Trie root = new Trie();
+public class Q211_Add_and_Search_Word_Data_structure_design 
+{
+	private TrieNode root;
     
-    public void addWord(String word) {
-        Trie node = root;
-        char[] letters = word.toCharArray();
+    /** Initialize your data structure here. */
+    public Q211_Add_and_Search_Word_Data_structure_design() 
+    {
+        root = new TrieNode();
+    }
+    
+    /** Adds a word into the data structure. */
+    public void addWord(String word) 
+    {
+        if (word == null || word.length() == 0)
+        {
+            return;
+        }
         
-        for(int i = 0; i < letters.length; i++){
-            int pos = letters[i] - 'a';
-            
-            if(node.child[pos] == null){
-                node.child[pos] = new Trie();
-                node.child[pos].value = letters[i];
+        TrieNode node = root;
+        
+        for (char c : word.toCharArray())
+        {
+            if (node.children[c] == null)
+            {
+                node.children[c] = new TrieNode();
             }
             
-            node = node.child[pos];
+            node = node.children[c];
         }
         
         node.isWord = true;
     }
- 
     
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
     public boolean search(String word) {
-        return searchHelper(root, word, 0);
+        if (word == null || word.length() == 0)
+        {
+            return false;
+        }
+        
+        return searchWord(word, 0, root);
     }
     
-    public boolean searchHelper(Trie node, String word, int start){
-        if(start == word.length()){
+    private boolean searchWord(String word, int index, TrieNode node)
+    {
+        if (index == word.length())
+        {
             return node.isWord;
         }
         
-        char c = word.charAt(start);
-        
-        if(c != '.'){
-            int pos = c - 'a';
+        char c = word.charAt(index);
             
-            if(node.child[pos] == null){
-                return false;
-            } else {
-                return searchHelper(node.child[pos], word, start + 1);
-            }
-        } else {
-            for(int i = 0; i < 26; i++){
-                if(node.child[i] != null && searchHelper(node.child[i], word, start + 1) == true){
+        if (c != '.')
+        {
+            return node.children[c] == null ? false : searchWord(word, index+1, node.children[c]);
+        }
+        else
+        {
+            for (TrieNode child : node.children)
+            {
+                if (child != null && searchWord(word, index+1, child))
+                {
                     return true;
                 }
             }
-            
+                
             return false;
         }
     }
-}
-
-class Trie {
-    char value; 
-    Trie[] child;
-    boolean isWord;
     
-    public Trie(){
-        value = ' ';
-        child = new Trie[26];
-        isWord = false;
+    class TrieNode 
+    {
+        public TrieNode[] children;
+        public boolean isWord;
+        
+        public TrieNode ()
+        {
+            children = new TrieNode[256];
+            isWord = false;
+        }
     }
 }

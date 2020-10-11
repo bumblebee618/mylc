@@ -40,19 +40,12 @@ public class Q496_Next_Greater_Element_I {
         
         for (int num : nums2)
         {
-            if (stack.isEmpty() || num < stack.peek())
+        	while (!stack.isEmpty() && num > stack.peek())
             {
-                stack.push(num);
+                map.put(stack.pop(), num);
             }
-            else
-            {
-                while (!stack.isEmpty() && num > stack.peek())
-                {
-                    map.put(stack.pop(), num);
-                }
-                
-                stack.push(num);
-            }
+            
+            stack.push(num);
         }
         
         int[] result = new int[nums1.length];

@@ -19,35 +19,36 @@ Note:
 N  will be in range [1, 10000].
  */
 public class Q788_Rotated_Digits {
-	public int rotatedDigits(int num) {
+	public int rotatedDigits(int num) 
+	{
         int result = 0;
         
-        for(int i = 1; i <= num; i++) 
+        for (int i = 1; i <= num; i++) 
         {
             boolean isGoodNum = false;
             int t = i;
             
-            while(t > 0) 
+            while (t > 0) 
             { 
-                int digit = t%10;
+                int digit = t % 10;
         
-                if(digit == 2 || digit == 5 || digit == 6 || digit == 9) 
+                if (digit == 2 || digit == 5 || digit == 6 || digit == 9) 
                 {
                     isGoodNum = true;
                 } 
-                else if(digit == 3 || digit == 4 || digit == 7) 
+                else if (digit == 3 || digit == 4 || digit == 7) 
                 {
                     isGoodNum = false;
                     break;
                 }
                 
-                t = t/10;
+                t = t / 10;
             }
             
-            if(isGoodNum) {
+            if(isGoodNum) 
+            {
                 result++;
             }
-        
         }
     
         return result;

@@ -17,21 +17,26 @@ public class Q041_First_Missing_Positive {
 	// corner case: [3,4,-1,1]
 	
 	// solution 1: using hashset, time is O(n), space is O(n)
-	public int firstMissingPositive(int[] nums) {
-		if(nums == null || nums.length == 0){
+	public int firstMissingPositive(int[] nums) 
+	{
+		if (nums == null || nums.length == 0)
+		{
             return 1;
         }
         
         Set<Integer> set = new HashSet<Integer>();
         int maxBound = 1;
         
-        for(int num : nums){
+        for (int num : nums)
+        {
             set.add(num);
             maxBound = Math.max(maxBound, num);
         }
         
-        for(int i = 1; i <= maxBound; i++){
-            if(!set.contains(i)){
+        for (int i = 1; i <= maxBound; i++)
+        {
+            if (!set.contains(i))
+            {
                 return i;
             }
         }
@@ -41,23 +46,29 @@ public class Q041_First_Missing_Positive {
 	
 	
 	// solution 2: using sort, time is O(n), space is O(1)
-	public int firstMissingPositive2(int[] nums) {
-        if(nums == null || nums.length == 0) {
+	public int firstMissingPositive2(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 1;
         }
         
         int len = nums.length;
         
-        for(int i = 0; i < len; i++) {
-            while(nums[i] > 0 && nums[i] <= len && nums[nums[i] - 1] != nums[i]) {
+        for (int i = 0; i < len; i++) 
+        {
+            while (nums[i] > 0 && nums[i] <= len && nums[i] != i + 1 && nums[nums[i] - 1] != nums[i]) 
+            {
                 int temp = nums[nums[i] - 1];   // nums[nums[i]-1] 必须先来置换 
                 nums[nums[i] - 1] = nums[i];
                 nums[i] = temp;
             }
         }
         
-        for(int i = 0; i < len; i++) {
-            if(nums[i] != i + 1) {
+        for (int i = 0; i < len; i++) 
+        {
+            if (nums[i] != i + 1) 
+            {
                 return i + 1;
             }
         }
