@@ -30,6 +30,8 @@ public class Li_2_1_Consistent_Hashing {
         machine.add(1);
         results.add(machine);
         
+        int currentMachineNum = machine.size();
+        
         for (int i = 1; i < n; ++i) 
         {
             List<Integer> new_machine = new ArrayList<Integer>();
@@ -51,7 +53,7 @@ public class Li_2_1_Consistent_Hashing {
             
             new_machine.add((x + y) / 2 + 1);
             new_machine.add(y);
-            new_machine.add(i + 1);
+            new_machine.add(currentMachineNum + i);
             results.add(new_machine);
         }
         

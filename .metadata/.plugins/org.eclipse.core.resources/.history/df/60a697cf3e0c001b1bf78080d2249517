@@ -1,0 +1,115 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+public class Trie_Set 
+{
+	public Trie root = new Trie("inventory", 0);
+	
+	public void addInformation(List<String> infos)
+	{
+		Trie node = root;
+		
+		for (String info : infos)
+		{
+			if (!node.children.containsKey(info))
+			{
+				node.children.put(info, new Trie(info, node.level+1));
+			}
+			
+			node = node.children.get(info);
+		}
+	}
+	
+	
+	
+	
+	
+	/****************************** main ******************************/ 
+	
+	public static void main(String[] args)
+	{
+		Trie_Set test = new Trie_Set();
+		
+		List<String> list1 = new ArrayList<>();
+		list1.add("MFST");
+		list1.add("Azure");
+		list1.add("Networking");
+		
+		List<String> list2 = new ArrayList<>();
+		list2.add("MFST");
+		list2.add("Azure");
+		list2.add("Computing");
+		
+		
+		List<String> list3 = new ArrayList<>();
+		list3.add("Google");
+		list3.add("Cloud");
+		list3.add("Networking");
+		
+		List<String> list4 = new ArrayList<>();
+		list4.add("Google");
+		list4.add("Youtube");
+		list4.add("Infra");
+		
+		List<String> list5 = new ArrayList<>();
+		list5.add("Apple");
+		list5.add("Iphone");
+		list5.add("Infra");
+		
+		List<String> list6 = new ArrayList<>();
+		list6.add("Apple");
+		list6.add("Iphone");
+		list6.add("App");
+		
+		List<List<String>> infoList = new LinkedList<>();
+		infoList.add(list1);
+		infoList.add(list2);
+		infoList.add(list3);
+		infoList.add(list4);
+		infoList.add(list5);
+		infoList.add(list6);
+		
+		for (List<String> infos : infoList)
+		{
+			test.addInformation(infos);
+		}
+		
+		System.out.println(test.root.getString());
+	}
+}
+
+class Trie
+{
+	public String node;
+	public int level;
+	public Map<String, Trie> children;
+	
+	public Trie(String node, int level)
+	{
+		this.node = node;
+		this.level = level;
+		children = new HashMap<>();
+	}
+	
+	public String getString()
+	{
+		StringBuilder builder = new StringBuilder();
+		
+		for (int i = 0; i < level; i++)
+		{
+			builder.append("  ");
+		}
+		
+		builder.append(node).append("\n");
+		
+		for (Trie child : children.values())
+		{
+			builder.append(child.getString());
+		}
+
+		return builder.toString();
+	}
+}
