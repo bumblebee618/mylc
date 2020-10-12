@@ -22,6 +22,11 @@ public class Trie_Set
 		{
 			info = info.trim();
 			
+			if (info.length() == 0)
+			{
+				continue;
+			}
+			
 			if (!node.children.containsKey(info))
 			{
 				node.children.put(info, new Trie(info, node.level+1));
@@ -51,7 +56,7 @@ public class Trie_Set
 		
 		infoList.add("Apple, Iphone, Hardware, ap_person1");
 		infoList.add("Apple, Iphone, App, ap_person2");
-		infoList.add("Apple, Iphone, App, ap_person3");
+		infoList.add("Apple, Iphone, App,  , ");
 		
 		
 		for (String infos : infoList)
@@ -80,7 +85,7 @@ class Trie
 	{
 		StringBuilder builder = new StringBuilder();
 		
-		if (level >= 0)
+		if (level >= 0 || node.length() > 0)
 		{
 			for (int i = 0; i < level; i++)
 			{
