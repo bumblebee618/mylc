@@ -1,0 +1,26 @@
+public class ReserveResponse 
+{
+	private String orderId;
+	private Status status;
+	
+	public ReserveResponse(String orderId, Status status)
+	{
+		this.orderId = orderId;
+		this.status = status;
+	}
+
+	public String getOrderId() 
+	{
+		return orderId;
+	}
+
+	public Status getStatus() 
+	{
+		return status;
+	}
+}
+
+enum Status
+{
+	SUCCEED(), FAIL();
+}

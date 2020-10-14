@@ -1,0 +1,65 @@
+import java.util.List;
+
+public abstract class Car 
+{
+	protected String id;
+	protected CarType type;
+	protected double rate;
+	protected boolean[] availableStatus;
+	
+	public boolean reserveCar(List<Integer> dates)
+	{
+		for (Integer date : dates)
+		{
+			if (date < 0 || date >= availableStatus.length || !availableStatus[date])
+			{
+				return false;
+			}
+		}
+		
+		setAvailableStatus(dates, false);
+		return true;
+	}
+	
+	public boolean unReserveCar(List<Integer> dates)
+	{
+		for (Integer date : dates)
+		{
+			if (date < 0 || date >= availableStatus.length)
+			{
+				return false;
+			}
+		}
+		
+		setAvailableStatus(dates, true);
+		return true;
+	}
+	
+	public String getId() 
+	{
+		return id;
+	}
+	
+	public CarType getType()
+	{
+		return type;
+	}
+	
+	public double getRate() 
+	{
+		return rate;
+	}
+	
+	public boolean[] getAvailableStatus()
+	{
+		return availableStatus;
+	}
+	
+	private void setAvailableStatus(List<Integer> dates, boolean value)
+	{
+		for (Integer date : dates)
+		{
+			availableStatus[date] = value;
+		}
+	}
+}

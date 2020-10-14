@@ -31,18 +31,24 @@ public class PizzaShop
 		return instance;
 	}
 	
-	public CustomerOrder placeOrder(String userName, PizzaFlavor flavor)
+	public CustomerOrder placeOrder(String userName, Map<PizzaFlavor, Integer> pizzaInventory)
 	{
 		String orderId = UUID.randomUUID().toString();
-		Pizza pizza = PizzaFactory.createPizza(flavor, flavorToprice.get(flavor));
-		CustomerOrder order = new CustomerOrder(orderId, userName, pizza);
+		CustomerOrder order = new CustomerOrder(orderId, userName);
+		
+		for (PizzaFlavor flavor : pizzaInventory.keySet())
+		{
+			Pizza pizza = PizzaFactory.createPizza(flavor, flavorToprice.get(flavor));
+			order.addPizzaToOrder(pizza, pizzaInventory.get(flavor));
+		}
+		
 		orderIdToOrder.put(orderId, order);
 		return order;
 	}
 	
-	public double checkPrice(PizzaFlavor flavor)
+	public double checkPrice(CustomerOrder order, CasherType type)
 	{
-		return flavorToprice.get(flavor);
+		return CasherFactory.getBalance(type, order.getPizzas());
 	} 
 	
 	public CustomerOrder checkOrder(String orderId)

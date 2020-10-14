@@ -1,0 +1,12 @@
+import java.util.List;
+
+public class CasherDiscount extends CasherBase
+{
+	private final double discountRate = 0.8;
+	
+	@Override
+	public double getTotalPrice(List<Pizza> pizzas)
+	{
+		return caculatePrice(pizzas) * discountRate;
+	}
+}

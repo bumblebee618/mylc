@@ -47,7 +47,7 @@ public class Q859_Buddy_Strings {
             
             for (char c : A.toCharArray())
             {
-                if (hash[c] > 0)
+                if (hash[c] >= 1)
                 {
                     return true;
                 }

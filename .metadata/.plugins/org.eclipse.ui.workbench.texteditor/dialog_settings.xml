@@ -6,12 +6,15 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="3de" key="selection"/>
+		<item value="totalAvailableSlotNum" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="totalAvailableSlotNum"/>
+			<item value="addRequest"/>
+			<item value="maxFloor"/>
 			<item value="3de"/>
 			<item value="15"/>
 			<item value="System.out.println(&quot;i = &quot; + i + &quot;, dp[i].count = &quot; + dp[i].count);"/>

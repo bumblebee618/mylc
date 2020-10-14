@@ -1,0 +1,8 @@
+
+public abstract class CasherBase 
+{
+	private double totalPrice = 0;
+	
+	
+	
+}

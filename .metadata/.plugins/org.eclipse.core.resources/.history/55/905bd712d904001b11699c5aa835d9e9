@@ -1,8 +1,0 @@
-public class Car extends Vehicle
-{
-	public Car(int plateNum) 
-	{
-		super(plateNum);
-		setSize(2);
-	}
-}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;Leetcode_OOD_car_rental_system&apos; to &apos;Leetcode_OOD_Car_Rental_System&apos;&#x0A;- Original element: &apos;Leetcode_OOD_car_rental_system&apos;&#x0A;- Renamed element: &apos;Leetcode_OOD_car_rental_system&apos;&#x0A;- Update references to refactored element" description="Rename Java project &apos;Leetcode_OOD_car_rental_system&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=Leetcode_OOD_car_rental_system" name="Leetcode_OOD_Car_Rental_System" references="true" stamp="1602657797247" version="1.0"/>
+</session>

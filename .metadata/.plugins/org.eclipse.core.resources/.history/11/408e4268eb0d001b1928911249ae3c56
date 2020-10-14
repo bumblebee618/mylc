@@ -1,0 +1,21 @@
+public abstract class Car 
+{
+	private String id;
+	private CarType type;
+	private double rate;
+	
+	public String getId() 
+	{
+		return id;
+	}
+	
+	public CarType getType()
+	{
+		return type;
+	}
+	
+	public double getRate() 
+	{
+		return rate;
+	}
+}

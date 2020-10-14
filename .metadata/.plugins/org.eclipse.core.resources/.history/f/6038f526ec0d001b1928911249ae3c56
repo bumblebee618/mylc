@@ -1,0 +1,11 @@
+
+public class CarFactory 
+{
+	public static Car generateCar(CarType type)
+	{
+		switch (type)
+		{
+			case CarType.SUV: ;
+		}
+	}
+}

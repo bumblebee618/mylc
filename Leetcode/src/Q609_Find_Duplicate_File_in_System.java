@@ -44,7 +44,7 @@ How to make sure the duplicated files you find are not false positive?
  */
 public class Q609_Find_Duplicate_File_in_System {
 	public List<List<String>> findDuplicate(String[] paths) {
-        List<List<String>> result = new LinkedList<>();
+List<List<String>> result = new LinkedList<>();
         
         if (paths == null || paths.length == 0)
         {
@@ -60,13 +60,7 @@ public class Q609_Find_Duplicate_File_in_System {
             for (int i = 1; i < strs.length; i++)
             {
                 String[] files = strs[i].split("\\(");
-                
-                if (!map.containsKey(files[1]))
-                {
-                    map.put(files[1], new LinkedList<>());
-                }
-            
-                map.get(files[1]).add(strs[0]+"/"+files[0]);
+                map.computeIfAbsent(files[1], x-> new LinkedList<String>()).add(String.format("%s/%s", strs[0], files[0]));
             }
         }
         

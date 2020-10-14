@@ -1,0 +1,20 @@
+import java.util.List;
+
+public abstract class CasherBase 
+{
+	protected List<Pizza> pizzas;
+	
+	public abstract double getTotalPrice(List<Pizza> pizzas);
+	
+	protected double caculatePrice(List<Pizza> pizzas)
+	{
+		double totalPrice = 0;
+		
+		for (Pizza pizza : pizzas)
+		{
+			totalPrice += pizza.getPrice();
+		}
+		
+		return totalPrice;
+	}
+}
