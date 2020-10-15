@@ -4,14 +4,13 @@ import java.util.UUID;
 public class UserOrder 
 {
 	private String orderId;
-	private String userId;
-	private UserProfile userProfile;
+	private UserProfile user;
 	private String carId;
 	private List<Integer> reserveDates;
 	
-	public UserOrder(String userId, String carId, List<Integer> reserveDates)
+	public UserOrder(UserProfile user, String carId, List<Integer> reserveDates)
 	{
-		this.userId = userId;
+		this.user = user;
 		this.carId = carId;
 		this.reserveDates = reserveDates;
 		this.orderId = "Order_"+ UUID.randomUUID().toString();
@@ -22,9 +21,9 @@ public class UserOrder
 		return orderId;
 	}
 
-	public String getUserId() 
+	public UserProfile getUser() 
 	{
-		return userId;
+		return user;
 	}
 
 	public String getCarId() 
@@ -35,15 +34,5 @@ public class UserOrder
 	public List<Integer> getReserveDates() 
 	{
 		return reserveDates;
-	}
-
-	public UserProfile getUserProfile() 
-	{
-		return userProfile;
-	}
-
-	public void setUserProfile(UserProfile userProfile) 
-	{
-		this.userProfile = userProfile;
 	}
 }

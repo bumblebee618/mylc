@@ -1,0 +1,25 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Z_PizzaOrderClient 
+{
+	public static void main(String[] args)
+	{
+		Map<PizzaFlavor, Integer> pizzaMap = new HashMap<>();
+		pizzaMap.put(PizzaFlavor.PINEAPPLE, 1);
+		pizzaMap.put(PizzaFlavor.BEEF, 2);
+		
+		String userName = "Jackie";
+		CustomerOrder order = PizzaShop.getInstance().placeOrder(userName, pizzaMap);
+		
+		System.out.println(order);
+		System.out.println("Total price: " + PizzaShop.getInstance().checkPrice(order, CasherType.Normal));
+		System.out.println("Discount price: " + PizzaShop.getInstance().checkPrice(order, CasherType.Discount));
+		System.out.println(PizzaShop.getInstance().checkOrder(order.getOrderId()));
+		
+		if (PizzaShop.getInstance().checkOrder("123") == null)
+		{
+			System.out.println("order doesn't exist");
+		}
+	}
+}

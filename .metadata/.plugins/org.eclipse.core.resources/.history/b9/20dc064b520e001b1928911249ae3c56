@@ -1,0 +1,16 @@
+import java.util.List;
+
+public interface RentalManager 
+{
+	// return orderId
+	public RentalResponse<String> reserveCarOnline(String userId, String driverLicense, String creditCard, CarType type, List<Integer> reserveDates);
+	
+	// return orderId
+	public RentalResponse<String> rentCarOndemand(String userId, String driverLicense, String creditCard, CarType type, List<Integer> reserveDates);
+	
+	public RentalResponse<Car> pickupCar(String orderId, String userId, String driverLicense, String creditCard);
+	
+	public RentalResponse<Double> dropOffCar(String orderId);
+	
+	public RentalResponse<UserProfile> accountRegistration(String userId, String driverLicense, String creditCard);
+}

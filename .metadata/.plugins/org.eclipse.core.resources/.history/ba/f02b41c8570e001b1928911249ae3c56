@@ -1,0 +1,37 @@
+import java.util.Timer;
+
+public abstract class Fish implements Runnable
+{
+	private String fishId;
+	private FishType type;
+	private int foodInStomach;
+	private int stomachCapacity;
+	private Timer timer;
+	
+	public synchronized int feed(int food)
+	{
+		int eat = Math.min(food, stomachCapacity - foodInStomach);
+		foodInStomach += eat;
+		return eat;
+	}
+	
+	public boolean isHealthy()
+	{
+		return foodInStomach > 0;
+	}
+	
+	public String getFishId() 
+	{
+		return fishId;
+	}
+	
+	public FishType getType() 
+	{
+		return type;
+	}
+}
+
+enum FishType
+{
+	GOLDFISH(), SHARK();
+}

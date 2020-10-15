@@ -2,7 +2,7 @@
 public class Z_ElevatorClient {
 	public static void main(String[] args)
 	{
-		ElevatorManager eManager = ElevatorFactory.getElevatorManager();
+		ElevatorManagerImpl eManager = ElevatorFactory.getElevatorManager();
 		Thread thread = new Thread(eManager);
 		thread.start();
 		

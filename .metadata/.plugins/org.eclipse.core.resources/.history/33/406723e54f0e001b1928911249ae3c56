@@ -1,0 +1,26 @@
+public class RentalResponseImpl<T> 
+{
+	private T obj;
+	private Status status;
+	
+	public RentalResponseImpl(T obj, Status status)
+	{
+		this.obj = obj;
+		this.status = status;
+	}
+
+	public T getResult() 
+	{
+		return obj;
+	}
+
+	public Status getStatus() 
+	{
+		return status;
+	}
+}
+
+enum Status
+{
+	SUCCEED(), FAIL();
+}

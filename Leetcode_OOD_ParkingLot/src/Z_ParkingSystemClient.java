@@ -1,6 +1,6 @@
 
 public class Z_ParkingSystemClient {
-	private ParkingManager parkingManager = ParkingManager.getInstance();
+	private ParkingManagerImpl parkingManager = ParkingManagerImpl.getInstance();
 	
 	public String getParkingTicket(Vehicle vehicle)
 	{

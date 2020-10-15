@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;ParkingManager&apos; to &apos;ParkingManagerImpl&apos;&#x0A;- Original project: &apos;Leetcode_OOD_ParkingLot&apos;&#x0A;- Original element: &apos;ParkingManager&apos;&#x0A;- Renamed element: &apos;ParkingManagerImpl&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ParkingManager&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{ParkingManager.java[ParkingManager" matchStrategy="1" name="ParkingManagerImpl" qualified="false" references="true" similarDeclarations="false" stamp="1602703884782" textual="true" version="1.0"/>
+</session>

@@ -1,0 +1,39 @@
+import java.util.Map;
+
+public class Pool 
+{
+	private String poolId;
+	private double temperature;
+	private Map<String, Fish> fishPool;
+	
+	public boolean isFishHealthy(String fishId)
+	{
+		if (!fishPool.containsKey(fishId))
+		{
+			return false;
+		}
+		
+		return fishPool.get(fishId).isHealthy();
+	}
+	
+	public String checkFishsStatus()
+	{
+		StringBuilder builder = new StringBuilder();
+		
+		for (String fishId : fishPool.keySet())
+		{
+			builder.append(fishId).append(":").append(fishPool.get(fishId)).append("\n");
+		}
+		
+	}
+	
+	public String getPoolId() 
+	{
+		return poolId;
+	}
+	
+	public double getTemperature() 
+	{
+		return temperature;
+	}
+}

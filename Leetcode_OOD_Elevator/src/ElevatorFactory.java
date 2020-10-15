@@ -1,8 +1,8 @@
 public class ElevatorFactory 
 {
-	public static ElevatorManager getElevatorManager()
+	public static ElevatorManagerImpl getElevatorManager()
 	{
-		return ElevatorManager.getInstance();
+		return ElevatorManagerImpl.getInstance();
 	}
 	
 	public static Elevator getElevator()

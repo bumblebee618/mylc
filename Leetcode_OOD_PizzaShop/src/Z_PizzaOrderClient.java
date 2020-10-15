@@ -10,14 +10,14 @@ public class Z_PizzaOrderClient
 		pizzaMap.put(PizzaFlavor.BEEF, 2);
 		
 		String userName = "Jackie";
-		CustomerOrder order = PizzaShop.getInstance().placeOrder(userName, pizzaMap);
+		CustomerOrder order = PizzaShopImpl.getInstance().placeOrder(userName, pizzaMap);
 		
 		System.out.println(order);
-		System.out.println("Total price: " + PizzaShop.getInstance().checkPrice(order, CasherType.Normal));
-		System.out.println("Discount price: " + PizzaShop.getInstance().checkPrice(order, CasherType.Discount));
-		System.out.println(PizzaShop.getInstance().checkOrder(order.getOrderId()));
+		System.out.println("Total price: " + PizzaShopImpl.getInstance().checkPrice(order, CasherType.Normal));
+		System.out.println("Discount price: " + PizzaShopImpl.getInstance().checkPrice(order, CasherType.Discount));
+		System.out.println(PizzaShopImpl.getInstance().checkOrder(order.getOrderId()));
 		
-		if (PizzaShop.getInstance().checkOrder("123") == null)
+		if (PizzaShopImpl.getInstance().checkOrder("123") == null)
 		{
 			System.out.println("order doesn't exist");
 		}

@@ -25,4 +25,9 @@ public class UserProfile
 	{
 		return creditCard;
 	}
+	
+	public void setCreditCard(String creditCard) 
+	{
+		this.creditCard = creditCard;
+	}
 }

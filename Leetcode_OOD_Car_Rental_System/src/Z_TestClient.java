@@ -5,7 +5,7 @@ public class Z_TestClient
 {
 	public static void main(String[] args)
 	{
-		RentalManager rentalManager = RentalManager.getInstance();
+		RentalManagerImpl rentalManager = RentalManagerImpl.getInstance();
 		
 		String user1 = "user1";
 		CarType type1 = CarType.SUV;
@@ -32,27 +32,27 @@ public class Z_TestClient
 		reserveDates3.add(1);
 		reserveDates3.add(2);
 		
-		RentalResponse response1_1 = rentalManager.reserveCar(user1, type1, reserveDates1);
+		RentalResponse response1_1 = rentalManager.reserveCarOnline(user1, driverLicense1, creditCard1, type1, reserveDates1);
 		System.out.println("response1_1: orderId = " + (String) response1_1.getResult() + ", status = " + response1_1.getStatus());
-		RentalResponse response1_2 = rentalManager.pickupCar((String) response1_1.getResult(), user1, driverLicense1, creditCard1);
+		RentalResponse response1_2 = rentalManager.pickupCar((String) response1_1.getResult());
 		System.out.println("response1_2: CarId = " + ((Car) response1_2.getResult()).getId() + ", status = " + response1_1.getStatus());
 		
-		RentalResponse response2_1 = rentalManager.reserveCar(user2, type2, reserveDates2);
-		System.out.println("response2_1: status = " + response2_1.getStatus());
+		RentalResponse response2_1 = rentalManager.reserveCarOnline(user2, driverLicense2, creditCard2, type2, reserveDates2);
+		System.out.println("response2_1: status = " + response2_1.getStatus() + ", error message: " + response2_1.getErrMsg());
 		
-		RentalResponse response3_1 = rentalManager.reserveCar(user3, type3, reserveDates3);
+		RentalResponse response3_1 = rentalManager.reserveCarOnline(user3, driverLicense3, creditCard3, type3, reserveDates3);
 		System.out.println("response3_1: orderId = " + (String) response3_1.getResult() + ", status = " + response3_1.getStatus());
-		RentalResponse response3_2 = rentalManager.pickupCar((String) response3_1.getResult(), user3, driverLicense3, creditCard3);
+		RentalResponse response3_2 = rentalManager.pickupCar((String) response3_1.getResult());
 		System.out.println("response3_2: CarId = " + ((Car) response3_2.getResult()).getId() + ", status = " + response3_1.getStatus());
-		RentalResponse response3_3 = rentalManager.dropCar((String) response3_1.getResult());
+		RentalResponse response3_3 = rentalManager.dropOffCar((String) response3_1.getResult());
 		System.out.println("response3_3: total charge = $" + (Double) response3_3.getResult() + ", status = " + response3_3.getStatus());
 		
-		RentalResponse response4_1 = rentalManager.dropCar((String) response1_1.getResult());
+		RentalResponse response4_1 = rentalManager.dropOffCar((String) response1_1.getResult());
 		System.out.println("response1_1: total charge = $" + (Double) response4_1.getResult() + ", status = " + response4_1.getStatus());
 		
-		RentalResponse response5_1 = rentalManager.reserveCar(user2, type2, reserveDates2);
+		RentalResponse response5_1 = rentalManager.reserveCarOnline(user2, driverLicense2, creditCard2, type2, reserveDates2);
 		System.out.println("response5_1: orderId = " + (String) response5_1.getResult() + ", status = " + response5_1.getStatus());
-		RentalResponse response5_2 = rentalManager.pickupCar((String) response5_1.getResult(), user2, driverLicense2, creditCard2);
+		RentalResponse response5_2 = rentalManager.pickupCar((String) response5_1.getResult());
 		System.out.println("response5_2: CarId = " + ((Car) response5_2.getResult()).getId() + ", status = " + response5_1.getStatus());
 	}
 }

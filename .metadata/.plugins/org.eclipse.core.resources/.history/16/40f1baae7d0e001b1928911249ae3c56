@@ -1,0 +1,13 @@
+import java.util.Timer;
+
+public class GoldFish extends Fish
+{
+	public GoldFish(String fishId)
+	{
+		this.fishId = fishId;
+		type = FishType.GOLDFISH;
+		stomachCapacity = 10;
+		foodInStomach = 2;
+		timer = new Timer();
+	}
+}
