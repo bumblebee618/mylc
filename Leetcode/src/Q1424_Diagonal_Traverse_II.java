@@ -37,7 +37,8 @@ Constraints:
 There at most 10^5 elements in nums.
  */
 public class Q1424_Diagonal_Traverse_II {
-	public int[] findDiagonalOrder(List<List<Integer>> nums) {
+	public int[] findDiagonalOrder(List<List<Integer>> nums) 
+	{
         if (nums == null || nums.size() == 0)
         {
             return new int[0];
@@ -45,7 +46,6 @@ public class Q1424_Diagonal_Traverse_II {
         
         Map<Integer, List<Integer>> map = new HashMap<>();
         int maxRow = 0;
-        List<Integer> result = new LinkedList<>();
         int count = 0;
         
         // should go from last row which is the start of the diagonals
@@ -62,14 +62,14 @@ public class Q1424_Diagonal_Traverse_II {
         int[] array = new int[count];
         int index = 0;
         
-        for (int i = 0; i <= maxRow; i++)
+        for (int level = 0; level <= maxRow; level++)
         {
-            if (!map.containsKey(i))
+            if (!map.containsKey(level))
             {
                 continue;
             }
             
-            for (int num : map.get(i))
+            for (int num : map.get(level))
             {
                 array[index++] = num;
             }

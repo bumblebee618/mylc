@@ -69,9 +69,8 @@ public class Q1011_Capacity_To_Ship_Packages_Within_D_Days {
         while (left+1 < right)
         {
             int mid = left+(right-left)/2;
-            int days = getShipDays(weights, mid);
             
-            if (days > D)
+            if (!canShipWithTargetDays(weights, D, mid))
             {
                 left = mid;
             }
@@ -81,10 +80,10 @@ public class Q1011_Capacity_To_Ship_Packages_Within_D_Days {
             }
         }
         
-        return getShipDays(weights, left) <= D ? left : right;
+        return canShipWithTargetDays(weights, D, left)? left : right;
     }
     
-    private int getShipDays(int[] weights, int capacity)
+    private boolean canShipWithTargetDays(int[] weights, int D, int capacity)
     {
         int days = 1;
         int curCapacity = 0;
@@ -97,9 +96,14 @@ public class Q1011_Capacity_To_Ship_Packages_Within_D_Days {
                 curCapacity = 0;
             }
             
+            if (days > D)
+            {
+                return false;
+            }
+            
             curCapacity += weight;
         }
         
-        return days;
+        return true;
     }
 }

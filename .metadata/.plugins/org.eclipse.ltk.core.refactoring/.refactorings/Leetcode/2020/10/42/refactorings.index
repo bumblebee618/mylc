@@ -5,3 +5,6 @@
 1602397381713	Rename local variable 'ans'
 1602448062740	Rename local variable 'used'
 1602742660081	Rename method 'solve'
+1602807147618	Rename local variable 'i'
+1602918800373	Rename local variable 'num'
+1602918992386	Rename local variable 'node'

@@ -52,7 +52,7 @@ public class Q622_Design_Circular_Queue {
         }
         
         capacity = k;
-        queue = new int[k];
+        queue = new int[capacity];
     }
     
     /** Insert an element into the circular queue. Return true if the operation is successful. */

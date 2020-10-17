@@ -28,9 +28,10 @@ public class Q095_Unique_Binary_Search_Trees_II {
 	 *      
 	 **********************************************************/
 	public List<TreeNode> generateTrees(int n) {
-        List<TreeNode> ans = new ArrayList();
+        List<TreeNode> ans = new ArrayList<>();
         
-        if(n <= 0) {
+        if(n <= 0) 
+        {
             return ans;
         }
         
@@ -40,22 +41,28 @@ public class Q095_Unique_Binary_Search_Trees_II {
     }
     
     public List<TreeNode> search(List<TreeNode>[][] memo, int start, int end) {
-        if(start > end) {
-            List<TreeNode> list = new ArrayList();
+        if (start > end) 
+        {
+            List<TreeNode> list = new ArrayList<>();
             list.add(null);                 // this step is important !!!
             return list;
-        } else if(memo[start][end] != null) {
+        } 
+        else if (memo[start][end] != null) 
+        {
             return memo[start][end];
         }
         
-        memo[start][end] = new ArrayList();
+        memo[start][end] = new ArrayList<>();
         
-        for(int node = start; node <= end; node++) {
+        for (int node = start; node <= end; node++) 
+        {
             List<TreeNode> leftList = search(memo, start, node-1);
             List<TreeNode> rightList = search(memo, node+1, end);
             
-            for(TreeNode left : leftList) {
-                for(TreeNode right : rightList) {
+            for (TreeNode left : leftList) 
+            {
+                for (TreeNode right : rightList) 
+                {
                     TreeNode root = new TreeNode(node);
                     root.left = left;
                     root.right = right;

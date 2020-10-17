@@ -82,7 +82,7 @@ public class Q689_Maximum_Sum_of_3_Non_Overlapping_Subarrays {
             int l = leftStartIndex[i-1];
             int r = rightStartIndex[i+k];
             
-            // left + middle + right
+            // left + middle + right 
             int total = (sum[l+k]-sum[l]) + (sum[i+k]-sum[i]) + (sum[r+k]-sum[r]);
             
             if (total > globalMax)

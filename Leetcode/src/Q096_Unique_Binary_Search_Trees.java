@@ -27,8 +27,10 @@ public class Q096_Unique_Binary_Search_Trees {
 	 **********************************************************/
 	
 	// recursive + DP, space O(n)
-	public int numTrees(int n) {
-        if(n <= 0){
+	public int numTrees(int n) 
+	{
+        if (n <= 0)
+        {
             return 0;
         }
         
@@ -41,20 +43,28 @@ public class Q096_Unique_Binary_Search_Trees {
         return helper(memo, 1, n);
     }
     
-    public int helper(int[] memo, int start, int end){
-        if(start > end){
+    public int helper(int[] memo, int start, int end)
+    {
+        if (start > end)
+        {
             return 0;
-        } else if(memo[end - start + 1] > 0){
+        } 
+        else if (memo[end - start + 1] > 0)
+        {
             return memo[end - start + 1];
         }
         
-        for(int node = start; node <= end; node++){
-            int left = helper(memo, start, node - 1);
-            int right = helper(memo, node + 1, end);
+        for (int root = start; root <= end; root++)
+        {
+            int left = helper(memo, start, root - 1);
+            int right = helper(memo, root + 1, end);
             
-            if(left == 0 || right == 0){
+            if (left == 0 || right == 0)
+            {
             	memo[end - start + 1] += left + right;
-            } else {
+            } 
+            else 
+            {
             	memo[end - start + 1] += left * right;
             }
         }

@@ -24,8 +24,10 @@ public class Q091_Decode_Ways {
 	 * 
 	 **********************************************/
 	
-	public int numDecodings(String s) {
-        if(s == null || s.length() == 0) {
+	public int numDecodings(String s) 
+	{
+        if (s == null || s.length() == 0) 
+        {
             return 0;
         }
         
@@ -34,26 +36,41 @@ public class Q091_Decode_Ways {
         ways[0] = 1;
         ways[1] = (s.charAt(0) == '0') ? 0 : 1;
         
-        for(int i = 2; i <= len; i++) {
+        for (int i = 2; i <= len; i++) 
+        {
             int prevNum = s.charAt(i-2) - '0';
-            int num = s.charAt(i-1) - '0';
+            int curNum = s.charAt(i-1) - '0';
             
-            if(num == 0) {
-                if(prevNum == 1 || prevNum == 2) {
+            if (curNum == 0) 
+            {
+                if (prevNum == 1 || prevNum == 2) 
+                {
                     ways[i] = ways[i-2];
-                } else {
+                } 
+                else 
+                {
                     return 0;
                 }
-            } else if(num > 0 && num <= 6) {
-                if(prevNum == 1 || prevNum == 2) {
+            } 
+            else if (curNum > 0 && curNum <= 6) 
+            {
+                if (prevNum == 1 || prevNum == 2) 
+                {
                     ways[i] = ways[i-1] + ways[i-2];
-                } else {
+                } 
+                else 
+                {
                     ways[i] = ways[i-1];
                 }
-            } else {
-                if(prevNum == 1) {
+            } 
+            else 
+            {
+                if (prevNum == 1) 
+                {
                     ways[i] = ways[i-1] + ways[i-2];
-                } else {
+                } 
+                else 
+                {
                     ways[i] = ways[i-1];
                 }
             }

@@ -34,8 +34,8 @@ public class Q674_Longest_Continuous_Increasing_Subsequence {
             }
             
             maxLen = Math.max(maxLen, front-back+1);
+            back = front+1;
             front = front+1;
-            back = front;
         }
         
         return maxLen;

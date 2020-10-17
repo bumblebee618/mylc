@@ -21,22 +21,31 @@ Examples:
 
 public class Q334_Increasing_Triplet_Subsequence {
 	// solution 1:
-	public boolean increasingTriplet(int[] nums) {
-		if (nums == null || nums.length < 3) {
+	public boolean increasingTriplet(int[] nums) 
+	{
+		if (nums == null || nums.length < 3) 
+		{
 			return false;
 		}
 		
 		int max1 = nums[0];
 		int max2 = Integer.MIN_VALUE;
 
-		for (int i = 1; i < nums.length; ++i) {
-			if (nums[i] > max1) {
-				if (max2 != Integer.MIN_VALUE && nums[i] > max2) {
+		for (int i = 1; i < nums.length; ++i) 
+		{
+			if (nums[i] > max1) 
+			{
+				if (max2 != Integer.MIN_VALUE && nums[i] > max2) 
+				{
 					return true;
-				} else {
+				} 
+				else 
+				{
 					max2 = nums[i];
 				}
-			} else {
+			} 
+			else 
+			{
 				max1 = nums[i];
 			}
 		}
