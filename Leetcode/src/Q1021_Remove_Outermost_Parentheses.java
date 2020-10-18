@@ -43,7 +43,8 @@ S is a valid parentheses string
 
  */
 public class Q1021_Remove_Outermost_Parentheses {
-	public String removeOuterParentheses(String s) {
+	public String removeOuterParentheses(String s) 
+	{
         if (s == null || s.length() == 0)
         {
             return s;
@@ -83,11 +84,13 @@ public class Q1021_Remove_Outermost_Parentheses {
         {
             char c = s.charAt(i);
             
-            switch (c)
+            if (c == '(')
             {
-                case '(': count++; break;
-                case ')': count--; break;
-                default: ;
+            	count++;
+            }
+            else if (c == ')')
+            {
+            	count--;
             }
             
             if (count == 0)

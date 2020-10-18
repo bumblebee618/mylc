@@ -21,18 +21,20 @@ kthLargest.add(4);   // returns 8
 Note:
 You may assume that nums' length ≥ k-1 and k ≥ 1.
  */
-public class Q703_Kth_Largest_Element_in_a_Stream {
+public class Q703_Kth_Largest_Element_in_a_Stream 
+{
 	private PriorityQueue<Integer> minHeap;
     private int capacity = 0;
     
-    public Q703_Kth_Largest_Element_in_a_Stream(int k, int[] nums) {
+    public Q703_Kth_Largest_Element_in_a_Stream(int k, int[] nums) 
+    {
         if (k <= 0 || nums == null)
         {
             return;
         }
         
         capacity = k;
-        minHeap = new PriorityQueue<Integer>(k+1, (n1, n2) -> n1-n2);
+        minHeap = new PriorityQueue<Integer>(k+1, (n1, n2) -> n1 - n2);
         
         for (int num : nums)
         {
@@ -40,7 +42,8 @@ public class Q703_Kth_Largest_Element_in_a_Stream {
         }
     }
     
-    public int add(int val) {
+    public int add(int val) 
+    {
         addValToHeap(val);
         return minHeap.size() == capacity ? minHeap.peek() : -1;
     }

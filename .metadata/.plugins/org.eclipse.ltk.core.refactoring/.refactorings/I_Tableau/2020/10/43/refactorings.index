@@ -1,0 +1,14 @@
+1603055301739	Rename local variable 'left'
+1603055309852	Rename local variable 'right'
+1603055366466	Rename local variable 'i'
+1603055397755	Rename local variable 'max'
+1603055434779	Rename local variable 'largest'
+1603055576465	Rename method 'build_Max_heap'
+1603055705091	Rename type 'Q000_Algorithm_Sort'
+1603056318175	Rename type 'Shift'
+1603056331267	Rename type 'shuffle'
+1603056714132	Rename type 'ShuffleCard'
+1603058631925	Rename local variable 'start'
+1603058893009	Rename field 'used'
+1603059261707	Copy compilation unit
+1603059286533	Copy compilation unit

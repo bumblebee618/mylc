@@ -25,12 +25,12 @@ public class Q214_Shortest_Palindrome {
         {
             if (isPalindrome(s, 0, i) == true) 
             {
-                String suffix = s.substring(i + 1, len);
+                String suffix = s.substring(i + 1);
                 return new StringBuilder(suffix).reverse().toString() + s;
             }
         }
         
-        String suffix = s.substring(1, len);
+        String suffix = s.substring(1);
         return new StringBuilder(suffix).reverse().toString() + s;
     }
     
@@ -51,26 +51,32 @@ public class Q214_Shortest_Palindrome {
     }
     
     
+    
     // follow up: to find min Palindrome either from left or right side
  	public String shortestPalindrome_follow_up(String s) 
  	{
- 		int j = 0;
+ 		if (s == null || s.length() == 0) 
+        {
+            return s;
+        }
  		
- 	    for (int i = s.length() - 1; i >= 0; i--) 
+ 		int pointer1 = 0;
+ 		
+ 	    for (int pointer2 = s.length() - 1; pointer2 >= 0; pointer2--) 
  	    {
- 	        if (s.charAt(i) == s.charAt(j)) 
+ 	        if (s.charAt(pointer1) == s.charAt(pointer2)) 
  	        { 
- 	        	j++; 
+ 	        	pointer1++; 
  	        }
  	    }
  	    
- 	    if (j == s.length()) 
+ 	    if (pointer1 == s.length()) 
  	    {
  	    	return s; 
  	    }
  	    
- 	    String suffix = s.substring(j);
- 	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;   // 注意这里继续递归 ！！！
+ 	    String suffix = s.substring(pointer1);
+ 	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, pointer1)) + suffix;   // 注意这里继续递归 ！！！
      }
 	
 	

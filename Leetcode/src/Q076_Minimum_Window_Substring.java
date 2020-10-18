@@ -18,15 +18,18 @@ Note:
 
 public class Q076_Minimum_Window_Substring {
 	// solution 1: time O(256 * n), space O(n)
-	public String minWindow(String s, String t) {
-        if(s == null || t == null || t.length() > s.length()) {
+	public String minWindow(String s, String t) 
+	{
+        if (s == null || t == null || t.length() > s.length()) 
+        {
             return "";
         }
         
         int[] sHash = new int[256];
         int[] tHash = new int[256];
         
-        for(char c : t.toCharArray()) {
+        for (char c : t.toCharArray()) 
+        {
             tHash[c]++;
         }
         
@@ -35,13 +38,16 @@ public class Q076_Minimum_Window_Substring {
         int minLen = Integer.MAX_VALUE;
         int startPos = 0;
         
-        for(int back = 0; back < len; back++) {
-            while(front < len && !isValid(sHash, tHash)) {
+        for (int back = 0; back < len; back++) 
+        {
+            while (front < len && !isValid(sHash, tHash)) 
+            {
                 sHash[s.charAt(front)]++;
                 front++;
             }
             
-            if(isValid(sHash, tHash) && minLen > front - back) {
+            if (isValid(sHash, tHash) && minLen > front - back) 
+            {
                 minLen = front - back;
                 startPos = back;
             }
@@ -52,20 +58,28 @@ public class Q076_Minimum_Window_Substring {
         return minLen == Integer.MAX_VALUE ? "" : s.substring(startPos, startPos + minLen);
     }
     
-    public boolean isValid(int[] sHash, int[] tHash) {
-        for(int i = 0; i < 256; i++) {
-            if(sHash[i] < tHash[i]) {
+    private boolean isValid(int[] sHash, int[] tHash) 
+    {
+        for (int i = 0; i < 256; i++) 
+        {
+            if (sHash[i] < tHash[i]) 
+            {
                 return false;
             }
         }
         
         return true;
     }
+    
+    
+    
    
     
     // solution 2: time O(n), space O(n)
-    public String minWindow2(String s, String t) {
-        if(s == null || t == null || t.length() > s.length()) {
+    public String minWindow2(String s, String t) 
+    {
+        if(s == null || t == null || t.length() > s.length()) 
+        {
             return "";
         }
         
@@ -73,10 +87,12 @@ public class Q076_Minimum_Window_Substring {
         int[] tHash = new int[256];
         int tDistinctCharCount = 0;
         
-        for(char c : t.toCharArray()) {
+        for (char c : t.toCharArray()) 
+        {
             tHash[c]++;
             
-            if(tHash[c] == 1) {
+            if(tHash[c] == 1) 
+            {
                 tDistinctCharCount++;
             }
         }
@@ -87,21 +103,26 @@ public class Q076_Minimum_Window_Substring {
         int minLen = Integer.MAX_VALUE;
         int startPos = 0;
         
-        for(int back = 0; back < len; back++) {
-            while(front < len && curCount < tDistinctCharCount) {
+        for (int back = 0; back < len; back++) 
+        {
+            while (front < len && curCount < tDistinctCharCount) 
+            {
                 char c = s.charAt(front++);
                 
-                if(++sHash[c] == tHash[c]) {
+                if (++sHash[c] == tHash[c]) 
+                {
                     curCount++;
                 }
             }
             
-            if(curCount == tDistinctCharCount && minLen > front - back) {
+            if (curCount == tDistinctCharCount && minLen > front - back) 
+            {
                 minLen = front - back;
                 startPos = back;
             }
             
-            if(sHash[s.charAt(back)]-- == tHash[s.charAt(back)]) {
+            if (sHash[s.charAt(back)]-- == tHash[s.charAt(back)]) 
+            {
                 curCount--;
             }
         }

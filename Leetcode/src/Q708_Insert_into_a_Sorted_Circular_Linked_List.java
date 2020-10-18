@@ -37,8 +37,10 @@ Constraints:
 -10^6 <= Node.val <= 10^6
 -10^6 <= insertVal <= 10^6
  */
-public class Q708_Insert_into_a_Sorted_Circular_Linked_List {
-	public Node insert(Node head, int insertVal) {
+public class Q708_Insert_into_a_Sorted_Circular_Linked_List 
+{
+	public Node insert(Node head, int insertVal) 
+	{
         Node node = new Node(insertVal);
         
         if (head == null)
@@ -66,7 +68,8 @@ public class Q708_Insert_into_a_Sorted_Circular_Linked_List {
         return head;
     }
 	
-	class Node {
+	class Node 
+	{
 	    public int val;
 	    public Node next;
 

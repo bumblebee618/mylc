@@ -1,0 +1,89 @@
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Data_Structure_HashMapImpl 
+{
+	private int capacity = 0;
+	private int usage = 0;
+	List<Tuple>[] lists;
+	
+	private int base = 33;
+	
+	public Data_Structure_HashMapImpl(int initCapacity)
+	{
+		this.capacity = initCapacity;
+		lists = new List[capacity];
+	}
+	
+	public boolean containsKey(int key)
+	{
+		int pos = key % base;
+		
+		if (lists[pos] == null)
+		{
+			return false;
+		}
+		
+		int start = 0;
+		
+		while (start < lists[pos].size())
+		{
+			if (lists[pos].get(start).key == key)
+			{
+				return true;
+			}
+			else
+			{
+				start++;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void put(int key, int value)
+	{
+		int pos = key % base;
+		
+		if (lists[pos] == null)
+		{
+			lists[pos] = new ArrayList<>();
+		}
+		
+		int start = 0;
+		
+		while (start < lists[pos].size())
+		{
+			if (lists[pos].get(start).key == key)
+			{
+				lists[pos].get(start).value = value;
+				return;
+			}
+			else
+			{
+				start++;
+			}
+		}
+		
+		lists[pos].add(new Tuple(key, value));
+	}
+	
+	private void rehash()
+	{
+		
+	}
+}
+
+class Tuple
+{
+	public int key;
+	public int value;
+	
+	public Tuple(int k, int v)
+	{
+		key = k;
+		value = v;
+	}
+}

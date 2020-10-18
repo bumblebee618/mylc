@@ -1,8 +1,21 @@
+/***
+ * 
+ * @author jackie
+ * Reverse a linked list from position m to n. Do it in one-pass.
+
+Note: 1 ≤ m ≤ n ≤ length of list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+
+ */
 
 public class Q092_Reverse_Linked_List_II {
 	// solution 1
 	public ListNode reverseBetween(ListNode head, int m, int n) 
-    {
+	{
         if(head == null || head.next == null || n - m <= 0) 
         {
             return head;
@@ -10,34 +23,43 @@ public class Q092_Reverse_Linked_List_II {
         
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        
         ListNode start = dummy;
         ListNode end = dummy;
+        ListNode m_node = null;
+        ListNode n_node = null;
         
-        ListNode m_node = dummy;
-        ListNode n_node = dummy;
-        
-        for (int i = 0; i < m - 1; i++) 
+        for (int i = 0; i < m-1 && start != null; i++)
         {
             start = start.next;
         }
         
+        if (start == null)
+        {
+            return head;
+        }
+        
         m_node = start.next;
         
-        for (int i = 0; i < n; i++) 
+        for (int i = 0; i < n && end != null; i++)
         {
             end = end.next;
         }
         
+        if (end == null)
+        {
+            return head;
+        }
+        
         n_node = end;
         end = end.next;
+        n_node.next = null;
         start.next = reverseList(m_node, end);
         return dummy.next;
     }
     
     private ListNode reverseList(ListNode head, ListNode tail) 
     {
-        if (head == tail || head.next == tail) 
+        if (head == null || head.next == null) 
         {
             return head;
         }
@@ -46,7 +68,7 @@ public class Q092_Reverse_Linked_List_II {
         ListNode curNext = head.next;
         ListNode curNextNext = head.next.next;
         
-        while (curNextNext != tail) 
+        while (curNextNext != null) 
         {
             curNext.next = current;
             current = curNext;
@@ -58,6 +80,9 @@ public class Q092_Reverse_Linked_List_II {
         head.next = tail;
         return curNext;
     }
+    
+    
+    
 	
     
     

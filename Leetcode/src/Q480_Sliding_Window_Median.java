@@ -38,8 +38,10 @@ public class Q480_Sliding_Window_Median {
 	private Double median = null;
     private Queue<Double> maxHeap;
     private Queue<Double> minHeap;
+    private int k = 0;
     
-    public double[] medianSlidingWindow(int[] nums, int k) {
+    public double[] medianSlidingWindow(int[] nums, int k) 
+    {
         if (nums == null || nums.length == 0 || k <= 0)
         {
             return new double[0];
@@ -53,6 +55,7 @@ public class Q480_Sliding_Window_Median {
         maxHeap = new PriorityQueue<>();
         minHeap = new PriorityQueue<>();
         double[] result = new double[size-k+1];
+        this.k = k;
         int index = 0;
         
         for (int i = 0; i < size; i++)
@@ -66,7 +69,7 @@ public class Q480_Sliding_Window_Median {
             
             if (i >= k-1)
             {
-                result[index++] = getMedian(k);
+                result[index++] = getMedian();
             }
         }
         
@@ -125,7 +128,7 @@ public class Q480_Sliding_Window_Median {
         }
     }
     
-    private double getMedian(int k)
+    private double getMedian()
     {
         if (k % 2 == 1)
         {
@@ -137,6 +140,10 @@ public class Q480_Sliding_Window_Median {
             return (median + num) / 2.0;
         }
     }
+    
+    
+    
+    
 	
 
 

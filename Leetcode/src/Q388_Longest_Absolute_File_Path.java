@@ -36,43 +36,52 @@ Notice that a/aa/aaa/file1.txt is not the longest file path, if there is another
  * 
  * */
 
-public class Q388_Longest_Absolute_File_Path {
-	public int lengthLongestPath(String input) {
-        if(input == null || input.length() == 0){
+public class Q388_Longest_Absolute_File_Path 
+{
+	public int lengthLongestPath(String input) 
+	{
+        if (input == null || input.length() == 0)
+        {
             return 0;
         }
         
         String[] array = input.split("\n");
         
-        if(array.length == 0){
+        if (array.length == 0)
+        {
             return 0;
         }
         
         int curLen = 0;
         int maxLen = 0;
-        Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();  // use stack to keep length of sub-path for each level
         
-        for(String str : array){
+        for (String str : array)
+        {
             int level = getLevel(str);
             
-            while(stack.size() > level){     // find the parent, using ">" ！！！
+            while (stack.size() > level)     // find the parent, using ">" ！！！
+            {
                 curLen -= stack.pop();
             }
             
-            int len = str.replaceAll("\t", "").length() + 1;   // add the "/"
-            curLen += len;
+            int subLen = str.replaceAll("\t", "").length() + 1;   // add the "/"
+            curLen += subLen;
             
-            if(str.contains(".")){
+            // if this is the file which is the last level
+            if (str.contains("."))
+            {
                 maxLen = Math.max(maxLen, curLen - 1);        // delete the first "/"
             }
             
-            stack.push(len);
+            stack.push(subLen);
         }
         
         return maxLen;
     }
     
-    public int getLevel(String str){
+    private int getLevel(String str)
+    {
         String newStr = str.replaceAll("\t", "");
         return str.length() - newStr.length();
     }

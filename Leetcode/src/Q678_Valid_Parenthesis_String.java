@@ -59,7 +59,7 @@ public class Q678_Valid_Parenthesis_String {
                     continue;
                 }
                 
-                for (int k = start+1; k < end-1; k++)
+                for (int k = start; k < end; k++)    // k可以从start开始，因为当k为*时，dp[start][start] = true
                 {
                     if (dp[start][k] && dp[k+1][end])
                     {

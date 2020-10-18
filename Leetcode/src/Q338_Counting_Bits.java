@@ -19,8 +19,10 @@ in c++ or in any other language.
  * */
 
 
-public class Q338_Counting_Bits {
-	public int[] countBits(int num) {
+public class Q338_Counting_Bits 
+{
+	public int[] countBits(int num) 
+	{
         if (num <= 0)
         {
             return new int[] {0};

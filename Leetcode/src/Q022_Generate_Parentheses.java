@@ -19,7 +19,8 @@ For example, given n = 3, a solution set is:
 
 public class Q022_Generate_Parentheses {
 	// solution 1: using backtrack
-	public List<String> generateParenthesis(int n) {
+	public List<String> generateParenthesis(int n) 
+	{
         List<String> result = new LinkedList<>();
         
         if (n <= 0)
@@ -27,11 +28,11 @@ public class Q022_Generate_Parentheses {
             return result;
         }
         
-        generationHelper(result, "", 0, 0, n);
+        backtrack(result, "", 0, 0, n);
         return result;
     }
     
-    private void generationHelper(List<String> result, String solution, int open, int close, int n)
+    private void backtrack(List<String> result, String solution, int open, int close, int n)
     {
         if (solution.length() == n*2)
         {
@@ -41,13 +42,13 @@ public class Q022_Generate_Parentheses {
         
         if (open < n)
         {
-            generationHelper(result, solution + "(", open+1, close, n);
+            backtrack(result, solution + "(", open+1, close, n);
         }
         
         // 注意不能用 else
         if (close < open)  
         {
-            generationHelper(result, solution + ")", open, close+1, n);
+            backtrack(result, solution + ")", open, close+1, n);
         }
     }
 

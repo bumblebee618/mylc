@@ -32,6 +32,7 @@ public class Q788_Rotated_Digits {
             { 
                 int digit = t % 10;
         
+                // just need to contains any of below digit to become a good number
                 if (digit == 2 || digit == 5 || digit == 6 || digit == 9) 
                 {
                     isGoodNum = true;

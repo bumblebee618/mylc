@@ -34,7 +34,7 @@ public class Q025_Reverse_Nodes_in_kGroup {
         dummy.next = head;
         ListNode curNode = dummy;
         ListNode front = dummy;
-        ListNode nextFront = null;
+        ListNode curTail = null;
         
         while (front != null)
         {
@@ -51,18 +51,19 @@ public class Q025_Reverse_Nodes_in_kGroup {
                 break;
             }
             
-            ListNode curNodeNext = curNode.next;
-            nextFront = front.next;
-            curNode.next = reverseList(curNodeNext, nextFront);
-            curNode = curNodeNext;
+            ListNode curHead = curNode.next;
+            curTail = front.next;
+            curNode.next = reverseList(curHead, curTail);
+            curNode = curHead;
             front = curNode;             // 每次front 都是从 node开始 ！！！
         }
         
         return dummy.next;
     }
     
-    private ListNode reverseList(ListNode head, ListNode tail){     
-        if (head == null || head.next == tail)
+    private ListNode reverseList(ListNode head, ListNode tail)
+    {     
+        if (head == tail || head.next == tail)
         {
             return head;
         }

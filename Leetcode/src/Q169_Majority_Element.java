@@ -12,8 +12,10 @@ public class Q169_Majority_Element {
     // 		does not contain major element
 	
 	// solution 1: time complexity is O(n);
-	public int majorityElement(int[] nums) {
-		if(nums == null || nums.length == 0){
+	public int majorityElement(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
             return 0;
         }
         
@@ -21,21 +23,27 @@ public class Q169_Majority_Element {
         int recordNum = nums[0];
         int count = 0;
         
-        for(int i = 0; i < len; i++){
-            if(recordNum == nums[i]){
+        for (int i = 0; i < len; i++)
+        {
+            if (recordNum == nums[i])
+            {
                 count++;
-            } else {
-                count--;
             }
-            
-            if(count == 0){
+            else if (count == 0)
+            {
                 recordNum = nums[i];
-                count++;
+                count = 1;
+            }
+            else 
+            {
+                count--;
             }
         }
         
         return recordNum;
     }
+	
+	
 	
 	
 	// solution 2: using sort, time complexity is O(nlogn)

@@ -51,16 +51,16 @@ public class Q1528_Shuffle_String {
         
         int size = s.length();
         char[] letters = new char[size];
-        boolean[] flag = new boolean[size];
+        boolean[] visited = new boolean[size];
         
         for (int i = 0; i < size; i++)
         {
-            if (indices[i] >= size || flag[indices[i]])
+            if (indices[i] >= size || visited[indices[i]])
             {
                 return "";
             }
             
-            flag[indices[i]] = true;
+            visited[indices[i]] = true;
             letters[indices[i]] = s.charAt(i);
         }
         
