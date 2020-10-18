@@ -96,8 +96,9 @@ public class Q529_Minesweeper {
         
         if (board[x][y] == 'E')
         {
-            int count = 0;
+            int mineCount = 0;
             
+            // calculate mine number
             for (int i = 0; i < dx.length; i++)
             {
                 int newX = x + dx[i];
@@ -107,14 +108,14 @@ public class Q529_Minesweeper {
                 {
                     if (board[newX][newY] == 'M')
                     {
-                        count++;
+                        mineCount++;
                     }
                 }
             }
             
-            if (count > 0)
+            if (mineCount > 0)
             {
-                board[x][y] = (char) (count + '0');
+                board[x][y] = (char) (mineCount + '0');
             }
             else
             {

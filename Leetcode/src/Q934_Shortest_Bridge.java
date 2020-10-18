@@ -48,14 +48,10 @@ public class Q934_Shortest_Bridge {
         Queue<int[]> queue = new LinkedList<>();
         boolean found = false;
         
+        // dfs
         for (int i = 0; i < row; i++)
         {
-            if (found)
-            {
-                break;
-            }
-            
-            for (int j = 0; j < row; j++)
+            for (int j = 0; j < col; j++)
             {
                 if (nums[i][j] == 1)
                 {
@@ -63,6 +59,11 @@ public class Q934_Shortest_Bridge {
                     found = true;
                     break;
                 }
+            }
+            
+            if (found)
+            {
+                break;
             }
         }
         

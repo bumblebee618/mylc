@@ -59,9 +59,6 @@ public class Q694_Number_of_Distinct_Islands {
                     List<Integer> shape = new LinkedList<>();
                     dfs(x, y, 0, shape);
                     
-                    // for test
-                    // printList(shape);
-                    
                     if (!shape.isEmpty()) 
                     {
                         shapes.add(shape);
@@ -73,7 +70,8 @@ public class Q694_Number_of_Distinct_Islands {
         return shapes.size();
     }
     
-    private void dfs(int x, int y, int direct, List<Integer> shape) {
+    private void dfs(int x, int y, int direct, List<Integer> shape) 
+    {
         visited[x][y] = true;
         shape.add(direct);
         
@@ -88,6 +86,7 @@ public class Q694_Number_of_Distinct_Islands {
             }
         }
         
+        // tail
         shape.add(0);
     }
     

@@ -132,14 +132,11 @@ public class Q305_Number_of_Islands_II {
                 parent = father.get(parent);
             }
             
-            int tempParent = -1;
-            int fa = x;
-            
-            while (fa != father.get(fa)) 
+            while (x != father.get(x)) 
             {
-                tempParent = father.get(fa);
-                father.put(fa, parent);
-                fa = tempParent;
+                int tempParent = father.get(x);
+                father.put(x, parent);
+                x = tempParent;
             }
             
             return parent;

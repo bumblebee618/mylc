@@ -62,7 +62,8 @@ public class Q505_The_Maze_II {
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+    public int shortestDistance(int[][] maze, int[] start, int[] destination) 
+    {
         if (maze == null || maze.length == 0 || maze[0].length == 0)
         {
             return -1;
@@ -100,7 +101,8 @@ public class Q505_The_Maze_II {
                 int newY = current[1] + dy[i];
                 int count = 0;
                 
-                while (newX >= 0 && newY >= 0 && newX < row && newY < col && maze[newX][newY] == 0) {
+                while (newX >= 0 && newY >= 0 && newX < row && newY < col && maze[newX][newY] == 0) 
+                {
                     newX += dx[i];
                     newY += dy[i];
                     count++;
@@ -111,7 +113,7 @@ public class Q505_The_Maze_II {
                 newY -= dy[i];
                 
                 // update distance
-                if (distance[current[0]][current[1]] + count < distance[newX][newY]) 
+                if (distance[newX][newY] > distance[current[0]][current[1]] + count) 
                 {
                     distance[newX][newY] = distance[current[0]][current[1]] + count;
                     queue.add(new int[] {newX, newY});

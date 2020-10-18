@@ -52,7 +52,8 @@ There exists some node in the given binary tree for which node.val == k.
  * 
  */
 public class Q742_Closest_Leaf_in_a_Binary_Tree {
-	public int findClosestLeaf(TreeNode root, int k) {
+	public int findClosestLeaf(TreeNode root, int k) 
+	{
         if (root == null)
         {
             return -1;
