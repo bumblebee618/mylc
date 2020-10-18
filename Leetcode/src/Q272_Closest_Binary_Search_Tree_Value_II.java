@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -20,25 +21,24 @@ Follow up:
 
 public class Q272_Closest_Binary_Search_Tree_Value_II {
 	// solution 1:  using heap, time complexity O(nlogk + klogk)
-	public List<Integer> closestKValues(TreeNode root, double target, int k) {
-        List<Integer> ans = new ArrayList<>();
+	public List<Integer> closestKValues(TreeNode root, double target, int k) 
+    {
+        List<Integer> result = new LinkedList<>();
         
-        if(root == null || k <= 0) {
-            return ans;
+        if(root == null || k <= 0) 
+        {
+            return result;
         }
         
-        Queue<Integer> heap = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer value1, Integer value2) {
-                return -Double.compare(Math.abs((double) value1 - target), Math.abs((double) value2 - target));
-            }
-        });
+        Queue<Integer> heap = new PriorityQueue<Integer>(k, (a, b) -> Double.compare(Math.abs((double) b - target), Math.abs((double) a - target)));
         
         Stack<TreeNode> stack = new Stack<>();
         
         // inorder traversal, this part total time is O(n*logk)
-        while(root != null || !stack.isEmpty()) {
-            while(root != null) {
+        while (root != null || !stack.isEmpty()) 
+        {
+            while (root != null) 
+            {
                 stack.push(root);
                 root = root.left;
             }
@@ -46,18 +46,20 @@ public class Q272_Closest_Binary_Search_Tree_Value_II {
             root = stack.pop();
             heap.offer(root.val);   // O(logk)
             
-            if(heap.size() > k) {     // O(logk)
+            if (heap.size() > k)   // O(logk)
+            {     
                 heap.poll();
             }
             
             root = root.right;
         }
         
-        while(!heap.isEmpty()) {      // O(klogk)
-            ans.add(0, heap.poll());
+        while (!heap.isEmpty())       // O(klogk)
+        {
+            result.add(0, heap.poll());
         }
         
-        return ans;
+        return result;
     }
 	
     

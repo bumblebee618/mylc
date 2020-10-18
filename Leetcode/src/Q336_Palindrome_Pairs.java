@@ -28,25 +28,31 @@ public class Q336_Palindrome_Pairs {
 	public List<List<Integer>> palindromePairs(String[] words) {
         List<List<Integer>> ans = new ArrayList<>();
         
-        if(words == null || words.length == 0){
+        if (words == null || words.length == 0)
+        {
             return ans;
         }
         
         Map<String, Integer> map = new HashMap<String, Integer>();
         
-        for(int i = 0; i < words.length; i++){
+        for (int i = 0; i < words.length; i++)
+        {
             map.put(words[i], i);
         }
         
-        for(int i = 0; i < words.length; i++){
-            for(int j = 0; j <= words[i].length(); j++){   // j从0开始，到words[i]的长度，且有等于号 ！！！ test case: ["abcd","dcba","lls","s","sssll"]
-                String part1 = words[i].substring(0, j);
+        for (int i = 0; i < words.length; i++)
+        {
+            for (int j = 0; j <= words[i].length(); j++)   // j从0开始，到words[i]的长度，且有等于号 ！！！ test case: ["abcd","dcba","lls","s","sssll"]
+            {    
+            	String part1 = words[i].substring(0, j);
                 String part2 = words[i].substring(j);
                 
-                if(isPalindrome(part1)){
+                if (isPalindrome(part1))
+                {
                     String part2_reverse = new StringBuilder(part2).reverse().toString();
                     
-                    if(map.containsKey(part2_reverse) && map.get(part2_reverse) != i){
+                    if (map.containsKey(part2_reverse) && map.get(part2_reverse) != i)
+                    {
                         List<Integer> list = new ArrayList<Integer>();
                         list.add(map.get(part2_reverse));
                         list.add(i);
@@ -54,10 +60,12 @@ public class Q336_Palindrome_Pairs {
                     }
                 }
                 
-                if(isPalindrome(part2) && part2.length() != 0){  // 必须有 part2.length() != 0, 防止test case ["a",""]被重复计算2次 ！！！
-                    String part1_reverse = new StringBuffer(part1).reverse().toString();
+                if (isPalindrome(part2) && part2.length() != 0)  // 必须有 part2.length() != 0, 防止test case ["a",""]被重复计算2次 ！！！
+                {
+                    String part1_reverse = new StringBuilder(part1).reverse().toString();
                     
-                    if(map.containsKey(part1_reverse) && map.get(part1_reverse) != i){  
+                    if (map.containsKey(part1_reverse) && map.get(part1_reverse) != i)
+                    {  
                         List<Integer> list = new ArrayList<Integer>();
                         list.add(i);
                         list.add(map.get(part1_reverse));
@@ -70,7 +78,7 @@ public class Q336_Palindrome_Pairs {
         return ans;
     }
     
-	public boolean isPalindrome(String str) {
+	private boolean isPalindrome(String str) {
         int left = 0, right = str.length() - 1;
         
         while(left <= right) {

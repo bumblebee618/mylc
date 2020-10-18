@@ -53,7 +53,6 @@ public class Q030_Substring_with_Concatenation_of_All_Words {
             {
                 int index = start + i*wordLen;
                 String nextWord = s.substring(index, index+wordLen);
-                index += wordLen;
                 
                 if (!map.containsKey(nextWord))
                 {

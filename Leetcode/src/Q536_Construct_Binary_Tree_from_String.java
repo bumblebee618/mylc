@@ -96,14 +96,13 @@ public class Q536_Construct_Binary_Tree_from_String {
         return root;
     }
     
-    private int findPos(String s, int start)
+	private int findPos(String s, int start)
     {
         int count = 0;
-        int pos = start;
         
-        while (pos < s.length())
+        for (int i = start; i < s.length(); i++)
         {
-            char c = s.charAt(pos);
+            char c = s.charAt(i);
             
             if (c == '(')
             {
@@ -116,15 +115,11 @@ public class Q536_Construct_Binary_Tree_from_String {
             
             if (count == 0)
             {
-                return pos;
+                return i;
             }
             else if (count < 0)
             {
                 return -1;
-            }
-            else
-            {
-                pos++;
             }
         }
         

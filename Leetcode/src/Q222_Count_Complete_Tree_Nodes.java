@@ -3,34 +3,42 @@ public class Q222_Count_Complete_Tree_Nodes {
 	 * 按左右子树进行划分，斜着拆分 
 	 * 
 	 *********************************/
-	// by other, simple.
-	
-	public int countNodes(TreeNode root) {
-        if(root == null){
+	// solution 1:
+	public int countNodes(TreeNode root) 
+	{
+        if (root == null)
+        {
             return 0;
         }
         
         int count = 0;
         int treeHeight = getHeight(root);
         
-        while(root != null){
+        while (root != null)
+        {
             int rightHeight = getHeight(root.right); // compare the height of the whole tree with right subtree
             
-            if(rightHeight == treeHeight - 1){       // Left is full and height of left is h - 1 and has h levels. Add left plus root, 2^h - 1 + 1.
-                count += (1 << treeHeight - 1);      // 2^(h) - 1 + 1: count the root node.
+            if (rightHeight == treeHeight - 1) // Left is full and height of left is h - 1 and has h levels. Add left plus root, 2^h - 1 + 1.
+            {       
+                count += 1 << (treeHeight - 1);      // 2^(h) - 1 + 1: count the root node.
                 root = root.right;
-            } else {                                 // Right is full and height of right is h - 2 and has h - 1 levels. Add right plus root 2^(h-1) - 1 + 1.
+            } 
+            else 
+            {                                 // Right is full and height of right is h - 2 and has h - 1 levels. Add right plus root 2^(h-1) - 1 + 1.
                 count += (1 << rightHeight);
                 root = root.left;
             }
+            
             treeHeight--;                            // 需要注意每次循环里h要--
         }
         
         return count;
     }
 	
-	public int getHeight(TreeNode node){
-        if(node == null){
+	private int getHeight(TreeNode node)
+	{
+        if (node == null)
+        {
             return 0;
         }
         
@@ -41,7 +49,7 @@ public class Q222_Count_Complete_Tree_Nodes {
 	/****************************************
 	 * 先算level 1到 last-1，再算last level *
 	 ****************************************/
-	// by other, fast
+	// solution 2:
 	public int countNodes2(TreeNode root) {
 		if (root == null)
 			return 0;

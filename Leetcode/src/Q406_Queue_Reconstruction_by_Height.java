@@ -16,12 +16,16 @@ Example
  * */
 
 public class Q406_Queue_Reconstruction_by_Height {
-	public int[][] reconstructQueue(int[][] people) {
+	public int[][] reconstructQueue(int[][] people) 
+	{
         if (people == null || people.length == 0 || people[0].length != 2)
         {
             return people;
         }
         
+        Arrays.sort(people, (a, b) -> a[0] != b[0] ? b[0]-a[0] : a[1]-b[1]);
+        
+        /***
         Arrays.sort(people, new Comparator<int[]>() 
         {
             @Override
@@ -30,18 +34,19 @@ public class Q406_Queue_Reconstruction_by_Height {
             	return (nums1[0] != nums2[0]) ? nums2[0] - nums1[0] : nums1[1] - nums2[1];
             }
         });
+        ***/
         
         List<int[]> result = new ArrayList<>();
         
-        for(int[] elem : people) 
+        // like insert sort
+        for (int[] elem : people) 
         {
-            if(elem[1] >= result.size()) 
+        	if (elem[1] > result.size())
             {
-                if (elem[1] > result.size())
-                {
-                    return new int[0][0];
-                }
-                
+                return new int[0][0];
+            }
+        	else if (elem[1] == result.size()) 
+            {
                 result.add(elem);
             }
             else 

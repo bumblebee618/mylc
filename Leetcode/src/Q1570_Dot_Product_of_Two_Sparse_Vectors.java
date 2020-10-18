@@ -66,7 +66,7 @@ public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
         {
             return 0;
         }
-        else if (map.size() > vec.map.size())
+        else if (map.size() > vec.map.size()) // 防止current map过大，优化运算时间
         {
             return vec.dotProduct(this);
         }

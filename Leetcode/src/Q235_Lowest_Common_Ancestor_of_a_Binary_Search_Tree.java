@@ -19,7 +19,9 @@ since a node can be a descendant of itself according to the LCA definition.
  **/
 
 public class Q235_Lowest_Common_Ancestor_of_a_Binary_Search_Tree {
-	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+	// solution 1:
+	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) 
+	{
         if (root == null || p == null || q == null)
         {
             return null;
@@ -44,20 +46,35 @@ public class Q235_Lowest_Common_Ancestor_of_a_Binary_Search_Tree {
         return root;
     }
 	
-	public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
-        if(root == null){
+	
+	
+	
+	// solution 2:
+	public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) 
+	{
+        if (root == null)
+        {
             return root; 
-        } else if(p == null){
+        } 
+        else if (p == null)
+        {
             return q;
-        } else if(q == null){
+        } 
+        else if (q == null)
+        {
             return p;
         }
         
-        if(root.val > p.val && root.val > q.val){
+        if (root.val > p.val && root.val > q.val)
+        {
             return lowestCommonAncestor2(root.left, p, q);
-        } else if(root.val < p.val && root.val < q.val){
+        } 
+        else if (root.val < p.val && root.val < q.val)
+        {
             return lowestCommonAncestor2(root.right, p, q);
-        } else {
+        } 
+        else 
+        {
             return root;
         }
     }

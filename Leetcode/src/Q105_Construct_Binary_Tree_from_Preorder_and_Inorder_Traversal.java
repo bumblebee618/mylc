@@ -10,21 +10,27 @@ Note:
  * 
  * */
 
-public class Q105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal {
-	public TreeNode buildTree(int[] preorder, int[] inorder) {
+public class Q105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal 
+{
+	public TreeNode buildTree(int[] preorder, int[] inorder) 
+	{
 	    Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
 
-	    for(int i = 0; i < inorder.length; i++) {
+	    for(int i = 0; i < inorder.length; i++) 
+	    {
 	        inMap.put(inorder[i], i);
 	    }
 
 	    return buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inMap);
 	}
 
-	public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inMap) {
-	    if(preStart > preEnd || inStart > inEnd) {   // 注意退出条件！！！
+    private TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inMap) 
+    {
+	    if (preStart > preEnd || inStart > inEnd)   // 注意退出条件！！！
+	    {
 	    	return null;
 	    }
+	    
 	    // root表示当前子树的根结点
 	    TreeNode root = new TreeNode(preorder[preStart]);
 	    int inRoot = inMap.get(root.val);
@@ -41,7 +47,8 @@ public class Q105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal {
 	
 	
 	/********** main function **************/
-	public static void main(String[] args){
+	public static void main(String[] args)
+	{
 		Q105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal t = new Q105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal();
     	int[] preorder = {1,2,3};
 		int[] inorder = {1,2,3};

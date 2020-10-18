@@ -90,8 +90,48 @@ public class Q939_Minimum_Area_Rectangle {
     }
     
     
-    // solution 2
-    public int minAreaRect2(int[][] points) {
+    // solution 2:
+    public int minAreaRect2(int[][] points) 
+    {
+        if (points == null || points.length == 0 || points[0].length == 0)
+        {
+            return 0;
+        }
+        
+        Map<String, int[]> map = new HashMap<>();
+        int result = Integer.MAX_VALUE;
+        
+        for(int[] point : points)
+        {
+            map.put(String.format("%s,%s", point[0],point[1]), point);
+        }
+ 
+        for(int[] p1 : map.values())
+        {
+            for(int[] p2 : map.values())
+            {
+                if(p1[0] == p2[0] || p1[1] == p2[1]) 
+                {
+                    continue;
+                }
+                
+                String p3Str = String.format("%s,%s", p1[0],p2[1]);
+                String p4Str = String.format("%s,%s", p2[0],p1[1]);
+                
+                if(map.containsKey(p3Str) && map.containsKey(p4Str))
+                {
+                    int area = Math.abs(p1[0]-p2[0]) * Math.abs(p1[1]-p2[1]);
+                    result = Math.min(area, result);
+                }
+            }
+        }
+
+        return result == Integer.MAX_VALUE ? 0 : result;
+    }
+    
+    
+    // solution 3
+    public int minAreaRect3(int[][] points) {
         if (points == null || points.length == 0 || points[0].length == 0)
         {
             return 0;
