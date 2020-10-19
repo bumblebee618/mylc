@@ -10,7 +10,7 @@ import Exception.SoldOutException;
 public class VendingMachineImpl implements VendingMachine 
 {   
 	// vending machine status
-    private Inventory<Coin> cashInventory;
+    private Inventory<Coin> coinInventory;
     private Inventory<Item> itemInventory;  
     private long totalSales;
     
@@ -28,13 +28,13 @@ public class VendingMachineImpl implements VendingMachine
    
     private void initInventory()
     {   
-    	cashInventory = new Inventory<Coin>();
+    	coinInventory = new Inventory<Coin>();
     	itemInventory = new Inventory<Item>(); 
     	
         //initialize machine with 5 coins of each denomination and 5 cans of each Item       
         for (Coin coin : Coin.values())
         {
-            cashInventory.put(coin, 5);
+            coinInventory.put(coin, 5);
         }
        
         for(Item item : Item.values())
@@ -61,7 +61,7 @@ public class VendingMachineImpl implements VendingMachine
    public long insertCoin(Coin coin) 
    {
        currentBalance = currentBalance + coin.getDenomination();
-       cashInventory.add(coin);
+       coinInventory.add(coin);
        return currentBalance;
    }
 
@@ -87,7 +87,7 @@ public class VendingMachineImpl implements VendingMachine
    @Override
    public void reset()
    {
-       cashInventory.clear();
+       coinInventory.clear();
        itemInventory.clear();
        totalSales = 0;
        currentItem = null;
@@ -137,22 +137,22 @@ public class VendingMachineImpl implements VendingMachine
         
         while (balance > 0)
         {
-            if (balance >= Coin.QUARTER.getDenomination() && cashInventory.hasItem(Coin.QUARTER))
+            if (balance >= Coin.QUARTER.getDenomination() && coinInventory.hasItem(Coin.QUARTER))
             {
                 changes.add(Coin.QUARTER);
                 balance = balance - Coin.QUARTER.getDenomination();
             }
-            else if (balance >= Coin.DIME.getDenomination() && cashInventory.hasItem(Coin.DIME)) 
+            else if (balance >= Coin.DIME.getDenomination() && coinInventory.hasItem(Coin.DIME)) 
             {
                 changes.add(Coin.DIME);
                 balance = balance - Coin.DIME.getDenomination();
             }
-            else if (balance >= Coin.NICKLE.getDenomination() && cashInventory.hasItem(Coin.NICKLE)) 
+            else if (balance >= Coin.NICKLE.getDenomination() && coinInventory.hasItem(Coin.NICKLE)) 
             {
                 changes.add(Coin.NICKLE);
                 balance = balance - Coin.NICKLE.getDenomination();
             }
-            else if (balance >= Coin.PENNY.getDenomination() && cashInventory.hasItem(Coin.PENNY)) 
+            else if (balance >= Coin.PENNY.getDenomination() && coinInventory.hasItem(Coin.PENNY)) 
             {
                 changes.add(Coin.PENNY);
                 balance = balance - Coin.PENNY.getDenomination();
@@ -186,7 +186,7 @@ public class VendingMachineImpl implements VendingMachine
     {
         for (Coin c : change)
         {
-            cashInventory.deduct(c);
+            coinInventory.deduct(c);
         }
     }
    
@@ -199,7 +199,7 @@ public class VendingMachineImpl implements VendingMachine
     {
         System.out.println("Total Sales : " + totalSales);
         System.out.println("Current Item Inventory : " + itemInventory);
-        System.out.println("Current Cash Inventory : " + cashInventory);
+        System.out.println("Current Cash Inventory : " + coinInventory);
     } 
 }
 

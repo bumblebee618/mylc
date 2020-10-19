@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;cashInventory&apos; in &apos;VendingMachineImpl&apos; to &apos;coinInventory&apos;&#x0A;- Original project: &apos;Leetcode_OOD_VendingMachine&apos;&#x0A;- Original element: &apos;VendingMachineImpl.cashInventory&apos;&#x0A;- Renamed element: &apos;VendingMachineImpl.coinInventory&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;cashInventory&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;{VendingMachineImpl.java[VendingMachineImpl^cashInventory" name="coinInventory" references="true" setter="false" stamp="1603061399871" textual="true" version="1.0"/>
+</session>

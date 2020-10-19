@@ -44,7 +44,7 @@ public class Pool
 		}
 	}
 	
-	public boolean isFishHealthy(String fishId)
+	public boolean isFishHealthy(int fishId)
 	{
 		if (!fishPool.containsKey(fishId))
 		{
@@ -81,13 +81,16 @@ public class Pool
 		}
 	}
 	
-	public void removeFishFromPool(int fishId)
+	public boolean removeFishFromPool(int fishId)
 	{
 		if (fishPool.containsKey(fishId))
 		{
 			fishPool.remove(fishId);
 			fishList.remove(fishId);
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public String getPoolId() 
@@ -100,9 +103,9 @@ public class Pool
 		return temperature;
 	}
 	
-	public void setTemperature(double temp, boolean isHeat) 
+	public void setTemperature(double temp) 
 	{
-		temperature = isHeat ? temperature + temp : temperature - temp;
+		temperature = temp;
 	}
 
 	private Fish pickupFish()

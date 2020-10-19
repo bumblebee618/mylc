@@ -5,7 +5,7 @@ public class Car_Sedan extends Car
 	public Car_Sedan(String id)
 	{
 		this.id = id;
-		rate = 100;
+		rentalRate = 100;
 		type = CarType.SEDAN;
 		reserveDates = new HashSet<>();
 	}

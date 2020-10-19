@@ -1,4 +1,4 @@
 public enum CasherType 
 {
-	Normal(), Discount();
+	NORMAL(), DISCOUNT();
 }

@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class RentalManagerImpl implements RentalManager
 {
@@ -41,7 +42,7 @@ public class RentalManagerImpl implements RentalManager
 			CarType type, 
 			List<Integer> reserveDates)
 	{
-		RentalResponse<UserProfile> response = accountRegistration(userId, driverLicense, creditCard);
+		RentalResponse<UserProfile> response = findOrCreateUser(userId, driverLicense, creditCard);
 		
 		if (response.getStatus() == Status.FAIL)
 		{
@@ -66,7 +67,7 @@ public class RentalManagerImpl implements RentalManager
 			CarType type, 
 			List<Integer> reserveDates)
 	{
-		RentalResponse<UserProfile> response = accountRegistration(userId, driverLicense, creditCard);
+		RentalResponse<UserProfile> response = findOrCreateUser(userId, driverLicense, creditCard);
 		
 		if (response.getStatus() == Status.FAIL)
 		{
@@ -118,12 +119,12 @@ public class RentalManagerImpl implements RentalManager
 		else
 		{
 			orderIdToOrder.remove(orderId);
-			double totalCharge = order.getReserveDates().size() * car.getRate();
+			double totalCharge = order.getReserveDates().size() * car.getRentalRate();
 			return new RentalResponse<Double>(totalCharge, Status.SUCCEED, "");
 		}
 	}
 	
-	public RentalResponse<UserProfile> accountRegistration(String userId, String driverLicense, String creditCard)
+	public RentalResponse<UserProfile> findOrCreateUser(String userId, String driverLicense, String creditCard)
 	{
 		userIdToUser.computeIfAbsent(userId, x -> new UserProfile(userId, driverLicense, creditCard));
 		UserProfile user = userIdToUser.get(userId);
@@ -183,8 +184,9 @@ public class RentalManagerImpl implements RentalManager
 	
 	private UserOrder createOrder(UserProfile user, String carId, List<Integer> reserveDates)
 	{
-		UserOrder order = new UserOrder(user, carId, reserveDates);
-		orderIdToOrder.put(order.getOrderId(), order);
+		String orderId = "Order_"+ UUID.randomUUID().toString();
+		UserOrder order = new UserOrder(user, carId, reserveDates, orderId);
+		orderIdToOrder.put(orderId, order);
 		return order;
 	}
 }

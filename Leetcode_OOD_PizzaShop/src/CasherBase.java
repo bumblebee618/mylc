@@ -9,9 +9,9 @@ public abstract class CasherBase
 		this.pizzas = pizzas;
 	}
 	
-	public abstract double getTotalPrice();
+	public abstract double getFinalPrice();
 	
-	protected double caculatePrice(List<Pizza> pizzas)
+	protected double caculatePrice()
 	{
 		double totalPrice = 0;
 		

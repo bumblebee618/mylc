@@ -13,8 +13,8 @@ public class Z_PizzaOrderClient
 		CustomerOrder order = PizzaShopImpl.getInstance().placeOrder(userName, pizzaMap);
 		
 		System.out.println(order);
-		System.out.println("Total price: " + PizzaShopImpl.getInstance().checkPrice(order, CasherType.Normal));
-		System.out.println("Discount price: " + PizzaShopImpl.getInstance().checkPrice(order, CasherType.Discount));
+		System.out.println("Total price: " + PizzaShopImpl.getInstance().checkPrice(order, CasherType.NORMAL));
+		System.out.println("DISCOUNT price: " + PizzaShopImpl.getInstance().checkPrice(order, CasherType.DISCOUNT));
 		System.out.println(PizzaShopImpl.getInstance().checkOrder(order.getOrderId()));
 		
 		if (PizzaShopImpl.getInstance().checkOrder("123") == null)

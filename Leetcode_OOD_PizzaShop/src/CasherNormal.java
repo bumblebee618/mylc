@@ -8,8 +8,8 @@ public class CasherNormal extends CasherBase
 	}
 	
 	@Override
-	public double getTotalPrice()
+	public double getFinalPrice()
 	{
-		return caculatePrice(pizzas);
+		return caculatePrice();
 	}
 }

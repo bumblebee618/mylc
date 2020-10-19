@@ -11,8 +11,7 @@ public class ElevatorManagerImpl implements Runnable, ElevatorManager
 	
 	private static ElevatorManagerImpl instance;
 	private Elevator elevator;
-	private volatile boolean isUp;
-	
+
 	private final int maxFloor = 10;
 	private final int minFloor = 1;
 	
@@ -25,7 +24,6 @@ public class ElevatorManagerImpl implements Runnable, ElevatorManager
 		downRequestWaitingQueue = new PriorityQueue<Integer>(1, (a, b) -> b - a);
 		
 		elevator = ElevatorFactory.getElevator();
-		isUp = true;
 	}
 	
 	public static ElevatorManagerImpl getInstance()
@@ -102,7 +100,7 @@ public class ElevatorManagerImpl implements Runnable, ElevatorManager
 	
 	private void processRequest(Queue<Integer> requestQueue, boolean isUp)
 	{
-		this.isUp = isUp;
+		elevator.setUp(isUp);
 		
 		while (!requestQueue.isEmpty())
 		{
@@ -215,7 +213,7 @@ public class ElevatorManagerImpl implements Runnable, ElevatorManager
 		try 
 		{
 			Thread.sleep(time);
-			System.out.println("Move " + (isUp ? "up" : "down") + " to " + elevator.getCurrentFloor() + " floor");
+			System.out.println("Move " + (elevator.isUp() ? "up" : "down") + " to " + elevator.getCurrentFloor() + " floor");
 		} 
 		catch (InterruptedException e) 
 		{

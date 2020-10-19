@@ -48,7 +48,7 @@ public class PizzaShopImpl
 	
 	public double checkPrice(CustomerOrder order, CasherType type)
 	{
-		return CasherFactory.getBalance(type, order.getPizzas());
+		return CasherFactory.getCasher(type, order.getPizzas()).getFinalPrice();
 	} 
 	
 	public CustomerOrder checkOrder(String orderId)

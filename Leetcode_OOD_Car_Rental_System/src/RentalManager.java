@@ -15,5 +15,5 @@ public interface RentalManager
 	public RentalResponse<Double> dropOffCar(String orderId);
 	
 	// return a user profile
-	public RentalResponse<UserProfile> accountRegistration(String userId, String driverLicense, String creditCard);
+	public RentalResponse<UserProfile> findOrCreateUser(String userId, String driverLicense, String creditCard);
 }

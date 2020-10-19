@@ -4,14 +4,15 @@ import java.util.Map;
 public class PoolControllerImpl implements PoolController
 {
 	private Pool pool;
-	private static PoolControllerImpl instance; 
 	private Map<FishType, Integer> fishCapacity;
+	
+	private static PoolControllerImpl instance; 
 	
 	private PoolControllerImpl()
 	{
 		pool = new Pool("pool_1");
 		fishCapacity = new HashMap<>();
-		fishCapacity.put(FishType.GOLDFISH, 5);
+		fishCapacity.put(FishType.GOLDENFISH, 5);
 		fishCapacity.put(FishType.SHARK, 2);
 		init();
 	}
@@ -43,14 +44,14 @@ public class PoolControllerImpl implements PoolController
 		System.out.println(status);
 	}
 	
-	public void heatPool(int template)
+	public void checkSingleFishStatus(int fishId)
 	{
-		pool.setTemperature(template, true);
+		System.out.println(pool.isFishHealthy(fishId));
 	}
 	
-	public void coolPool(int template)
+	public void ModifyPoolTemperature(double template)
 	{
-		pool.setTemperature(template, false);
+		pool.setTemperature(template);
 	}
 	
 	private void init()

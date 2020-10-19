@@ -5,7 +5,7 @@ public abstract class Car
 {
 	protected String id;
 	protected CarType type;
-	protected double rate;
+	protected double rentalRate;
 	protected Set<Integer> reserveDates;
 	
 	public boolean reserveCar(List<Integer> dates)
@@ -46,9 +46,9 @@ public abstract class Car
 		return type;
 	}
 	
-	public double getRate() 
+	public double getRentalRate() 
 	{
-		return rate;
+		return rentalRate;
 	}
 	
 	private void updateCarStatus(List<Integer> dates, boolean isReserveRequest)

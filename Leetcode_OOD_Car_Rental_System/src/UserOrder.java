@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.UUID;
 
 public class UserOrder 
 {
@@ -8,12 +7,12 @@ public class UserOrder
 	private String carId;
 	private List<Integer> reserveDates;
 	
-	public UserOrder(UserProfile user, String carId, List<Integer> reserveDates)
+	public UserOrder(UserProfile user, String carId, List<Integer> reserveDates, String orderId)
 	{
 		this.user = user;
 		this.carId = carId;
 		this.reserveDates = reserveDates;
-		this.orderId = "Order_"+ UUID.randomUUID().toString();
+		this.orderId = orderId;
 	}
 
 	public String getOrderId() 

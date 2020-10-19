@@ -38,5 +38,5 @@ public abstract class Fish
 
 enum FishType
 {
-	GOLDFISH(), SHARK();
+	GOLDENFISH(), SHARK();
 }

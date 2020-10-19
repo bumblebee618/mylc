@@ -10,8 +10,8 @@ public class CasherDiscount extends CasherBase
 	}
 	
 	@Override
-	public double getTotalPrice()
+	public double getFinalPrice()
 	{
-		return caculatePrice(pizzas) * discountRate;
+		return caculatePrice() * discountRate;
 	}
 }
