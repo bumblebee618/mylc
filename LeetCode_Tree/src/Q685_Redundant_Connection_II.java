@@ -89,6 +89,7 @@ public class Q685_Redundant_Connection_II {
     
     public static void main(String[] args) {
     	Q685_Redundant_Connection_II test = new Q685_Redundant_Connection_II();
-    	test.findRedundantDirectedConnection(edges)
+    	int[][] edges = {{1,2}, {2, 3}};
+    	test.findRedundantDirectedConnection(edges);
     }
 }
