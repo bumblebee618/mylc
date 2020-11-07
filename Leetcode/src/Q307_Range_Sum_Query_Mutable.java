@@ -40,6 +40,52 @@ public class Q307_Range_Sum_Query_Mutable {
      * j=i-(i&-i), up to j==idx-(idx&-idx) exclusive. (However, a quicker
      * way but using extra space is to store the original array.)
      */
+	private int[] nums;
+    private int[] sum;
+
+    public Q307_Range_Sum_Query_Mutable(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return;
+        }
+        
+        this.nums = nums;
+        sum = new int[nums.length];
+        
+        for (int i = 0; i < nums.length; i++)
+        {
+            sum[i] = (i == 0) ? nums[i] : sum[i-1] + nums[i];
+        }
+    }
+    
+    public void update(int i, int val)
+    {
+        if (i < 0 || i >= nums.length)
+        {
+            return;
+        }
+        
+        int diff = val - nums[i];
+        nums[i] = val;
+        
+        for (int index = i; index < sum.length; index++)
+        {
+            sum[index] += diff;
+        }
+    }
+    
+    public int sumRange(int i, int j) 
+    {
+        if (i < 0 || i >= nums.length || j < 0 || j >= nums.length || i > j)
+        {
+            return -1;
+        }
+        
+        return i == 0 ? sum[j] : sum[j] - sum[i-1];
+    }
+	
+	/*** segment tree
 	private SegmentTreeNode root;
 
     public Q307_Range_Sum_Query_Mutable(int[] nums) {
@@ -141,6 +187,8 @@ public class Q307_Range_Sum_Query_Mutable {
     	System.out.println(t.sumRange(0, 2));
     	
     }
+
+    ***/
 	
 	
 	// by other

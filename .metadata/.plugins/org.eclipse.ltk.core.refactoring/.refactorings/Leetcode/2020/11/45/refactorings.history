@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;stop&apos; in &apos;Q787_Cheapest_Flights_Within_K_Stops.findCheapestPrice(...)&apos; to &apos;step&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q787_Cheapest_Flights_Within_K_Stops.findCheapestPrice(int, int[][], int, int, int).stop&apos;&#x0A;- Renamed element: &apos;stop&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;stop&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q787_Cheapest_Flights_Within_K_Stops.java[Q787_Cheapest_Flights_Within_K_Stops~findCheapestPrice~I~\[\[I~I~I~I@stop!2014!2026!2018!2021!I!0!false" name="step" references="true" stamp="1604733310177" version="1.0"/>
+</session>

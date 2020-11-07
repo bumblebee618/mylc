@@ -1,6 +1,0 @@
-public interface Pool 
-{
-	public void feedFish(int foodCount);
-	public boolean isFishHealthy(String fishId);
-	public String checkFishsStatus();
-}

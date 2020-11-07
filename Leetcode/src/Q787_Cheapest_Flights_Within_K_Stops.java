@@ -37,8 +37,127 @@ There will not be any duplicated flights or self cycles.
  *
  */
 
-public class Q787_Cheapest_Flights_Within_K_Stops {
-	public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+public class Q787_Cheapest_Flights_Within_K_Stops 
+{
+	// solution 1:
+	public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) 
+    {
+        if (flights == null || flights.length == 0 || flights[0].length != 3)
+        {
+            return 0;
+        }
+        else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || K < 0 || K > n)
+        {
+            return 0;
+        }
+        
+        Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
+        
+        for (int[] flight : flights) 
+        {
+            prices.computeIfAbsent(flight[0], x -> new HashMap<>()).put(flight[1], flight[2]);
+        }
+        
+        Queue<int[]> pq = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+        
+        // price, city and steps left
+        pq.add(new int[] {0, src, K + 1});
+        
+        while (!pq.isEmpty()) 
+        {
+            int[] top = pq.poll();
+            int price = top[0];
+            int city = top[1];
+            int stops = top[2];
+            
+            if (city == dst) 
+            {
+                return price;
+            }
+            
+            if (stops > 0) 
+            {
+                Map<Integer, Integer> adj = prices.getOrDefault(city, new HashMap<>());
+ 
+                for (int a : adj.keySet()) 
+                {
+                    pq.add(new int[] {price + adj.get(a), a, stops - 1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    
+	// solution 2: TLE
+    private int result = Integer.MAX_VALUE;
+    
+    public int findCheapestPrice2(int n, int[][] flights, int src, int dst, int K) 
+    {
+        if (flights == null || flights.length == 0 || flights[0].length != 3)
+        {
+            return 0;
+        }
+        else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || K < 0 || K > n)
+        {
+            return 0;
+        }
+        
+        Set<Tuple>[] graph = new Set[n];
+        
+        for (int[] flight : flights)
+        {
+            if (graph[flight[0]] == null)
+            {
+                graph[flight[0]] = new HashSet<>();
+            }
+            
+            graph[flight[0]].add(new Tuple(flight[1], flight[2]));
+        }
+        
+        bfs(new Tuple(src, 0), graph, 0, dst, 0, K);
+        return result == Integer.MAX_VALUE ? -1 : result;
+    }
+    
+    private void bfs(Tuple node, Set<Tuple>[] graph, int totalCost, int dst, int stop, int K)
+    {
+        if (node.city == dst)
+        {
+            result = Math.min(result, totalCost);
+            return;
+        }
+        else if (stop == K+1)
+        {
+            return;
+        } 
+        
+        if (graph[node.city] != null)
+        {
+            for (Tuple next : graph[node.city])
+            {
+                bfs(next, graph, totalCost+next.cost, dst, stop+1, K);
+            }
+        }
+    }
+    
+    class Tuple
+    {
+        public int city;
+        public int cost;
+        
+        public Tuple(int city, int cost)
+        {
+            this.city = city;
+            this.cost = cost;
+        }
+    }
+	
+	
+	
+	
+	
+	public int findCheapestPrice3(int n, int[][] flights, int src, int dst, int K) {
         if (n <= 0 || flights == null || flights.length == 0 || flights[0].length == 0 || src == dst) {
             return 0;
         }
@@ -100,5 +219,14 @@ public class Q787_Cheapest_Flights_Within_K_Stops {
         public int compareTo(City c){
             return this.costFromSrc - c.costFromSrc;
         }
+    }
+    
+    
+    
+    public static void main(String[] args)
+    {
+    	Q787_Cheapest_Flights_Within_K_Stops test = new Q787_Cheapest_Flights_Within_K_Stops();
+    	int[][] flights = {{0, 1, 100}, {1, 2, 100}, {0, 2, 500}};
+    	System.out.println(test.findCheapestPrice(3, flights, 0, 2, 1));
     }
 }
