@@ -32,8 +32,8 @@
 		<item value="62" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="RefactoringWizard.preview">
-		<item value="520" key="width"/>
-		<item value="446" key="height"/>
+		<item value="470" key="width"/>
+		<item value="326" key="height"/>
 	</section>
 	<section name="SourceActionDialog.methods">
 		<item value="false" key="SynchronizedModifier"/>

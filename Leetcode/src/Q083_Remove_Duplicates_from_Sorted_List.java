@@ -1,16 +1,21 @@
 
 public class Q083_Remove_Duplicates_from_Sorted_List {
 	public ListNode deleteDuplicates(ListNode head) {
-		if (head == null) {
+		if (head == null || head.next == null) 
+		{
             return head;
         }
         
         ListNode node = head;
         
-        while (node != null && node.next != null) {
-            if (node.val == node.next.val) {
+        while (node != null && node.next != null) 
+        {
+            if (node.val == node.next.val) 
+            {
                 node.next = node.next.next;
-            } else {
+            } 
+            else 
+            {
                 node = node.next;
             }
         }

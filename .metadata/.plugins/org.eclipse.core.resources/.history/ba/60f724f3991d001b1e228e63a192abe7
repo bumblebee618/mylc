@@ -1,0 +1,30 @@
+
+public class Q1460_Make_Two_Arrays_Equal_by_Reversing_Sub_arrays 
+{
+	public boolean canBeEqual(int[] target, int[] arr) 
+	{
+        if (target == null || target.length == 0 || arr == null || arr.length == 0 || target.length != arr.length)
+        {
+            return false;
+        }
+        
+        int[] tHash = new int[1001];
+        int[] sHash = new int[1001];
+        
+        for (int i = 0; i < target.length; i++)
+        {
+            tHash[target[i]]++;
+            sHash[arr[i]]++;
+        }
+        
+        for (int i = 0; i < tHash.length; i++)
+        {
+            if (tHash[i] != sHash[i])
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
