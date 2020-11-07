@@ -17,27 +17,37 @@ public class Q000_Algorithm_Sort {
 
 	/*********************** Insert Sort **************************/
 	// 时间O(n^2)，空间O(1)，稳定
-	void insert_sort(int[] p) {      
+	void insert_sort(int[] array) 
+	{      
 		int j, key;
-		for (int i = 1; i < p.length; i++) {
+		
+		for (int i = 1; i < array.length; i++) 
+		{
 			j = i - 1;
-			key = p[i];
-			while (j >= 0 && p[j] > key) {
-				p[j + 1] = p[j];
+			key = array[i];
+			
+			while (j >= 0 && array[j] > key) 
+			{
+				array[j + 1] = array[j];
 				j--;
 			}
-			p[j + 1] = key;
+			
+			array[j + 1] = key;
 		}
 	}
 
 	
 	/*********************** Bubble Sort **************************/
 	// 时间O(n^2)，空间O(1)，稳定
-	void bubble_sort(int[] p) {      
-		for (int i = 0; i < p.length - 1; i++) {
-			for (int j = p.length - 1; j >= i + 1; j--) {
-				if (p[j] < p[j - 1]) {
-					swap(p, j-1, j);
+	void bubble_sort(int[] array) 
+	{      
+		for (int i = 0; i < array.length - 1; i++) 
+		{
+			for (int j = array.length - 1; j >= i + 1; j--) 
+			{
+				if (array[j] < array[j - 1]) 
+				{
+					swap(array, j-1, j);
 				}
 			}
 		}

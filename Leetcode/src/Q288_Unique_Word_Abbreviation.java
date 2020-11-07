@@ -39,46 +39,61 @@ true
  * */
 
 public class Q288_Unique_Word_Abbreviation {
-	private Map<String, Set<String>> map = new HashMap<String, Set<String>>();
+private Map<String, Set<String>> map = new HashMap<>();
     
-    public Q288_Unique_Word_Abbreviation(String[] dictionary) {
-        for(String word : dictionary){
-            String abbrStr = getAbbreviation(word);
-            
-            if(map.containsKey(abbrStr)){
-                map.get(abbrStr).add(word);
-            } else {
-                Set<String> set = new HashSet<String>();
-                set.add(word);
-                map.put(abbrStr, set);
-            }
+    public Q288_Unique_Word_Abbreviation(String[] dictionary) 
+    {
+        if (dictionary == null || dictionary.length == 0)
+        {
+            return;
         }
+        
+        for(String word : dictionary)
+        {
+            String abbrStr = getAbbreviation(word);
+            map.computeIfAbsent(abbrStr, x -> new HashSet<>()).add(word);
+        }    
     }
-
-    public boolean isUnique(String word) {
+    
+    public boolean isUnique(String word) 
+    {
+        if (word == null || word.length() == 0)
+        {
+            return false;
+        }
+        
         String abbrStr = getAbbreviation(word);
         
-        if(!map.containsKey(abbrStr)){
+        if(!map.containsKey(abbrStr))
+        {
             return true;
-        } else {
-            Set<String> set = map.get(abbrStr);
+        }
             
-            if(set.size() > 1){
-                return false;
-            } else if(set.contains(word)){
-                return true;
-            } else {
-                return false;
-            }
+        Set<String> set = map.get(abbrStr);
+            
+        if(set.size() > 1)
+        {
+            return false;
+        } 
+        else 
+        {
+            return set.contains(word) ? true : false;
         }
     }
     
-    public String getAbbreviation(String word){
-        if(word.length() <= 2){
+    private String getAbbreviation(String word)
+    {
+        if (word.length() <= 2)
+        {
             return word;
-        } else {
-            StringBuilder builder = new StringBuilder();
-            builder.append(word.charAt(0)).append(word.length() - 2).append(word.charAt(word.length() - 1));
+        } 
+        else 
+        {
+            StringBuilder builder = new StringBuilder()
+                .append(word.charAt(0))
+                .append(word.length() - 2)
+                .append(word.charAt(word.length() - 1));
+            
             return builder.toString();
         }
     }
