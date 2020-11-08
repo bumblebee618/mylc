@@ -1,12 +1,58 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
 
 public class Q145_Binary_Tree_Postorder_Traversal {
-	public List<Integer> postorderTraversal(TreeNode root) {
+	// solution 1:
+	public List<Integer> postorderTraversal(TreeNode root) 
+    {
+        List<Integer> list = new LinkedList<>();
+        
+        if (root == null)
+        {
+            return list;
+        }
+        
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        Set<TreeNode> visited = new HashSet<>();
+        
+        while (!stack.isEmpty())
+        {
+            TreeNode node = stack.peek();
+            
+            if (node.left != null && !visited.contains(node.left))
+            {
+                node = node.left;
+                
+                while (node != null && !visited.contains(node))
+                {
+                    stack.push(node);
+                    node = node.left;
+                }
+            }
+            else if (node.right != null && !visited.contains(node.right))
+            {
+                stack.push(node.right);
+            }
+            else
+            {
+                TreeNode t = stack.pop();
+                list.add(t.val);
+                visited.add(t);
+            }
+        }
+        
+        return list;
+    }
+	
+	
+	// solution 2:
+	public List<Integer> postorderTraversal2(TreeNode root) {
 		List<Integer> result = new ArrayList<>();
         
         if (root == null)
@@ -36,7 +82,7 @@ public class Q145_Binary_Tree_Postorder_Traversal {
         return result;
     }
     
-    public List<Integer> postorderTraversal2(TreeNode root) {
+    public List<Integer> postorderTraversal3(TreeNode root) {
         List<Integer> ans = new ArrayList<Integer>();
         
         if(root == null){
@@ -76,7 +122,7 @@ public class Q145_Binary_Tree_Postorder_Traversal {
 	
     
 	//use two stacks
-	public ArrayList<Integer> postorderTraversal3(TreeNode root) {
+	public ArrayList<Integer> postorderTraversal4(TreeNode root) {
 		ArrayList<Integer> res = new ArrayList<Integer>();
 		if (root == null) return res;
 		Stack<TreeNode> s1 = new Stack<TreeNode>();

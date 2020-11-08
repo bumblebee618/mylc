@@ -17,18 +17,23 @@ Output: The root of a Greater Tree like this:
           20     13
  *
  */
-public class Q538_Convert_BST_to_Greater_Tree {
-	public TreeNode convertBST(TreeNode root) {
-        if (root == null) {
+public class Q538_Convert_BST_to_Greater_Tree 
+{
+	public TreeNode convertBST(TreeNode root) 
+	{
+        if (root == null) 
+        {
             return root;
         }    
         
-        Stack<TreeNode> stack = new Stack();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
         int sum = 0;
         
-        while (node != null || !stack.isEmpty()) {
-            while (node != null) {
+        while (node != null || !stack.isEmpty()) 
+        {
+            while (node != null) 
+            {
                 stack.push(node);
                 node = node.right;
             }
