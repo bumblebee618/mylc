@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;Q000_Algorithm_SegmentTree.modify(...)&apos; to &apos;update&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q000_Algorithm_SegmentTree.modify(...)&apos;&#x0A;- Renamed element: &apos;Q000_Algorithm_SegmentTree.update(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;modify&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{Q000_Algorithm_SegmentTree.java[Q000_Algorithm_SegmentTree~modify~QSegmentTreeNode;~I~I" name="update" references="true" stamp="1604865808882" version="1.0"/>
+</session>

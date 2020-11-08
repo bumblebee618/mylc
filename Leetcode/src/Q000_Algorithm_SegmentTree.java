@@ -85,7 +85,7 @@ public class Q000_Algorithm_SegmentTree
         return Math.max(leftMax, rightMax);
     }
 	
-	public void modify(SegmentTreeNode root, int index, int value) 
+	public void update(SegmentTreeNode root, int index, int value) 
 	{
 		if(index > bound) 
 		{
@@ -104,13 +104,13 @@ public class Q000_Algorithm_SegmentTree
         // index is in left subtree
         if (root.start <= index && index <= mid) 
         {
-            modify(root.left, index, value);
+            update(root.left, index, value);
         }
         
         // index is in right subtree
         if (mid < index && index <= root.end) 
         {
-        	modify(root.right, index, value);
+        	update(root.right, index, value);
         }
                
         // update value
@@ -128,7 +128,7 @@ public class Q000_Algorithm_SegmentTree
 		SegmentTreeNode root = t.build(nums);
 		
 		System.out.println(t.query(root, 0, 19));
-		t.modify(root, 19, 12);
+		t.update(root, 19, 12);
 		System.out.println(t.query(root, 0, 19));		
 	}
 }
