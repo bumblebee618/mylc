@@ -55,8 +55,6 @@ public class Q1162_As_Far_from_Land_as_Possible {
         {
             for (int j = 0; j < col; j++)
             {
-                distance[i][j] = Integer.MIN_VALUE;
-                
                 if (grid[i][j] == 1)
                 {
                     queue.offer(new int[] {i, j});
@@ -64,6 +62,7 @@ public class Q1162_As_Far_from_Land_as_Possible {
             }
         }
         
+        // bfs
         int dist = 1;
         
         while (!queue.isEmpty())
@@ -79,7 +78,7 @@ public class Q1162_As_Far_from_Land_as_Possible {
                     int newX = index[0] + dx[j];
                     int newY = index[1] + dy[j];
             
-                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && distance[newX][newY] == Integer.MIN_VALUE)
+                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && distance[newX][newY] == 0)
                     {
             	        distance[newX][newY] = dist;
                         queue.offer(new int[] {newX, newY});
@@ -98,6 +97,6 @@ public class Q1162_As_Far_from_Land_as_Possible {
             }
         }
         
-        return result;
+        return result == 0 ? -1 : result;
     }
 }

@@ -87,12 +87,12 @@ public class Q742_Closest_Leaf_in_a_Binary_Tree {
                     return node.val;
                 }
                 
-                for (TreeNode nei: graph.get(node))
+                for (TreeNode neighbor: graph.get(node))
                 {
-                    if (!visited.contains(nei)) 
+                    if (!visited.contains(neighbor)) 
                     {
-                        visited.add(nei);
-                        queue.add(nei);
+                        visited.add(neighbor);
+                        queue.add(neighbor);
                     }
                 }
             }

@@ -15,9 +15,12 @@ The point (0,2) is an ideal meeting point, as the total travel distance of 2+2+2
  * 
  * */
 
-public class Q296_Best_Meeting_Point {
-	public int minTotalDistance(int[][] grid) {
-		if(grid == null || grid.length == 0 || grid[0].length == 0){
+public class Q296_Best_Meeting_Point 
+{
+	public int minTotalDistance(int[][] grid) 
+    {
+        if (grid == null || grid.length == 0 || grid[0].length == 0)
+        {
             return 0;
         }
         
@@ -25,9 +28,12 @@ public class Q296_Best_Meeting_Point {
         List<Integer> list_y = new ArrayList<Integer>();
         int row = grid.length, col = grid[0].length;
         
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                if(grid[i][j] == 1){
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (grid[i][j] == 1)
+                {
                     list_x.add(i);
                     list_y.add(j);
                 }
@@ -35,21 +41,23 @@ public class Q296_Best_Meeting_Point {
         }
         
         return getDistance(list_x) + getDistance(list_y);
-	}
-
-	private int getDistance(List<Integer> list){
-        int left = 0, right = list.size() - 1, distance = 0;
+    }
+    
+    private int getDistance(List<Integer> list)
+    {
+        int left = 0, right = list.size() - 1;
+        int totalDistance = 0;
         Collections.sort(list);
         
-        while(left < right){
-            distance += list.get(right) - list.get(left);
+        while (left < right)
+        {
+            totalDistance += list.get(right) - list.get(left);
             left++;
             right--;
         }
         
-        return distance;
+        return totalDistance;
     }
-	
 	
 
 	

@@ -15,20 +15,29 @@ For example, in array [1, 2, 3, 1], 3 is a peak element and your function should
 
 public class Q162_Find_Peak_Element {
 	// time is O(logn)
-	public int findPeakElement(int[] nums) {
-		if(nums == null || nums.length == 0){
+	public int findPeakElement(int[] nums) 
+	{
+		if (nums == null || nums.length == 0)
+		{
             return 0;
         }
         
         int left = 0, right = nums.length - 1;    // 不会越界
         
-        while(left + 1 < right){
+        while (left + 1 < right)
+        {
             int mid = left + (right - left) / 2;  // 防止溢出
-            if(nums[mid] < nums[mid + 1]){        // 注意mid和mid+1, mid-1比较
+            
+            if (nums[mid] < nums[mid + 1])         // 注意mid和mid+1, mid-1比较
+            {
                 left = mid;
-            } else if (nums[mid] < nums[mid-1]) {
+            } 
+            else if (nums[mid] < nums[mid-1]) 
+            {
                 right = mid;
-            } else {
+            } 
+            else 
+            {
                 return mid;
             }
         }

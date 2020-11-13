@@ -38,7 +38,7 @@ The given edges form an undirected tree.
 public class Q1245_Tree_Diameter 
 {	
 	// solution 1:
-private int diameter = 0;
+	private int diameter = 0;
     
     public int treeDiameter(int[][] edges) 
     {
@@ -61,7 +61,6 @@ private int diameter = 0;
             graph[edge[1]].add(edge[0]);
         }
         
-        diameter = 0;
         dfs(0, -1, graph);
         return diameter;
     }

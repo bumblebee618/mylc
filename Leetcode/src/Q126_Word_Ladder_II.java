@@ -38,17 +38,18 @@ public class Q126_Word_Ladder_II {
     // wordList is empty
     // beginWord cannot been transfered to endWord
 	
-	// bfs + dfs
-	private List<List<String>> result1 = new LinkedList<>();
+	// solution 1: bfs + dfs
+	private List<List<String>> result = new LinkedList<>();
     
-    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) 
+    {
         if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0)
         {
-            return result1;
+            return result;
         }
         else if (beginWord.equals(endWord))
         {
-            return result1;
+            return result;
         }
         
         Set<String> wordSet = new HashSet<>();
@@ -57,18 +58,18 @@ public class Q126_Word_Ladder_II {
             wordSet.add(word);
         }
         
-        Map<String, List<String>> nextWordMap = new HashMap<>();
-        Set<String> level = new HashSet<>();
-        level.add(beginWord);
-        bfs(level, wordSet, nextWordMap, endWord);
+        Map<String, Set<String>> wordMap = new HashMap<>();
+        Set<String> curLevel = new HashSet<>();
+        curLevel.add(beginWord);
+        bfs(curLevel, wordSet, wordMap, endWord);
         
         List<String> path = new LinkedList<>();
         path.add(beginWord);
-        dfs(beginWord, endWord, nextWordMap, path);
-        return result1;
+        dfs(beginWord, endWord, wordMap, path);
+        return result;
     }
     
-    private void bfs(Set<String> curLevel, Set<String> wordSet, Map<String, List<String>> nextWordMap, String endWord)
+    private void bfs(Set<String> curLevel, Set<String> wordSet, Map<String, Set<String>> wordMap, String endWord)
     {
         wordSet.removeAll(curLevel);
         Set<String> nextLevel = new HashSet<>();
@@ -103,12 +104,7 @@ public class Q126_Word_Ladder_II {
                             nextLevel.add(newWord);
                         }
                         
-                        if (!nextWordMap.containsKey(word))
-                        {
-                            nextWordMap.put(word, new LinkedList<String>());
-                        }
-                        
-                        nextWordMap.get(word).add(newWord);
+                        wordMap.computeIfAbsent(word,x -> new HashSet<>()).add(newWord);
                     }
                 }
                 
@@ -118,26 +114,26 @@ public class Q126_Word_Ladder_II {
         
         if (!found && nextLevel.size() > 0)
         {
-            bfs(nextLevel, wordSet, nextWordMap, endWord);
+            bfs(nextLevel, wordSet, wordMap, endWord);
         }
     }
     
-    private void dfs(String curWord, String endWord, Map<String, List<String>> nextWordMap, List<String> path)
+    private void dfs(String curWord, String endWord, Map<String, Set<String>> wordMap, List<String> path)
     {
         if (curWord.equals(endWord))
         {
             result.add(new LinkedList<String>(path));
             return;
         }
-        else if (!nextWordMap.containsKey(curWord))
+        else if (!wordMap.containsKey(curWord))
         {
             return;
         }
         
-        for (String nextWord : nextWordMap.get(curWord))
+        for (String nextWord : wordMap.get(curWord))
         {
             path.add(nextWord);
-            dfs(nextWord, endWord, nextWordMap, path);
+            dfs(nextWord, endWord, wordMap, path);
             path.remove(path.size()-1);
         }
     }
@@ -414,55 +410,12 @@ public class Q126_Word_Ladder_II {
 		}
 	}
 
-	/**************************************************************/
-	// by Jackie, but exceed time limited
-	private LinkedList<LinkedList<String>> res = new LinkedList<LinkedList<String>>();
-	private LinkedList<LinkedList<String>> result = new LinkedList<LinkedList<String>>();
-	private int minStep = Integer.MAX_VALUE;
-
-	public LinkedList<LinkedList<String>> findLadders4(String beginWord,
-			String endWord, Set<String> wordList) {
-		LinkedList<String> path = new LinkedList<String>();
-		wordList.add(endWord);
-		dfs(beginWord, path, wordList, 1, endWord);
-		for (int i = 0; i < res.size(); ++i)
-			if (res.get(i).size() == minStep)
-				result.add(res.get(i));
-		return res;
-	}
-
-	public void dfs(String str, LinkedList<String> path, Set<String> wordList,
-			int step, String endWord) {
-		if (step >= minStep)
-			return;
-		path.add(str);
-		char[] array = str.toCharArray();
-		for (int i = 0, len = array.length; i < len; ++i) {
-			for (char j = 'a'; j <= 'z'; ++j) {
-				char temp = array[i];
-				if (array[i] == j)
-					continue;
-				array[i] = j;
-				String newStr = new String(array);
-				if (newStr.equals(endWord)) {
-					path.add(endWord);
-					res.add(new LinkedList<String>(path));
-					path.remove(endWord);
-					array[i] = temp;
-					minStep = Math.min(minStep, step + 1);
-					continue;
-				}
-				if (wordList.contains(newStr)) {
-					wordList.remove(newStr);
-					dfs(newStr, path, wordList, step + 1, endWord);
-					wordList.add(newStr);
-				}
-				array[i] = temp;
-			}
-		}
-		path.remove(str);
-	}
-
+	
+	
+	
+	
+/**************************************************************************************************/
+	
 	public static void main(String[] args) {
 		Q126_Word_Ladder_II t = new Q126_Word_Ladder_II();
 		List<String> wordList = new LinkedList<String>();
