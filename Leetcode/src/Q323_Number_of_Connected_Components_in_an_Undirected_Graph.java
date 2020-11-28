@@ -25,9 +25,12 @@ Given n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]], return 1.
  * 
  * */
 
-public class Q323_Number_of_Connected_Components_in_an_Undirected_Graph {
-	public int countComponents(int n, int[][] edges) {
-        if (n <= 0) {
+public class Q323_Number_of_Connected_Components_in_an_Undirected_Graph 
+{
+	public int countComponents(int n, int[][] edges) 
+	{
+        if (n <= 0) 
+        {
             return 0;
         }
         
@@ -35,35 +38,43 @@ public class Q323_Number_of_Connected_Components_in_an_Undirected_Graph {
         Set<Integer> visited = new HashSet<>();
         int count = 0;
         
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) 
+        {
             graph[i] = new HashSet<Integer>();
         }
         
-        for (int[] edge : edges) {
+        for (int[] edge : edges) 
+        {
             graph[edge[0]].add(edge[1]);
             graph[edge[1]].add(edge[0]);
         }
         
-        for (int i = 0; i < n; i++) {
-            if (!visited.contains(i)) {
+        for (int i = 0; i < n; i++) 
+        {
+            if (!visited.contains(i)) 
+            {
                 count++;
-                BFS(graph, i, visited);
+                bfs(graph, i, visited);
             }
         }
         
         return count;
     }
     
-    public void BFS(Set<Integer>[] graph, int root, Set<Integer> visited) {
+    public void bfs(Set<Integer>[] graph, int root, Set<Integer> visited) 
+    {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(root);
         visited.add(root);
         
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             int node = queue.poll();
             
-            for (int nextNode : graph[node]) {
-                if (!visited.contains(nextNode)) {
+            for (int nextNode : graph[node]) 
+            {
+                if (!visited.contains(nextNode)) 
+                {
                     visited.add(nextNode);
                     queue.offer(nextNode);
                 }

@@ -64,13 +64,13 @@ public class Q200_Number_of_Islands {
         return count;
     }
     
-    public void bfs(char[][] grid, boolean[][] visited, int x, int y)
+    private void bfs(char[][] grid, boolean[][] visited, int x, int y)
     {        
     	visited[x][y] = true;
         int row = grid.length;
         int col = grid[0].length; 
         
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < dx.length; ++i)
         {
             int newX = x + dx[i];
             int newY = y + dy[i];

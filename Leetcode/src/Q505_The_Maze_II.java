@@ -88,7 +88,7 @@ public class Q505_The_Maze_II {
         
         while (!queue.isEmpty()) 
         {
-            int[] current = queue.remove();
+            int[] current = queue.poll();
             
             if (current[0] == destination[0] && current[1] == destination[1])
             {
@@ -99,7 +99,7 @@ public class Q505_The_Maze_II {
             {
                 int newX = current[0] + dx[i];
                 int newY = current[1] + dy[i];
-                int count = 0;
+                int count = 1;
                 
                 while (newX >= 0 && newY >= 0 && newX < row && newY < col && maze[newX][newY] == 0) 
                 {
@@ -111,6 +111,7 @@ public class Q505_The_Maze_II {
                 // remove back one step
                 newX -= dx[i];
                 newY -= dy[i];
+                count--;
                 
                 // update distance
                 if (distance[newX][newY] > distance[current[0]][current[1]] + count) 

@@ -50,9 +50,15 @@ public class Q127_Word_Ladder {
         }
         
         Set<String> dict = new HashSet<>();
+        
         for (String word : wordList)
         {
             dict.add(word);
+        }
+        
+        if (!dict.contains(endWord))
+        {
+        	return 0;
         }
         
         Queue<String> queue = new LinkedList<>();
@@ -68,9 +74,9 @@ public class Q127_Word_Ladder {
             
             for (int i = 0; i < size; i++)
             {
-                String cur = queue.poll();
+                String curWord = queue.poll();
                 
-                for (String newWord : expends(cur, dict))
+                for (String newWord : expends(curWord, dict))
                 {
                     if (visited.contains(newWord))
                     {

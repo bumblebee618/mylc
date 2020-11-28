@@ -59,14 +59,14 @@ public class Q329_Longest_Increasing_Path_in_a_Matrix {
         return maxLen;
     }
     
-    public int memoSearch(int[][] matrix, int[][] memo, int x, int y) 
+    private int memoSearch(int[][] matrix, int[][] memo, int x, int y) 
     {
         if (memo[x][y] > 0) 
         {
             return memo[x][y];
         }
         
-        for (int i = 0; i < 4; i++) 
+        for (int i = 0; i < dx.length; i++) 
         {
             int newX = x + dx[i];
             int newY = y + dy[i];

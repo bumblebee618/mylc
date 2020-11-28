@@ -55,14 +55,14 @@ public class Q417_Pacific_Atlantic_Water_Flow {
 
 		for (int i = 0; i < row; i++) 
         {
-			dfs(matrix, visitedPacific, 0, i, 0);
-			dfs(matrix, visitedAtlantic, 0, i, col - 1);
+			dfs(matrix, visitedPacific, i, 0);
+			dfs(matrix, visitedAtlantic, i, col - 1);
 		}
 
 		for (int j = 0; j < col; j++) 
         {
-			dfs(matrix, visitedPacific, 0, 0, j);
-			dfs(matrix, visitedAtlantic, 0, row - 1, j);
+			dfs(matrix, visitedPacific, 0, j);
+			dfs(matrix, visitedAtlantic, row - 1, j);
 		}
 
 		for (int i = 0; i < row; i++) 
@@ -82,21 +82,21 @@ public class Q417_Pacific_Atlantic_Water_Flow {
 		return result;
     }
     
-    private void dfs(int[][] matrix, boolean[][] visited, int height, int x, int y) 
+    private void dfs(int[][] matrix, boolean[][] visited, int x, int y) 
     {
 		visited[x][y] = true;
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < dx.length; i++) 
+        {
 		    int newX = x + dx[i];
 		    int newY = y + dy[i];
 		    
-		    if(newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && !visited[newX][newY] && matrix[newX][newY] >= matrix[x][y]) 
+		    if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && !visited[newX][newY] && matrix[newX][newY] >= matrix[x][y]) 
             {
-		        dfs(matrix, visited, matrix[newX][newY], newX, newY);
+		        dfs(matrix, visited, newX, newY);
 		    }
 		}
 	}
-
 	
 	
 	

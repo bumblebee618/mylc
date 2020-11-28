@@ -57,99 +57,105 @@ public class Q305_Number_of_Islands_II {
     
     public List<Integer> numIslands2(int m, int n, int[][] positions) 
     {
-        List<Integer> ans = new LinkedList<>();
+        List<Integer> result = new LinkedList<>();
         
-        if (m <=0 || n <= 0) 
+        if (m <= 0 || n <= 0 || positions == null || positions.length == 0 || positions[0].length != 2) 
         {
-            return ans;
+            return result;
         }
         
         UnionFind uf = new UnionFind(m, n);
         int count = 0;
         int[][] island = new int[m][n];
-        int len = positions.length;
         
-        for (int i = 0; i < len; i++) 
+        for (int[] position : positions)
         {
-            int x = positions[i][0];
-            int y = positions[i][1];
+            int x = position[0];
+            int y = position[1];
             
-            if (island[x][y] == 0) 
+            if (island[x][y] == 0)
             {
                 count++;
                 island[x][y] = 1;
-                int currentId = convertToId(x, y, n);
-                
-                for (int j = 0; j < 4; j++) 
+                int currentId = getId(x, y, n);
+            
+                for (int i = 0; i < dx.length; i++)
                 {
-                    int newX = x + dx[j];
-                    int newY = y + dy[j];
-                    
-                    if (newX >= 0 && newX < m && newY >= 0 && newY < n && island[newX][newY] == 1) 
+                    int newX = x + dx[i];
+                    int newY = y + dy[i];
+                
+                    if (newX >= 0 && newX < m && newY >= 0 && newY < n && island[newX][newY] == 1)
                     {
-                        int newId = convertToId(newX, newY, n);
-                        int currentParent = uf.Find(currentId);
-                        int newParent = uf.Find(newId);
-                        
-                        if (currentParent != newParent) 
+                        int newId = getId(newX, newY, n);
+                        int parent = uf.find(currentId);
+                        int newParent = uf.find(newId);
+                    
+                        if (parent != newParent)
                         {
+                            uf.union(currentId, newId);
                             count--;
-                            uf.Union(currentParent, newParent);
                         }
                     }
                 }
             }
             
-            ans.add(count); 
+            result.add(count);
         }
         
-        return ans;
+        return result;
     }
     
-    public int convertToId(int x, int y, int col) 
+    private int getId(int x, int y, int col)
     {
         return x * col + y;
     }
     
-    class UnionFind 
+    class UnionFind
     {
-        Map<Integer, Integer> father = new HashMap<>();
+        private Map<Integer, Integer> father;
         
-        public UnionFind(int row, int col) 
+        public UnionFind(int row, int col)
         {
-            for (int i = 0; i < row * col; i++) 
+            father = new HashMap<>();
+            
+            for (int i = 0; i < row * col; i++)
             {
                 father.put(i, i);
             }
         }
         
-        public int Find(int x) 
+        public int find(int id)
         {
-            int parent = father.get(x);
+        	if (!father.containsKey(id))
+        	{
+        		return -1;
+        	}
+        	
+            int parent = father.get(id);
             
-            while (parent != father.get(parent)) 
+            while (parent != father.get(parent))
             {
                 parent = father.get(parent);
             }
             
-            while (x != father.get(x)) 
+            while (id != father.get(id))
             {
-                int tempParent = father.get(x);
-                father.put(x, parent);
-                x = tempParent;
+                int temp = father.get(id);
+                father.put(id, parent);
+                id = temp;
             }
             
             return parent;
         }
         
-        public void Union(int x, int y) 
-        { 
-            int parentX = father.get(x);
-            int parentY = father.get(y);
+        public void union(int id1, int id2)
+        {
+            int parent1 = find(id1);
+            int parent2 = find(id2);
             
-            if (parentX != parentY) 
+            if (parent1 != parent2)
             {
-                father.put(parentX, parentY);
+                father.put(parent1, parent2);
             }
         }
     }

@@ -89,7 +89,7 @@ public class Q490_The_Maze {
                 int newX = current[0] + dx[i];
                 int newY = current[1] + dy[i];
                 
-                while (newX >= 0 && newY >= 0 && newX < maze.length && newY < maze[0].length && maze[newX][newY] == 0) 
+                while (newX >= 0 && newX < maze.length && newY >= 0 && newY < maze[0].length && maze[newX][newY] == 0) 
                 {
                     newX += dx[i];
                     newY += dy[i];

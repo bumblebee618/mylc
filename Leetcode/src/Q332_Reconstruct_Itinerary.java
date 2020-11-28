@@ -63,7 +63,7 @@ public class Q332_Reconstruct_Itinerary {
             Collections.sort(entry.getValue());
         }
         
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
         stack.add("JFK");
         
         // 以下是深度优先搜索的写法，必须写成这样；注释部分写法不正确

@@ -37,8 +37,10 @@ grid[i][j] is 0 or 1.
 
 public class Q463_Island_Perimeter {
 	// solution 1: time complexity is O(n^2)
-	public int islandPerimeter(int[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+	public int islandPerimeter(int[][] grid) 
+	{
+        if (grid == null || grid.length == 0 || grid[0].length == 0) 
+        {
             return 0;
         }
         
@@ -47,17 +49,21 @@ public class Q463_Island_Perimeter {
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
         
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (grid[i][j] == 1) {
+        for (int i = 0; i < row; i++) 
+        {
+            for (int j = 0; j < col; j++) 
+            {
+                if (grid[i][j] == 1) 
+                {
                     int neighbour = 0;
                     
-                    for (int k = 0; k < 4; k++) {
+                    for (int k = 0; k < dx.length; k++) 
+                    {
                         int newX = i + dx[k];
                         int newY = j + dy[k];
             
-                        if (newX >= 0 && newX < row && newY >= 0 && newY < col 
-                            && grid[newX][newY] == 1) {
+                        if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 1) 
+                        {
                             neighbour++;
                         }
                     }

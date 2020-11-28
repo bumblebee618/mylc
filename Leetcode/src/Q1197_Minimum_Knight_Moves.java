@@ -33,11 +33,13 @@ Constraints:
 
 |x| + |y| <= 300
  */
-public class Q1197_Minimum_Knight_Moves {
+public class Q1197_Minimum_Knight_Moves 
+{
 	private int[] dx = {-2, -1, 1, 2, 2, 1, -1, -2};
     private int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
-     
-    public int minKnightMoves(int m, int n) {
+    
+    public int minKnightMoves(int m, int n) 
+    {
         if (m == 0 && n == 0)
         {
             return 0;
@@ -51,27 +53,27 @@ public class Q1197_Minimum_Knight_Moves {
         visited.add("0,0");
         int steps = 0;
         
-        while(!queue.isEmpty()){
-            int len = queue.size();
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
             
-            for (int i = 0; i < len; i++) 
+            for (int i = 0; i < size; i++) 
             {
-                int[] coor = queue.poll();
-                int x = coor[0];
-                int y = coor[1];
+                int[] index = queue.poll();
                 
-                if(x == m && y == n) 
+                if (index[0] == m && index[1] == n) 
                 {
                     return steps;
                 }
                 
-                for(int j = 0; j < dx.length; j++)
+                for (int j = 0; j < dx.length; j++)
                 {
-                    int newX = x + dx[j];
-                    int newY = y + dy[j];
+                    int newX = index[0] + dx[j];
+                    int newY = index[1] + dy[j];
                     String newIndex = newX+","+newY;
                     
-                    if(newX >= -2 && newY >= -2 && !visited.contains(newIndex)){
+                    if (newX >= -2 && newY >= -2 && !visited.contains(newIndex))
+                    {
                         queue.add(new int[]{newX, newY});
                         visited.add(newIndex);
                     }

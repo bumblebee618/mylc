@@ -81,20 +81,13 @@ public class Q1162_As_Far_from_Land_as_Possible {
                     if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && distance[newX][newY] == 0)
                     {
             	        distance[newX][newY] = dist;
+            	        result = Math.max(result, dist);
                         queue.offer(new int[] {newX, newY});
                     }
                 }
             }
             
             dist++;
-        }
-        
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                result = Math.max(result, distance[i][j]);
-            }
         }
         
         return result == 0 ? -1 : result;

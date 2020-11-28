@@ -91,7 +91,7 @@ public class Q310_Minimum_Height_Trees {
 	        
 	        for (int i = 0; i < n; i++)
 	        {
-	            if (graph[i].size() == 1)
+	            if (graph[i] != null && graph[i].size() == 1)
 	            {
 	                queue.offer(i);
 	            }
