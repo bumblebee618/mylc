@@ -62,7 +62,6 @@ public class Q079_Word_Search {
         }
         
         visited[x][y] = true;
-        boolean result = false;
         
         for (int i = 0; i < dx.length; i++)
         {
@@ -73,14 +72,13 @@ public class Q079_Word_Search {
             {
                 if (dfs(board, visited, newX, newY, word, index+1))
                 {
-                    result = true;
-                    break;
+                    return true;
                 }
             }
         }
         
         visited[x][y] = false;
-        return result;
+        return false;
     }
 
     
