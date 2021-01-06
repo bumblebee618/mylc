@@ -48,7 +48,7 @@ public class Q1162_As_Far_from_Land_as_Possible {
         
         Queue<int[]> queue = new LinkedList<>();
         int row = grid.length, col = grid[0].length;
-        int[][] distance = new int[row][col];
+        boolean[][] visited = new boolean[row][col];
         int result = -1;
         
         for (int i = 0; i < row; i++)
@@ -62,7 +62,7 @@ public class Q1162_As_Far_from_Land_as_Possible {
             }
         }
         
-        // bfs
+        //bfs
         int dist = 1;
         
         while (!queue.isEmpty())
@@ -78,11 +78,11 @@ public class Q1162_As_Far_from_Land_as_Possible {
                     int newX = index[0] + dx[j];
                     int newY = index[1] + dy[j];
             
-                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && distance[newX][newY] == 0)
+                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && !visited[newX][newY])
                     {
-            	        distance[newX][newY] = dist;
-            	        result = Math.max(result, dist);
+            	        visited[newX][newY] = true;
                         queue.offer(new int[] {newX, newY});
+                        result = Math.max(result, dist);
                     }
                 }
             }

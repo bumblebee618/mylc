@@ -74,7 +74,7 @@ public class Q1197_Minimum_Knight_Moves
                     
                     if (newX >= -2 && newY >= -2 && !visited.contains(newIndex))
                     {
-                        queue.add(new int[]{newX, newY});
+                        queue.offer(new int[]{newX, newY});
                         visited.add(newIndex);
                     }
                 }

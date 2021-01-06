@@ -53,7 +53,7 @@ public class Q200_Number_of_Islands {
         {
             for (int j = 0; j < col; ++j)
             {
-                if (grid[i][j] == '1' && visited[i][j] != true)
+                if (grid[i][j] == '1' && !visited[i][j])
                 {
                     bfs(grid, visited, i, j);
                     count++;

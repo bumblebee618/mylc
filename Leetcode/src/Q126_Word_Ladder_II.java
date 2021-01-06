@@ -58,6 +58,11 @@ public class Q126_Word_Ladder_II {
             wordSet.add(word);
         }
         
+        if (!wordSet.contains(endWord))
+        {
+        	return result;
+        }
+        
         Map<String, Set<String>> wordMap = new HashMap<>();
         Set<String> curLevel = new HashSet<>();
         curLevel.add(beginWord);

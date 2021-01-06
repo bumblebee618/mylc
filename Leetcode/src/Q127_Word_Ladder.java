@@ -78,17 +78,13 @@ public class Q127_Word_Ladder {
                 
                 for (String newWord : expends(curWord, dict))
                 {
-                    if (visited.contains(newWord))
-                    {
-                        continue;
-                    }
-                    else if (newWord.equals(endWord))
+                	if (newWord.equals(endWord))
                     {
                         return step;
                     }
-                    else
+                	else if (!visited.contains(newWord))
                     {
-                        visited.add(newWord);
+                    	visited.add(newWord);
                         queue.offer(newWord);
                     }
                 }
