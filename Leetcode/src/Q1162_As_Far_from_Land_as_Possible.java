@@ -63,11 +63,12 @@ public class Q1162_As_Far_from_Land_as_Possible {
         }
         
         //bfs
-        int dist = 1;
+        int dist = 0;
         
         while (!queue.isEmpty())
         {
             int size = queue.size();
+            result = Math.max(result, dist);
             
             for (int i = 0; i < size; i++)
             {
@@ -80,9 +81,8 @@ public class Q1162_As_Far_from_Land_as_Possible {
             
                     if(newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && !visited[newX][newY])
                     {
-            	        visited[newX][newY] = true;
                         queue.offer(new int[] {newX, newY});
-                        result = Math.max(result, dist);
+                        visited[newX][newY] = true;
                     }
                 }
             }

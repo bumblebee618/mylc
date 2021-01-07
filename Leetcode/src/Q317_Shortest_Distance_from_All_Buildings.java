@@ -47,7 +47,7 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 		}
         
         int row = grid.length, col = grid[0].length;
-	    int[][] dist = new int[row][col];  // total distance for each "0"
+	    int[][] distance = new int[row][col];  // total distance for each "0"
 	    List<Tuple> buildings = new ArrayList<>();
         
 	    // Initialize building list and accessibility matrix `grid`
@@ -69,7 +69,7 @@ public class Q317_Shortest_Distance_from_All_Buildings {
         // BFS from every building
         for (int i = 0; i < buildings.size(); i++)
         {
-            bfs(buildings.get(i), i, grid, dist);
+            bfs(buildings.get(i), i, grid, distance);
         }
         
         // Find the minimum distance
@@ -81,7 +81,7 @@ public class Q317_Shortest_Distance_from_All_Buildings {
             {
                 if (grid[i][j] == buildings.size())
                 {
-                    result = Math.min(result, dist[i][j]);
+                    result = Math.min(result, distance[i][j]);
                 }
             }
         }

@@ -86,7 +86,7 @@ public class Q694_Number_of_Distinct_Islands {
             }
         }
         
-        // tail
+        // tail, 也可以用其他数字like "5"
         shape.add(0);
     }
     

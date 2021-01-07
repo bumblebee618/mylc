@@ -66,22 +66,23 @@ public class Q787_Cheapest_Flights_Within_K_Stops
         while (!pq.isEmpty()) 
         {
             int[] top = pq.poll();
-            int price = top[0];
+            int totalPrice = top[0];
             int city = top[1];
             int stops = top[2];
             
             if (city == dst) 
             {
-                return price;
+                return totalPrice;
             }
             
             if (stops > 0) 
             {
-                Map<Integer, Integer> adj = prices.getOrDefault(city, new HashMap<>());
- 
-                for (int a : adj.keySet()) 
+                Map<Integer, Integer> map = prices.getOrDefault(city, new HashMap<>());
+                
+                // bfs
+                for (int nextCity : map.keySet()) 
                 {
-                    pq.add(new int[] {price + adj.get(a), a, stops - 1});
+                    pq.add(new int[] {totalPrice + map.get(nextCity), nextCity, stops - 1});
                 }
             }
         }

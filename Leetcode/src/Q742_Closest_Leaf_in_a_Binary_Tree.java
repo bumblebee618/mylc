@@ -59,6 +59,7 @@ public class Q742_Closest_Leaf_in_a_Binary_Tree {
             return -1;
         }
         
+        // use dfs to build graph
         Map<TreeNode, List<TreeNode>> graph = new HashMap<>();
         dfs(graph, root, null);
 
@@ -75,6 +76,7 @@ public class Q742_Closest_Leaf_in_a_Binary_Tree {
             }
         }
 
+        // bfs
         while (!queue.isEmpty()) 
         {
             TreeNode node = queue.poll();

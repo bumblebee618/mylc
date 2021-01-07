@@ -50,15 +50,15 @@ public class Q332_Reconstruct_Itinerary {
         }
 
         // 注意只有linkedlist有poll() API ！！！
-        Map<String, LinkedList<String>> map = new HashMap<>();
+        Map<String, LinkedList<String>> graph = new HashMap<>();
         int size = tickets.size();
 
         for(int i = 0; i < size; ++i)
         {
-            map.computeIfAbsent(tickets.get(i).get(0), k -> new LinkedList<String>()).add(tickets.get(i).get(1));
+            graph.computeIfAbsent(tickets.get(i).get(0), k -> new LinkedList<String>()).add(tickets.get(i).get(1));
         }
         
-        for(Map.Entry<String, LinkedList<String>> entry : map.entrySet())
+        for(Map.Entry<String, LinkedList<String>> entry : graph.entrySet())
         {
             Collections.sort(entry.getValue());
         }
@@ -71,9 +71,9 @@ public class Q332_Reconstruct_Itinerary {
         // 如何在不知道图中总结点树的情况下，用map来dfs遍历一个图的方法：
         while (!stack.empty()) 
         {  
-            while (map.containsKey(stack.peek()) && !map.get(stack.peek()).isEmpty())
+            while (graph.containsKey(stack.peek()) && !graph.get(stack.peek()).isEmpty())
             {
-                stack.push(map.get(stack.peek()).poll());
+                stack.push(graph.get(stack.peek()).poll());
             }
             
             result.add(0, stack.pop());

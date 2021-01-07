@@ -43,6 +43,7 @@ public class Q863_All_Nodes_Distance_K_in_Binary_Tree {
 	            return result;
 	        }
 	        
+	        // use dfs to build graph
 	        Map<TreeNode, List<TreeNode>> graph = new HashMap<>();
 	        dfs(graph, root, null);
 	        
@@ -57,6 +58,7 @@ public class Q863_All_Nodes_Distance_K_in_Binary_Tree {
 	        visited.add(target);
 	        int distance = 0;
 	        
+	        // bfs
 	        while (!queue.isEmpty())
 	        {
 	            int size = queue.size();
