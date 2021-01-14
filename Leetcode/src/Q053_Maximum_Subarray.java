@@ -10,28 +10,33 @@ the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 
 
 public class Q053_Maximum_Subarray {
-	public int maxSubArray(int[] nums) {
-        if (nums == null || nums.length == 0) {
+	public int maxSubArray(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
         int len = nums.length;
-        int sum = nums[0]; 
-        int maxSum = nums[0];
+        int localMax = nums[0]; 
+        int globalMax = nums[0];
         
-        for (int i = 1; i < len; i++) {
-            sum = Math.max(sum + nums[i], nums[i]);
-            maxSum = Math.max(maxSum, sum);
+        for (int i = 1; i < len; i++) 
+        {
+            localMax = Math.max(localMax + nums[i], nums[i]);
+            globalMax = Math.max(globalMax, localMax);
         }
         
-        return maxSum;
+        return globalMax;
     }
 	
 	// brute force method is using two loops to find the largest sum
 	
 	// solution 1: using DP, time O(n), space O(n)
-	public int maxSubArray2(int[] nums) {
-        if(nums == null || nums.length == 0) {
+	public int maxSubArray2(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
@@ -39,7 +44,8 @@ public class Q053_Maximum_Subarray {
         sum[0] = nums[0];
         int maxSum = nums[0];
         
-        for(int i = 1; i < nums.length; i++) {
+        for (int i = 1; i < nums.length; i++) 
+        {
             sum[i] = Math.max(sum[i-1] + nums[i], nums[i]);
             maxSum = Math.max(maxSum, sum[i]);
         }

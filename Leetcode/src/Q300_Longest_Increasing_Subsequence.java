@@ -35,7 +35,7 @@ public class Q300_Longest_Increasing_Subsequence {
         
         for (int num : nums)
         {
-            if (curTail == -1 || queue[curTail] < num)
+            if (curTail == -1 || num > queue[curTail])
             {
                 queue[++curTail] = num;
             }
@@ -49,6 +49,7 @@ public class Q300_Longest_Increasing_Subsequence {
         return curTail+1;
     }
 
+	// find the position of first num which is equal or larger than target num
     private int findPos(int[] queue, int curTail, int target)
     {
         int left = 0, right = curTail;

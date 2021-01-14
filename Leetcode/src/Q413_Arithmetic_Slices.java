@@ -31,29 +31,34 @@ Example:
  * */
 
 
-public class Q413_Arithmetic_Slices {
+public class Q413_Arithmetic_Slices 
+{
 	// time O(n^2)
-	public int numberOfArithmeticSlices(int[] A) {
-        if(A == null || A.length < 3) {
+	public int numberOfArithmeticSlices(int[] A) 
+	{
+        if (A == null || A.length < 3) 
+        {
             return 0;
         } 
         
         int len = A.length;
-        int count = 0;
+        int totalCount = 0;
         
-        for(int i = 1; i < len - 1; i++) {
-            int step = A[i] - A[i-1];
-            int index = i + 1;
-            int num = 0;
+        for (int i = 1; i < len - 1; i++) 
+        {
+            int diff = A[i] - A[i-1];
+            int index = i + 1; // at least contains 3 numbers
+            int count = 0;
             
-            while(index < len && A[index] - A[index-1] == step) {
+            while (index < len && A[index] - A[index-1] == diff) 
+            {
                 index++;
-                num++;
+                count++;
             }
             
-            count += num;
+            totalCount += count;
         }
         
-        return count;
+        return totalCount;
     }
 }

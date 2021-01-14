@@ -14,10 +14,13 @@ Could you solve it with constant space complexity?
  * 
  * */ 
 
-public class Q238_Product_of_Array_Except_Self {	
+public class Q238_Product_of_Array_Except_Self 
+{	
 	// using DP, time is O(n), space is O(n)
-	public int[] productExceptSelf(int[] nums) {
-        if(nums == null || nums.length == 0) {
+	public int[] productExceptSelf(int[] nums) 
+	{
+        if(nums == null || nums.length == 0) 
+        {
             return new int[0];
         }      
         
@@ -27,15 +30,18 @@ public class Q238_Product_of_Array_Except_Self {
         left[0] = 1;
         right[len - 1] = 1;
         
-        for(int i = 1; i < len; i++) {
+        for(int i = 1; i < len; i++) 
+        {
             left[i] = left[i - 1] * nums[i - 1];
         }
         
-        for(int i = len - 2; i >= 0; i--) {
+        for(int i = len - 2; i >= 0; i--) 
+        {
             right[i] = right[i + 1] * nums[i + 1];
         }
         
-        for(int i = 0; i < len; i++) {
+        for(int i = 0; i < len; i++) 
+        {
             left[i] *= right[i];
         }
         

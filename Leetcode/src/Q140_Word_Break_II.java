@@ -47,10 +47,10 @@ public class Q140_Word_Break_II {
     
     private List<String> backtrack(String s, int start, List<String>[] memo)
     {
-        List<String> result = new LinkedList<>();
-        
+        // 防止访问memo[]时越界
         if (start == s.length())
         {
+            List<String> result = new LinkedList<>();
             result.add("");
             return result;
         }
@@ -58,6 +58,8 @@ public class Q140_Word_Break_II {
         {
             return memo[start];
         }
+        
+        memo[start] = new LinkedList<>();
         
         for (int end = start; end < s.length() && end-start+1 <= maxWordLen; end++)
         {
@@ -74,16 +76,15 @@ public class Q140_Word_Break_II {
             {
                 if (str.equals(""))
                 {
-                    result.add(curWord);
+                    memo[start].add(curWord);
                 }
                 else
                 {
-                    result.add(String.format("%s %s", curWord, str));
+                    memo[start].add(String.format("%s %s", curWord, str));
                 }
             }
         }
         
-        memo[start] = result;
         return memo[start];
     }
     
