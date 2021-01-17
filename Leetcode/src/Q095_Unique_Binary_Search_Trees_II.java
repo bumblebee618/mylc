@@ -27,12 +27,13 @@ public class Q095_Unique_Binary_Search_Trees_II {
 	 *  (4). 引入记忆化搜索，去除重复计算。  
 	 *      
 	 **********************************************************/
-	public List<TreeNode> generateTrees(int n) {
-        List<TreeNode> ans = new ArrayList<>();
+	public List<TreeNode> generateTrees(int n) 
+	{
+        List<TreeNode> result = new ArrayList<>();
         
-        if(n <= 0) 
+        if (n <= 0) 
         {
-            return ans;
+            return result;
         }
         
         // because the label is from 1 to n, so the lenght should be n + 1 !!!

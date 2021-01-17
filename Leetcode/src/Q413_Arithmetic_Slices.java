@@ -33,8 +33,34 @@ Example:
 
 public class Q413_Arithmetic_Slices 
 {
-	// time O(n^2)
-	public int numberOfArithmeticSlices(int[] A) 
+	// solution 1: O(n)
+	public int numberOfArithmeticSlices(int[] nums) 
+    {
+        if (nums == null || nums.length <= 2)
+        {
+            return 0;
+        }
+        
+        int result = 0;
+        int[] dp = new int[nums.length];
+        
+        for (int i = 2; i < nums.length; i++)
+        {
+            if (nums[i] - nums[i-1] == nums[i-1] - nums[i-2])
+            {
+                dp[i] += dp[i-1] + 1;
+                result += dp[i];
+            }
+        }
+        
+        return result;
+    }
+	
+	
+	
+	
+	// solution 2: time O(n^2)
+	public int numberOfArithmeticSlices2(int[] A) 
 	{
         if (A == null || A.length < 3) 
         {

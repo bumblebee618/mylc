@@ -43,36 +43,35 @@ All arithmetic subsequence slices are:
  */
 public class Q446_Arithmetic_Slices_II_Subsequence 
 {
-	public int numberOfArithmeticSlices(int[] A) 
+	public int numberOfArithmeticSlices(int[] nums) 
     {
-        if(A == null || A.length < 3) 
+        if (nums == null || nums.length < 3) 
         {
             return 0;
         } 
         
-        int len = A.length;
         int result = 0;
-        Map<Integer, Integer>[] counts = new Map[len];
+        Map<Integer, Integer>[] counts = new Map[nums.length];
         
-        for (int i = 0; i < len; i++) 
+        for (int i = 0; i < nums.length; i++) 
         {
             counts[i] = new HashMap<>(i);
             
             for (int j = 0; j < i; j++) 
             {
-                long gap = (long)A[i] - (long)A[j];
+                long gap = (long) nums[i] - (long) nums[j];
                 
                 if (gap < Integer.MIN_VALUE || gap > Integer.MAX_VALUE) 
                 {
                     continue;
                 }
                 
-                int diff = (int)gap;
-                int sum = counts[j].getOrDefault(diff, 0);
+                int diff = (int) gap;
+                int count = counts[j].getOrDefault(diff, 0);
                 int origin = counts[i].getOrDefault(diff, 0);
-                counts[i].put(diff, origin + sum + 1);
+                counts[i].put(diff, origin + count + 1);
                 // 这里加的是j的sum, 防止subarray长度只有2的情况
-                result += sum;
+                result += count;
             }
         }
         

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /******
  * 
 You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. 
@@ -39,12 +41,7 @@ public class Q494_Target_Sum {
             return 0;
         } 
         
-        int positiveSum = 0;
-        
-        for (int num : nums) 
-        {
-        	positiveSum += num;
-        }
+        int positiveSum = Arrays.stream(nums).sum();
         
         if (target > positiveSum || target < -positiveSum) 
         {
@@ -62,7 +59,12 @@ public class Q494_Target_Sum {
         	
         	for (int k = 0; k < dp.length; k++) 
         	{
-        	    if(k + num < dp.length) 
+        		if (dp[k] == 0)
+        		{
+        			continue;
+        		}
+        		
+        	    if (k + num < dp.length) 
         	    {
         	        nextDp[k + num] += dp[k];
         	    }
