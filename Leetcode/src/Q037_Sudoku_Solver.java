@@ -72,7 +72,7 @@ public class Q037_Sudoku_Solver {
             }
         }
                 
-        //Check 3 x 3 block
+        //Check 3 row 3 block
         for (int row = (i / 3) * 3; row < (i / 3) * 3 + 3; row++) 
         {
             for (int col = (j / 3) * 3; col < (j / 3) * 3 + 3; col++) 

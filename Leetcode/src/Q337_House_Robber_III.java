@@ -22,14 +22,18 @@ Maximum amount of money the thief can rob = 4 + 5 = 9.
  * 
  * */
 
-public class Q337_House_Robber_III {
-	public int rob(TreeNode root) {
+public class Q337_House_Robber_III 
+{
+	public int rob(TreeNode root) 
+	{
         int[] num = dfs(root);
         return Math.max(num[0], num[1]);
     }
 	
-	public int[] dfs(TreeNode node){
-		if(node == null){
+	private int[] dfs(TreeNode node)
+	{
+		if (node == null)
+		{
             return new int[]{0, 0};
         }
         

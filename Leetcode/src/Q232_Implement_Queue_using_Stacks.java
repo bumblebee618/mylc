@@ -15,7 +15,7 @@ public class Q232_Implement_Queue_using_Stacks {
         s2 = new Stack<Integer>();
     }
     
-    /** Push element x to the back of queue. */
+    /** Push element row to the back of queue. */
     public void push(int x) {
         s1.push(x);
     }

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 public class Q000_Algorithm_BackTracking {
 	private int num_recursive;      // 皇后的数目
 	private int sum_recursive;	    // 解的数目
-	private int[] x_recursive;	    // x[i]用于表示在第i行，皇后所放的位置
+	private int[] x_recursive;	    // row[i]用于表示在第i行，皇后所放的位置
 	private int num;
 	private int sum;
 	private int[] x;

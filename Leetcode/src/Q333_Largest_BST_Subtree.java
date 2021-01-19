@@ -7,24 +7,25 @@ public class Q333_Largest_BST_Subtree {
 	// return result contains 3 elements: minVal of child, maxVal of child, count from child
 	private int count = 0;
     
-    public int largestBSTSubtree(TreeNode root) {
-        traverse(root);
+    public int largestBSTSubtree(TreeNode root) 
+    {
+        dfs(root);
         return count;
     }
     
-    private Integer[] traverse(TreeNode root)
+    private Integer[] dfs(TreeNode root)
     {
     	// minvalue, maxvalue, total count of the subBST
         Integer[] result = new Integer[] {null, null, null};
         
         if (root == null)
         {
-            result[2] = 0;
+            result[2] = 0; // count of BST == 0 mean subtree is still a valid BST
             return result;
         }
         
-        Integer[] left = traverse(root.left);
-        Integer[] right = traverse(root.right);
+        Integer[] left = dfs(root.left);
+        Integer[] right = dfs(root.right);
         
         // not any valid sub tree found
         if (left[2] == null || right[2] == null)
@@ -41,8 +42,8 @@ public class Q333_Largest_BST_Subtree {
         }
         else
         {
-            result[0] = left[0] == null ? root.val : left[0];
-            result[1] = right[1] == null ? root.val : right[1];
+            result[0] = (left[0] == null) ? root.val : left[0];
+            result[1] = (right[1] == null) ? root.val : right[1];
             result[2] = left[2] + right[2] + 1;
             count = Math.max(count, result[2]);
             return result;

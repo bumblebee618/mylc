@@ -8,7 +8,7 @@ Equations are given in the format A / B = k, where A and B are variables represe
 
 Example:
 Given a / b = 2.0, b / c = 3.0. 
-queries are: a / c = ?, b / a = ?, a / e = ?, a / a = ?, x / x = ? . 
+queries are: a / c = ?, b / a = ?, a / e = ?, a / a = ?, row / row = ? . 
 return [6.0, 0.5, -1.0, 1.0, -1.0 ].
 
 The input is: vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries , where equations.size() == values.size(), and the values are positive. This represents the equations. Return vector<double>.
@@ -17,7 +17,7 @@ According to the example above:
 
 equations = [ ["a", "b"], ["b", "c"] ],
 values = [2.0, 3.0],
-queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ]. 
+queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["row", "row"] ]. 
 The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
 
  * 

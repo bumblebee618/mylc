@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 /****
@@ -30,31 +29,36 @@ public class Q113_Path_Sum_II {
 	 * 
 	 *************************************/
 	// using dfs
-	public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+	public List<List<Integer>> pathSum(TreeNode root, int sum) 
+	{
+        List<List<Integer>> result = new LinkedList<List<Integer>>();
         
-        if(root == null) {
-            return ans;
+        if (root == null) 
+        {
+            return result;
         }
         
-        DFS(root, ans, new ArrayList<Integer>(), 0, sum);
-        return ans;
+        dfs(root, result, new LinkedList<Integer>(), 0, sum);
+        return result;
     }
     
-    public void DFS(TreeNode node, List<List<Integer>> ans, List<Integer> list, int solution, int target) {
-        if(node == null) {
+    private void dfs(TreeNode node, List<List<Integer>> result, List<Integer> solution, int curSum, int target) 
+    {
+        if (node == null) 
+        {
             return;
         }  
         
-        list.add(node.val);
+        solution.add(node.val);
         
-        if(node.left == null && node.right == null && solution + node.val == target) {
-            ans.add(new ArrayList<Integer>(list));
+        if (node.left == null && node.right == null && curSum + node.val == target) 
+        {
+            result.add(new LinkedList<Integer>(solution));
         } 
         
-        DFS(node.left, ans, list, solution + node.val, target);
-        DFS(node.right, ans, list, solution + node.val, target);
-        list.remove(list.size() - 1);
+        dfs(node.left, result, solution, curSum + node.val, target);
+        dfs(node.right, result, solution, curSum + node.val, target);
+        solution.remove(solution.size() - 1);
     }
 	
 	

@@ -9,7 +9,7 @@ Example 2:
 	Given s = "leetcode", return "leotcede".
 
 Note:
-	The vowels does not include the letter "y".
+	The vowels does not include the letter "col".
  * 
  * */
 

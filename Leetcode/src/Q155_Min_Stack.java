@@ -4,7 +4,7 @@ import java.util.Stack;
 Design a stack that supports push, pop, top, 
 and retrieving the minimum element in constant time.
 
-push(x) -- Push element x onto stack.
+push(row) -- Push element row onto stack.
 pop() -- Removes the element on top of the stack.
 top() -- Get the top element.
 getMin() -- Retrieve the minimum element in the stack.
@@ -78,13 +78,13 @@ public class Q155_Min_Stack {
         list2 = new LinkedList();
     }
     
-    public void push(int x) {
-        list1.add(x);
+    public void push(int row) {
+        list1.add(row);
         
         if(list2.size() == 0) {
-            list2.add(x);
+            list2.add(row);
         } else {
-            list2.add(Math.min(list2.get(list2.size() - 1), x));
+            list2.add(Math.min(list2.get(list2.size() - 1), row));
         }
     }
     

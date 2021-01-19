@@ -1,14 +1,14 @@
 /******
  * 
-	Implement pow(x, n).
+	Implement pow(row, n).
 
  * 
  * */
 
 public class Q050_Pow_x_n {
 	// test case:
-    // invalid input: x == 0 or n >= Integer.MAX_VALUE, <= Integer.MIN_VALUE;
-    // x == 1, x == -1
+    // invalid input: row == 0 or n >= Integer.MAX_VALUE, <= Integer.MIN_VALUE;
+    // row == 1, row == -1
     // n == 0
 	
 	// solution 1: iterator, time is O(logn)

@@ -13,25 +13,25 @@ A knight has 8 possible moves it can make, as illustrated below. Each move is tw
 
 
 
-Return the minimum number of steps needed to move the knight to the square [x, y].  It is guaranteed the answer exists.
+Return the minimum number of steps needed to move the knight to the square [row, col].  It is guaranteed the answer exists.
 
  
 
 Example 1:
 
-Input: x = 2, y = 1
+Input: row = 2, col = 1
 Output: 1
 Explanation: [0, 0] → [2, 1]
 Example 2:
 
-Input: x = 5, y = 5
+Input: row = 5, col = 5
 Output: 4
 Explanation: [0, 0] → [2, 1] → [4, 2] → [3, 4] → [5, 5]
  
 
 Constraints:
 
-|x| + |y| <= 300
+|row| + |col| <= 300
  */
 public class Q1197_Minimum_Knight_Moves 
 {

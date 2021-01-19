@@ -23,36 +23,27 @@ Note:
 Both of the given trees will have between 1 and 100 nodes.
  */
 public class Q872_Leaf_Similar_Trees {
-	public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        List<Integer> list1 = dfs(root1);
-        List<Integer> list2 = dfs(root2);
-        
-        if (list1.size() != list2.size())
+	public boolean leafSimilar(TreeNode root1, TreeNode root2) 
+    {
+        if (root1 == null || root2 == null)
         {
-            return false;
+            return root1 == root2;
         }
         
-        for (int i = 0; i < list1.size(); i++)
-        {
-            if (list1.get(i) != list2.get(i))
-            {
-                return false;
-            }
-        }
-        
-        return true;
+        String leafs1 = dfs(root1);
+        String leafs2 = dfs(root2);
+        return leafs1.equals(leafs2);
     }
     
-    private List<Integer> dfs(TreeNode root)
+    private String dfs(TreeNode root)
     {
-        List<Integer> list = new LinkedList<>();
-        
         if (root == null)
         {
-            return list;
+            return "";
         }
         
         Stack<TreeNode> stack = new Stack<>();
+        StringBuilder builder = new StringBuilder();
         
         while (root != null || !stack.isEmpty())
         {
@@ -66,12 +57,12 @@ public class Q872_Leaf_Similar_Trees {
             
             if (root.left == null && root.right == null)
             {
-                list.add(root.val);
+                builder.append(root.val).append(",");
             }
             
             root = root.right;
         }
         
-        return list;
+        return builder.toString();
     }
 }

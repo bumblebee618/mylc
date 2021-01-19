@@ -152,7 +152,7 @@ public class Q323_Number_of_Connected_Components_in_an_Undirected_Graph
         }
         
         public void union(int x, int y){
-            int fa_x = compress_find(x);     // 注意这里用的是compress_find(x)而不是直接father.get(x) !!!
+            int fa_x = compress_find(x);     // 注意这里用的是compress_find(row)而不是直接father.get(row) !!!
             int fa_y = compress_find(y);
             
             if(fa_x != fa_y){

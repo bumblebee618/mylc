@@ -13,7 +13,8 @@ public class Q109_Convert_Sorted_List_to_Binary_Search_Tree {
 	 * ascending order, convert it to a height balanced BST.
 	 ****************************************************************/
 	// solution 1: doesn't modify list
-    public TreeNode sortedListToBST(ListNode head) {
+    public TreeNode sortedListToBST(ListNode head) 
+    {
         return buildTree(head, null);
     }
     

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 /******
  *
@@ -30,25 +31,31 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
 	 *      
 	 ********************************************************************/
 	
-    public String serialize(TreeNode root) {
-    	if(root == null){
+    public String serialize(TreeNode root) 
+    {
+    	if (root == null)
+    	{
             return "";
         }
     	
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        q.add(root);
-        StringBuffer serial = new StringBuffer();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        StringBuilder serial = new StringBuilder();
         int lastPos = 0;
         
-        while(!q.isEmpty()){
-            TreeNode node = q.poll();
+        while (!queue.isEmpty())
+        {
+            TreeNode node = queue.poll();
             
-            if(node != null){
+            if (node != null)
+            {
                 serial.append(node.val).append(",");
-                q.add(node.left);
-                q.add(node.right);
+                queue.add(node.left);
+                queue.add(node.right);
                 lastPos = serial.length() - 2;
-            } else {
+            } 
+            else 
+            {
                 serial.append("#,");
             }
         }
@@ -57,37 +64,45 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-    	if(data == null || data.equals("")){
+    public TreeNode deserialize(String data) 
+    {
+    	if (data == null || data.equals(""))
+    	{
             return null;
         }
         
         String[] array = data.split(",");
-        int n = array.length;
         
-        if(array[0].equals("#")){
+        if (array[0].equals("#"))
+        {
             return null;
         }
         
         TreeNode root = new TreeNode(Integer.parseInt(array[0]));
-        ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+        List<TreeNode> list = new ArrayList<TreeNode>();
         list.add(root);
         int index = 0;
         
-        for(int i = 1; i < n; ++i){
-            if(!array[i].equals("#")){
+        for (int i = 1; i < array.length; ++i)
+        {
+            if (!array[i].equals("#"))
+            {
                 TreeNode node = new TreeNode(Integer.parseInt(array[i]));
                 
-                if(i % 2 == 1){
+                if (i % 2 == 1)
+                {
                     list.get(index).left = node;
-                } else{
+                } 
+                else
+                {
                     list.get(index).right = node;
                 }
                 
                 list.add(node);   
             }
             
-            if(i % 2 == 0){
+            if (i % 2 == 0)
+            {
                 index++;
             }
         }

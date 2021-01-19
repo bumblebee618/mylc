@@ -3,7 +3,7 @@ import java.util.*;
 /***
  * 
  * @author jackie
- * Given a set of points in the xy-plane, determine the minimum area of a rectangle formed from these points, with sides parallel to the x and y axes.
+ * Given a set of points in the xy-plane, determine the minimum area of a rectangle formed from these points, with sides parallel to the row and col axes.
 
 If there isn't any rectangle, return 0.
 

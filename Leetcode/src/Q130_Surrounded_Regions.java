@@ -191,17 +191,17 @@ public class Q130_Surrounded_Regions {
 //
 //        while (!queue.isEmpty()) {
 //            int cur = queue.poll();
-//            int x = cur / col,
-//                y = cur % col;
+//            int row = cur / col,
+//                col = cur % col;
 //
-//            if (board[x][y] == 'O') {
-//                board[x][y] = 'D';
+//            if (board[row][col] == 'O') {
+//                board[row][col] = 'D';
 //            }
 //
-//            enqueue(x - 1, y);
-//            enqueue(x + 1, y);
-//            enqueue(x, y - 1);
-//            enqueue(x, y + 1);
+//            enqueue(row - 1, col);
+//            enqueue(row + 1, col);
+//            enqueue(row, col - 1);
+//            enqueue(row, col + 1);
 //        }
 //
 //        for (int i = 0; i < row; i++) {
@@ -220,9 +220,9 @@ public class Q130_Surrounded_Regions {
 //        col = 0;
 //    }
 //
-//    public void enqueue(int x, int y) {
-//        if (x >= 0 && x < row && y >= 0 && y < col && board[x][y] == 'O'){  
-//            queue.offer(x * col + y);
+//    public void enqueue(int row, int col) {
+//        if (row >= 0 && row < row && col >= 0 && col < col && board[row][col] == 'O'){  
+//            queue.offer(row * col + col);
 //        }
 //    }
 	

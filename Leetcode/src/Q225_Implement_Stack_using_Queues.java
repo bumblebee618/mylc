@@ -5,7 +5,7 @@ import java.util.Queue;
 public class Q225_Implement_Stack_using_Queues {
 	Queue<Integer> q1 = new LinkedList<Integer>();
     
-    // Push element x onto stack.
+    // Push element row onto stack.
     public void push(int x) {
         q1.add(x);
         int num = q1.size();
@@ -38,12 +38,12 @@ public class Q225_Implement_Stack_using_Queues {
 //	Queue<Integer> q2 = new LinkedList<Integer>();
 //    boolean q1_used = true, q2_used = false;
 //    
-//    // Push element x onto stack.
-//    public void push(int x) {
+//    // Push element row onto stack.
+//    public void push(int row) {
 //        if(q1_used)
-//            q1.add(x);
+//            q1.add(row);
 //        else if(q2_used)
-//            q2.add(x);
+//            q2.add(row);
 //    }
 //
 //    // Removes the element on top of the stack.

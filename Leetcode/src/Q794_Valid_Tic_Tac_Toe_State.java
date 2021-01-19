@@ -2,7 +2,7 @@
  * 
 A Tic-Tac-Toe board is given as a string array board. Return True if and only if it is possible to reach this board position during the course of a valid tic-tac-toe game.
 
-The board is a 3 x 3 array, and consists of characters " ", "X", and "O".  The " " character represents an empty square.
+The board is a 3 row 3 array, and consists of characters " ", "X", and "O".  The " " character represents an empty square.
 
 Here are the rules of Tic-Tac-Toe:
 

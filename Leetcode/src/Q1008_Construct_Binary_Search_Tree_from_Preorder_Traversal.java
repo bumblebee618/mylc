@@ -19,8 +19,10 @@ Note:
 1 <= preorder.length <= 100
 The values of preorder are distinct.
  */
-public class Q1008_Construct_Binary_Search_Tree_from_Preorder_Traversal {
-	public TreeNode bstFromPreorder(int[] preorder) {
+public class Q1008_Construct_Binary_Search_Tree_from_Preorder_Traversal 
+{
+	public TreeNode bstFromPreorder(int[] preorder) 
+    {
         if (preorder == null || preorder.length == 0)
         {
             return null;
@@ -39,13 +41,8 @@ public class Q1008_Construct_Binary_Search_Tree_from_Preorder_Traversal {
         TreeNode root = new TreeNode(preorder[start]);
         int rightStart = start+1;
         
-        while (rightStart <= end)
+        while (rightStart <= end && preorder[start] > preorder[rightStart])
         {
-            if (preorder[rightStart] > preorder[start])
-            {
-                break;
-            }
-            
             rightStart++;
         }
         

@@ -22,7 +22,8 @@ Note:
 The string size will be in the range [1, 100].
  */
 public class Q678_Valid_Parenthesis_String {
-	public boolean checkValidString(String s) {
+	public boolean checkValidString(String s) 
+	{
         if (s == null || s.length() == 0)
         {
             return true;
@@ -30,41 +31,36 @@ public class Q678_Valid_Parenthesis_String {
         
         int size = s.length();
         boolean[][] dp = new boolean[size][size];
-        
-        // "*" 作为空字符使用
+
         for (int i = 0; i < size; i++)
         {
-            if (s.charAt(i) == '*')
-            {
-                dp[i][i] = true;
-            }
+            dp[i][i] = s.charAt(i) == '*';
         }
         
-        for (int i = 0; i < size-1; i++)
+        for (int i = 0; i < s.length()-1; i++)
         {
-            char c1 = s.charAt(i);
-            char c2 = s.charAt(i+1);
-            dp[i][i+1] = isValid(c1, c2);
+            dp[i][i+1] = isValid(s, i, i+1);
         }
         
         for (int length = 2; length < size; length++)
         {
             for (int start = 0; start+length < size; start++)
             {
-                int end = start + length;
-                dp[start][end] = dp[start+1][end-1] && isValid(s.charAt(start), s.charAt(end));
+                int end = start+length;
                 
-                if (dp[start][end])
+                if (dp[start+1][end-1] && isValid(s, start, end))
                 {
-                    continue;
+                    dp[start][end] = true;
                 }
-                
-                for (int k = start; k < end; k++)    // k可以从start开始，因为当k为*时，dp[start][start] = true
+                else
                 {
-                    if (dp[start][k] && dp[k+1][end])
+                    for (int k = start; k < end; k++)
                     {
-                        dp[start][end] = true;
-                        break;
+                        if (dp[start][k] && dp[k+1][end])
+                        {
+                            dp[start][end] = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -73,8 +69,10 @@ public class Q678_Valid_Parenthesis_String {
         return dp[0][size-1];
     }
     
-    private boolean isValid(char c1, char c2)
+    private boolean isValid(String s, int index1, int index2)
     {
-        return (c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*');
+        char c1 = s.charAt(index1);
+        char c2 = s.charAt(index2);
+        return (c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*') ? true : false;
     }
 }

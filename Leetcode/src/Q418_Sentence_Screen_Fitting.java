@@ -1,6 +1,6 @@
 /************
  * 
-Given a rows x cols screen and a sentence represented by a list of words, find how many times the given sentence can be fitted on the screen.
+Given a rows row cols screen and a sentence represented by a list of words, find how many times the given sentence can be fitted on the screen.
 
 Note:
 

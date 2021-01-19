@@ -6,7 +6,7 @@ I pick a number from 1 to n. You have to guess which number I picked.
 
 Every time you guess wrong, I'll tell you whether the number I picked is higher or lower.
 
-However, when you guess a particular number x, and you guess wrong, you pay $x. You win the game when you guess the number I picked.
+However, when you guess a particular number row, and you guess wrong, you pay $row. You win the game when you guess the number I picked.
 
 Example:
 

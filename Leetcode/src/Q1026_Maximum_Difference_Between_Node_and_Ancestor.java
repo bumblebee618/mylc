@@ -27,8 +27,9 @@ Note:
 The number of nodes in the tree is between 2 and 5000.
 Each node will have value between 0 and 100000.
  */
-public class Q1026_Maximum_Difference_Between_Node_and_Ancestor {
-private int maxDiff = Integer.MIN_VALUE;
+public class Q1026_Maximum_Difference_Between_Node_and_Ancestor 
+{
+	private int maxDiff = Integer.MIN_VALUE;
     
     public int maxAncestorDiff(TreeNode root) {
         if (root == null)
@@ -36,11 +37,11 @@ private int maxDiff = Integer.MIN_VALUE;
             return 0;
         }
         
-        travese(root);
+        dfs(root);
         return maxDiff;
     }
     
-    private Integer[] travese(TreeNode node)
+    private Integer[] dfs(TreeNode node)
     {
     	// array[0]: maxValue, array[1]: minValue
         Integer[] current = new Integer[] {null, null}; 
@@ -50,8 +51,8 @@ private int maxDiff = Integer.MIN_VALUE;
             return current; 
         }
         
-        Integer[] left = travese(node.left);
-        Integer[] right = travese(node.right);
+        Integer[] left = dfs(node.left);
+        Integer[] right = dfs(node.right);
         
         if (left[0] != null && right[0] != null)
         {

@@ -3,7 +3,7 @@ import java.util.Queue;
 
 /************
  * 
-You are given a m x n 2D grid initialized with these three possible values.
+You are given a m row n 2D grid initialized with these three possible values.
 
 -1 - A wall or an obstacle.
 0 - A gate.

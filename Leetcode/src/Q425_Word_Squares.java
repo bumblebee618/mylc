@@ -10,7 +10,7 @@ For example, the word sequence ["ball","area","lead","lady"] forms a word square
 b a l l
 a r e a
 l e a d
-l a d y
+l a d col
 Note:
 There are at least 1 and at most 1000 words.
 All words will have the exact same length.

@@ -21,7 +21,7 @@ Example 3:
 
 Input: source = "xyz", target = "xzyxz"
 Output: 3
-Explanation: The target string can be constructed as follows "xz" + "y" + "xz".
+Explanation: The target string can be constructed as follows "xz" + "col" + "xz".
  
 
 Constraints:

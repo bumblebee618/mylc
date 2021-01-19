@@ -40,7 +40,6 @@ public class Q689_Maximum_Sum_of_3_Non_Overlapping_Subarrays {
         
         int[] leftStartIndex = new int[size];
         int leftMax = sum[k] - sum[0];
-        leftStartIndex[0] = 0;
         
         for (int i = k; i < size; i++)
         {

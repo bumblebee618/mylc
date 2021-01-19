@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -22,33 +21,43 @@ All root-to-leaf paths are:
 
 public class Q257_Binary_Tree_Paths {
 	// solution 1: using recursion
-	public List<String> binaryTreePaths(TreeNode root) {
-        List<String> ans = new ArrayList<String>();
+	public List<String> binaryTreePaths(TreeNode root) 
+	{
+        List<String> ans = new LinkedList<String>();
         
-        if(root == null){
+        if (root == null)
+        {
             return ans;
         }
         
-        DFS(ans, root, "");
+        dfs(ans, root, "");
         return ans;
     }
     
-    public void DFS(List<String> ans, TreeNode node, String solution){
-        if(node == null){
+    private void dfs(List<String> result, TreeNode node, String solution)
+    {
+        if (node == null)
+        {
             return ;
         } 
         
-        if(solution.length() == 0){
+        if (solution.length() == 0)
+        {
             solution = Integer.toString(node.val);
-        } else {
+        } 
+        else 
+        {
             solution = solution + "->" + Integer.toString(node.val);
         }
         
-        if(node.left == null && node.right == null){
-            ans.add(solution);
-        } else {
-            DFS(ans, node.left, solution);   
-            DFS(ans, node.right, solution); 
+        if (node.left == null && node.right == null)
+        {
+            result.add(solution);
+        } 
+        else 
+        {
+            dfs(result, node.left, solution);   
+            dfs(result, node.right, solution); 
         }
     }
 	
@@ -57,35 +66,41 @@ public class Q257_Binary_Tree_Paths {
     
   
 	// solution 2: using Iterator
-	public List<String> binaryTreePaths2(TreeNode root) {
-        List<String> ans = new ArrayList<String>();
+	public List<String> binaryTreePaths2(TreeNode root) 
+	{
+        List<String> ans = new LinkedList<String>();
         
-        if(root == null){
+        if (root == null)
+        {
             return ans;
         }
         
         Queue<List<TreeNode>> queue = new LinkedList<>();
-        List<TreeNode> list = new ArrayList<>();
+        List<TreeNode> list = new LinkedList<>();
         list.add(root);
         queue.offer(list);
         
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty())
+        {
             List<TreeNode> currentList = queue.poll();
             TreeNode node = currentList.get(currentList.size() - 1);
             
-            if(node.left != null){
-                List<TreeNode> leftList = new ArrayList<>(currentList);
+            if (node.left != null)
+            {
+                List<TreeNode> leftList = new LinkedList<>(currentList);
                 leftList.add(node.left);
                 queue.offer(leftList);
             }
             
-            if(node.right != null){
-                List<TreeNode> rightList = new ArrayList<>(currentList);
+            if (node.right != null)
+            {
+                List<TreeNode> rightList = new LinkedList<>(currentList);
                 rightList.add(node.right);
                 queue.offer(rightList);
             } 
             
-            if(node.left == null && node.right == null){
+            if (node.left == null && node.right == null)
+            {
                 ans.add(getStr(currentList));
             }
         }
@@ -93,13 +108,18 @@ public class Q257_Binary_Tree_Paths {
         return ans;
     }
     
-    public String getStr(List<TreeNode> list){
+    private String getStr(List<TreeNode> list)
+    {
         StringBuilder builder = new StringBuilder();
         
-        for(TreeNode node : list){
-            if(builder.length() == 0){
+        for (TreeNode node : list)
+        {
+            if (builder.length() == 0)
+            {
                 builder.append(node.val);
-            } else {
+            } 
+            else 
+            {
                 builder.append("->").append(node.val);
             }
         }

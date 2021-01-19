@@ -33,26 +33,27 @@ This tree is also valid:
           4
  */
 public class Q701_Insert_into_a_Binary_Search_Tree {
-	public TreeNode insertIntoBST(TreeNode root, int val) {
+	public TreeNode insertIntoBST(TreeNode root, int val) 
+	{
         if (root == null)
         {
             return new TreeNode(val);
         }
         
-        TreeNode prev = root;
-        TreeNode node = root;
+        TreeNode prevNode = root;
+        TreeNode currentNode = root;
         
-        while (node != null)
+        while (currentNode != null)
         {
-            if (node.val > val)
+            if (currentNode.val > val)
             {
-                prev = node;
-                node = node.left;
+                prevNode = currentNode;
+                currentNode = currentNode.left;
             }
-            else if (node.val < val)
+            else if (currentNode.val < val)
             {
-                prev = node;
-                node = node.right;
+                prevNode = currentNode;
+                currentNode = currentNode.right;
             }
             else
             {
@@ -60,15 +61,15 @@ public class Q701_Insert_into_a_Binary_Search_Tree {
             }
         }
         
-        if (node == null)
+        if (currentNode == null)
         {
-            if (prev.val > val)
+            if (prevNode.val > val)
             {
-                prev.left = new TreeNode(val);
+                prevNode.left = new TreeNode(val);
             }
             else
             {
-                prev.right = new TreeNode(val);
+                prevNode.right = new TreeNode(val);
             }
         }
         

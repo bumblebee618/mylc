@@ -4,8 +4,8 @@ import java.util.List;
  * 
 Numbers can be regarded as product of its factors. For example,
 
-8 = 2 x 2 x 2;
-  = 2 x 4.
+8 = 2 row 2 row 2;
+  = 2 row 4.
 Write a function that takes an integer n and return all possible combinations of its factors.
 
 Note: 

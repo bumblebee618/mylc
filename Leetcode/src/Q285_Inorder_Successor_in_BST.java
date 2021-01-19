@@ -8,26 +8,79 @@ Note: If the given node has no in-order successor in the tree, return null.
  * */
 
 public class Q285_Inorder_Successor_in_BST {
-	// solution 1, use inorder traverse, time complexity is O(n), space is O(n)
-	public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        if (root == null || p == null) {
+	// solution 1, use the feature of BST, time complexity is O(logn), space is O(1)
+		public TreeNode inorderSuccessor(TreeNode root, TreeNode target) 
+		{
+	        if (root == null || target == null) 
+	        {
+	            return null;
+	        }
+	        
+	        TreeNode nextNode = null;
+	        
+	        while (root != null) 
+	        {
+	            if (root.val < target.val) 
+	            {
+	                root = root.right;
+	            } 
+	            else if (root.val > target.val) 
+	            {
+	                nextNode = root;
+	                root = root.left;
+	            } 
+	            else 
+	            {
+	                if (root.right == null) 
+	                {
+	                    return nextNode;
+	                } 
+	                else 
+	                {
+	                    TreeNode curNode = root.right;
+	                    
+	                    while (curNode.left != null) 
+	                    {
+	                        curNode = curNode.left;
+	                    }
+	                    
+	                    return curNode;
+	                }
+	            }
+	        }
+	        
+	        return null;
+	    }
+		
+		
+	
+	// solution 2, use inorder traverse, time complexity is O(n), space is O(n)
+	public TreeNode inorderSuccessor2(TreeNode root, TreeNode target) 
+	{
+        if (root == null || target == null) 
+        {
             return null;
         }
         
-        Stack<TreeNode> stack = new Stack();
+        Stack<TreeNode> stack = new Stack<>();
         boolean foundNode = false; 
         
-        while (root != null || !stack.isEmpty()) {
-            while (root != null) {
+        while (root != null || !stack.isEmpty()) 
+        {
+            while (root != null) 
+            {
                 stack.push(root);
                 root = root.left;
             }
             
             root = stack.pop();
             
-            if (foundNode) {
+            if (foundNode) 
+            {
                 return root;
-            } else if (root == p) {
+            } 
+            else if (root == target) 
+            {
                 foundNode = true;
             }
             
@@ -37,37 +90,9 @@ public class Q285_Inorder_Successor_in_BST {
         return null;
     }
 	
-	// solution 2, use the feature of BST, time complexity is O(logn), space is O(1)
-	public TreeNode inorderSuccessor2(TreeNode root, TreeNode p) {
-        if (root == null || p == null) {
-            return null;
-        }
-        
-        TreeNode nextNode = null;
-        
-        while (root != null) {
-            if (root.val < p.val) {
-                root = root.right;
-            } else if (root.val > p.val) {
-                nextNode = root;
-                root = root.left;
-            } else {
-                if (root.right == null) {
-                    return nextNode;
-                } else {
-                    TreeNode curNode = root.right;
-                    
-                    while (curNode.left != null) {
-                        curNode = curNode.left;
-                    }
-                    
-                    return curNode;
-                }
-            }
-        }
-        
-        return null;
-    }
+	
+	
+	
 	
 	
 //	

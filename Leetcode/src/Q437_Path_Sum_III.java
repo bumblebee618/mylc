@@ -31,28 +31,33 @@ Return 3. The paths that sum to 8 are:
  * */
 
 public class Q437_Path_Sum_III {
-	public int pathSum(TreeNode root, int sum) {
-        if (root == null) {
+	public int pathSum(TreeNode root, int sum) 
+	{
+        if (root == null) 
+        {
             return 0;
         }
         
-        int totalCount = DFS(root, 0, sum);
+        int totalCount = dfs(root, 0, sum);
         return totalCount + pathSum(root.left, sum) + pathSum(root.right, sum);  // 更换起始点
     }
     
-    public int DFS(TreeNode node, int curSum, int sum) {
-        if(node == null) {
+    private int dfs(TreeNode node, int curSum, int sum) 
+    {
+        if (node == null) 
+        {
             return 0;
         } 
         
         int count = 0;
         
-        if(curSum + node.val == sum) {
+        if (curSum + node.val == sum) 
+        {
             count++;
         }
         
-        count += DFS(node.left, curSum + node.val, sum);
-        count += DFS(node.right, curSum + node.val, sum);
+        count += dfs(node.left, curSum + node.val, sum);
+        count += dfs(node.right, curSum + node.val, sum);
         return count;
     }
 }

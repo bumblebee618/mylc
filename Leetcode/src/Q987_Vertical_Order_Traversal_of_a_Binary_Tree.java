@@ -52,7 +52,8 @@ The tree will have between 1 and 1000 nodes.
 Each node's value will be between 0 and 1000.
  */
 public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
-	public List<List<Integer>> verticalTraversal(TreeNode root) {
+	public List<List<Integer>> verticalTraversal(TreeNode root) 
+	{
         List<List<Integer>> result = new LinkedList<>();
         
         if (root == null)
@@ -69,18 +70,18 @@ public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
         while (!queue.isEmpty())
         {
             Tuple t = queue.poll();
-            map.computeIfAbsent(t.y, x -> new LinkedList<Tuple>()).add(t);
-            leftBound = Math.min(leftBound, t.y);
-            rightBound = Math.max(rightBound, t.y);
+            map.computeIfAbsent(t.col, x -> new LinkedList<>()).add(t);
+            leftBound = Math.min(leftBound, t.col);
+            rightBound = Math.max(rightBound, t.col);
             
             if (t.node.left != null)
             {
-                queue.offer(new Tuple(t.node.left, t.x+1, t.y-1));
+                queue.offer(new Tuple(t.node.left, t.row+1, t.col-1));
             }
             
             if (t.node.right != null)
             {
-                queue.offer(new Tuple(t.node.right, t.x+1, t.y+1));
+                queue.offer(new Tuple(t.node.right, t.row+1, t.col+1));
             }
         }
         
@@ -89,7 +90,7 @@ public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
             if (map.containsKey(i))
             {
                 List<Tuple> list = map.get(i);
-                Collections.sort(list, (t1, t2) -> (t1.x != t2.x ? t1.x - t2.x : t1.node.val - t2.node.val));
+                Collections.sort(list, (t1, t2) -> (t1.row != t2.row ? t1.row - t2.row : t1.node.val - t2.node.val));
                 List<Integer> valList = list.stream().map(x -> x.node.val).collect(Collectors.toList());
                 result.add(valList);
                 
@@ -119,15 +120,15 @@ public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
     
     class Tuple
     {
-        public int x;
-        public int y;
+        public int row;
+        public int col;
         public TreeNode node;
         
-        public Tuple(TreeNode node, int x, int y)
+        public Tuple(TreeNode node, int row, int col)
         {
             this.node = node;
-            this.x = x;
-            this.y = y;
+            this.row = row;
+            this.col = col;
         }
     }
 }

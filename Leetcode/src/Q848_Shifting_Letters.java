@@ -8,7 +8,7 @@ Call the shift of a letter, the next letter in the alphabet, (wrapping around so
 
 For example, shift('a') = 'b', shift('t') = 'u', and shift('z') = 'a'.
 
-Now for each shifts[i] = x, we want to shift the first i+1 letters of S, x times.
+Now for each shifts[i] = row, we want to shift the first i+1 letters of S, row times.
 
 Return the final string after all such shifts to S are applied.
 

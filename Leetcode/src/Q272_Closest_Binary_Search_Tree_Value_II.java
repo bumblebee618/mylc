@@ -31,7 +31,6 @@ public class Q272_Closest_Binary_Search_Tree_Value_II {
         }
         
         Queue<Integer> heap = new PriorityQueue<Integer>(k, (a, b) -> Double.compare(Math.abs((double) b - target), Math.abs((double) a - target)));
-        
         Stack<TreeNode> stack = new Stack<>();
         
         // inorder traversal, this part total time is O(n*logk)

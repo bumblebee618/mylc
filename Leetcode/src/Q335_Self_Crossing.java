@@ -46,7 +46,7 @@ public class Q335_Self_Crossing {
 		int index = 0;
 
 		while (len > 0) {
-			System.out.println("x = " + xCoordinary + ", y = " + yCoordinary);
+			System.out.println("row = " + xCoordinary + ", col = " + yCoordinary);
 			if (len - 4 >= 0) {
 				xCoordinary = x[index + 3] - x[index + 1] + xCoordinary;
 				yCoordinary = x[index] - x[index + 2] + yCoordinary;
@@ -64,17 +64,17 @@ public class Q335_Self_Crossing {
 				if (len >= 3) {
 					dx[2] = x[index + 2];
 				}
-				System.out.println("1: x = " + xCoordinary + ", y = " + yCoordinary);
+				System.out.println("1: row = " + xCoordinary + ", col = " + yCoordinary);
 				System.out.println("in here" + dx[0] + ", " + dx[1] + ", " + dx[2] + ", " + dx[3]);
 				System.out.println((dx[3] - dx[1]) + ", " + (dx[0] - dx[2]));
 				xCoordinary = dx[3] - dx[1] + xCoordinary;
 				yCoordinary = dx[0] - dx[2] + yCoordinary;
-				System.out.println("2: x = " + xCoordinary + ", y = " + yCoordinary);
+				System.out.println("2: row = " + xCoordinary + ", col = " + yCoordinary);
 				len = 0;
 			}
 		}
 
-		System.out.println("x = " + xCoordinary + ", y = " + yCoordinary);
+		System.out.println("row = " + xCoordinary + ", col = " + yCoordinary);
 
 		if (xCoordinary >= 0 && yCoordinary >= 0) {
 			return true;

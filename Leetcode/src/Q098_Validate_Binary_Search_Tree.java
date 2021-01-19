@@ -31,18 +31,24 @@ public class Q098_Validate_Binary_Search_Tree {
 	 *************************************************/
 
 	// solution 1: using recursive
-	public boolean isValidBST(TreeNode root) {
-        if(root == null) {
+	public boolean isValidBST(TreeNode root) 
+	{
+        if (root == null) 
+        {
             return true;
         }
 
         return isValid(Long.MAX_VALUE, Long.MIN_VALUE, root);
     }
     
-    public boolean isValid(long max, long min, TreeNode node) {
-        if(node == null) {
+    private boolean isValid(long max, long min, TreeNode node) 
+    {
+        if (node == null) 
+        {
             return true; 
-        } else if(node.val >= max || node.val <= min) {
+        } 
+        else if (node.val >= max || node.val <= min) 
+        {
             return false;
         }
         
