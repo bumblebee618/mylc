@@ -66,6 +66,7 @@ public class Q388_Longest_Absolute_File_Path
             }
             
             int subLen = str.replaceAll("\t", "").length() + 1;   // add the "/"
+            stack.push(subLen);
             curLen += subLen;
             
             // if this is the file which is the last level
@@ -73,8 +74,6 @@ public class Q388_Longest_Absolute_File_Path
             {
                 maxLen = Math.max(maxLen, curLen - 1);        // delete the first "/"
             }
-            
-            stack.push(subLen);
         }
         
         return maxLen;

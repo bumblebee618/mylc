@@ -35,33 +35,45 @@ Explanation: This is neither a IPv4 address nor a IPv6 address.
  *
  */
 public class Q468_Validate_IP_Address {
-	public String validIPAddress(String IP) {
-        if (IP == null || IP.length() == 0) {
+	public String validIPAddress(String IP) 
+	{
+        if (IP == null || IP.length() == 0) 
+        {
             return "Neither";
         }
         
-        if (IP.indexOf(".") > 0) {
+        if (IP.indexOf(".") > 0) 
+        {
             return validateIpv4(IP) ? "IPv4" : "Neither";
-        } else if (IP.indexOf(":") > 0) {
+        } 
+        else if (IP.indexOf(":") > 0) 
+        {
             return validateIpv6(IP) ? "IPv6" : "Neither";
-        } else {
+        } 
+        else 
+        {
             return "Neither";
         }
     }
     
-    private boolean validateIpv4(String IP) {
-        if (IP.charAt(IP.length() - 1) == '.') {
+    private boolean validateIpv4(String IP) 
+    {
+        if (IP.charAt(IP.length() - 1) == '.') 
+        {
             return false;
         }
         
         String[] strs = IP.split("\\.");
         
-        if (strs.length != 4) {
+        if (strs.length != 4) 
+        {
             return false;
         } 
         
-        for (String str : strs) {
-            if (!validIpv4Token(str)) {
+        for (String str : strs) 
+        {
+            if (!validIpv4Token(str)) 
+            {
                 return false;
             }
         }
@@ -69,13 +81,17 @@ public class Q468_Validate_IP_Address {
         return true;
     }
     
-    private boolean validIpv4Token(String token) {
-        if (token == null || token.length() == 0 || token.length() > 3) {
+    private boolean validIpv4Token(String token) 
+    {
+        if (token == null || token.length() == 0 || token.length() > 3) 
+        {
             return false;
         }
         
-        for (char c : token.toCharArray()) {
-            if (!Character.isDigit(c)) {
+        for (char c : token.toCharArray()) 
+        {
+            if (!Character.isDigit(c)) 
+            {
                 return false;
             }
         }
@@ -85,19 +101,24 @@ public class Q468_Validate_IP_Address {
         return (!newToken.equals(token) || num > 255) ? false : true;
     }
     
-    private boolean validateIpv6(String IP) {
-        if (IP.charAt(IP.length() - 1) == ':') {
+    private boolean validateIpv6(String IP) 
+    {
+        if (IP.charAt(IP.length() - 1) == ':') 
+        {
             return false;
         }
         
         String[] strs = IP.split(":");
         
-        if (strs.length != 8) {
+        if (strs.length != 8) 
+        {
             return false;
         } 
         
-        for (String str : strs) {
-            if (!validIpv6Token(str)) {
+        for (String str : strs) 
+        {
+            if (!validIpv6Token(str)) 
+            {
                 return false;
             }
         }
@@ -105,17 +126,25 @@ public class Q468_Validate_IP_Address {
         return true;
     }
     
-    private boolean validIpv6Token(String token) {
-        if (token.length() == 0 || token.length() > 4) {
+    private boolean validIpv6Token(String token) 
+    {
+        if (token.length() == 0 || token.length() > 4) 
+        {
             return false;
         }
         
-        for (char c : token.toCharArray()) {
-            if (c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F') {
+        for (char c : token.toCharArray()) 
+        {
+            if (c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F') 
+            {
                 continue;
-            } else if (Character.isDigit(c)) {
+            } 
+            else if (Character.isDigit(c)) 
+            {
                 continue;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
         }

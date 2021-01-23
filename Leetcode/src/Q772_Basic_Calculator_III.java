@@ -20,8 +20,10 @@ Some examples:
 "(2+6* 3+5- (3*14/7+2)*5)+3"=-12
 
  */
-public class Q772_Basic_Calculator_III {
-	public int calculate(String s) {
+public class Q772_Basic_Calculator_III 
+{
+	public int calculate(String s) 
+	{
         if (s == null)
         {
             return 0;
@@ -71,6 +73,7 @@ public class Q772_Basic_Calculator_III {
             {
                 switch (prevOper)
                 {
+                	case ' ': stack.push(num); break;
                     case '+': stack.push(num); break;
                     case '-': stack.push(-num); break;
                     case '*': 
@@ -93,7 +96,7 @@ public class Q772_Basic_Calculator_III {
                             stack.push(stack.pop() / num);
                             break;
                         }
-                    case ' ': stack.push(num); break;
+                    default: break;
                 }
                 
                 num = 0;
@@ -125,8 +128,12 @@ public class Q772_Basic_Calculator_III {
             {
                 count--;
             }
-                
-            if (count == 0)
+            
+            if (count < 0)
+            {
+            	return -1;
+            }
+            else if (count == 0)
             {
                 return i;
             }

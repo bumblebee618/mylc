@@ -20,8 +20,10 @@ Return 6.
  **************************************************************************/
 
 public class Q085_Maximal_Rectangle {
-	public int maximalRectangle(char[][] matrix) {
-		if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+	public int maximalRectangle(char[][] matrix) 
+	{
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+		{
             return 0;
         }
         
@@ -30,28 +32,37 @@ public class Q085_Maximal_Rectangle {
         int[][] heights = new int[row][col];
         int maxArea = 0;
         
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (i == 0) {
+        for (int i = 0; i < row; i++) 
+        {
+            for (int j = 0; j < col; j++) 
+            {
+                if (i == 0) 
+                {
                     heights[i][j] = matrix[i][j] - '0';
                     continue;
                 } 
                   
-                if (matrix[i][j] == '1') {
+                if (matrix[i][j] == '1') 
+                {
                     heights[i][j] = heights[i-1][j] + 1;
-                } else {
+                } 
+                else 
+                {
                     heights[i][j] = 0;
                 }
             }
         }
         
-        for(int i = 0; i < row; i++){
+        for (int i = 0; i < row; i++)
+        {
             Stack<Integer> stack = new Stack<>();
             
-            for(int j = 0; j <= col; j++){
+            for (int j = 0; j <= col; j++)
+            {
                 int curHeight = (j == col) ? Integer.MIN_VALUE : heights[i][j];
                 
-                while(!stack.isEmpty() && curHeight <= heights[i][stack.peek()]){
+                while (!stack.isEmpty() && curHeight <= heights[i][stack.peek()])
+                {
                     int H = heights[i][stack.pop()];
                     int L = stack.isEmpty() ? j : j - stack.peek() - 1;
                     maxArea = Math.max(maxArea, H * L);

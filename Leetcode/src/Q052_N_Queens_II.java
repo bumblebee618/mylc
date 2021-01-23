@@ -1,11 +1,39 @@
+/*******
+ * 
+ * @author jackie
+ * The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+
+Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+
+ 
+
+Example 1:
+
+
+Input: n = 4
+Output: 2
+Explanation: There are two distinct solutions to the 4-queens puzzle as shown.
+Example 2:
+
+Input: n = 1
+Output: 1
+ 
+
+Constraints:
+
+1 <= n <= 9
+ *
+ */
 
 public class Q052_N_Queens_II {
 	/********************************************************/
-	// by Jackie using backtrack (recursive)
+	// using backtrack (recursive)
 	private int count = 0;
     
-    public int totalNQueens(int n) {
-        if(n <= 0){
+    public int totalNQueens(int n) 
+    {
+        if (n <= 0)
+        {
             return 0;
         }
         
@@ -14,30 +42,46 @@ public class Q052_N_Queens_II {
         return count;
     }
     
-    public void backtrack(int[] position, int startRow, int n){
-        if(startRow > n){
+    public void backtrack(int[] position, int startRow, int n)
+    {
+        if (startRow > n)
+        {
             count++;
-        } else {
-            for(int i = 1; i <= n; i++){
+        } 
+        else
+        {
+            for (int i = 1; i <= n; i++)
+            {
                 position[startRow] = i;
-                if(isValid(position, startRow) == true){
+                
+                if (isValid(position, startRow) == true)
+                {
                     backtrack(position, startRow + 1, n);
                 }
             }    
         }
     }
     
-    public boolean isValid(int[] position, int curRow){
-        for(int i = 1; i < curRow; i++){
-            if(position[i] == position[curRow] || (Math.abs(i - curRow) == Math.abs(position[i] - position[curRow]))){
+    public boolean isValid(int[] position, int curRow)
+    {
+        for (int i = 1; i < curRow; i++)
+        {
+            if (position[i] == position[curRow] || (Math.abs(i - curRow) == Math.abs(position[i] - position[curRow])))
+            {
                 return false;
             }
         }
+        
         return true;
     }
     
     
-    public static void main(String[] args){
+    
+    
+    
+    /******************************* main *******************************/
+    public static void main(String[] args)
+    {
     	Q052_N_Queens_II t = new Q052_N_Queens_II();
     	System.out.println(t.totalNQueens(8));
     }

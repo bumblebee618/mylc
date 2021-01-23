@@ -42,7 +42,7 @@ public class Q239_Sliding_Window_Maximum {
         }
         
         Deque<Integer> dq = new LinkedList<>();
-        int[] ans = new int[nums.length - k + 1];
+        int[] result = new int[nums.length - k + 1];
         int index = 0;
         
         for (int i = 0; i < nums.length; i++) 
@@ -59,13 +59,13 @@ public class Q239_Sliding_Window_Maximum {
                 dq.pollFirst();
             }
             
-            if (i + 1 >= k)
+            if (i - k + 1 >= 0)
             {
-                ans[index++] = nums[dq.peekFirst()];
+                result[index++] = nums[dq.peekFirst()];
             }
         }
         
-        return ans;
+        return result;
     }
 	
     

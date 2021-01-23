@@ -26,7 +26,8 @@ The best way is to split it into [7,2,5] and [10,8],
 where the largest sum among the two subarrays is only 18.
  */
 public class Q410_Split_Array_Largest_Sum {
-	public int splitArray(int[] nums, int m) {
+	public int splitArray(int[] nums, int m) 
+	{
         if (nums == null || nums.length == 0 || m <= 0 || m > nums.length)
         {
             return 0;
@@ -57,7 +58,7 @@ public class Q410_Split_Array_Largest_Sum {
         return canSplit(nums, m, left) ? left : right;
     }
     
-    private boolean canSplit(int[] nums, int m, int maxSum)
+    private boolean canSplit(int[] nums, int maxCount, int maxSum)
     {
         int count = 1;
         int sum = 0;
@@ -72,7 +73,7 @@ public class Q410_Split_Array_Largest_Sum {
             
             sum += num;
             
-            if (count > m)
+            if (count > maxCount)
             {
                 return false;
             }

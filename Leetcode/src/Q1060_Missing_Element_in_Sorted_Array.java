@@ -34,7 +34,8 @@ Note:
  */
 public class Q1060_Missing_Element_in_Sorted_Array {
 	// solution 1, using binary search and time complexity is O(logn)
-	public int missingElement(int[] nums, int k) {
+	public int missingElement(int[] nums, int k) 
+	{
         if (nums == null || nums.length == 0 || k <= 0)
         {
             return -1;
@@ -46,9 +47,10 @@ public class Q1060_Missing_Element_in_Sorted_Array {
         ***/
         int missing = findMissingNumber(nums, nums.length-1);
         
+        // result == nums[index] + (k - missing number ranges from 0 to index)
         if (k > missing)
         {
-            return nums[nums.length-1] + k - missing;
+            return nums[nums.length-1] + (k - missing);
         }
         
         int left = 0, right = nums.length-1;
@@ -69,11 +71,11 @@ public class Q1060_Missing_Element_in_Sorted_Array {
         
         if (findMissingNumber(nums, left) == k)
         {
-            return nums[left-1] + k - findMissingNumber(nums, left-1);
+            return nums[left-1] + (k - findMissingNumber(nums, left-1));
         }
         else
         {
-            return nums[left] + k - findMissingNumber(nums, left);
+            return nums[left] + (k - findMissingNumber(nums, left));
         }
     }
     

@@ -11,26 +11,45 @@ Implement a function to find the first bad version. You should minimize the numb
  * 
  * */
 
-public class Q278_First_Bad_Version {
+public class Q278_First_Bad_Version 
+{
 	// using binary search
-	public int firstBadVersion(int n) {
-        int start = 1, end = n;
+	public int firstBadVersion(int n) 
+	{
+		if (n < 1)
+        {
+            return -1;
+        }
         
-        while (start < end-1) {
-            int mid = (end - start) / 2 + start;
+        int left = 1, right = n;
+        
+        while (left+1 < right)
+        {
+            int mid = left + (right-left) / 2;
             
-            if (isBadVersion(mid)) {
-                end = mid;
-            } else {
-                start = mid;
+            if (!isBadVersion(mid))
+            {
+                left = mid;
+            }
+            else
+            {
+                right = mid;
             }
         }
         
-        if (isBadVersion(start)) {
-            return start;
-        }
         
-        return end;
+        if (isBadVersion(left))
+        {
+            return left;
+        }
+        else if (isBadVersion(right))
+        {
+            return right;
+        }
+        else
+        {
+            return -1;
+        }
     }
 	
 	

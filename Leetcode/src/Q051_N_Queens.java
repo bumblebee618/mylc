@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,43 +6,42 @@ public class Q051_N_Queens {
 	// backtrack(recursive)
 	public List<List<String>> solveNQueens(int n) 
 	{
-        List<List<String>> ans = new LinkedList<>();
+        List<List<String>> result = new LinkedList<>();
         
-        if(n <= 0)
+        if (n <= 0)
         {
-            return ans;
+            return result;
         }
         
-        int[] position = new int[n + 1];
-        backtrack(ans, position, 1, n);
-        return ans;
+        int[] position = new int[n+1];
+        backtrack(result, position, 1, n);
+        return result;
     }
     
-    private void backtrack(List<List<String>> ans, int[] position, int curRow, int n)
+    private void backtrack(List<List<String>> result, int[] position, int index, int n)
     {
-        if (curRow > n)
+        if (index > n)
         {
-            ans.add(getStr(position));
-        } 
-        else 
+            result.add(getSolution(position, n));
+            return;
+        }
+        
+        for (int i = 1; i <= n; i++)
         {
-            for (int i = 1; i <= n; i++)
+            position[index] = i;
+            
+            if (isValid(position, index))
             {
-                position[curRow] = i;
-                
-                if (isValid(position, curRow) == true)
-                {
-                    backtrack(ans, position, curRow + 1, n);
-                }
+                backtrack(result, position, index+1, n);
             }
         }
     }
     
-    private boolean isValid(int[] position, int curRow)
+    private boolean isValid(int[] position, int curIndex)
     {
-        for (int i = 1; i < curRow; i++)
+        for (int i = 1; i < curIndex; i++)
         {
-            if (position[i] == position[curRow] || Math.abs(position[i] - position[curRow]) == Math.abs(i - curRow))
+            if (position[i] == position[curIndex] || Math.abs(i-curIndex) == Math.abs(position[i] - position[curIndex]))
             {
                 return false;
             }
@@ -52,10 +50,9 @@ public class Q051_N_Queens {
         return true;
     }
     
-    private List<String> getStr(int[] position)
+    private List<String> getSolution(int[] position, int n)
     {
         List<String> list = new LinkedList<>();
-        int n = position.length - 1;
         
         for (int i = 1; i <= n; i++)
         {
@@ -63,14 +60,7 @@ public class Q051_N_Queens {
             
             for (int j = 1; j <= n; j++)
             {
-                if (position[i] == j)
-                {
-                    builder.append("Q");
-                } 
-                else 
-                {
-                    builder.append(".");
-                }
+                builder.append(j == position[i] ? "Q" : ".");
             }
             
             list.add(builder.toString());

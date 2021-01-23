@@ -48,8 +48,10 @@ Note:
 1 <= D <= weights.length <= 50000
 1 <= weights[i] <= 500
  */
-public class Q1011_Capacity_To_Ship_Packages_Within_D_Days {
-	public int shipWithinDays(int[] weights, int D) {
+public class Q1011_Capacity_To_Ship_Packages_Within_D_Days 
+{
+	public int shipWithinDays(int[] weights, int D) 
+	{
         if (weights == null || weights.length == 0 || D <= 0)
         {
             return 0;
@@ -83,20 +85,20 @@ public class Q1011_Capacity_To_Ship_Packages_Within_D_Days {
         return canShipWithTargetDays(weights, D, left)? left : right;
     }
     
-    private boolean canShipWithTargetDays(int[] weights, int D, int capacity)
+    private boolean canShipWithTargetDays(int[] weights, int maxDay, int maxCapacity)
     {
         int days = 1;
         int curCapacity = 0;
         
         for (int weight : weights)
         {
-            if (curCapacity+weight > capacity)
+            if (curCapacity+weight > maxCapacity)
             {
                 days++;
                 curCapacity = 0;
             }
             
-            if (days > D)
+            if (days > maxDay)
             {
                 return false;
             }

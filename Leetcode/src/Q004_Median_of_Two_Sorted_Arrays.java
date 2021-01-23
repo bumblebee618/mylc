@@ -17,12 +17,18 @@
 
 public class Q004_Median_of_Two_Sorted_Arrays {
 	// Solution 1: using merge sort, time complexity is O(m + n), space complexity is O(m + n)
-	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-		if(nums1 == null && nums2 == null) {
+	public double findMedianSortedArrays(int[] nums1, int[] nums2) 
+	{
+		if (nums1 == null && nums2 == null) 
+		{
             return 0;
-        } else if(nums1 == null) {
+        } 
+		else if (nums1 == null) 
+		{
             return nums2[nums2.length / 2];
-        } else if(nums2 == null) {
+        } 
+		else if (nums2 == null) 
+		{
             return nums1[nums1.length / 2];
         }
 		
@@ -31,23 +37,35 @@ public class Q004_Median_of_Two_Sorted_Arrays {
         int[] array = new int[len];
         int index = 0, index1 = 0, index2 = 0;
         
-        while(index1 < len1 || index2 < len2) {
-            if(index1 < len1 && index2 < len2) {
-                if(nums1[index1] < nums2[index2]) {
+        while (index1 < len1 || index2 < len2) 
+        {
+            if (index1 < len1 && index2 < len2) 
+            {
+                if (nums1[index1] < nums2[index2]) 
+                {
                     array[index++] = nums1[index1++]; 
-                } else {
+                } 
+                else 
+                {
                     array[index++] = nums2[index2++]; 
                 }
-            } else if(index1 < len1) {
+            } 
+            else if (index1 < len1) 
+            {
                 array[index++] = nums1[index1++]; 
-            } else {
+            } 
+            else 
+            {
                 array[index++] = nums2[index2++]; 
             }
         }
         
-        if(len % 2 == 0) {
+        if (len % 2 == 0) 
+        {
             return (array[len/2 - 1] + array[len/2]) / 2.0;
-        } else {
+        } 
+        else 
+        {
             return array[len/2];
         }
     }
@@ -55,32 +73,47 @@ public class Q004_Median_of_Two_Sorted_Arrays {
 	
 	
 	// Solution 2: using binary search, the overall run time complexity is O(log (m+n)), space complexity is O(1).
-	public double findMedianSortedArrays2(int[] nums1, int[] nums2) {
-		if(nums1 == null && nums2 == null) {
+	public double findMedianSortedArrays2(int[] nums1, int[] nums2) 
+	{
+		if (nums1 == null && nums2 == null) 
+		{
             return 0;
-        } else if(nums1 == null) {
+        } 
+		else if (nums1 == null) 
+		{
             return nums2[nums2.length / 2];
-        } else if(nums2 == null) {
+        } 
+		else if (nums2 == null) 
+		{
             return nums1[nums1.length / 2];
         }
         
         int len = nums1.length + nums2.length;
         
-        if(len % 2 == 1) {
+        if (len % 2 == 1) 
+        {
             return findKthElement(nums1, 0, nums2, 0, len/2 + 1);
-        } else {
+        } 
+        else 
+        {
             return (findKthElement(nums1, 0, nums2, 0, len/2) + findKthElement(nums1, 0, nums2, 0, len/2 + 1)) / 2.0;
         }
     }
 	
 	// 转化成查找A和B数组里第k小的数
 	// find the Kth smallest value in the array nums1 and array nums2;
-	public int findKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) {
-        if(start1 >= nums1.length) {         // 注意有等号 ！！！
+	public int findKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) 
+	{
+        if (start1 >= nums1.length)          // 注意有等号 ！！！
+        {
             return nums2[start2 + k - 1];
-        } else if(start2 >= nums2.length) {  // 注意有等号 ！！！
+        } 
+        else if (start2 >= nums2.length)   // 注意有等号 ！！！
+        {
             return nums1[start1 + k - 1];
-        } else if(k == 1) {
+        } 
+        else if (k == 1) 
+        {
             return Math.min(nums1[start1], nums2[start2]);
         }
         
@@ -90,9 +123,12 @@ public class Q004_Median_of_Two_Sorted_Arrays {
         // 首先假设数组A和B的元素个数都大于k/2，我们比较A[k/2-1]和B[k/2-1]两个元素，
      	// 这两个元素分别表示A的第k/2小的元素和B的第k/2小的元素。这两个元素比较共有三种情况：>、<和=。
      	// 如果A[k/2-1]<B[k/2-1]，这表示A[0]到A[k/2-1]的元素都在A和B合并之后的前k小的元素中。
-        if(num1 < num2) {     // A[k/2] < B[k/2],因此A[]往k/2后找，B[]往k/2前找
+        if (num1 < num2) 
+        {   // A[k/2] < B[k/2],因此A[]往k/2后找，B[]往k/2前找
             return findKthElement(nums1, start1 + k/2, nums2, start2, k - k/2);
-        } else {              // A[k/2] >= B[k/2],因此A[]往k/2前找，B[]往k/2后找
+        } 
+        else 
+        {   // A[k/2] >= B[k/2],因此A[]往k/2前找，B[]往k/2后找
             return findKthElement(nums1, start1, nums2, start2 + k/2, k - k/2);
         }
     }
@@ -100,7 +136,8 @@ public class Q004_Median_of_Two_Sorted_Arrays {
 	
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Q004_Median_of_Two_Sorted_Arrays t = new Q004_Median_of_Two_Sorted_Arrays();
 		int[] nums1 = { 131, 135, 195, 241, 274, 288, 330, 334, 342, 358, 361,
 				391, 392, 430, 470, 497, 578, 627, 659, 660, 756, 798, 807,

@@ -11,45 +11,51 @@ public class Q069_Sqrt_x {
 	 * 
 	 ************************************************/
 
-	int mySqrt(int x) {
-		if (x <= 0) {
+	public int mySqrt(int x) 
+	{
+		if (x <= 0) 
+		{
 			return 0;
-		} else if (x <= 3) {
+		} 
+		else if (x <= 3) 
+		{
 			return 1;
 		}
 
 		long left = 1, right = x;
 
-		while (left + 1 < right) {
+		while (left + 1 < right) 
+		{
 			long mid = left + (right - left) / 2;
 			long product = mid * mid;
 
-			if (product < x) {
+			if (product < x) 
+			{
 				left = mid;
-			} else if (product > x) {
+			} 
+			else if (product > x) 
+			{
 				right = mid;
-			} else {
+			} 
+			else 
+			{
 				return (int) mid;
 			}
 		}
 
-		if (right * right <= x) {
-			return (int) right;
-		} else {
+		if (left * left <= x) 
+		{
 			return (int) left;
+		} 
+		else 
+		{
+			return (int) right;
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/******************************** main function *******************************/
+	/********************************
+	 * main function
+	 *******************************/
 
 	public static void main(String[] args) {
 		Q069_Sqrt_x t = new Q069_Sqrt_x();

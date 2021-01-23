@@ -19,22 +19,29 @@ public class Q071_Simplify_Path {
 	// test case: [/], [/..], [///]
 	
 	// solution 1:
-	public String simplifyPath(String path) { 
-		if(path.length() < 2) {
+	public String simplifyPath(String path) 
+	{ 
+		if (path.length() < 2) 
+		{
 			return path;
 		}
 		
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
         
-		for (String s : path.split("/")) {
-			if (s.equals("..") && !stack.isEmpty()) {
+		for (String s : path.split("/")) 
+		{
+			if (s.equals("..") && !stack.isEmpty()) 
+			{
 				stack.pop();     // 注意"."表示当前路径，因此简化过程中可以忽略
-			} else if (!s.equals(".") && !s.equals("..") && !s.equals("")) {
+			} 
+			else if (!s.equals(".") && !s.equals("..") && !s.equals("")) 
+			{
 				stack.push(s);
 			}
 		}
 		
-		if(stack.isEmpty()) {    // 防止 test case: [///]
+		if (stack.isEmpty())   // 防止 test case: [///]
+		{    
 			return "/";
 		}
 		
@@ -42,7 +49,7 @@ public class Q071_Simplify_Path {
         
         while (!stack.isEmpty())
         {
-            builder.insert(0, String.format("%s%s", "/", stack.pop()));
+            builder.insert(0, String.format("/%s", stack.pop()));
         }
         
         return builder.toString();

@@ -18,8 +18,10 @@ Output: 10
 
 Note: Your solution should run in O(log n) time and O(1) space.
  */
-public class Q540_Single_Element_in_a_Sorted_Array {
-	public int singleNonDuplicate(int[] nums) {
+public class Q540_Single_Element_in_a_Sorted_Array 
+{
+	public int singleNonDuplicate(int[] nums) 
+	{
         if (nums == null || nums.length == 0)
         {
             return -1;
@@ -34,11 +36,11 @@ public class Q540_Single_Element_in_a_Sorted_Array {
         while (left+1 < right)
         {
             int mid = left + (right-left)/2;
-            boolean isEven = (right - mid + 1) % 2 == 0;
+            boolean isRightEven = (right - mid + 1) % 2 == 0;
             
             if (nums[mid] == nums[mid+1])
             {
-                if (isEven)
+                if (isRightEven)
                 {
                     right = mid-1;
                 }
@@ -49,7 +51,7 @@ public class Q540_Single_Element_in_a_Sorted_Array {
             }
             else if (nums[mid] == nums[mid-1])
             {
-                if (isEven)
+                if (isRightEven)
                 {
                     left = mid+1;
                 }

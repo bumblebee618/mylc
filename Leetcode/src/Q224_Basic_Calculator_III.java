@@ -5,112 +5,137 @@ import java.util.*;
  * 
  * */
 
-public class Q224_Basic_Calculator_III {	
-	public int Basic_Calculator_III(String str) {
-		if (str == null || str.length() == 0) {
-			return 0;
-		}
-		
-		Stack<Integer> stack = new Stack<Integer>();
-		int len = str.length();
-		int sum = 0;
-		int num = 0;
-		char prevSign = ' ';
-		int index = 0;
-		
-		while (index < len) {
-			char c = str.charAt(index);
-			
-			if (Character.isDigit(c)) {
-				num = num * 10 + (int) (c - '0');
-			} 
-			
-			if (!Character.isDigit(c) && c != ' ' || index == len - 1) {
-				if (c == '(') {
-					int endPos = findClosePosition(str, index);			
-					String subStr = str.substring(index + 1, endPos);
-					num = Basic_Calculator_III(subStr);	
-					index = endPos + 1;
-					continue;
-				}
-				
-				if (prevSign == '+') {
-					stack.push(num);
-				} else if (prevSign == '-') {
-					stack.push(-num);
-				} else if (prevSign == '*') {
-					if (!stack.isEmpty()) {
-						stack.push(stack.pop() * num);
-					} else {
-						break;
-					}
-				} else if (prevSign == '/') {
-					if (!stack.isEmpty()) {
-						stack.push(stack.pop() / num);
-					} else {
-						break;
-					}
-				} else {
-					stack.push(num);
-				}
-				
-				prevSign = c;
-				num = 0;
-			}
-			
-			index++;
-		}
-		
-		while (!stack.isEmpty()) {
-			sum += stack.pop();
-		}
-		
-		if (num != 0) {
-			if (prevSign == '+') {
-				sum += num;
-			} else if (prevSign == '-') {
-				sum -= num;
-			} else if (prevSign == '*') {
-				sum *= num;
-			} else if (prevSign == '/') {
-				sum /= num;
-			} else {            // when prevSign == ' '
-				sum += num;
-			}
-		}
-		
-		return sum;
-	}
+public class Q224_Basic_Calculator_III 
+{	
+	public int calculate(String s) 
+    {
+        if (s == null)
+        {
+            return 0;
+        }
+        
+        s = s.trim();
+        
+        if (s.length() == 0)
+        {
+            return 0;
+        }
+        
+        Stack<Integer> stack = new Stack<>();
+        char prevOper = ' ';
+        int num = 0;
+        int result = 0;
+        
+        for (int i = 0; i < s.length(); i++)
+        {
+            char c = s.charAt(i);
+            
+            if (c == ' ')
+            {
+                continue;
+            }
+            
+            if (Character.isDigit(c))
+            {
+                num = num*10 + (c-'0');
+            }
+            
+            if (c == '(')
+            {
+                int end = findClosePosition(s, i);
+                
+                if (end == -1)
+                {
+                    return 0;
+                }
+                
+                num = calculate(s.substring(i+1, end));
+                i = end;
+            }
+            
+            if (!Character.isDigit(c) || i == s.length()-1)
+            {
+                switch (prevOper)
+                {
+                    case ' ': stack.push(num); break;
+                    case '+': stack.push(num); break;
+                    case '-': stack.push(-num); break;
+                    case '*':
+                        {
+                            if (stack.isEmpty())
+                            {
+                                return 0;
+                            }
+                            
+                            stack.push(stack.pop() * num);
+                            break;
+                        }
+                    case '/':
+                        {
+                            if (stack.isEmpty())
+                            {
+                                return 0;
+                            }
+                            
+                            stack.push(stack.pop() / num);
+                            break;
+                        }
+                    default: break;
+                }
+                
+                prevOper = c;
+                num = 0;
+            }
+        }
+        
+        while (!stack.isEmpty())
+        {
+            result += stack.pop();
+        }
+        
+        return result;
+    }
+    
+    private int findClosePosition(String s, int start)
+    {
+        int count = 0;
+        
+        for (int i = start; i < s.length(); i++)
+        {
+            char c = s.charAt(i);
+            
+            if (c == '(')
+            {
+                count++;
+            }
+            else if (c == ')')
+            {
+                count--;
+            }
+            
+            if (count < 0)
+            {
+                return -1;
+            }
+            else if (count == 0)
+            {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
 	
-	public int findClosePosition(String str, int start) {
-		int count = 0;		
-		int index = start;
-		
-		while (index < str.length()) {
-			char c = str.charAt(index);
-			
-			if (c == '(') {
-				count++;
-			} else if (c == ')') {
-				count--;
-			}
-
-			if (count == 0) {
-				break;
-			}
-			
-			index++;
-		}
-		
-		return index;		
-	}
 	
 	
+    
+    
+    /****************************** main ******************************/ 
 	
-	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Q224_Basic_Calculator_III t = new Q224_Basic_Calculator_III();
 		String str = "3 * (3/(1+2))";
-		System.out.println(t.Basic_Calculator_III(str));
+		System.out.println(t.calculate(str));
 	}
 }

@@ -20,7 +20,8 @@ Note: Do not use the eval built-in library function.
 
 public class Q224_Basic_Calculator {
 	// using recursion
-	public int calculate(String s) {
+	public int calculate(String s) 
+    {
         if (s == null)
         {
             return 0;
@@ -37,9 +38,8 @@ public class Q224_Basic_Calculator {
         char prevOper = ' ';
         int num = 0;
         int result = 0;
-        int size = s.length();
         
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < s.length(); i++)
         {
             char c = s.charAt(i);
             
@@ -55,7 +55,7 @@ public class Q224_Basic_Calculator {
             
             if (c == '(')
             {
-                int end = findClosePos(s, i);
+                int end = findClosePosition(s, i);
                 
                 if (end == -1)
                 {
@@ -66,17 +66,38 @@ public class Q224_Basic_Calculator {
                 i = end;
             }
             
-            if (!Character.isDigit(c) || i == size-1)
+            if (!Character.isDigit(c) || i == s.length()-1)
             {
                 switch (prevOper)
                 {
                     case ' ': stack.push(num); break;
                     case '+': stack.push(num); break;
                     case '-': stack.push(-num); break;
+                    case '*':
+                        {
+                            if (stack.isEmpty())
+                            {
+                                return 0;
+                            }
+                            
+                            stack.push(stack.pop() * num);
+                            break;
+                        }
+                    case '/':
+                        {
+                            if (stack.isEmpty())
+                            {
+                                return 0;
+                            }
+                            
+                            stack.push(stack.pop() / num);
+                            break;
+                        }
+                    default: break;
                 }
                 
-                num = 0;
                 prevOper = c;
+                num = 0;
             }
         }
         
@@ -84,18 +105,18 @@ public class Q224_Basic_Calculator {
         {
             result += stack.pop();
         }
-            
+        
         return result;
     }
     
-    private int findClosePos(String s, int start)
+    private int findClosePosition(String s, int start)
     {
         int count = 0;
-            
+        
         for (int i = start; i < s.length(); i++)
         {
-            int c = s.charAt(i);
-                
+            char c = s.charAt(i);
+            
             if (c == '(')
             {
                 count++;
@@ -104,13 +125,17 @@ public class Q224_Basic_Calculator {
             {
                 count--;
             }
-                
-            if (count == 0)
+            
+            if (count < 0)
+            {
+                return -1;
+            }
+            else if (count == 0)
             {
                 return i;
             }
         }
-            
+        
         return -1;
     }
 

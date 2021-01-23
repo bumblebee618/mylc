@@ -16,7 +16,7 @@ public class Q216_Combination_Sum_III {
 	public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> result = new LinkedList<List<Integer>>();
         
-        if(k <= 0 || n <= 0)
+        if (k <= 0 || n <= 0)
         {
             return result;
         }
@@ -30,7 +30,7 @@ public class Q216_Combination_Sum_III {
     {
         if (list.size() == k)
         {
-            if(target == 0)
+            if (target == 0)
             {
                 result.add(new LinkedList<Integer>(list));
             }

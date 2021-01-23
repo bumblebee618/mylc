@@ -13,72 +13,92 @@ which has length = 4.
 
 public class Q032_Longest_Valid_Parentheses {	
 	// solution 1: using stack, time O(n), space O(n)
-	public int longestValidParentheses(String s) {  // 使用 test case ")(()()())" 来理解！！！
-        if(s == null || s.length() == 0){
+	public int longestValidParentheses(String s)   // 使用 test case ")(()()())" 来理解！！！
+	{
+        if (s == null || s.length() == 0)
+        {
             return 0;
         }
         
-        int len = s.length();
         Stack<Integer> stack = new Stack<Integer>();
         int prevPos = -1;
-        int ans = 0;
+        int result = 0;
         
-        for(int i = 0; i < len; i++){
+        for (int i = 0; i < s.length(); i++)
+        {
             char c = s.charAt(i);
             
-            if(c == '('){
+            if (c == '(')
+            {
                 stack.push(i);
-            } else {
-                if(stack.isEmpty()){
+            } 
+            else if (c == ')')
+            {
+                if (stack.isEmpty())
+                {
                     prevPos = i;
-                } else {
+                } 
+                else 
+                {
                     stack.pop();
                     
-                    if(stack.isEmpty()){
-                        ans = Math.max(ans, i - prevPos);        // 注意这两步 ！！！
-                    } else {                                     // 这里没有 lastPos = i, test case "()()"
-                        ans = Math.max(ans, i - stack.peek());   // 注意这两步 ！！！
+                    if (stack.isEmpty())
+                    {
+                        result = Math.max(result, i - prevPos);        // 注意这两步 ！！！
+                    } 
+                    else     // 这里没有 lastPos = i, test case "()()" 
+                    {                                      
+                        result = Math.max(result, i - stack.peek());   // 注意这两步 ！！！
                     }
                 }
             }
         }
         
-        return ans;
+        return result;
     }
 	
 	
 	
 	// solution 2: using 区间DP, time O(n^3), space O(n^2)
-		public int longestValidParentheses2(String s) {
-			if(s == null || s.length() == 0){
+		public int longestValidParentheses2(String s) 
+		{
+			if (s == null || s.length() == 0)
+			{
 	            return 0;
 	        }
 			
-	        char[] array = s.toCharArray();
-	        int len = array.length;
+	        char[] letters = s.toCharArray();
+	        int len = letters.length;
 	        int maxLen = 0;	        
 	        boolean[][] valid = new boolean[len][len];
 	        
-	        for(int i = 0; i < len-1; ++i){
-	        	if(array[i] == '(' && array[i+1] == ')'){
+	        for (int i = 0; i < len-1; ++i)
+	        {
+	        	if (letters[i] == '(' && letters[i+1] == ')')
+	        	{
 	        		valid[i][i+1] = valid[i+1][i] = true;
 	        		maxLen = 2;
 	        	}
 	        }
 	        
-	        for(int length = 2; length < len; ++length){
-	        	for(int start = 0; start+length < len; ++start){
+	        for (int length = 2; length < len; ++length)
+	        {
+	        	for (int start = 0; start+length < len; ++start)
+	        	{
 	        		int end = start + length;
 	        		
-	        		valid[start][end] = valid[start+1][end-1] && array[start] == '(' && array[end] == ')';
+	        		valid[start][end] = valid[start+1][end-1] && letters[start] == '(' && letters[end] == ')';
 	                
-	                if(valid[start][end] == true){
+	                if (valid[start][end] == true)
+	                {
 	                    maxLen = Math.max(maxLen, length + 1);
 	                    continue;
 	                } 
 	                
-	                for(int k = start+1; k < end; k++){
-	                    if(valid[start][k] == true && valid[k+1][end] == true){
+	                for (int k = start+1; k < end; k++)
+	                {
+	                    if (valid[start][k] == true && valid[k+1][end] == true)
+	                    {
 	                        valid[start][end] = true;
 	                        maxLen = Math.max(maxLen, length+1);
 	                        break;

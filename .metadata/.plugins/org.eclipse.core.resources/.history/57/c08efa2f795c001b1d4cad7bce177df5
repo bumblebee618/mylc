@@ -1,0 +1,59 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class Robot_Rodeo {
+	private int[] dx = {-1, 0, 1, 0};
+	private int[] dy = {0, 1, 0, -1};
+	
+	public List<String> doesCircleExist(List<String> commands)
+	{
+		List<String> result = new LinkedList<String>();
+		
+		if (commands == null || commands.size() == 0)
+		{
+			return result;
+		}
+		
+		for (String command : commands)
+		{
+			result.add(checkCircle(command));
+		}
+		
+		return result;
+	}
+	
+	private String checkCircle(String command)
+	{	
+		Map<String, String> visited = new HashMap<>();
+		int x = 0, y = 0, direction = 0;
+		StringBuilder pathBuilder = new StringBuilder();
+		
+		for (char c : command.toCharArray())
+		{
+			if (c == 'R')
+			{
+				direction = (direction+1) % 4;
+			}
+			else if (c == 'L')
+			{
+				direction = (direction-1) % 4;
+			}
+			else if (c == 'G')
+			{
+				x += dx[direction];
+				y += dy[direction];
+				
+				String curPoint = new StringBuilder().append(x).append(",").append(y).toString();
+				pathBuilder.append(curPoint).append(";");
+				
+				if (visited.containsKey(curPoint))
+				{
+					
+				}
+			}
+		}
+	}
+}

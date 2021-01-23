@@ -37,7 +37,7 @@ public class Q269_Alien_Dictionary {
         }
         
         Set<Character>[] graph = new Set[256];
-        Map<Character, Integer> map = new HashMap<>();
+        Map<Character, Integer> dependencyMap = new HashMap<>();
         Queue<Character> queue = new LinkedList<>();
         StringBuilder builder = new StringBuilder();
         
@@ -45,7 +45,7 @@ public class Q269_Alien_Dictionary {
         {
             for (char c : word.toCharArray())
             {
-                map.put(c, 0);
+                dependencyMap.put(c, 0);
             }
         }
         
@@ -73,22 +73,22 @@ public class Q269_Alien_Dictionary {
                     if (!graph[c1].contains(c2))
                     {
                         graph[c1].add(c2);
-                        map.put(c2, map.get(c2) + 1);
+                        dependencyMap.put(c2, dependencyMap.get(c2) + 1);
                     }
                     
                     break;
                 }
                 
-                if (j == len-1 && words[i].length() > len)
+                if (j == len-1 && words[i].length() > words[i+1].length())
                 {
                     return "";
                 }
             }
         }
         
-        for (char c : map.keySet())
+        for (char c : dependencyMap.keySet())
         {
-            if (map.get(c) == 0)
+            if (dependencyMap.get(c) == 0)
             {
                 queue.offer(c);
             }
@@ -106,7 +106,7 @@ public class Q269_Alien_Dictionary {
             
             for (char next : graph[node])
             {
-                int count = map.get(next);
+                int count = dependencyMap.get(next);
                 
                 if (count == 1)
                 {
@@ -114,12 +114,12 @@ public class Q269_Alien_Dictionary {
                 }
                 else
                 {
-                    map.put(next, count-1);
+                    dependencyMap.put(next, count-1);
                 }
             }
         }
         
-        return builder.length() == map.size() ? builder.toString() : "";
+        return builder.length() == dependencyMap.size() ? builder.toString() : "";
     }
 
 	

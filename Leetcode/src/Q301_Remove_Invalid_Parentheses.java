@@ -93,9 +93,8 @@ public class Q301_Remove_Invalid_Parentheses {
     private boolean isValid(String str) 
     {   
         int count = 0;
-        int n = str.length();
         
-        for (int i = 0; i < n; ++i)
+        for (int i = 0; i < str.length(); ++i)
         {
             char c = str.charAt(i);
             

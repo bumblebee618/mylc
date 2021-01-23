@@ -39,7 +39,7 @@ public class Q207_Course_Schedule {
         }
         
         Set<Integer>[] graph = new Set[numCourses];
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> dependencyMap = new HashMap<>();
         Queue<Integer> queue = new LinkedList<>();
         
         for (int[] prerequisite : prerequisites) 
@@ -52,13 +52,13 @@ public class Q207_Course_Schedule {
             if (!graph[prerequisite[1]].contains(prerequisite[0])) 
             {
                 graph[prerequisite[1]].add(prerequisite[0]);
-                map.put(prerequisite[0], map.getOrDefault(prerequisite[0], 0) + 1);
+                dependencyMap.put(prerequisite[0], dependencyMap.getOrDefault(prerequisite[0], 0) + 1);
             }
         }
         
         for (int i = 0; i < numCourses; i++) 
         {
-            if (!map.containsKey(i)) 
+            if (!dependencyMap.containsKey(i)) 
             {
                 queue.offer(i);
             }
@@ -80,21 +80,21 @@ public class Q207_Course_Schedule {
             
             for (int next : graph[node]) 
             {
-                int count = map.get(next);
+                int count = dependencyMap.get(next);
                 
                 if (count == 1) 
                 {
-                    map.remove(next);
+                    dependencyMap.remove(next);
                     queue.offer(next);
                 } 
                 else 
                 {
-                    map.put(next, count - 1);
+                    dependencyMap.put(next, count - 1);
                 }
             }
         }
         
-        return map.size() == 0;
+        return dependencyMap.size() == 0;
     }
 	
 	

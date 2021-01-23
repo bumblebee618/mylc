@@ -2,83 +2,101 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**************
+ * 
+ * @author jackie
+ * Given a string s and an integer k, return the length of the longest substring of s such that the frequency of each character in this substring is greater than or equal to k.
+
+ 
+
+Example 1:
+
+Input: s = "aaabb", k = 3
+Output: 3
+Explanation: The longest substring is "aaa", as 'a' is repeated 3 times.
+Example 2:
+
+Input: s = "ababbc", k = 2
+Output: 5
+Explanation: The longest substring is "ababb", as 'a' is repeated 2 times and 'b' is repeated 3 times.
+ 
+
+Constraints:
+
+1 <= s.length <= 104
+s consists of only lowercase English letters.
+1 <= k <= 105
+ */
 
 public class Q395_Longest_Substring_with_At_Least_K_Repeating_Characters 
 {
 	// solution 1:
 	public int longestSubstring(String s, int k) 
     {
-        if(s == null || k <= 0)
+        if (s == null || k <= 0)
         {
             return 0;
         }
         
-        char[] str = s.toCharArray();
+        char[] letters = s.toCharArray();
         int[] countMap = new int[26];
-        int maxUnique = getMaxUniqueLetters(s);
+        int maxUniqueLetter = getMaxUniqueLetters(letters);
         int result = 0;
         
-        for (int currUnique = 1; currUnique <= maxUnique; currUnique++) 
+        for (int curUniqueLetter = 1; curUniqueLetter <= maxUniqueLetter; curUniqueLetter++)
         {
-            // reset countMap
             Arrays.fill(countMap, 0);
-            int windowStart = 0, windowEnd = 0, idx = 0, unique = 0, countAtLeastK = 0;
+            int unique = 0, front = 0, back = 0, countAtLeastK = 0;
             
-            while (windowEnd < str.length) 
+            while (front < s.length())
             {
-                // expand the sliding window
-                if (unique <= currUnique) 
+                if (unique <= curUniqueLetter)
                 {
-                    idx = str[windowEnd] - 'a';
-                    
-                    if (countMap[idx]++ == 0) 
+                    int pos = letters[front++] - 'a';
+                
+                    if (countMap[pos]++ == 0)
                     {
                         unique++;
                     }
-                    
-                    if (countMap[idx] == k) 
+                
+                    if (countMap[pos] == k)
                     {
                         countAtLeastK++;
                     }
-                    
-                    windowEnd++;
                 }
-                // shrink the sliding window
-                else 
+                else
                 {
-                    idx = str[windowStart] - 'a';
-                    
-                    if (countMap[idx]-- == k) 
-                    {
-                        countAtLeastK--;
-                    }
-                    
-                    if (countMap[idx] == 0) 
+                    int pos = letters[back++] - 'a';
+                
+                    if (countMap[pos]-- == 1)
                     {
                         unique--;
                     }
-                    
-                    windowStart++;
-                }
                 
-                if (unique == currUnique && unique == countAtLeastK)
+                    if (countMap[pos] == k-1)
+                    {
+                        countAtLeastK--;
+                    }
+                }
+            
+                if (unique == curUniqueLetter && unique == countAtLeastK)
                 {
-                    result = Math.max(windowEnd - windowStart, result);
+                    result = Math.max(result, front-back);
                 }
             }
         }
-
+        
         return result;
     }
     
-    private int getMaxUniqueLetters(String s) 
+    private int getMaxUniqueLetters(char[] letters) 
     {
         int map[] = new int[26];
         int maxUnique = 0;
         
-        for (int i = 0; i < s.length(); i++) 
+        for (int i = 0; i < letters.length; i++) 
         {
-            if (map[s.charAt(i) - 'a']++ == 0) 
+            if (map[letters[i] - 'a']++ == 0) 
             {
                 maxUnique++;
             }
