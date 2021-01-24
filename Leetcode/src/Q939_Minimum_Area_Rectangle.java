@@ -47,7 +47,7 @@ public class Q939_Minimum_Area_Rectangle {
         {
             for(Point p2 : allPoints)
             {
-                if(p1.equals(p2) || p1.x == p2.x || p2.y == p1.y) 
+                if(p1.equals(p2) || p1.x == p2.x || p1.y == p2.y) 
                 {
                     continue;
                 }
@@ -66,14 +66,15 @@ public class Q939_Minimum_Area_Rectangle {
         return result == Integer.MAX_VALUE ? 0 : result;
     }
     
-    class Point{
+    class Point
+    {
         public int x;
         public int y;
         
         Point(int i, int j)
         { 
-            x =i; 
-            y =j; 
+            x = i; 
+            y = j; 
         }
         
         @Override

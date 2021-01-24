@@ -1,13 +1,37 @@
 import java.util.*;
 
-public class Q242_Valid_Anagram {
+/*******
+ * 
+ * @author jackie
+ * 
+ * Given two strings s and t , write a function to determine if t is an anagram of s.
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+Note:
+You may assume the string contains only lowercase alphabets.
+
+Follow up:
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
+ */
+
+public class Q242_Valid_Anagram 
+{
 	// using sort, time is O(nlogn), space is O(n)
-	public boolean isAnagram(String s, String t) {
-        if(s == null && t == null) {
-            return true;
-        } else if(s == null || t == null) {
-            return false;
-        } else if(s.length() != t.length()) {
+	public boolean isAnagram(String s, String t) 
+	{
+        if (s == null || t == null) 
+        {
+            return s == null && t == null;
+        } 
+        else if (s.length() != t.length()) 
+        {
             return false;
         }
         
@@ -15,14 +39,7 @@ public class Q242_Valid_Anagram {
         char[] letters2 = t.toCharArray();
         Arrays.sort(letters1);
         Arrays.sort(letters2);
-        
-        for(int i = 0; i < letters1.length; i++) {
-            if(letters1[i] != letters2[i]) {
-                return false;
-            }
-        }
-        
-        return true;
+        return new String(letters1).equals(new String(letters2));
     }
 	
 	

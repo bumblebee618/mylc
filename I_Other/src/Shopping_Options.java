@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 
 public class Shopping_Options 
@@ -13,7 +11,7 @@ public class Shopping_Options
 			List<Integer> priceOfShoes, 
 			List<Integer> priceOfSkirts, 
 			List<Integer> priceOfTops,
-			int dollar)
+			int dollars)
 	{
 		List<List<Integer>> items = new ArrayList<>();
 		items.add(priceOfJeans);
@@ -33,7 +31,7 @@ public class Shopping_Options
 			{
 				if (i == 0)
 				{
-					if (price > dollar)
+					if (price > dollars)
 					{
 						break;
 					}
@@ -44,7 +42,7 @@ public class Shopping_Options
 				{
 					for (int prevCost : dp[i-1])
 					{
-						if (prevCost + price > dollar)
+						if (prevCost + price > dollars)
 						{
 							break;
 						}
@@ -62,13 +60,13 @@ public class Shopping_Options
 	
 	
 	
-	
+	// O(4 * m * dollars)
 	public static long getNumberOfOptions2(
 			List<Integer> priceOfJeans, 
 			List<Integer> priceOfShoes, 
 			List<Integer> priceOfSkirts, 
 			List<Integer> priceOfTops,
-			int dollar)
+			int dollars)
 	{
 		List<List<Integer>> items = new ArrayList<>();
 		items.add(priceOfJeans);
@@ -77,41 +75,48 @@ public class Shopping_Options
 		items.add(priceOfTops);
 		Collections.sort(items, (a, b) -> a.size() - b.size());
 		
-		Map<Integer, Integer>[] dp = new Map[4];
+		int[][] dp = new int[4][dollars+1];
 		
 		for (int i = 0; i < items.size(); i++)
 		{
-			dp[i] = new HashMap<>();
+			Collections.sort(items.get(i));
 			
 			for (int price : items.get(i))
 			{
 				if (i == 0)
 				{
-					if (price > dollar)
+					if (price > dollars)
 					{
-						continue;
+						break;
 					}
 					
-					dp[i].put(price, dp[i].getOrDefault(price, 0)+1);
+					dp[i][price] = 1;
 				}
 				else
 				{
-					for (int prevCost : dp[i-1].keySet())
+					for (int prevCost = 0; prevCost < dp[i-1].length; prevCost++)
 					{
 						int cost = prevCost + price;
 						
-						if (cost > dollar)
+						if (cost > dollars)
 						{
-							continue;
+							break;
 						}
-						
-						dp[i].put(cost, dp[i].getOrDefault(cost, 0)+1);
+
+						dp[i][cost] += dp[i-1][prevCost];
 					}
 				}
 			}
 		}
-			
-		return dp[3].size();
+		
+		long way = 0;
+		
+		for (int i = 0; i < dp[3].length; i++)
+		{
+			way += dp[3][i];
+		}
+		
+		return way;
 	}
 	
 	
@@ -181,8 +186,8 @@ public class Shopping_Options
 		priceOfTops.add(1);
 		priceOfTops.add(2);
 		
-		long result1 = getNumberOfOptions(priceOfJeans, priceOfShoes, priceOfSkirts, priceOfTops, 10);
-		System.out.print(result1);
+		long result1 = getNumberOfOptions2(priceOfJeans, priceOfShoes, priceOfSkirts, priceOfTops, 10);
+		System.out.println(result1);
 	}
 }
 

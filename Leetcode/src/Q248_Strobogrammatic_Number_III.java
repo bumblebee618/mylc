@@ -22,7 +22,7 @@ public class Q248_Strobogrammatic_Number_III {
     
     public int strobogrammaticInRange(String low, String high) 
     {
-        for(int i = low.length(); i <= high.length(); i++)
+        for (int i = low.length(); i <= high.length(); i++)
         {
             backtrack("", i, low, high);
         }
@@ -30,17 +30,18 @@ public class Q248_Strobogrammatic_Number_III {
         return count;
     }
     
-    public void backtrack(String solution, int n, String low, String high)
+    private void backtrack(String solution, int n, String low, String high)
     {
-        if(solution.length() == n)
+        if (solution.length() == n)
         {
-            if(n > 1 && solution.charAt(0) == '0')
+            if (n > 1 && solution.charAt(0) == '0')
             {
                 return;
             } 
             
-            if((solution.length() == low.length() && solution.compareTo(low) < 0) || 
-         		   (solution.length() == high.length() && solution.compareTo(high) > 0)) {
+            if ((solution.length() == low.length() && solution.compareTo(low) < 0) || 
+         		   (solution.length() == high.length() && solution.compareTo(high) > 0)) 
+            {
             	return;
             }
             
@@ -48,16 +49,16 @@ public class Q248_Strobogrammatic_Number_III {
             return;
         } 
         
-        if(solution.length() == 0 && n % 2 == 1)
+        if (solution.length() == 0 && n % 2 == 1)
         {
-            for(char c : single)
+            for (char c : single)
             {
                 backtrack(solution + c, n, low, high);
             }
         } 
         else 
         {
-            for(int i = 0; i < pair1.length; i++)
+            for (int i = 0; i < pair1.length; i++)
             {
                 backtrack(pair1[i] + solution + pair2[i], n, low, high);
             }

@@ -25,7 +25,8 @@ Example 2:
 // test case: ["a", ""] -> [[0,1], [1,0]]
 
 public class Q336_Palindrome_Pairs {
-	public List<List<Integer>> palindromePairs(String[] words) {
+	public List<List<Integer>> palindromePairs(String[] words) 
+	{
         List<List<Integer>> ans = new ArrayList<>();
         
         if (words == null || words.length == 0)
@@ -33,11 +34,11 @@ public class Q336_Palindrome_Pairs {
             return ans;
         }
         
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> wordIndexMap = new HashMap<String, Integer>();
         
         for (int i = 0; i < words.length; i++)
         {
-            map.put(words[i], i);
+            wordIndexMap.put(words[i], i);
         }
         
         for (int i = 0; i < words.length; i++)
@@ -51,10 +52,10 @@ public class Q336_Palindrome_Pairs {
                 {
                     String part2_reverse = new StringBuilder(part2).reverse().toString();
                     
-                    if (map.containsKey(part2_reverse) && map.get(part2_reverse) != i)
+                    if (wordIndexMap.containsKey(part2_reverse) && wordIndexMap.get(part2_reverse) != i)
                     {
                         List<Integer> list = new ArrayList<Integer>();
-                        list.add(map.get(part2_reverse));
+                        list.add(wordIndexMap.get(part2_reverse));
                         list.add(i);
                         ans.add(list);
                     }
@@ -64,11 +65,11 @@ public class Q336_Palindrome_Pairs {
                 {
                     String part1_reverse = new StringBuilder(part1).reverse().toString();
                     
-                    if (map.containsKey(part1_reverse) && map.get(part1_reverse) != i)
+                    if (wordIndexMap.containsKey(part1_reverse) && wordIndexMap.get(part1_reverse) != i)
                     {  
                         List<Integer> list = new ArrayList<Integer>();
                         list.add(i);
-                        list.add(map.get(part1_reverse));
+                        list.add(wordIndexMap.get(part1_reverse));
                         ans.add(list);
                     }
                 }

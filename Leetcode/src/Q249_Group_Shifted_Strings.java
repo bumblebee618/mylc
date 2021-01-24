@@ -26,7 +26,8 @@ A solution is:
  * */
 
 public class Q249_Group_Shifted_Strings {
-	public List<List<String>> groupStrings(String[] strings) {
+	public List<List<String>> groupStrings(String[] strings) 
+	{
         List<List<String>> result = new LinkedList<>();
         
         if (strings == null || strings.length == 0)
@@ -60,8 +61,8 @@ public class Q249_Group_Shifted_Strings {
         
         for (int i = 0; i < size; i++)
         {
-            int curDiff = letters[i] - 'a' - diff;
-            letters[i] = curDiff >= 0 ? (char) (letters[i] - diff) : (char) (26 + curDiff + 'a');
+            int gap = letters[i] - 'a' - diff;
+            letters[i] = gap >= 0 ? (char) (letters[i] - diff) : (char) (26 + gap + 'a');
         }
         
         return new String(letters);

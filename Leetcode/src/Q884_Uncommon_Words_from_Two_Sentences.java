@@ -38,16 +38,13 @@ public class Q884_Uncommon_Words_from_Two_Sentences {
         }
         
         Map<String, Integer> map = new HashMap<>();
-        String[] strs = A.split(" ");
         
-        for (String str : strs)
+        for (String str : A.split(" "))
         {
             map.put(str, map.getOrDefault(str, 0)+1);
         }
         
-        strs = B.split(" ");
-        
-        for (String str : strs)
+        for (String str : B.split(" "))
         {
             map.put(str, map.getOrDefault(str, 0)+1);
         }

@@ -20,18 +20,11 @@ Note:
 public class Q205_Isomorphic_Strings {
 	// solution 1: 
 	public boolean isIsomorphic(String s, String t) {
-        if (s == null || s.length() == 0)
+		if (s == null || t == null) 
         {
-            if (t == null || t.length() == 0)
-            {
-                return true;
-            } 
-            else 
-            {
-                return false;
-            }
+            return s == null && t == null;
         } 
-        else if (t == null || t.length() != s.length())
+        else if (s.length() != t.length()) 
         {
             return false;
         }

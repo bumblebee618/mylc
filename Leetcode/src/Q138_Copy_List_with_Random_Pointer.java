@@ -10,8 +10,10 @@ Return a deep copy of the list.
  * */
 
 public class Q138_Copy_List_with_Random_Pointer {
-	public RandomListNode copyRandomList(RandomListNode head) {
-        if (head == null) {
+	public RandomListNode copyRandomList(RandomListNode head) 
+	{
+        if (head == null) 
+        {
             return null;
         }
 
@@ -19,21 +21,28 @@ public class Q138_Copy_List_with_Random_Pointer {
         RandomListNode dummy = new RandomListNode(0);
         RandomListNode pre = dummy, newNode;
         
-        while (head != null) {
-            if (map.containsKey(head)) {
+        while (head != null) 
+        {
+            if (map.containsKey(head)) 
+            {
                 newNode = map.get(head);
             } 
-            else {
+            else 
+            {
                 newNode = new RandomListNode(head.label);
                 map.put(head, newNode);
             }
             
             pre.next = newNode;
 
-            if (head.random != null) {
-                if (map.containsKey(head.random)) {
+            if (head.random != null) 
+            {
+                if (map.containsKey(head.random)) 
+                {
                     newNode.random = map.get(head.random);
-                } else {
+                } 
+                else 
+                {
                     newNode.random = new RandomListNode(head.random.label);
                     map.put(head.random, newNode.random);
                 }

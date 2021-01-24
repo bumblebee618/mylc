@@ -16,10 +16,12 @@ public class Q267_Palindrome_Permutation_II {
 	 * 
 	 *****************************************/
 	// using backtrack
-	public List<String> generatePalindromes(String s) {
+	public List<String> generatePalindromes(String s) 
+	{
         List<String> result = new LinkedList<>();
         
-        if (s == null || s.length() == 0) {
+        if (s == null || s.length() == 0) 
+        {
             return result;
         }
         
@@ -27,15 +29,18 @@ public class Q267_Palindrome_Permutation_II {
         int len = s.length();
         int count = 0;
         
-        for (char c : s.toCharArray()) {
+        for (char c : s.toCharArray()) 
+        {
             hash[c]++;
         }
         
-        for (int i : hash) {
+        for (int i : hash) 
+        {
             count += i % 2;
         }
         
-        if (count > 1) {
+        if (count > 1) 
+        {
             return result;
         }
         
@@ -44,22 +49,30 @@ public class Q267_Palindrome_Permutation_II {
     }
     
     private void backtracking(List<String> result, String solution, int[] hash, int len) {
-        if (len == solution.length()) {
+        if (len == solution.length()) 
+        {
             result.add(solution);
             return;
         }
         
-        if (len % 2 == 1 && solution.length() == 0) {
-            for (int i = 0; i < 256; i++) {
-                if (hash[i] % 2 == 1) {
+        if (len % 2 == 1 && solution.length() == 0) 
+        {
+            for (int i = 0; i < 256; i++) 
+            {
+                if (hash[i] % 2 == 1) 
+                {
                     hash[i] -= 1;
                     backtracking(result, solution + (char) i, hash, len);
                     hash[i] += 1;
                 }
             }
-        } else {
-            for (int i = 0; i < 256; i++) {
-                if (hash[i] > 0 && hash[i] % 2 == 0) {
+        } 
+        else
+        {
+            for (int i = 0; i < 256; i++) 
+            {
+                if (hash[i] > 0 && hash[i] % 2 == 0) 
+                {
                     hash[i] -= 2;
                     backtracking(result, (char) i + solution + (char) i, hash, len);
                     hash[i] += 2;

@@ -17,28 +17,34 @@ For example,
 
 public class Q128_Longest_Consecutive_Sequence {
 	// solution 1: time is O(n), space is O(n)
-	public int longestConsecutive(int[] nums) {
-        if (nums == null || nums.length == 0) {
+	public int longestConsecutive(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
         Set<Integer> set = new HashSet<>();
         int maxLen = 0;
         
-        for (int num : nums) {
+        for (int num : nums) 
+        {
             set.add(num);
         }
         
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) 
+        {
             int left = nums[i] - 1;
             int right = nums[i] + 1;
             
-            while (set.contains(left)) {
+            while (set.contains(left)) 
+            {
                 set.remove(left);
                 left--;
             }
             
-            while (set.contains(right)) {
+            while (set.contains(right)) 
+            {
                 set.remove(right);
                 right++;
             }
