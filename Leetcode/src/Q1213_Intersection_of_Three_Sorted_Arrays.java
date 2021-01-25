@@ -24,7 +24,8 @@ Constraints:
 1 <= arr1[i], arr2[i], arr3[i] <= 2000
  */
 public class Q1213_Intersection_of_Three_Sorted_Arrays {
-	public List<Integer> arraysIntersection(int[] arr1, int[] arr2, int[] arr3) {
+	public List<Integer> arraysIntersection(int[] arr1, int[] arr2, int[] arr3) 
+	{
         List<Integer> result = new LinkedList<>();
         
         if (arr1 == null || arr1.length == 0 || arr2 == null || arr2.length == 0 || arr3 == null || arr3.length == 0)

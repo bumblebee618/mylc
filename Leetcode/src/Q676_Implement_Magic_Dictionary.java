@@ -71,6 +71,42 @@ public class Q676_Implement_Magic_Dictionary {
         return searchWord(root, searchWord, 0, false);
     }
     
+    private boolean searchWord(Trie node, String word, int index, boolean alreadyUpdateOneChar)
+    {
+        if (index == word.length())
+        {
+            return node.isWord && alreadyUpdateOneChar;
+        }
+        
+        for (int i = 0; i < node.children.length; i++)
+        {
+            if (node.children[i] == null)
+            {
+                continue;
+            }
+            
+            if (word.charAt(index) == (char) i)
+            {
+                if (searchWord(node.children[i], word, index+1, alreadyUpdateOneChar))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (!alreadyUpdateOneChar)
+                {
+                    if (searchWord(node.children[i], word, index+1, true))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+            
+        return false;
+    }
+    
     private void insertWord(String word)
     {
         if (word == null || word.length() == 0)
@@ -91,41 +127,6 @@ public class Q676_Implement_Magic_Dictionary {
         }
         
         node.isWord = true;
-    }
-    
-    private boolean searchWord(Trie node, String word, int index, boolean updateOneChar)
-    {
-        if (index == word.length())
-        {
-            return node.isWord && updateOneChar;
-        }
-        
-        for (int i = 0; i < node.children.length; i++)
-        {
-            if (node.children[i] == null)
-            {
-                continue;
-            }
-            else if (word.charAt(index) == (char) i)
-            {
-                if (searchWord(node.children[i], word, index+1, updateOneChar))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (!updateOneChar)
-                {
-                    if (searchWord(node.children[i], word, index+1, true))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-            
-        return false;
     }
     
     class Trie

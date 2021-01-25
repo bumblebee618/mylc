@@ -11,25 +11,30 @@ Note:
  **/
 
 
-public class Q283_Move_Zeroes {
-	public void moveZeroes(int[] nums) {
-        if (nums == null || nums.length == 0) {
+public class Q283_Move_Zeroes 
+{
+	public void moveZeroes(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return;
         }
         
-        int len = nums.length;
         int front = 0;
         int nextCopyIndex = 0;
         
-        while (front < len) {
-            if (nums[front] != 0) {
+        while (front < nums.length) 
+        {
+            if (nums[front] != 0) 
+            {
                 nums[nextCopyIndex++] = nums[front];
             }
             
             front++;
         }
         
-        while (nextCopyIndex < len) {
+        while (nextCopyIndex < nums.length) 
+        {
             nums[nextCopyIndex++] = 0;
         }
     }

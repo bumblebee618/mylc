@@ -13,18 +13,22 @@ Note:
 The string will only contain lowercase characters a-z. The maximum length of the string is 50000.
  *
  */
-public class Q680_Valid_Palindrome_II {
+public class Q680_Valid_Palindrome_II 
+{
 	// time complexity is O(n)
-	public boolean validPalindrome(String s) {
-        if (s == null || s.length() == 0) {
+	public boolean validPalindrome(String s) 
+	{
+        if (s == null || s.length() == 0) 
+        {
             return true;
         }
         
         int left = 0, right = s.length() - 1;
-        int count = 0;
         
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
+        while (left < right) 
+        {
+            if (s.charAt(left) != s.charAt(right)) 
+            {
                 return isPalindrome(s, left+1, right) || isPalindrome(s, left, right-1);
             } 
             
@@ -35,14 +39,17 @@ public class Q680_Valid_Palindrome_II {
         return true;
     }
     
-    private boolean isPalindrome(String s, int start, int end) {
-        while (start < end) {
-            if (s.charAt(start) != s.charAt(end)) {
+    private boolean isPalindrome(String s, int start, int end) 
+    {
+        while (start < end) 
+        {
+            if (s.charAt(start) != s.charAt(end)) 
+            {
                 return false;
-            } else {
-                start++;
-                end--;
-            }
+            } 
+            
+            start++;
+            end--;
         }
         
         return true;

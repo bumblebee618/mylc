@@ -59,7 +59,7 @@ public class Q875_Koko_Eating_Bananas {
         return isPossible(piles, H, left) ? left : right;
     }
     
-    private boolean isPossible(int[] piles, int hour, int speed)
+    private boolean isPossible(int[] piles, int targetHour, int speed)
     {
         int time = 0;
         
@@ -68,6 +68,6 @@ public class Q875_Koko_Eating_Bananas {
             time += (pile-1)/speed + 1;
         }
         
-        return time <= hour;
+        return time <= targetHour;
     }
 }

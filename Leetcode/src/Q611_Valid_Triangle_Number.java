@@ -16,25 +16,33 @@ The length of the given array won't exceed 1000.
 The integers in the given array are in the range of [0, 1000].
  *
  */
-public class Q611_Valid_Triangle_Number {
-	public int triangleNumber(int[] nums) {
-        if (nums == null || nums.length == 0) {
+public class Q611_Valid_Triangle_Number 
+{
+	public int triangleNumber(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
         Arrays.sort(nums);
         int count = 0;
         
-        for (int i = nums.length-1; i >= 2; i--) {
+        for (int i = nums.length-1; i >= 2; i--) 
+        {
             int left = 0, right=i-1;
             
-            while (left < right) {
+            while (left < right) 
+            {
                 int result = nums[left]+nums[right]-nums[i];
                 
-                if (result > 0) {
+                if (result > 0) 
+                {
                     count += right-left;
                     right--;
-                } else {
+                } 
+                else 
+                {
                     left++;
                 }
             }

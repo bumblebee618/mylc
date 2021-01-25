@@ -59,12 +59,14 @@ public class Q846_Hand_of_Straights {
             
             for (int j = 0; j < W; j++)
             {
-                if (!frequency.containsKey(card+j) || frequency.get(card+j) == 0)
+            	int count = frequency.getOrDefault(card+j, 0);
+            	
+                if (count == 0)
                 {
                     return false;
                 }
                 
-                frequency.put(card+j, frequency.get(card+j)-1);
+                frequency.put(card+j, count-1);
             }
         }
         

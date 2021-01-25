@@ -60,12 +60,14 @@ public class Q1296_Divide_Array_in_Sets_of_K_Consecutive_Numbers {
             
             for (int i = 0; i < k; i++)
             {
-                if (!frequency.containsKey(num+i) || frequency.get(num+i) == 0)
+            	int count = frequency.getOrDefault(num+i, 0);
+            	
+                if (count == 0)
                 {
                     return false;
                 }
                 
-                frequency.put(num+i, frequency.get(num+i)-1);
+                frequency.put(num+i, count-1);
             }
         }
         

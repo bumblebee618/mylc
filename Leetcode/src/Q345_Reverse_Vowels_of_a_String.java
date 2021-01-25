@@ -14,9 +14,12 @@ Note:
  * */
 
 
-public class Q345_Reverse_Vowels_of_a_String {
-	public String reverseVowels(String s) {
-        if(s == null || s.length() == 0) {
+public class Q345_Reverse_Vowels_of_a_String 
+{
+	public String reverseVowels(String s) 
+	{
+        if (s == null || s.length() == 0) 
+        {
             return s;
         }
         
@@ -24,12 +27,15 @@ public class Q345_Reverse_Vowels_of_a_String {
         char[] letters = s.toCharArray();
         int left = 0, right = s.length() - 1;
         
-        while(left < right) {
-            while(left < right && vowels.indexOf(letters[left]) == -1) {
+        while (left < right) 
+        {
+            while (left < right && vowels.indexOf(letters[left]) == -1) 
+            {
                 left++;
             }
         
-            while(left < right && vowels.indexOf(letters[right]) == -1) {
+            while (left < right && vowels.indexOf(letters[right]) == -1) 
+            {
                 right--;
             }
         
