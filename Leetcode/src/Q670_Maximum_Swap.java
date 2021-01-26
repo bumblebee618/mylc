@@ -16,36 +16,40 @@ Note:
 The given number is in the range [0, 108]
  */
 public class Q670_Maximum_Swap {
-	public int maximumSwap(int num) {
+	public int maximumSwap(int num) 
+    {
         if (num <= 0)
         {
             return 0;
         }
         
         char[] digits = Integer.toString(num).toCharArray();
-        int[] last = new int[10];
+        int[] lastPos = new int[10];
         
-        for (int i = 0; i < digits.length; i++) 
+        for (int i = 0; i < digits.length; i++)
         {
-            last[digits[i] - '0'] = i;
+            lastPos[digits[i] - '0'] = i;
         }
-
-        for (int i = 0; i < digits.length; i++) 
+        
+        for (int i = 0; i < digits.length; i++)
         {
-            for (int d = 9; d > digits[i] - '0'; d--) 
+            for (int j = 9; j > digits[i] - '0'; j--)
             {
-                if (last[d] > i) 
+                if (lastPos[j] > i)
                 {
-                    char tmp = digits[i];
-                    digits[i] = digits[last[d]];
-                    digits[last[d]] = tmp;
-                    return Integer.valueOf(new String(digits));
+                    char temp = digits[i];
+                    digits[i] = digits[lastPos[j]];
+                    digits[lastPos[j]] = temp;
+                    return Integer.parseInt(new String(digits));
                 }
             }
         }
         
         return num;
     }
+	
+	
+	
 	
 	
 	// solution 2:

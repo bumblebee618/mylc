@@ -15,8 +15,36 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
  * */
 
 public class Q215_Kth_Largest_Element_in_an_Array {
-	// Solution 1: using quickselect, time complexity is O(n)
+	// solution 1: use priority queue, O(nlogk)
 	public int findKthLargest(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        else if (k <= 0 || nums.length < k)
+        {
+            return 0;
+        }
+        
+        Queue<Integer> heap = new PriorityQueue<>();
+        
+        for (int num : nums)
+        {
+            heap.offer(num);
+            
+            if (heap.size() > k)
+            {
+                heap.poll();
+            }
+        }
+        
+        return heap.poll();
+    }
+	
+	
+	// Solution 2: using quickselect, time complexity is O(n), worst case is O(n2)
+	public int findKthLargest2(int[] nums, int k) 
 	{
         if (nums == null || nums.length == 0)
         {
@@ -77,35 +105,6 @@ public class Q215_Kth_Largest_Element_in_an_Array {
     }
     
     
-    
-    
-    // solution 2 : using priority queue
-    public int findKthLargest2(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k <= 0)
-        {
-            return -1;
-        }
-        
-        Queue<Integer> maxHeap = new PriorityQueue<>(k+1, new Comparator<Integer>(){
-            @Override
-            public int compare(Integer num1, Integer num2)
-            {
-                return num1 - num2;
-            }
-        });
-        
-        for (int num : nums)
-        {
-            maxHeap.offer(num);
-            
-            if (maxHeap.size() > k)
-            {
-                maxHeap.poll();
-            }
-        }
-        
-        return maxHeap.peek();
-    }
     
     
     

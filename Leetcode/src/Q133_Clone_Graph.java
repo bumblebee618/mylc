@@ -39,36 +39,40 @@ public class Q133_Clone_Graph {
 	 *  
 	 *******************************************************************/
 	
-	public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if(node == null)
+	public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) 
+	{
+		if (node == null)
         {
             return node;
         }
         
-        Map<Integer, UndirectedGraphNode> map = new HashMap<Integer, UndirectedGraphNode>();
-        UndirectedGraphNode copyRoot = new UndirectedGraphNode(node.label);
-        Queue<UndirectedGraphNode> oldQueue = new LinkedList<UndirectedGraphNode>();
-        Queue<UndirectedGraphNode> newQueue = new LinkedList<UndirectedGraphNode>();
+		UndirectedGraphNode copyRoot = new UndirectedGraphNode(node.label);
+        
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        map.put(node, copyRoot);
+        
+        Queue<UndirectedGraphNode> oldQueue = new LinkedList<>();
         oldQueue.offer(node);
+        
+        Queue<UndirectedGraphNode> newQueue = new LinkedList<>();
         newQueue.offer(copyRoot);
-        map.put(copyRoot.label, copyRoot);                // map表示已经建立的新图中的结点, 有了map, 相当于visited
         
         while (!oldQueue.isEmpty())
         {
-            UndirectedGraphNode oldNode = oldQueue.poll();
-            UndirectedGraphNode newNode = newQueue.poll();
+        	UndirectedGraphNode oldNode = oldQueue.poll();
+        	UndirectedGraphNode newNode = newQueue.poll();
             
             for (UndirectedGraphNode n : oldNode.neighbors)
             {
-                if (map.containsKey(n.label))      // 已经建立的新图中的结点，则无需继续建立
+                if (map.containsKey(n))      // 已经建立的新图中的结点，则无需继续建立
                 {
-                    newNode.neighbors.add(map.get(n.label));
+                    newNode.neighbors.add(map.get(n));
                 } 
                 else 
                 {
-                    UndirectedGraphNode copyNeighbor = new UndirectedGraphNode(n.label);
+                	UndirectedGraphNode copyNeighbor = new UndirectedGraphNode(n.label);
                     newNode.neighbors.add(copyNeighbor);
-                    map.put(copyNeighbor.label, copyNeighbor);     // map.put的操作放与此处，即当结点建立了，就立即放入map
+                    map.put(n, copyNeighbor);     // map.put的操作放与此处，即当结点建立了，就立即放入map
                     newQueue.offer(copyNeighbor);
                     oldQueue.offer(n);
                 }

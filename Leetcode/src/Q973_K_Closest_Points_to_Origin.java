@@ -37,7 +37,41 @@ Note:
  *
  */
 public class Q973_K_Closest_Points_to_Origin {
-	public int[][] kClosest(int[][] points, int K) {
+	// solution 1:
+	public int[][] kClosest(int[][] points, int K) 
+    {
+        if (points == null || points.length == 0 || points[0].length != 2 || K <= 0)
+        {
+            return new int[0][0];
+        }
+        
+        Queue<int[]> heap = new PriorityQueue<>(K, (a, b) -> (b[0]*b[0] + b[1]*b[1]) - (a[0]*a[0] + a[1]*a[1])); 
+        
+        for (int[] point : points)
+        {
+            heap.offer(point);
+            
+            if (heap.size() > K)
+            {
+                heap.poll();
+            }
+        }
+        
+        int[][] result = new int[K][2];
+        
+        for (int i = K-1; i >= 0; i--)
+        {
+            result[i] = heap.poll();
+        }
+        
+        return result;
+    }
+	
+	
+	
+	
+	// solution 2: Customized comparator
+	public int[][] kClosest2(int[][] points, int K) {
         if (points == null || points.length == 0 || points[0].length != 2 || K <= 0)
         {
             return new int[0][0];

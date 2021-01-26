@@ -71,11 +71,11 @@ public class Q721_Accounts_Merge {
         return result;
     }
 
-    private List<String> bfs(Map<String, List<String>> graph, String email, Set<String> visited)
+    private List<String> bfs(Map<String, List<String>> graph, String rootEmail, Set<String> visited)
     {
         Queue<String> queue = new LinkedList<>();
-        queue.offer(email);
-        visited.add(email);
+        queue.offer(rootEmail);
+        visited.add(rootEmail);
         List<String> list = new LinkedList<>();
 
         while (!queue.isEmpty())

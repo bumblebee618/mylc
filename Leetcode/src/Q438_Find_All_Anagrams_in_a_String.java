@@ -33,12 +33,15 @@ The substring with start index = 2 is "ab", which is an anagram of "ab".
 
  * 
  * */
-public class Q438_Find_All_Anagrams_in_a_String {
+public class Q438_Find_All_Anagrams_in_a_String 
+{
 	// solution 1: similar to solution3, use two pointers, time complexity is O(n), space complexity is O(1)
-	public List<Integer> findAnagrams(String s, String p) {
+	public List<Integer> findAnagrams(String s, String p) 
+	{
         List<Integer> result = new LinkedList<>();
         
-        if (s == null || s.length() == 0 || p == null || p.length() == 0 || s.length() < p.length()) {
+        if (s == null || s.length() == 0 || p == null || p.length() == 0 || s.length() < p.length()) 
+        {
             return result;
         }
         
@@ -47,18 +50,22 @@ public class Q438_Find_All_Anagrams_in_a_String {
         int sLen = s.length();
         int pLen = p.length();
         
-        for (char c : p.toCharArray()) {
+        for (char c : p.toCharArray()) 
+        {
             pHash[c]++;
         }
         
-        for (int i = 0; i < pLen-1; i++) {
+        for (int i = 0; i < pLen-1; i++) 
+        {
             sHash[s.charAt(i)]++;
         }
         
-        for (int i = pLen-1; i < sLen; i++) {
+        for (int i = pLen-1; i < sLen; i++) 
+        {
             sHash[s.charAt(i)]++;
             
-            if (isAnagrams(sHash, pHash)) {
+            if (isAnagrams(sHash, pHash)) 
+            {
                 result.add(i-pLen+1);
             }
             
@@ -68,9 +75,12 @@ public class Q438_Find_All_Anagrams_in_a_String {
         return result;
     }
     
-    private boolean isAnagrams(int[] sHash, int[] pHash) {
-        for (int i = 0; i < 256; i++) {
-            if (sHash[i] != pHash[i]) {
+    private boolean isAnagrams(int[] sHash, int[] pHash) 
+    {
+        for (int i = 0; i < 256; i++) 
+        {
+            if (sHash[i] != pHash[i]) 
+            {
                 return false;
             }
         }

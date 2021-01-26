@@ -27,27 +27,26 @@ The final answer is guaranteed to be less than 2^31.
 
 
 public class Q938_Range_Sum_of_BST {
-private int sum = 0;
-    
-    public int rangeSumBST(TreeNode root, int L, int R) {
-        if (root == null || L > R)
+	public int rangeSumBST(TreeNode root, int low, int high) 
+    {
+        if (root == null || low > high)
         {
             return 0;
         }
         
-        if (root.val >= L && root.val <= R)
+        int sum = 0;
+        
+        if (root.val >= low && root.val <= high)
         {
-            sum += root.val;
-            rangeSumBST(root.left, L, R);
-            rangeSumBST(root.right, L, R);
+            sum = root.val + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high);
         }
-        else if (root.val < L)
+        else if (root.val < low)
         {
-            rangeSumBST(root.right, L, R);
+            sum = rangeSumBST(root.right, low, high);
         }
         else
         {
-            rangeSumBST(root.left, L, R);
+            sum = rangeSumBST(root.left, low, high);
         }
         
         return sum;

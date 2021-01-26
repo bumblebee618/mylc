@@ -24,7 +24,9 @@ Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Th
  */
 public class Q273_Integer_to_English_Words {
 	private final String[] level1 = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+
     private final String[] level2 = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
     private final String[] level3 = {"", "Thousand", "Million", "Billion"};
     
     public String numberToWords(int num) {
@@ -40,11 +42,11 @@ public class Q273_Integer_to_English_Words {
         {
             int part1 = num % 1000;
             num /= 1000;
-            String word = helper(part1);
+            String word = insertHelper(part1);
             
             if (word.length() > 0 && index > 0)
             {
-                builder.insert(0, String.format("%s%s", level3[index], " "));
+                builder.insert(0, String.format("%s ", level3[index]));
             }
             
             builder.insert(0, word);
@@ -54,7 +56,7 @@ public class Q273_Integer_to_English_Words {
         return builder.toString().trim();
     }
     
-    private String helper(int num)
+    private String insertHelper(int num)
     {
         StringBuilder builder = new StringBuilder();
         
@@ -70,7 +72,7 @@ public class Q273_Integer_to_English_Words {
                 builder.append(level2[num/10]).append(" ");
                 num %= 10;
             }
-            else if (num > 0)
+            else
             {
                 builder.append(level1[num]).append(" ");
                 num = 0;

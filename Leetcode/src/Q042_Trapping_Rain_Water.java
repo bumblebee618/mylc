@@ -16,8 +16,10 @@ public class Q042_Trapping_Rain_Water {
 	 * 
 	 **************************************************************************************/
 	// Solution 1: using DP, time complexity O(n), space 0(n)
-	public int trap(int[] height) {
-		if (height == null || height.length == 0) {
+	public int trap(int[] height) 
+	{
+		if (height == null || height.length == 0) 
+		{
 			return 0;
 		}
 
@@ -27,18 +29,22 @@ public class Q042_Trapping_Rain_Water {
 		left[0] = right[0] = left[len - 1] = right[len - 1] = 0;
 		int res = 0;
 
-		for (int i = 1; i < len - 1; i++) {
+		for (int i = 1; i < len - 1; i++) 
+		{
 			left[i] = Math.max(left[i - 1], height[i - 1]);
 		}
 
-		for (int i = len - 2; i > 0; i--) {
+		for (int i = len - 2; i > 0; i--) 
+		{
 			right[i] = Math.max(right[i + 1], height[i + 1]);
 		}
 
-		for (int i = 1; i < len - 1; ++i) {
+		for (int i = 1; i < len - 1; ++i) 
+		{
 			int waterNum = Math.min(left[i], right[i]) - height[i];
 
-			if (waterNum > 0) {
+			if (waterNum > 0) 
+			{
 				res += waterNum;
 			}
 		}
@@ -53,23 +59,28 @@ public class Q042_Trapping_Rain_Water {
 	
 	
 	// Solution 2: using two pointers, time is O(n), space is O(1)
-	public int trap2(int[] height) {
-		if (height == null || height.length < 2) {
+	public int trap2(int[] height) 
+	{
+		if (height == null || height.length < 2) 
+		{
 			return 0;
 		}
 
 		int left = 0, right = height.length - 1;
 		int waterCount = 0;
 
-		while (left < right) {
+		while (left < right) 
+		{
 			int smallestHeight = Math.min(height[left], height[right]);
 
-			while (left < right && smallestHeight >= height[left]) {
+			while (left < right && height[left] <= smallestHeight) 
+			{
 				waterCount += smallestHeight - height[left];
 				left++;
 			}
 
-			while (left < right && smallestHeight >= height[right]) {
+			while (left < right && height[right] <= smallestHeight) 
+			{
 				waterCount += smallestHeight - height[right];
 				right--;
 			}

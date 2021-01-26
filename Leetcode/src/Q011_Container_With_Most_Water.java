@@ -12,24 +12,30 @@
  *************************************************************************/
 
 
-public class Q011_Container_With_Most_Water {
-	public int maxArea(int[] height) {
-        if(height == null || height.length <= 1) {
+public class Q011_Container_With_Most_Water 
+{
+	public int maxArea(int[] height) 
+	{
+        if (height == null || height.length <= 1) 
+        {
             return 0;
         }
         
         int left = 0, right = height.length - 1;
         int maxArea = 0;
         
-        while(left < right) {
+        while (left < right) 
+        {
             int smallestHeight = Math.min(height[left], height[right]); // 定一个最低／最高值，低于它的往中间跑
             maxArea = Math.max(maxArea, smallestHeight * (right - left));
             
-            while(left < right && smallestHeight >= height[left]) {
+            while (left < right && height[left] <= smallestHeight) 
+            {
                 left++;
             }
             
-            while(left < right && smallestHeight >= height[right]) {
+            while (left < right && height[right] <= smallestHeight) 
+            {
                 right--;
             }
         }

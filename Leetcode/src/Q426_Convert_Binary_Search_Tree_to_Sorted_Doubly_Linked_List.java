@@ -45,17 +45,15 @@ All values of Node.val are unique.
 0 <= Number of Nodes <= 2000
  */
 public class Q426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List {
-	public Node treeToDoublyList(Node root) {
+	public Node treeToDoublyList(Node root) 
+	{
         if (root == null)
         {
             return null;
         }
         
         Stack<Node> stack = new Stack<>();
-        Node head = null, tail = null;
-        Node prev = null;
-        long max = Long.MIN_VALUE;
-        long min = Long.MAX_VALUE;
+        Node head = null, tail = null, prev = null;
         
         while (root != null || !stack.isEmpty())
         {
@@ -73,16 +71,14 @@ public class Q426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List {
                 prev.right = root;
             }
             
-            if (root.val > max)
+            if (head == null || root.val < head.val)
             {
-                max = root.val;
-                tail = root;
+                head = root;
             }
             
-            if (root.val < min)
+            if (tail == null || root.val > tail.val)
             {
-                min = root.val;
-                head = root;
+                tail = root;
             }
             
             prev = root;
@@ -94,6 +90,11 @@ public class Q426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List {
         return head;
     }
 
+	
+	
+	
+	
+	
 	
 	class Node {
 	    public int val;

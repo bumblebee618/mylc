@@ -12,9 +12,8 @@ public class Q050_Pow_x_n {
     // n == 0
 	
 	// solution 1: iterator, time is O(logn)
-	public double myPow(double x, int n) 
-	{
-		if (n == 0 || x == 1) 
+	public double myPow(double x, int n) {
+        if (n == 0 || x == 1) 
 		{
             return 1;
         } 
@@ -28,13 +27,10 @@ public class Q050_Pow_x_n {
         } 
 		
 		int flag_n = n < 0 ? -1 : 1;
-        int flag_x = 1;
         
-        if (x < 0 && n % 2 == 1)             // flag_x表示是否最后有负号，不仅考虑x < 0,同时要考虑n % 2 == 1
-        {
-        	flag_x = -1;
-        }
-        
+        // flag_x表示是否最后有负号，不仅考虑x < 0,同时要考虑n % 2 == 1
+        int flag_x = (x < 0 && n % 2 == 1) ? -1 : 1; 
+
         n = Math.abs(n);
         x = Math.abs(x);
         double sum = 1;
@@ -51,15 +47,7 @@ public class Q050_Pow_x_n {
         }
         
         sum = sum * x * flag_x;     // 添加入符号
-        
-        if (flag_n < 0)
-        {
-            return 1 / sum; 
-        } 
-        else 
-        {
-            return sum;
-        }
+        return flag_n < 0 ? 1 / sum : sum;
     }
 	
 	

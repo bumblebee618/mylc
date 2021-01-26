@@ -39,31 +39,30 @@ public class Q134_Gas_Station {
 	
     
 	// Time complexity O(n^2)
-    public int canCompleteCircuit2(int[] gas, int[] cost) {
+	public int canCompleteCircuit2(int[] gas, int[] cost) 
+	{
         if (gas == null || gas.length == 0 || cost == null || cost.length == 0 || gas.length != cost.length)
         {
             return -1;
         }
         
-        int start = 0;
         int size = gas.length;
         
-        while (start < size)
+        for (int start = 0; start < size; start++)
         {
             if (gas[start]-cost[start] < 0)
             {
-                start++;
                 continue;
             }
             
             int index = (start+1) % size;
-            int sum = gas[start]-cost[start];
+            int totalGas = gas[start]-cost[start];
             
             while (index != start)
             {
-                sum += gas[index]-cost[index];
+                totalGas += gas[index]-cost[index];
                     
-                if (sum < 0)
+                if (totalGas < 0)
                 {
                     break;
                 }
@@ -71,12 +70,10 @@ public class Q134_Gas_Station {
                 index = (index+1) % size;
             }
             
-            if (sum >= 0)
+            if (totalGas >= 0)
             {
                 return start;
             }
-            
-            start++;
         }
         
         return -1;

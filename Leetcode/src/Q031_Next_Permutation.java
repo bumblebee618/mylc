@@ -26,8 +26,10 @@ public class Q031_Next_Permutation {
 	 * 
 	 ***************************************************************/
 
-	public void nextPermutation(int[] nums) {
-        if (nums == null || nums.length == 0) {
+	public void nextPermutation(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return ;
         }
         
@@ -35,12 +37,18 @@ public class Q031_Next_Permutation {
         int index1 = len - 2;
         int index2 = len - 1;
         
-        while (index1 >= 0 && nums[index1] >= nums[index1 + 1]) {   // Find 1st id that breaks descending order, contains "=" !!!
-            index1--;
+        // Find 1st id that breaks descending order, contains "=" !!!
+        while (index1 >= 0 && nums[index1] >= nums[index1 + 1]) 
+        {
+        	index1--;
         }
         
-        if (index1 >= 0) {                                          // If not entirely descending  注意必需 i >= 0 ！！!
-        	while(index2 >= 0 && nums[index2] <= nums[index1]){     // Find rightmost first larger number        
+        // If not entirely descending  注意必需 i >= 0 ！！!
+        if (index1 >= 0)        
+        {
+        	// Find rightmost first larger number
+        	while (index2 >= 0 && nums[index2] <= nums[index1])    
+        	{
                 index2--;
             }
             
@@ -52,8 +60,10 @@ public class Q031_Next_Permutation {
         reverseArray(nums, index1 + 1, len - 1);
     }
     
-    public void reverseArray(int[] nums, int start, int end) {
-        while (start < end) {
+    private void reverseArray(int[] nums, int start, int end) 
+    {
+        while (start < end) 
+        {
             int temp = nums[start];
             nums[start] = nums[end];
             nums[end] = temp;

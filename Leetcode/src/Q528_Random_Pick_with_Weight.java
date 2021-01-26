@@ -29,34 +29,39 @@ Explanation of Input Syntax:
 The input is two lists: the subroutines called and their arguments. Solution's constructor has one argument, the array w. pickIndex has no arguments. Arguments are always wrapped with a list, even if there aren't any.
  *
  */
-public class Q528_Random_Pick_with_Weight {
-	private List<Integer> candidates = new ArrayList<>();
+public class Q528_Random_Pick_with_Weight 
+{
+	private int[] candidates;
     private Random rand = new Random();
     private int tot = 0;
 
-    public Q528_Random_Pick_with_Weight(int[] w) {
+    public Q528_Random_Pick_with_Weight(int[] w) 
+    {
         if (w == null || w.length == 0)
         {
             return;
         }
         
-        for (int weight : w)
+        candidates = new int[w.length];
+        
+        for (int i = 0; i < w.length; i++)
         {
-        	tot += weight;
-        	candidates.add(tot);
+        	tot += w[i];
+        	candidates[i] = tot;
         }
     }
     
-    public int pickIndex() {
+    public int pickIndex() 
+    {
         int target = rand.nextInt(tot);
         int left = 0;
-        int right = candidates.size()-1;
+        int right = candidates.length-1;
         
         while (left+1 < right)
         {
             int mid = left+(right-left)/2;
             
-            if (candidates.get(mid) > target)
+            if (candidates[mid] > target)
             {
                 right = mid;
             }
@@ -66,13 +71,6 @@ public class Q528_Random_Pick_with_Weight {
             }
         }
         
-        if (candidates.get(left) > target)
-        {
-            return left;
-        }
-        else
-        {
-            return right;
-        }
+        return candidates[left] > target ? left : right;
     }
 }
