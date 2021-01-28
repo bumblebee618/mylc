@@ -14,28 +14,27 @@ Note:
 public class Q283_Move_Zeroes 
 {
 	public void moveZeroes(int[] nums) 
-	{
-        if (nums == null || nums.length == 0) 
+    {
+        if (nums == null || nums.length == 0)
         {
             return;
         }
         
-        int front = 0;
-        int nextCopyIndex = 0;
+        int front = 0, back = 0;
         
-        while (front < nums.length) 
+        while (front < nums.length)
         {
-            if (nums[front] != 0) 
+            if (nums[front] != 0)
             {
-                nums[nextCopyIndex++] = nums[front];
+                nums[back++] = nums[front];
             }
             
             front++;
         }
         
-        while (nextCopyIndex < nums.length) 
+        while (back < nums.length)
         {
-            nums[nextCopyIndex++] = 0;
+            nums[back++] = 0;
         }
     }
 	

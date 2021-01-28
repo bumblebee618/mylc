@@ -111,9 +111,9 @@ public class Q348_Design_Tic_Tac_Toe {
         }
         
         if (Math.abs(rowStatus[row]) == size 
-        		|| Math.abs(colStatus[col]) == size 
-        		|| Math.abs(diag) == size 
-        		|| Math.abs(antidiag) == size)
+        	|| Math.abs(colStatus[col]) == size 
+        	|| Math.abs(diag) == size 
+        	|| Math.abs(antidiag) == size)
         {
             return player;
         }

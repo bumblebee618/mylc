@@ -10,8 +10,10 @@ Note:
  * 
  * */
 public class Q043_Multiply_Strings {
-	public String multiply(String num1, String num2) {
-        if(num1 == null || num1.length() == 0 || num2 == null || num2.length() == 0){
+	public String multiply(String num1, String num2) 
+	{
+        if (num1 == null || num1.length() == 0 || num2 == null || num2.length() == 0)
+        {
             return new String();
         }
         
@@ -20,10 +22,12 @@ public class Q043_Multiply_Strings {
         int sum = 0;
         int mul = 0;
         int x = 0, y = 0;
-        StringBuffer builder = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         
-        for(int i = m - 1; i >= 0; --i){
-            for(int j = n - 1; j >= 0; --j){
+        for (int i = m - 1; i >= 0; --i)
+        {
+            for (int j = n - 1; j >= 0; --j)
+            {
                 mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
                 x = i + j;
                 y = i + j + 1;
@@ -34,9 +38,12 @@ public class Q043_Multiply_Strings {
             }
         }
         
-        for(int num : pos){
-            if(builder.length() == 0 && num == 0){   // 防止 99 * 0 会得到 000的结果 ！！！
-                continue;
+        for(int num : pos)
+        {
+        	// 去除无效的零，防止 99 * 0 会得到 000的结果 ！！！
+            if (builder.length() == 0 && num == 0)   
+            {
+            	continue;
             }
             
             builder.append(num);

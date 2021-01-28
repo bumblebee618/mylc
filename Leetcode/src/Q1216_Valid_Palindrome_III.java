@@ -22,7 +22,8 @@ s has only lowercase English letters.
 1 <= k <= s.length
  */
 public class Q1216_Valid_Palindrome_III {
-	public boolean isValidPalindrome(String s, int k) {
+	public boolean isValidPalindrome(String s, int k) 
+	{
         if (s == null || s.length() == 0)
         {
             return false;
@@ -31,7 +32,8 @@ public class Q1216_Valid_Palindrome_III {
         return s.length() - longestPalindromeSubseq(s) <= k;
     }
     
-    private int longestPalindromeSubseq(String s) {
+    private int longestPalindromeSubseq(String s) 
+    {
         int len = s.length();
         int[][] dp = new int[len][len];
         
@@ -51,6 +53,7 @@ public class Q1216_Valid_Palindrome_III {
             {
                 int end = start + length;
                 
+                // 此处不需要 string[start+1, end-1] 一定是Palindrome
                 if (s.charAt(start) == s.charAt(end))
                 {
                     dp[start][end] = dp[start+1][end-1] + 2;

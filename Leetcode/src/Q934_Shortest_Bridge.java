@@ -36,7 +36,8 @@ public class Q934_Shortest_Bridge {
 	private int[] dx = new int[] {1, -1, 0, 0};
     private int[] dy = new int[] {0, 0, 1, -1};
     
-    public int shortestBridge(int[][] nums) {
+    public int shortestBridge(int[][] nums) 
+    {
         if (nums == null || nums.length == 0 || nums[0].length == 0)
         {
             return 0;
@@ -85,6 +86,7 @@ public class Q934_Shortest_Bridge {
             
                     if (newX >= 0 && newX < row && newY >= 0 && newY < col && !visited[newX][newY])
                     {
+                    	// 在这里check是否是1，为了防止检测到第一个岛的1
                         if (nums[newX][newY] == 1)
                         {
                             return step;

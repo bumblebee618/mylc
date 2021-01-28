@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 /*****
  * 
@@ -17,12 +18,14 @@ public class Q138_Copy_List_with_Random_Pointer {
             return null;
         }
 
-        HashMap<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();   // 以RandomListNode为key放入map
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();   // 以RandomListNode为key放入map
         RandomListNode dummy = new RandomListNode(0);
-        RandomListNode pre = dummy, newNode;
+        RandomListNode pointer = dummy;
         
         while (head != null) 
         {
+        	RandomListNode newNode = null;
+        	
             if (map.containsKey(head)) 
             {
                 newNode = map.get(head);
@@ -33,7 +36,7 @@ public class Q138_Copy_List_with_Random_Pointer {
                 map.put(head, newNode);
             }
             
-            pre.next = newNode;
+            pointer.next = newNode;
 
             if (head.random != null) 
             {
@@ -43,12 +46,13 @@ public class Q138_Copy_List_with_Random_Pointer {
                 } 
                 else 
                 {
-                    newNode.random = new RandomListNode(head.random.label);
-                    map.put(head.random, newNode.random);
+                	RandomListNode random = new RandomListNode(head.random.label);
+                    newNode.random = random;
+                    map.put(head.random, random);
                 }
             }
 
-            pre = newNode;
+            pointer = newNode;
             head = head.next;
         }
         

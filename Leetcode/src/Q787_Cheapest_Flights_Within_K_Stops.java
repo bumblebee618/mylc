@@ -58,6 +58,69 @@ public class Q787_Cheapest_Flights_Within_K_Stops
             prices.computeIfAbsent(flight[0], x -> new HashMap<>()).put(flight[1], flight[2]);
         }
         
+        Queue<Tuple> pq = new PriorityQueue<>((a, b) -> (a.cost - b.cost));
+        
+        // cost, city and steps left
+        pq.add(new Tuple(0, src, K+1));
+        
+        while (!pq.isEmpty()) 
+        {
+            Tuple node = pq.poll();
+            
+            if (node.city == dst) 
+            {
+                return node.cost;
+            }
+            
+            if (node.stopLeft > 0) 
+            {
+                Map<Integer, Integer> priceMap = prices.getOrDefault(node.city, new HashMap<>());
+                
+                // bfs
+                for (int nextCity : priceMap.keySet()) 
+                {
+                    pq.add(new Tuple(node.cost + priceMap.get(nextCity), nextCity, node.stopLeft - 1));
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    class Tuple
+    {
+        public int cost;
+        public int city;
+        public int stopLeft;
+        
+        public Tuple(int cost, int city, int stopLeft)
+        {
+            this.cost = cost;
+            this.city = city;
+            this.stopLeft = stopLeft;
+        }
+    }
+	
+	
+	// solution 2:
+	public int findCheapestPrice2(int n, int[][] flights, int src, int dst, int K) 
+    {
+        if (flights == null || flights.length == 0 || flights[0].length != 3)
+        {
+            return 0;
+        }
+        else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || K < 0 || K > n)
+        {
+            return 0;
+        }
+        
+        Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
+        
+        for (int[] flight : flights) 
+        {
+            prices.computeIfAbsent(flight[0], x -> new HashMap<>()).put(flight[1], flight[2]);
+        }
+        
         Queue<int[]> pq = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
         
         // price, city and steps left
@@ -91,73 +154,8 @@ public class Q787_Cheapest_Flights_Within_K_Stops
     }
     
     
-	// solution 2: TLE
-    private int result = Integer.MAX_VALUE;
-    
-    public int findCheapestPrice2(int n, int[][] flights, int src, int dst, int K) 
-    {
-        if (flights == null || flights.length == 0 || flights[0].length != 3)
-        {
-            return 0;
-        }
-        else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || K < 0 || K > n)
-        {
-            return 0;
-        }
-        
-        Set<Tuple>[] graph = new Set[n];
-        
-        for (int[] flight : flights)
-        {
-            if (graph[flight[0]] == null)
-            {
-                graph[flight[0]] = new HashSet<>();
-            }
-            
-            graph[flight[0]].add(new Tuple(flight[1], flight[2]));
-        }
-        
-        bfs(new Tuple(src, 0), graph, 0, dst, 0, K);
-        return result == Integer.MAX_VALUE ? -1 : result;
-    }
-    
-    private void bfs(Tuple node, Set<Tuple>[] graph, int totalCost, int dst, int stop, int K)
-    {
-        if (node.city == dst)
-        {
-            result = Math.min(result, totalCost);
-            return;
-        }
-        else if (stop == K+1)
-        {
-            return;
-        } 
-        
-        if (graph[node.city] != null)
-        {
-            for (Tuple next : graph[node.city])
-            {
-                bfs(next, graph, totalCost+next.cost, dst, stop+1, K);
-            }
-        }
-    }
-    
-    class Tuple
-    {
-        public int city;
-        public int cost;
-        
-        public Tuple(int city, int cost)
-        {
-            this.city = city;
-            this.cost = cost;
-        }
-    }
-	
-	
-	
-	
-	
+
+	// solution 3:
 	public int findCheapestPrice3(int n, int[][] flights, int src, int dst, int K) {
         if (n <= 0 || flights == null || flights.length == 0 || flights[0].length == 0 || src == dst) {
             return 0;

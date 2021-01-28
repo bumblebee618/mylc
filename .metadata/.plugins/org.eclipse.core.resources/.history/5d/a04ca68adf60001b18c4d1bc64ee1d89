@@ -1,0 +1,114 @@
+import java.util.Stack;
+
+import org.omg.CORBA.SystemException;
+
+/***
+ * 
+ * @author jackie
+ * 
+ * If the depth of a tree is smaller than 5, then this tree can be represented by a list of three-digits integers.
+For each integer in this list:
+	1. The hundreds digit represents the depth D of this node, 1 <= D <= 4.
+	2. The tens digit represents the position P of this node in the level it belongs to, 1 <= P <= 8. The position is the same as that in a full binary tree.
+	3. The units digit represents the value V of this node, 0 <= V <= 9.
+Given a list of ascending three-digits integers representing a binary tree with the depth smaller than 5, you need to return the sum of all paths from the root towards the leaves.
+It's guaranteed that the given list represents a valid connected binary tree.
+Example 1:
+Input: [113, 215, 221]
+Output: 12
+Explanation: 
+The tree that the list represents is:
+    3
+   / \
+  5   1
+The path sum is (3 + 5) + (3 + 1) = 12.
+ 
+Example 2:
+Input: [113, 221]
+Output: 4
+Explanation: 
+The tree that the list represents is: 
+    3
+     \
+      1
+The path sum is (3 + 1) = 4.
+
+ */
+public class Q666_Path_Sum_IV 
+{
+	private int result = 0;
+	
+	public int pathSum(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return result;
+        }
+        
+        int[][] tree = new int[5][9];
+        
+        for (int num : nums)
+        {
+            int row = num / 100;
+            int col = (num / 10) - row * 10;
+            int value = num % 10;
+            tree[row][col] = value;
+        }
+        
+        for (int i = 0; i < 5; i++)
+        {
+        	for (int j = 0; j < 9; j++)
+        	{
+        		System.out.print(tree[i][j] + ", ");
+        	}
+        	
+        	System.out.println();
+        }
+        
+        dfs(tree, 1, 1, 0);
+        return result;
+    }
+	
+	private void dfs(int[][] tree, int row, int col, int solution)
+	{
+		solution += tree[row][col];
+		int leftRow = row+1, rightRow = row+1;
+        int leftCol = (1 << row) - 1;
+        int rightCol = 1 << row;
+        boolean leftNull = false, rightNull = false;
+        
+        if (leftRow < tree.length && leftCol < tree[0].length && tree[leftRow][leftCol] > 0)
+        {
+            dfs(tree, leftRow, leftCol, solution);
+        }
+        else
+        {
+        	leftNull = true;
+        }
+        
+        if (rightRow < tree.length && rightCol < tree[0].length && tree[rightRow][rightCol] > 0)
+        {
+        	dfs(tree, rightRow, rightCol, solution); 
+        }
+        else
+        {
+        	rightNull = true;
+        }
+        
+        if (leftNull && rightNull)
+        {
+        	result += solution;
+        }
+	}
+
+	
+	
+	public static void main(String[] args)
+	{
+		Q666_Path_Sum_IV test = new Q666_Path_Sum_IV();
+		int[] nums1 = {113, 215, 221};
+		int[] nums2 = {113, 221};
+		// System.out.println(test.pathSum(nums1));
+		System.out.println(test.pathSum(nums2));
+	}
+}

@@ -18,32 +18,44 @@ Note:
  * 
  * */
 
-public class Q039_Combination_Sum {
-	public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> ans = new ArrayList<>();
+public class Q039_Combination_Sum 
+{
+	public List<List<Integer>> combinationSum(int[] candidates, int target) 
+	{
+        List<List<Integer>> result = new LinkedList<>();
         
-        if(candidates == null || candidates.length == 0) {
-            return ans;
+        if (candidates == null || candidates.length == 0) 
+        {
+            return result;
         }
         
         Arrays.sort(candidates);
-        backtrack(ans, new ArrayList<Integer>(), target, candidates, 0);
-        return ans;
+        backtrack(result, new LinkedList<Integer>(), target, candidates, 0);
+        return result;
     }
     
-    public void backtrack(List<List<Integer>> ans, List<Integer> solution, int target, int[] candidates, int start) {
-        if(target == 0) {
-            ans.add(new ArrayList<Integer>(solution));
+    private void backtrack(
+    		List<List<Integer>> result, 
+    		List<Integer> solution, 
+    		int target, 
+    		int[] candidates, 
+    		int start) 
+    {
+        if (target == 0) 
+        {
+        	result.add(new ArrayList<Integer>(solution));
             return;
         }
         
-        for(int i = start; i < candidates.length; i++) {
-            if(target < candidates[i]) {
-                return ;
+        for (int i = start; i < candidates.length; i++) 
+        {
+            if (target < candidates[i]) 
+            {
+                return;
             }
             
             solution.add(candidates[i]);
-            backtrack(ans, solution, target - candidates[i], candidates, i);
+            backtrack(result, solution, target - candidates[i], candidates, i);
             solution.remove(solution.size() - 1);
         }
     }

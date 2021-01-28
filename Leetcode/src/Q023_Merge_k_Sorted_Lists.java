@@ -36,13 +36,13 @@ public class Q023_Merge_k_Sorted_Lists {
 	        }
 	        
 	        ListNode dummy = new ListNode(0);
-	        ListNode point = dummy;
+	        ListNode pointer = dummy;
 	        
 	        while (!heap.isEmpty())
 	        {
 	            ListNode node = heap.poll();
-	            point.next = node;
-	            point = point.next;
+	            pointer.next = node;
+	            pointer = pointer.next;
 	            
 	            if (node.next != null)
 	            {

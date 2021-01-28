@@ -22,31 +22,38 @@ Show Similar Problems
  * 
  * */
 
-public class Q129_Sum_Root_to_Leaf_Numbers {
+public class Q129_Sum_Root_to_Leaf_Numbers 
+{
 	private int totalSum = 0;
     
-    public int sumNumbers(TreeNode root) {
-        if(root == null) {
+    public int sumNumbers(TreeNode root) 
+    {
+        if (root == null) 
+        {
             return 0;
         }
         
-        DFS(root, 0);
+        dfs(root, 0);
         return totalSum;
     }
     
-    public void DFS(TreeNode node, int sum) {
-        if(node == null) {
+    private void dfs(TreeNode node, int sum) 
+    {
+        if (node == null) 
+        {
             return;
         } 
         
         sum = sum * 10 + node.val;
         
-        if(node.left == null && node.right == null) {
+        if (node.left == null && node.right == null) 
+        {
             totalSum += sum;
-            return;
-        } else {
-            DFS(node.left, sum);
-            DFS(node.right, sum);
+        } 
+        else 
+        {
+            dfs(node.left, sum);
+            dfs(node.right, sum);
         }
     }
     

@@ -41,20 +41,23 @@ collection.getRandom();
  * 
  * */
 
-public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed {
+public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed 
+{
 	private List<Integer> list;
     private Map<Integer, Set<Integer>> map;
     private Random rand;
     
     /** Initialize your data structure here. */
-    public Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed() {
+    public Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed() 
+    {
         list = new ArrayList<>();
         map = new HashMap<>();
         rand = new Random();
     }
     
     /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
-    public boolean insert(int val) {
+    public boolean insert(int val) 
+    {
         boolean result = false;
         
         if (!map.containsKey(val))
@@ -69,7 +72,8 @@ public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed {
     }
     
     /** Removes a value from the collection. Returns true if the collection contained the specified element. */
-    public boolean remove(int val) {
+    public boolean remove(int val) 
+    {
         if (!map.containsKey(val) || !map.get(val).iterator().hasNext())
         {
             return false;
@@ -91,7 +95,8 @@ public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed {
     }
     
     /** Get a random element from the collection. */
-    public int getRandom() {
+    public int getRandom() 
+    {
         return list.get(rand.nextInt(list.size()));
     }
 }

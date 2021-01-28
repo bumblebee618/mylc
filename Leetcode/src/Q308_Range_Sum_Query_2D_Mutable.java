@@ -32,7 +32,8 @@ public class Q308_Range_Sum_Query_2D_Mutable {
 	private int[][] matrix;
     private int[][] rowSum;
     
-    public Q308_Range_Sum_Query_2D_Mutable(int[][] matrix) {
+    public Q308_Range_Sum_Query_2D_Mutable(int[][] matrix) 
+    {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
         {
             return;
@@ -52,23 +53,24 @@ public class Q308_Range_Sum_Query_2D_Mutable {
         }
     }
     
-    public void update(int row, int col, int val) {
+    public void update(int row, int col, int val) 
+    {
         if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length)
         {
             return;
         }
         
         int different = val - matrix[row][col];
+        matrix[row][col] = val;
         
         for (int i = col; i < matrix[0].length; i++)
         {
             rowSum[row][i] += different;
         }
-        
-        matrix[row][col] = val;
     }
     
-    public int sumRegion(int row1, int col1, int row2, int col2) {
+    public int sumRegion(int row1, int col1, int row2, int col2) 
+    {
         if (row1 < 0 || row1 >= matrix.length || row2 < 0 || row2 >= matrix.length || row1 > row2)
         {
             return 0;

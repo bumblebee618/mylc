@@ -22,7 +22,8 @@ public class Q364_Nested_List_Weight_Sum_II {
 	private Map<Integer, List<Integer>> map = new HashMap<>();
     private int totalDepth = 0;
     
-    public int depthSumInverse(List<NestedInteger> nestedList) {
+    public int depthSumInverse(List<NestedInteger> nestedList) 
+    {
         if (nestedList == null || nestedList.size() == 0)
         {
             return 0;
@@ -30,7 +31,7 @@ public class Q364_Nested_List_Weight_Sum_II {
         
         for (NestedInteger node : nestedList)
         {
-            bfs(node, 1);
+            dfs(node, 1);
         }
         
         int result = 0;
@@ -49,7 +50,7 @@ public class Q364_Nested_List_Weight_Sum_II {
         return result;
     }
     
-    private void bfs(NestedInteger node, int level)
+    private void dfs(NestedInteger node, int level)
     {
         if (node.isInteger())
         {
@@ -61,7 +62,7 @@ public class Q364_Nested_List_Weight_Sum_II {
         
         for (NestedInteger next : node.getList())
         {
-            bfs(next, level+1);
+            dfs(next, level+1);
         } 
     }
 
@@ -129,7 +130,7 @@ public class Q364_Nested_List_Weight_Sum_II {
         int ans = 0;
         
         for(NestedInteger item : nestedList){
-            dfs(item, 1);    // 必须从1开始 ！！！
+            dfs2(item, 1);    // 必须从1开始 ！！！
         }
         
         while(!stack.isEmpty()){
@@ -140,7 +141,7 @@ public class Q364_Nested_List_Weight_Sum_II {
         return ans;
     }
     
-    public void dfs(NestedInteger node, int level){
+    public void dfs2(NestedInteger node, int level){
         totalLevel = Math.max(totalLevel, level);
         
         if(node.isInteger() == true){

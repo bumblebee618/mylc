@@ -9,22 +9,24 @@ For example,
  * */
 
 public class Q266_Palindrome_Permutation {
-	public boolean canPermutePalindrome(String s) {
-        if (s == null || s.length() <= 1) {
+	public boolean canPermutePalindrome(String s) 
+	{
+        if (s == null || s.length() <= 1) 
+        {
             return true;
         }
         
         int[] hash = new int[256];
         int count = 0;
         
-        for (char c : s.toCharArray()) {
+        for (char c : s.toCharArray()) 
+        {
             hash[c]++;
         }
         
-        for (int i = 0; i < 256; i++) {
-            if (hash[i] % 2 == 1) {
-                count++;
-            }
+        for (int i = 0; i < 256; i++) 
+        {
+            count += hash[i] % 2;
         }
         
         return count <= 1;

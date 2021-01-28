@@ -17,29 +17,40 @@ The input string length won't exceed 1000.
  *
  */
 public class Q647_Palindromic_Substrings {
-	public int countSubstrings(String s) {
-        if (s == null || s.length() == 0) {
+	public int countSubstrings(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
             return 0;
         }
         
-        int len = s.length();
-        int result = len;
-        boolean[][] dp = new boolean[len][len];
+        int size = s.length();
+        int[][] dp = new int[size][size];
+        int result = size;
         
-        for (int i = 0; i < len; i++) {
-            dp[i][i] = true;
+        for (int i = 0; i < size; i++)
+        {
+            dp[i][i] = 1;
         }
         
-        for (int i = 0; i < len-1; i++) {
-            dp[i][i+1] = s.charAt(i) == s.charAt(i+1);
-            result += dp[i][i+1] == true ? 1 : 0;
+        for (int i = 0; i < size-1; i++)
+        {
+            dp[i][i+1] = s.charAt(i) == s.charAt(i+1) ? 1 : 0;
+            result += dp[i][i+1];
         }
         
-        for (int length = 2; length < len; length++) {
-            for (int start = 0; start + length < len; start++) {
+        for (int length = 2; length < size; length++)
+        {
+            for (int start = 0; start+length < size; start++)
+            {
                 int end = start + length;
-                dp[start][end] = dp[start+1][end-1] && s.charAt(start) == s.charAt(end);
-                result += dp[start][end] == true ? 1 : 0;
+                
+                if (dp[start+1][end-1] == 1 && s.charAt(start) == s.charAt(end))
+                {
+                    dp[start][end] = 1;
+                }
+                
+                result += dp[start][end];
             }
         }
         

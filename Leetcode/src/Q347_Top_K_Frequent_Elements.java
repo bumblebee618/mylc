@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -22,47 +20,53 @@ import java.util.Queue;
 
 public class Q347_Top_K_Frequent_Elements {
 	// solution 1: using heap, time complexity is O(n + nlogk)
-	public List<Integer> topKFrequent(int[] nums, int k) {
-        List<Integer> ans = new ArrayList<Integer>();
+	public int[] topKFrequent(int[] nums, int k)
+	{
+        int[] result = new int[k];
         
-        if (nums == null || nums.length == 0) {
-            return ans;
+        if (nums == null || nums.length == 0) 
+        {
+            return result;
         }
         
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> map = new HashMap<>();
         
         // O(n)
-        for (int num : nums) {
+        for (int num : nums) 
+        {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
-        Queue<Pair> minHeap = new PriorityQueue<Pair>(k + 1, new Comparator<Pair>(){
-            public int compare(Pair p1, Pair p2) {
-                return p1.count - p2.count;
-            }    
-        });
+        Queue<Pair> minHeap = new PriorityQueue<>(k, (a, b) -> a.count - b.count);
         
         // O(nlogk)
-        for (int key : map.keySet()) {
+        for (int key : map.keySet()) 
+        {
             minHeap.offer(new Pair(key, map.get(key)));
             
-            if (minHeap.size() > k) {
+            if (minHeap.size() > k) 
+            {
                 minHeap.poll();
             }
         }
         
-        while (!minHeap.isEmpty()) {
-            ans.add(minHeap.poll().value);
+        int index = 0;
+        
+        while (!minHeap.isEmpty()) 
+        {
+            result[index++] = minHeap.poll().value;
         }
         
-        return ans;
+        return result;
     }
     
-    class Pair {
+    class Pair 
+    {
         int value;
         int count;
         
-        public Pair(int v, int c) {
+        public Pair(int v, int c) 
+        {
             value = v;
             count = c;
         }
@@ -74,7 +78,7 @@ public class Q347_Top_K_Frequent_Elements {
 	
 	// solution 2: using bucket sort, time complexity is O(n)
 	public List<Integer> topKFrequent2(int[] nums, int k) {
-		List<Integer> ans = new ArrayList<Integer>();
+		List<Integer> ans = new LinkedList<Integer>();
 		if (nums == null || nums.length == 0) {
 			return ans;
 		}
@@ -90,7 +94,7 @@ public class Q347_Top_K_Frequent_Elements {
 		for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
 			int frequency = entry.getValue();
 			if (bucket[frequency] == null) {
-				bucket[frequency] = new ArrayList<Integer>();
+				bucket[frequency] = new LinkedList<Integer>();
 			}
 			bucket[frequency].add(entry.getKey());
 		}

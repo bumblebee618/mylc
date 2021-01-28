@@ -28,10 +28,18 @@ public class Q033_Search_in_Rotated_Sorted_Array {
             {
                  return mid;
             }
+            else if (nums[left] == target)
+            {
+                return left;
+            }
+            else if (nums[right] == target)
+            {
+                return right;
+            }
             
             if (nums[mid] > nums[left] || nums[mid] > nums[right])
             {
-                if (nums[left] <= target && target < nums[mid])
+                if (nums[left] < target && target < nums[mid])
                 {
                     right = mid;
                 }
@@ -42,7 +50,7 @@ public class Q033_Search_in_Rotated_Sorted_Array {
             }
             else
             {
-                if (nums[mid] < target && target <= nums[right])
+                if (nums[mid] < target && target < nums[right])
                 {
                     left = mid;
                 }

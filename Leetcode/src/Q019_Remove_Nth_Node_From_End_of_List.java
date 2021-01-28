@@ -17,8 +17,10 @@
 
 
 public class Q019_Remove_Nth_Node_From_End_of_List {
-	public ListNode removeNthFromEnd(ListNode head, int n) {
-        if(head == null || n <= 0) {
+	public ListNode removeNthFromEnd(ListNode head, int n) 
+	{
+        if (head == null || n <= 0) 
+        {
             return head;
         }
         
@@ -27,16 +29,19 @@ public class Q019_Remove_Nth_Node_From_End_of_List {
         ListNode faster = dummy, slower = dummy;
         int index = 0;
         
-        while(index < n && faster.next != null) {
+        while (index < n && faster != null) 
+        {
             faster = faster.next;
             index++;
         }
         
-        if(index < n) {
+        if (index < n) 
+        {
             return dummy.next;
         }
         
-        while(faster.next != null) {
+        while (faster.next != null) 
+        {
             faster = faster.next;
             slower = slower.next;
         }

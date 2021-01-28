@@ -1,0 +1,140 @@
+/***
+ * 
+ * @author jackie
+ * 
+ * We are given N different types of stickers. Each sticker has a lowercase English word on it.
+
+You would like to spell out the given target string by cutting individual letters from your collection of stickers and rearranging them.
+
+You can use each sticker more than once if you want, and you have infinite quantities of each sticker.
+
+What is the minimum number of stickers that you need to spell out the target? If the task is impossible, return -1.
+
+Example 1:
+
+Input:
+
+["with", "example", "science"], "thehat"
+Output:
+
+3
+Explanation:
+
+We can use 2 "with" stickers, and 1 "example" sticker.
+After cutting and rearrange the letters of those stickers, we can form the target "thehat".
+Also, this is the minimum number of stickers necessary to form the target string.
+Example 2:
+
+Input:
+
+["notice", "possible"], "basicbasic"
+Output:
+
+-1
+Explanation:
+
+We can't form the target "basicbasic" from cutting letters from the given stickers.
+Note:
+
+stickers has length in the range [1, 50].
+stickers consists of lowercase English words (without apostrophes).
+target has length in the range [1, 15], and consists of lowercase English letters.
+In all test cases, all words were chosen randomly from the 1000 most common US English words, and the target was chosen as a concatenation of two random words.
+The time limit may be more challenging than usual. It is expected that a 50 sticker test case can be solved within 35ms on average.
+ */
+public class Q691_Stickers_to_Spell_Word 
+{
+private int minStep = Integer.MAX_VALUE;
+    
+    public int minStickers(String[] stickers, String target) 
+    {
+        if (stickers == null || stickers.length == 0 || target == null || target.length() == 0)
+        {
+            return 0;
+        }
+         
+        int[][] hashs = new int[stickers.length][26];
+        int[] totalHash = new int[26];
+        
+        for (int i = 0; i < stickers.length; i++)
+        {
+            for (char c : stickers[i].toCharArray())
+            {
+                hashs[i][c - 'a']++;
+                totalHash[c - 'a']++;
+            }
+        }
+        
+        int[] tHash = new int[26];
+        
+        for (char c : target.toCharArray())
+        {
+            tHash[c - 'a']++;
+        }
+        
+        if (!hasSolution(totalHash, tHash))
+        {
+            return -1;
+        } 
+        
+        backtrack(hashs, tHash, target.length(), 1);
+        return minStep;
+    } 
+    
+    private void backtrack(int[][] hashs, int[] tHash, int remainCount, int step)
+    {
+        if (remainCount == 0)
+        {
+            minStep = Math.min(minStep, step);
+            return;
+        }
+        
+        for (int[] hash : hashs)
+        {
+            int[] solution = new int[26];
+            boolean found = false;
+            int count = 0;
+            
+            for (int i = 0; i < hash.length; i++)
+            {
+                if (hash[i] == 0 || tHash[i] == 0)
+                {
+                    continue;
+                }
+                
+                found = true;
+                solution[i] = Math.max(0, tHash[i] - hash[i]);
+                count += solution[i];
+            }
+            
+            if (found)
+            {
+                backtrack(hashs, solution, count, step+1);
+            }
+        }
+    }
+    
+    private boolean hasSolution(int[] totalHash, int[] tHash)
+    {
+        for (int i = 0; i < tHash.length; i++)
+        {
+            if (tHash[i] > 0 && totalHash[i] == 0)
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    
+    
+    
+    public static void main(String[] args)
+    {
+    	Q691_Stickers_to_Spell_Word test = new Q691_Stickers_to_Spell_Word();
+    	String[] stickers = {"with","example","science"};
+    	String target = "thehat";
+    	System.out.println(test.minStickers(stickers, target));
+    }
+}

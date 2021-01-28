@@ -19,7 +19,8 @@ Absolute value of elements in the array and row will not exceed 104
  */
 public class Q658_Find_K_Closest_Elements {
 	// Time complexity O(logn)
-	public List<Integer> findClosestElements(int[] arr, int k, int x) {
+	public List<Integer> findClosestElements(int[] arr, int k, int x) 
+	{
         List<Integer> result = new ArrayList<>();
         
         if (arr == null || arr.length == 0 || k <= 0 || k > arr.length)
@@ -33,7 +34,7 @@ public class Q658_Find_K_Closest_Elements {
         {
             int mid = left + (right - left) / 2;
             
-            if (x - arr[mid] > arr[mid + k] - x)
+            if (x - arr[mid] > arr[mid + k] - x)    // 不可以用绝对值
             {
                 left = mid + 1;
             }

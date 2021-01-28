@@ -21,7 +21,7 @@ public class Q071_Simplify_Path {
 	// solution 1:
 	public String simplifyPath(String path) 
 	{ 
-		if (path.length() < 2) 
+		if (path.length() <= 1) 
 		{
 			return path;
 		}

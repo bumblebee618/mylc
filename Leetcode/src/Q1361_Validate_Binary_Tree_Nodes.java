@@ -44,41 +44,85 @@ Constraints:
 leftChild.length == rightChild.length == n
 -1 <= leftChild[i], rightChild[i] <= n - 1
  */
-public class Q1361_Validate_Binary_Tree_Nodes {
+public class Q1361_Validate_Binary_Tree_Nodes
+{
+	// solution 1:
 	public boolean validateBinaryTreeNodes(int n, int[] leftChild, int[] rightChild) {
-        if (n <= 0 || leftChild == null || leftChild.length == 0 || rightChild == null || rightChild.length == 0 || leftChild.length != rightChild.length)
+        if (n <= 0 || leftChild == null || rightChild == null)
+        {
+            return false;
+        }
+        else if (leftChild.length == 0 || rightChild.length == 0)
         {
             return false;
         }
         
-        Stack<Integer> stack = new Stack<>();
-        int count = 0;
-        int root = 0;
-        int index1 = 0, index2 = 0;
-        int size = leftChild.length;
+        int[] indegree = new int[n];
         
-        while (root != -1 || !stack.isEmpty())
+        for (int i = 0; i < n; i++) 
         {
-            while (root != -1 && index1 < size)
+            if (leftChild[i] != -1 && indegree[leftChild[i]]++ == 1)
             {
-                stack.push(root);
-                count++;
-                root = leftChild[index1++];
+                return false;
             }
-            
-            stack.pop();
-            
-            if (index2 < size)
+                
+            if (rightChild[i] != -1 && indegree[rightChild[i]]++ == 1)
             {
-                root = rightChild[index2++];
+                return false;
             }
         }
         
-        System.out.println(count + ", " + index1 + ", " + index2);
+        int root = -1;
         
-        return count == n && stack.isEmpty() && index1 == size && index2 == size;
+        for (int i = 0; i < n; i++)
+        {
+            if (indegree[i] == 0)
+            {
+                if (root == -1)
+                {
+                    root = i;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        
+        if (root == -1)
+        {
+            return false;
+        }
+        
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(root);
+        int count = 0;
+        
+        while (!queue.isEmpty()) 
+        {
+            int node = queue.poll();
+            ++count;
+            
+            if (leftChild[node] != -1)
+            {
+                queue.offer(leftChild[node]);
+            }
+                
+            if (rightChild[node] != -1)
+            {
+                queue.offer(rightChild[node]);
+            }
+        }
+        
+        return count == n;
     }
 	
+	
+	
+	
+	
+	
+	// solution 2:
 	public boolean validateBinaryTreeNodes2(int n, int[] leftChild, int[] rightChild) {
         if (n <= 0 || leftChild == null || leftChild.length == 0 || rightChild == null || rightChild.length == 0 || leftChild.length != rightChild.length)
         {

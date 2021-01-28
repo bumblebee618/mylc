@@ -7,31 +7,39 @@ public class Q153_Find_Minimum_in_Rotated_Sorted_Array {
 	 * 
 	 *********************************************************/
 	// by Jackie using binary search
-	public int findMin(int[] nums) {
-		if(nums == null || nums.length == 0){
+	public int findMin(int[] nums) 
+	{
+		if (nums == null || nums.length == 0)
+		{
             return -1;
         }
         
         int n = nums.length;
         int left = 0, right = n - 1;
-        int ans = Integer.MAX_VALUE;
+        int result = Integer.MAX_VALUE;
         
-        while(left + 1 < right){
+        while (left + 1 < right)
+        {
             int mid = left + (right - left) / 2;
-            ans = Math.min(ans, nums[left]);
-            ans = Math.min(ans, nums[right]);
-            ans = Math.min(ans, nums[mid]);
+            result = Math.min(result, nums[left]);
+            result = Math.min(result, nums[right]);
+            result = Math.min(result, nums[mid]);
             
-            if(nums[mid] > nums[left] || nums[mid] > nums[right]){
+            if (nums[mid] > nums[left] || nums[mid] > nums[right])
+            {
                 left = mid;
-            } else if(nums[mid] < nums[left] || nums[mid] < nums[right]){
+            } 
+            else if (nums[mid] < nums[left] || nums[mid] < nums[right])
+            {
                 right = mid;
-            } else {
+            } 
+            else 
+            {
                 right--;
             }
         }
         
-        return Math.min(ans, Math.min(nums[left], nums[right]));
+        return Math.min(result, Math.min(nums[left], nums[right]));
     }
 	
 	

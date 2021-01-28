@@ -40,21 +40,25 @@ randomSet.getRandom();
 
 // follow up: Le_381
 
-public class Q380_Insert_Delete_GetRandom_O_1 {
+public class Q380_Insert_Delete_GetRandom_O_1 
+{
 	private ArrayList<Integer> list;
     private HashMap<Integer, Integer> map;
     private Random rand;
 
     /** Initialize your data structure here. */
-    public Q380_Insert_Delete_GetRandom_O_1() {
+    public Q380_Insert_Delete_GetRandom_O_1() 
+    {
         list = new ArrayList<Integer>();
         map = new HashMap<Integer, Integer>();
         rand = new Random();
     }
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
-    public boolean insert(int val) {
-        if(map.containsKey(val)){
+    public boolean insert(int val) 
+    {
+        if (map.containsKey(val))
+        {
             return false;   
         } 
         
@@ -64,15 +68,18 @@ public class Q380_Insert_Delete_GetRandom_O_1 {
     }
     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
-    public boolean remove(int val) {
-        if(!map.containsKey(val)){ 
+    public boolean remove(int val) 
+    {
+        if (!map.containsKey(val))
+        { 
             return false;
         }
         
         int pos = map.get(val);
         map.remove(val);
         
-        if (pos < list.size() - 1) { // not the last one then swap the last one with this val
+        if (pos < list.size() - 1)  // not the last one then swap the last one with this val
+        {
             int lastElement = list.get(list.size() - 1);
             list.set(pos, lastElement);
             map.put(lastElement, pos);
@@ -83,7 +90,8 @@ public class Q380_Insert_Delete_GetRandom_O_1 {
     }
     
     /** Get a random element from the set. */
-    public int getRandom() {
+    public int getRandom() 
+    {
         return list.get(rand.nextInt(list.size()));
     }
 }

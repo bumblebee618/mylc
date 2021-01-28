@@ -55,22 +55,22 @@ public class Q536_Construct_Binary_Tree_from_String
             {
                 switch (c)
                 {
-                    case '+': index++; continue;
-                    case '-': index++; flag = -1; continue;
+                    case '+': index++; break;
+                    case '-': index++; flag = -1; break;
                     default: return null;
                 }
             }
             else
             {
+            	if (c != '(')
+                {
+                    break;
+                }
+            	
                 int num = Integer.parseInt(builder.toString()) * flag;
                 root = new TreeNode(num);
                 int leftEnd = -1;
                 int rightEnd = -1;
-            
-                if (c != '(')
-                {
-                    break;
-                }
 
                 // left subtree
                 leftEnd = findPos(s, index);

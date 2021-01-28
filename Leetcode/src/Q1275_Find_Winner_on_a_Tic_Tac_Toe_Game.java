@@ -71,7 +71,8 @@ public class Q1275_Find_Winner_on_a_Tic_Tac_Toe_Game {
     private int diag = 0;
     private int antidiag = 0;
     
-    public String tictactoe(int[][] moves) {
+    public String tictactoe(int[][] moves) 
+    {
         if (moves == null || moves.length == 0)
         {
             return "";
@@ -118,7 +119,10 @@ public class Q1275_Find_Winner_on_a_Tic_Tac_Toe_Game {
             antidiag += player;
         }
         
-        if (Math.abs(rowStatus[row]) == 3 || Math.abs(colStatus[col]) == 3 || Math.abs(diag) == 3 || Math.abs(antidiag) == 3)
+        if (Math.abs(rowStatus[row]) == 3 
+        	|| Math.abs(colStatus[col]) == 3 
+        	|| Math.abs(diag) == 3 
+        	|| Math.abs(antidiag) == 3)
         {
             return player;
         }

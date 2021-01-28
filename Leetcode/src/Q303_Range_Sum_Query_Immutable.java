@@ -16,19 +16,24 @@ Note:
  * */
 
 
-public class Q303_Range_Sum_Query_Immutable {
+public class Q303_Range_Sum_Query_Immutable 
+{
 	private int[] sum;
 
-    public Q303_Range_Sum_Query_Immutable(int[] nums) {
+    public Q303_Range_Sum_Query_Immutable(int[] nums) 
+    {
         sum = new int[nums.length];
         
-        for(int i = 0; i < nums.length; i++) {
+        for(int i = 0; i < nums.length; i++) 
+        {
             sum[i] = (i == 0) ? nums[i] : sum[i-1] + nums[i];
         }
     }
 
-    public int sumRange(int i, int j) {
-        if(i < 0 || i >= sum.length || j < 0 || j >= sum.length || i > j) {
+    public int sumRange(int i, int j) 
+    {
+        if (i < 0 || i >= sum.length || j < 0 || j >= sum.length || i > j) 
+        {
             return -1;
         }
         

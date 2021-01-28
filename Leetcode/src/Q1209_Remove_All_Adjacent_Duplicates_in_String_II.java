@@ -74,9 +74,9 @@ public class Q1209_Remove_All_Adjacent_Duplicates_in_String_II
         while (!characters.isEmpty())
         {
             char c = characters.pop();
-            int size = frequency.pop();
+            int count = frequency.pop();
             
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < count; i++)
             {
                 builder.insert(0, c);
             }

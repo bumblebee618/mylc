@@ -13,46 +13,63 @@ public class Q008_String_to_Integer_atoi {
 	 * 遇到非数字的字符串，只返回但前有效的数字
 	 * 
 	 ****************************************************/
-	public int myAtoi(String str) {
-	    if(str == null || str.length() == 0){
+	public int myAtoi(String str) 
+	{
+	    if (str == null)
+	    {
 	        return 0;
 	    }
 	    
 	    str = str.trim();
-	    int len = str.length();
 	    
-	    if(len == 0){
+	    if (str.length() == 0)
+	    {
 	        return 0;
 	    }
 	    
 	    int flag = 1;
-	    char[] letters = str.toCharArray();
-	    long sum = 0;
+	    long num = 0;
 	    
-	    for(int i = 0; i < len; i++){
-	        if(Character.isDigit(letters[i])){
-	            sum = sum * 10 + (int)(letters[i] - '0');
+	    for (int i = 0; i < str.length(); i++)
+	    {
+	    	char c = str.charAt(i);
+	    	
+	        if (Character.isDigit(c))
+	        {
+	            num = num * 10 + (int)(c - '0');
 	            
-	            if(sum > Integer.MAX_VALUE){        // 防止越界 ！！！
+	            if (num > Integer.MAX_VALUE)   // 防止越界 ！！！
+	            {        
 	                break;
 	            }
-	        } else if(i == 0 && letters[i] == '+'){
+	        } 
+	        else if (i == 0 && c == '+')
+	        {
 	            continue;
-	        } else if(i == 0 && letters[i] == '-'){
+	        } 
+	        else if (i == 0 && c == '-')
+	        {
 	            flag = -1;
-	        } else {
+	        } 
+	        else 
+	        {
 	            break;
 	        }
 	    }
 	    
-	    sum = flag * sum;
+	    num = flag * num;
 	    
-	    if(sum > Integer.MAX_VALUE){
+	    if (num > Integer.MAX_VALUE)
+	    {
 	        return Integer.MAX_VALUE;
-	    } else if(sum < Integer.MIN_VALUE){
+	    } 
+	    else if (num < Integer.MIN_VALUE)
+	    {
 	        return Integer.MIN_VALUE;
-	    } else {
-	        return (int) sum;
+	    } 
+	    else 
+	    {
+	        return (int) num;
 	    }
 	}
 	

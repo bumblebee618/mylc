@@ -103,7 +103,10 @@ public class Q1242_Web_Crawler_Multithreaded
             .collect(Collectors.toList());
     }
     
-    private Stream<String> crawl(String startUrl, HtmlParser htmlParser, String hostname, Set<String> visited) 
+    private Stream<String> crawl(String startUrl, 
+    							HtmlParser htmlParser, 
+    							String hostname, 
+    							Set<String> visited) 
     {
         Stream<String> stream = htmlParser.getUrls(startUrl)
             .parallelStream()
@@ -116,7 +119,7 @@ public class Q1242_Web_Crawler_Multithreaded
     
     private String getHostname(String url) 
     {
-        int idx = url.indexOf('/', 7);
+        int idx = url.indexOf('/', "http://".length());
         return (idx != -1) ? url.substring(0, idx) : url;
     }
     

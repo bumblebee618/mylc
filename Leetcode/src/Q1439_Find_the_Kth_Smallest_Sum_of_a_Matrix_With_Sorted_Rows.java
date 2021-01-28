@@ -45,38 +45,40 @@ mat[i] is a non decreasing array.
  */
 public class Q1439_Find_the_Kth_Smallest_Sum_of_a_Matrix_With_Sorted_Rows {
 	public int kthSmallest(int[][] mat, int k) 
-    {
-        if (mat == null || mat.length == 0 || mat[0].length == 0 || k <= 0)
-        {
-            return 0;
-        }
-        
-        int col = Math.min(mat[0].length, k);
-	    Queue<Integer> heap = new PriorityQueue<>(Collections.reverseOrder());
-	    heap.add(0);
-        
-	    for (int[] row : mat) 
-        {
-		    // max priority queue for the i-th row
-		    Queue<Integer> nextHeap = new PriorityQueue<>(Collections.reverseOrder());
-            
-		    for (int sum : heap) 
-            {
-			    for (int c = 0; c < col; c++) 
-                {
-				    nextHeap.add(sum + row[c]);
-				
-                    // keep heap size <= k
-				    if (nextHeap.size() > k) 
-                    {
-					    nextHeap.poll();
-                    }
-			    }
-		    }
-            
-		    heap = nextHeap;
-	    }
-	    
-        return heap.poll();
-    }
+	{
+		if (mat == null || mat.length == 0 || mat[0].length == 0 || k <= 0) 
+		{
+			return 0;
+		}
+
+		int col = Math.min(mat[0].length, k);
+		Queue<Integer> heap = new PriorityQueue<>((a, b) -> b - a);
+		heap.add(0);
+
+		for (int[] row : mat) 
+		{
+			// max priority queue for the i-th row
+			Queue<Integer> nextHeap = new PriorityQueue<>((a, b) -> b - a);
+
+			while (!heap.isEmpty()) 
+			{
+                int sum = heap.poll();
+                
+				for (int i = 0; i < col; i++) 
+				{
+					nextHeap.add(sum + row[i]);
+
+					// keep heap size <= k
+					if (nextHeap.size() > k) 
+					{
+						nextHeap.poll();
+					}
+				}
+			}
+
+			heap = nextHeap;
+		}
+
+		return heap.poll();
+	}
 }

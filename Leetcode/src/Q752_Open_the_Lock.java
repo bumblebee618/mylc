@@ -38,7 +38,8 @@ target will not be in the list deadends.
 Every string in deadends and the string target will be a string of 4 digits from the 10,000 possibilities '0000' to '9999'.
  */
 public class Q752_Open_the_Lock {
-	public int openLock(String[] deadends, String target) {
+	public int openLock(String[] deadends, String target) 
+	{
         if (target == null || target.length() != 4)
         {
             return -1;

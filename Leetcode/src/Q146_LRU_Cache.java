@@ -13,15 +13,18 @@ import java.util.*;
 
 public class Q146_LRU_Cache {
     private int capacity;
-    private Map<Integer, CacheItem> map = new HashMap<Integer, CacheItem>();
-    private CacheItem head = new CacheItem(-1, -1);
-    private CacheItem tail = new CacheItem(-1, -1);
+    private Map<Integer, CacheItem> map;
+    private CacheItem head;
+    private CacheItem tail;
 	
     public Q146_LRU_Cache(int capacity) 
     {
         this.capacity = capacity;
-        tail.prev = head;
+        map = new HashMap<Integer, CacheItem>();
+        head = new CacheItem(-1, -1);
+        tail = new CacheItem(-1, -1);
         head.next = tail;
+        tail.prev = head;
     }
 
     // @return an integer
@@ -52,7 +55,8 @@ public class Q146_LRU_Cache {
 
         if (map.size() == capacity) 
         {
-            map.remove(head.next.key);    // 必须先remove，否则head.next改变了 ！！！
+        	CacheItem delete = head.next;
+            map.remove(delete.key);    // 必须先remove，否则head.next改变了 ！！！
             head.next = head.next.next;
             head.next.prev = head;
         }
