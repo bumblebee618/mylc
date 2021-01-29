@@ -18,9 +18,9 @@ public class Q051_N_Queens {
         return result;
     }
     
-    private void backtrack(List<List<String>> result, int[] position, int index, int n)
+    private void backtrack(List<List<String>> result, int[] position, int curRow, int n)
     {
-        if (index > n)
+        if (curRow > n)
         {
             result.add(getSolution(position, n));
             return;
@@ -28,11 +28,11 @@ public class Q051_N_Queens {
         
         for (int i = 1; i <= n; i++)
         {
-            position[index] = i;
+            position[curRow] = i;
             
-            if (isValid(position, index))
+            if (isValid(position, curRow))
             {
-                backtrack(result, position, index+1, n);
+                backtrack(result, position, curRow+1, n);
             }
         }
     }
@@ -54,7 +54,7 @@ public class Q051_N_Queens {
     {
         List<String> list = new LinkedList<>();
         
-        for (int i = 1; i <= n; i++)
+        for (int i = 1; i < position.length; i++)
         {
             StringBuilder builder = new StringBuilder();
             

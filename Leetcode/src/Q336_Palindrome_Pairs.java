@@ -27,14 +27,14 @@ Example 2:
 public class Q336_Palindrome_Pairs {
 	public List<List<Integer>> palindromePairs(String[] words) 
 	{
-        List<List<Integer>> ans = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
         
         if (words == null || words.length == 0)
         {
-            return ans;
+            return result;
         }
         
-        Map<String, Integer> wordIndexMap = new HashMap<String, Integer>();
+        Map<String, Integer> wordIndexMap = new HashMap<>();
         
         for (int i = 0; i < words.length; i++)
         {
@@ -57,7 +57,7 @@ public class Q336_Palindrome_Pairs {
                         List<Integer> list = new ArrayList<Integer>();
                         list.add(wordIndexMap.get(part2_reverse));
                         list.add(i);
-                        ans.add(list);
+                        result.add(list);
                     }
                 }
                 
@@ -70,25 +70,29 @@ public class Q336_Palindrome_Pairs {
                         List<Integer> list = new ArrayList<Integer>();
                         list.add(i);
                         list.add(wordIndexMap.get(part1_reverse));
-                        ans.add(list);
+                        result.add(list);
                     }
                 }
             }
         }
         
-        return ans;
+        return result;
     }
     
-	private boolean isPalindrome(String str) {
+	private boolean isPalindrome(String str) 
+	{
         int left = 0, right = str.length() - 1;
         
-        while(left <= right) {
-            if(str.charAt(left) == str.charAt(right)) {
-                left++;
-                right--;
-            } else {
-                return false;
-            }
+        while (left <= right) 
+        {
+            if (str.charAt(left) != str.charAt(right)) 
+            {
+            	return false;
+                
+            } 
+            
+            left++;
+            right--;
         }
         
         return true;

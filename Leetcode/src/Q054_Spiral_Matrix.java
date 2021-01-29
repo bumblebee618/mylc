@@ -21,7 +21,7 @@ public class Q054_Spiral_Matrix {
 	// test case: [[2,3]],  [[2], [3]],  [ ], [[1]], 
 	public List<Integer> spiralOrder(int[][] matrix) 
 	{
-		List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<Integer>();
 		
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
         {

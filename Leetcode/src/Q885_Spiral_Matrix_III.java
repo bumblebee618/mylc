@@ -46,8 +46,8 @@ public class Q885_Spiral_Matrix_III {
             return new int[0][0];
         }
         
-        int[] dx = new int[]{0, 1, 0, -1};
-        int[] dy = new int[]{1, 0, -1, 0};
+        int[] dx = new int[] {0, 1, 0, -1};
+        int[] dy = new int[] {1, 0, -1, 0};
         int[][] result = new int[row*col][2];
         int index = 0;
         
@@ -60,9 +60,9 @@ public class Q885_Spiral_Matrix_III {
         
         for (int k = 1; k < 2*(row+col); k += 2)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)  // direction index
             {
-                int dk = k + (i/2);
+                int dk = k + (i/2);  // number of steps in this direction
                 
                 for (int step = 0; step < dk; step++)
                 {

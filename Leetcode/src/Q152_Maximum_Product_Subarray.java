@@ -10,8 +10,10 @@ For example, given the array [2,3,-2,4],
 
 public class Q152_Maximum_Product_Subarray {
 	// solution 1: using dp, time O(n), space O(n)
-	public int maxProduct(int[] nums) {
-        if (nums == null || nums.length == 0) {
+	public int maxProduct(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
@@ -21,13 +23,17 @@ public class Q152_Maximum_Product_Subarray {
         maxValue[0] = minValue[0] = nums[0];
         int globalMax = nums[0];
         
-        for(int i = 1; i < len; i++) {
-            if(nums[i] > 0) {
-                maxValue[i] = Math.max(nums[i], maxValue[i - 1] * nums[i]);
-                minValue[i] = Math.min(nums[i], minValue[i - 1] * nums[i]);
-            } else {
-                maxValue[i] = Math.max(nums[i], minValue[i - 1] * nums[i]);
-                minValue[i] = Math.min(nums[i], maxValue[i - 1] * nums[i]);
+        for (int i = 1; i < len; i++) 
+        {
+            if (nums[i] > 0) 
+            {
+                maxValue[i] = Math.max(nums[i], maxValue[i-1] * nums[i]);
+                minValue[i] = Math.min(nums[i], minValue[i-1] * nums[i]);
+            } 
+            else 
+            {
+                maxValue[i] = Math.max(nums[i], minValue[i-1] * nums[i]);
+                minValue[i] = Math.min(nums[i], maxValue[i-1] * nums[i]);
             }
             
             globalMax = Math.max(globalMax, maxValue[i]);

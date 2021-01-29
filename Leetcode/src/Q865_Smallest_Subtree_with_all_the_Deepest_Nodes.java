@@ -32,8 +32,10 @@ Note:
 The number of nodes in the tree will be between 1 and 500.
 The values of each node are unique.
  */
-public class Q865_Smallest_Subtree_with_all_the_Deepest_Nodes {
-	public TreeNode subtreeWithAllDeepest(TreeNode root) {
+public class Q865_Smallest_Subtree_with_all_the_Deepest_Nodes 
+{
+	public TreeNode subtreeWithAllDeepest(TreeNode root) 
+	{
         if (root == null)
         {
              return root;

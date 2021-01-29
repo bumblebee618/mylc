@@ -1,0 +1,117 @@
+/***
+ * 
+ * @author jackie
+ * 
+ * Given a string s, return the maximum number of ocurrences of any substring under the following rules:
+
+The number of unique characters in the substring must be less than or equal to maxLetters.
+The substring size must be between minSize and maxSize inclusive.
+ 
+
+Example 1:
+
+Input: s = "aababcaab", maxLetters = 2, minSize = 3, maxSize = 4
+Output: 2
+Explanation: Substring "aab" has 2 ocurrences in the original string.
+It satisfies the conditions, 2 unique letters and size 3 (between minSize and maxSize).
+Example 2:
+
+Input: s = "aaaa", maxLetters = 1, minSize = 3, maxSize = 3
+Output: 2
+Explanation: Substring "aaa" occur 2 times in the string. It can overlap.
+Example 3:
+
+Input: s = "aabcabcab", maxLetters = 2, minSize = 2, maxSize = 3
+Output: 3
+Example 4:
+
+Input: s = "abcde", maxLetters = 2, minSize = 3, maxSize = 3
+Output: 0
+ 
+
+Constraints:
+
+1 <= s.length <= 10^5
+1 <= maxLetters <= 26
+1 <= minSize <= maxSize <= min(26, s.length)
+s only contains lowercase English letters.
+ */
+public class Q1297_Maximum_Number_of_Occurrences_of_a_Substring 
+{
+	public int maxFreq(String s, int maxLetters, int minSize, int maxSize) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return 0;
+        }
+        else if (maxLetters <= 0 || maxLetters > s.length())
+        {
+            return 0;
+        }
+        else if (minSize < 0 || maxSize < 0 || minSize > maxSize || minSize > s.length() || maxSize > s.length())
+        {
+            return 0;
+        }
+        
+        int maxFrequency = 0;
+        int[] hash = new int[26];
+        int uniqueLetters = 0;
+        
+        for (int index = 0; index < s.length(); index++)
+        {
+        	if (hash[s.charAt(index) - 'a']++ == 0)
+            {
+                uniqueLetters++;
+            }
+        	
+        	if (index >= minSize)
+        	{
+        		if (hash[s.charAt(index-minSize) - 'a']-- == 1)
+                {
+                    uniqueLetters--;
+                }
+        	}
+        	
+            if (uniqueLetters <= maxLetters)
+            {
+            	String substr = s.substring(index-minSize+1, index+1);
+                maxFrequency = Math.max(maxFrequency, getFrequency(substr, s));
+            }
+        }
+        
+        return maxFrequency;
+    }
+    
+    private int getFrequency(String substr, String str)
+    {
+        int frequency = 0;
+        int index = 0;
+        
+        while (index < str.length())
+        {
+            index = str.indexOf(substr, index);
+            
+            if (index == -1)
+            {
+                break;
+            }
+            
+            index++;
+            frequency++;
+        }
+        
+        return frequency;
+    }
+    
+    
+    
+    
+    
+    
+    public static void main(String[] args)
+    {
+    	Q1297_Maximum_Number_of_Occurrences_of_a_Substring test = new Q1297_Maximum_Number_of_Occurrences_of_a_Substring();
+    	String s = "aabcabcab";
+    	System.out.println(test.maxFreq(s, 2, 2, 3));
+    }
+}

@@ -15,19 +15,24 @@ Note: Do not use class member/global/static variables to store states. Your seri
  * 
  * */
 
-public class Q449_Serialize_and_Deserialize_BST {
+public class Q449_Serialize_and_Deserialize_BST 
+{
 	// solution 1: this method will also work for BT, time is O(nlogn)
 	// Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        if(root == null) {
+    public String serialize(TreeNode root) 
+    {
+        if (root == null) 
+        {
             return "";
         }
         
         Stack<TreeNode> stack = new Stack<>();
         StringBuilder builder = new StringBuilder();
         
-        while(!stack.isEmpty() || root != null) {
-            while(root != null) {
+        while (!stack.isEmpty() || root != null) 
+        {
+            while (root != null) 
+            {
                 builder.append(root.val).append(",");
                 stack.push(root);
                 root = root.left;
@@ -41,43 +46,58 @@ public class Q449_Serialize_and_Deserialize_BST {
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        if(data == null || data.length() == 0) {
+    public TreeNode deserialize(String data) 
+    {
+        if (data == null || data.length() == 0) 
+        {
             return null;
         }
         
         String[] strs = data.split(",");
         
-        if(strs.length == 0 || strs[0].equals("#")) {
+        if (strs.length == 0 || strs[0].equals("#")) 
+        {
             return null;
         }
         
         TreeNode root = new TreeNode(Integer.parseInt(strs[0]));
         
-        for(int i = 1; i < strs.length; i++) {
+        for (int i = 1; i < strs.length; i++) 
+        {
             insertToBST(root, strs[i]);
         }
         
         return root;
     }
     
-    public void insertToBST(TreeNode node, String str) {
+    public void insertToBST(TreeNode node, String str) 
+    {
         int num = Integer.parseInt(str);
         
-        while(node != null) {
-            if(node.val > num) {
-                if(node.left == null) {
+        while (node != null) 
+        {
+            if (node.val > num) 
+            {
+                if (node.left == null) 
+                {
                     node.left = new TreeNode(num);
                     return;
                 } 
+                
                 node = node.left;
-            } else if(node.val < num) {
-                if(node.right == null) {
+            } 
+            else if (node.val < num) 
+            {
+                if (node.right == null) 
+                {
                     node.right = new TreeNode(num);
                     return;
                 } 
+                
                 node = node.right;
-            } else {
+            } 
+            else 
+            {
                 return;
             }
         }
@@ -89,62 +109,77 @@ public class Q449_Serialize_and_Deserialize_BST {
 	
 	// solution 2: this method will also work for BT, time is O(n) + O(n^2)
 	// Encodes a tree to a single string.
-    public String serialize2(TreeNode root) {
-        if(root == null) {
+    public String serialize2(TreeNode root) 
+    {
+        if (root == null) 
+        {
             return "";
         }
         
         Queue<TreeNode> queue = new LinkedList<>();
         StringBuilder builder = new StringBuilder();
-        int lastPos = 0;
+        int lastValidPos = 0;
         queue.offer(root);
         
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             TreeNode node = queue.poll();
                 
-            if(node != null) {
+            if (node != null) 
+            {
                 builder.append(node.val).append(",");
-                lastPos = builder.length() - 1;
+                lastValidPos = builder.length() - 2;
                 queue.offer(node.left);
                 queue.offer(node.right);
-            } else {
+            } 
+            else 
+            {
                 builder.append("#,");
             }
         }
         
-        return builder.substring(0, lastPos);
+        return builder.substring(0, lastValidPos+1);
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize2(String data) {
-        if(data == null || data.length() == 0) {
+    public TreeNode deserialize2(String data) 
+    {
+        if (data == null || data.length() == 0) 
+        {
             return null;
         }
         
         String[] strs = data.split(",");
         
-        if(strs.length == 0 || strs[0].equals("#")) {
+        if (strs.length == 0 || strs[0].equals("#"))
+        {
             return null;
         }
         
         TreeNode root = new TreeNode(Integer.parseInt(strs[0]));
-        List<TreeNode> list = new LinkedList<>();
+        List<TreeNode> list = new ArrayList<>();
         list.add(root);
         int index = 0;
         
-        for(int i = 1; i < strs.length; i++) {
-            if(!strs[i].equals("#")) {
+        for (int i = 1; i < strs.length; i++) 
+        {
+            if (!strs[i].equals("#")) 
+            {
                 TreeNode node = new TreeNode(Integer.parseInt(strs[i]));
                 list.add(node);
                 
-                if(i % 2 != 0) {
+                if (i % 2 != 0) 
+                {
                     list.get(index).left = node;
-                } else {
+                } 
+                else 
+                {
                     list.get(index).right = node;
                 }
             }
             
-            if(i % 2 == 0) {
+            if (i % 2 == 0) 
+            {
                 index++;
             }
         }

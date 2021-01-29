@@ -30,39 +30,51 @@ Try to solve it in O(n log k) time and O(n) extra space.
  *
  */
 public class Q692_Top_K_Frequent_Words {
-	public List<String> topKFrequent(String[] words, int k) {
+	public List<String> topKFrequent(String[] words, int k) 
+	{
         List<String> result = new LinkedList<>();
         
-        if (words == null || words.length == 0) {
+        if (words == null || words.length == 0)
+        {
             return result;
         }
         
         Map<String, Integer> map = new HashMap<>();
         
-        for (String word : words) {
+        for (String word : words) 
+        {
             map.put(word, map.getOrDefault(word, 0) + 1);
         }
         
-        Queue<Tuple> minHeap = new PriorityQueue<Tuple>(k+1, new Comparator<Tuple>() {
-            public int compare(Tuple t1, Tuple t2) {
-                if (t1.freq != t2.freq) {
+        Queue<Tuple> minHeap = new PriorityQueue<>(k+1, new Comparator<Tuple>() 
+        {
+        	@Override
+            public int compare(Tuple t1, Tuple t2) 
+            {
+                if (t1.freq != t2.freq) 
+                {
                     return t1.freq - t2.freq;
-                } else {
+                } 
+                else 
+                {
                     return t2.word.compareTo(t1.word);                    
                 }
             }
         });
         
-        for (String word : map.keySet()) {
+        for (String word : map.keySet()) 
+        {
             int freq = map.get(word);
             minHeap.offer(new Tuple(word, freq));
             
-            if (minHeap.size() > k) {
+            if (minHeap.size() > k) 
+            {
                 minHeap.poll();
             }
         }
         
-        while (!minHeap.isEmpty()) {
+        while (!minHeap.isEmpty()) 
+        {
             result.add(0, minHeap.poll().word);
         }
         

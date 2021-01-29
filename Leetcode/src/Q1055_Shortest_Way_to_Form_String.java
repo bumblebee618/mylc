@@ -37,11 +37,15 @@ public class Q1055_Shortest_Way_to_Form_String
         {
             return -1;
         }
+        else if (!isValid(source, target))
+        {
+        	return -1;
+        }
         
         int s_index = 0, t_index = 0;
         int step = 0;
         
-        while (t_index < target.length() && step <= t_index)
+        while (t_index < target.length() && step <= t_index) // step <= t_index 防止死循环
         {
             while (s_index < source.length() && source.charAt(s_index) != target.charAt(t_index))
             {
@@ -53,7 +57,7 @@ public class Q1055_Shortest_Way_to_Form_String
                 s_index++;
                 t_index++;
             }
-            else
+            else  // s_index == source.length(), find another iteration for string s 
             {
                 s_index = 0;
                 step++;
@@ -62,4 +66,30 @@ public class Q1055_Shortest_Way_to_Form_String
         
         return step <= t_index ? step+1 : -1;
     }
+	
+	private boolean isValid(String source, String target)
+	{
+		int[] sHash = new int[256];
+		int[] tHash = new int[256];
+		
+		for (char c : source.toCharArray())
+		{
+			sHash[c]++;
+		}
+		
+		for (char c : target.toCharArray())
+		{
+			tHash[c]++;
+		}
+		
+		for (int i = 0; i < sHash.length; i++)
+		{
+			if (tHash[i] > 0 && sHash[i] == 0)
+			{
+				return false;
+			}
+		}
+		
+		return false;
+	}
 }

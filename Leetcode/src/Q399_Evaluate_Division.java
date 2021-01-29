@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 /********
@@ -23,67 +24,79 @@ The input is always valid. You may assume that evaluating the queries will resul
  * 
  * */
 
-public class Q399_Evaluate_Division {
-	// using DFS
-	private Map<String, Set<String>> graph = new HashMap<String, Set<String>>();
-	private Map<String, Double> resultMap = new HashMap<String, Double>();
+public class Q399_Evaluate_Division 
+{
+	private Map<String, Set<String>> graph = new HashMap<>();
+	private Map<String, Double> resultMap = new HashMap<>();
 	
-    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
-        if(equations == null || values == null || queries == null || queries.length == 0 || equations.length != values.length){
-        	return new double[0];
+	public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) 
+	{
+        if (equations == null || equations.size() == 0 
+        	|| values == null || values.length == 0
+        	|| queries == null || queries.size() == 0)
+        {
+            return new double[0];
+        }
+        else if (equations.size() != values.length)
+        {
+            return new double[0];
         }
         
-        int len = equations.length;
-        double[] ans = new double[queries.length];
+        double[] result = new double[queries.size()];
         
-        // build graph
-        for(int i = 0; i < len; i++){
-        	if(!graph.containsKey(equations[i][0])){
-        		graph.put(equations[i][0], new HashSet<String>());
-        	}
-        	graph.get(equations[i][0]).add(equations[i][1]);
-        	
-        	if(!graph.containsKey(equations[i][1])){
-        		graph.put(equations[i][1], new HashSet<String>());
-        	}
-        	graph.get(equations[i][1]).add(equations[i][0]);
-        	
-        	resultMap.put(equations[i][0] + "/" + equations[i][1], values[i]);
-        	resultMap.put(equations[i][1] + "/" + equations[i][0], 1.0 / values[i]);
+        // build graph;
+        for (int i = 0; i < values.length; i++)
+        {
+            graph.computeIfAbsent(equations.get(i).get(0), x -> new HashSet<>()).add(equations.get(i).get(1));
+            graph.computeIfAbsent(equations.get(i).get(1), x -> new HashSet<>()).add(equations.get(i).get(0));
+            resultMap.put(equations.get(i).get(0) + "/" + equations.get(i).get(1), values[i]);
+            resultMap.put(equations.get(i).get(1) + "/" + equations.get(i).get(0), 1.0 / values[i]);
         }
         
-        for(int i = 0; i < queries.length; i++){
-        	ans[i] = DFS(queries[i][0], queries[i][1], 1, new HashSet<String>());
+        // dfs
+        for (int i = 0; i < queries.size(); i++)
+        {
+            result[i] = dfs(queries.get(i).get(0), queries.get(i).get(1), 1, new HashSet<>());
         }
         
-        return ans;
+        return result;
     }
     
-    public double DFS(String start, String end, double sum, Set<String> visited){		
-		if(!graph.containsKey(start)){
-			return -1.0;
-		} else if(start.equals(end)){
-			return 1.0;
-		} else if(resultMap.containsKey(start + "/" + end)){
-			return sum * resultMap.get(start + "/" + end);
-		} 
- 		
-		visited.add(start);
-		double result = -1.0;		
-		
-		for(String next : graph.get(start)){			
-			if(!visited.contains(next)){			
-				if(resultMap.containsKey(start + "/" + next)){
-					result = DFS(next, end, sum * resultMap.get(start + "/" + next), visited);
-				} 
-				
-				if(result != -1.0){
-					return result;
-				}
-			}
-		}
-		
-		visited.remove(start);
-		return result;
-	}
+    private double dfs(String startNode, String endNode, double sum, Set<String> visited)
+    {
+        if (!graph.containsKey(startNode))
+        {
+            return -1.0;
+        }
+        else if (startNode.equals(endNode))
+        {
+            return 1.0;
+        }
+        else if (resultMap.containsKey(startNode + "/" + endNode))
+        {
+            return sum * resultMap.get(startNode + "/" + endNode);
+        }
+        
+        visited.add(startNode);
+        double result = -1.0;
+        
+        for (String nextNode : graph.get(startNode))
+        {
+            if (!visited.contains(nextNode))
+            {
+                if (resultMap.containsKey(startNode + "/" + nextNode))
+                {
+                    result = dfs(nextNode, endNode, sum * resultMap.get(startNode + "/" + nextNode), visited);
+                    
+                    if (result != -1.0)
+                    {
+                        return result;
+                    }
+                }
+            }
+        }
+        
+        visited.remove(startNode);
+        return result;
+    }
 }

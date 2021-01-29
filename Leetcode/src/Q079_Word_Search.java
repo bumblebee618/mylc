@@ -26,7 +26,8 @@ public class Q079_Word_Search {
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public boolean exist(char[][] board, String word) {
+    public boolean exist(char[][] board, String word) 
+    {
         if (board == null || board.length == 0 || board[0].length == 0 || word == null || word.length() == 0)
         {
             return false;

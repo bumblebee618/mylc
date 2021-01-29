@@ -63,7 +63,6 @@ public class Q686_Repeated_String_Match
             count++;
         }
         
-        
         return builderA.indexOf(b) < 0 ? -1 : count;
     }
     

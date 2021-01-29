@@ -10,23 +10,32 @@ public class Q014_Longest_Common_Prefix {
     // strs contains only one element
     
 	// solution 1: time is O(n * len), len is the length of word
-    public String longestCommonPrefix(String[] strs) {
-        if(strs == null || strs.length == 0) {
+    public String longestCommonPrefix(String[] strs) 
+    {
+        if (strs == null || strs.length == 0) 
+        {
             return "";
-        } else if(strs.length == 1) {
+        } 
+        else if (strs.length == 1) 
+        {
             return strs[0];
         }
         
         String str1 = strs[0];
         
-        for(int i = 1; i < strs.length && str1.length() > 0; i++) {
+        for (int i = 1; i < strs.length && str1.length() > 0; i++) 
+        {
             int len = Math.min(str1.length(), strs[i].length());
             int j = 0;
             
-            while(j < len) {
-                if(str1.charAt(j) != strs[i].charAt(j)) {
+            while (j < len) 
+            {
+                if (str1.charAt(j) != strs[i].charAt(j)) 
+                {
                     break;
-                } else {
+                } 
+                else 
+                {
                     j++;
                 }
             }
@@ -40,20 +49,28 @@ public class Q014_Longest_Common_Prefix {
 	
 	
 	// solution 2: using Divide and Conquer
-	public String longestCommonPrefix2(String[] strs) {
-        if(strs == null || strs.length == 0){
+	public String longestCommonPrefix2(String[] strs) 
+	{
+        if (strs == null || strs.length == 0)
+        {
             return new String();
-        } else if(strs.length == 1){
+        } 
+        else if (strs.length == 1)
+        {
             return strs[0];
         }
         
         return helper(strs, 0, strs.length - 1);
     }
     
-    public String helper(String[] strs, int start, int end){
-        if(start > end){
+    private String helper(String[] strs, int start, int end)
+    {
+        if (start > end)
+        {
             return null;
-        } else if(start == end){
+        } 
+        else if (start == end)
+        {
             return strs[start];
         }
         
@@ -61,18 +78,26 @@ public class Q014_Longest_Common_Prefix {
         String left = helper(strs, start, mid);
         String right = helper(strs, mid + 1, end);
         
-        if(left == null){
+        if (left == null)
+        {
             return right;
-        } else if(right == null){
+        } 
+        else if (right == null)
+        {
             return left;
-        } else {
+        } 
+        else 
+        {
             int len = Math.min(left.length(), right.length());
             int index = 0;
             
-            while(index < len){
-                if(left.charAt(index) != right.charAt(index)){
+            while (index < len) 
+            {
+                if (left.charAt(index) != right.charAt(index))
+                {
                     break;
                 }
+                
                 index++;
             }
             

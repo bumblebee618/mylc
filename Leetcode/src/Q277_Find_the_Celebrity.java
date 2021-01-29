@@ -24,25 +24,32 @@ public class Q277_Find_the_Celebrity {
     // n is equal to or less than 0
     // knows(i, i) == false ?
     
-    public int findCelebrity(int n) {
-        if(n <= 0) {
+    public int findCelebrity(int n) 
+    {
+        if (n <= 0) 
+        {
             return -1;
         }
         
         int candidate = 0;
         
-        for (int i = 1; i < n; i++) {
-            if (knows(candidate, i)) {
+        for (int i = 1; i < n; i++) 
+        {
+            if (knows(candidate, i)) 
+            {
                 candidate = i;
             }
         }
         
-        for(int i = 0; i < n; i++) {
-            if(i == candidate) {
+        for (int i = 0; i < n; i++) 
+        {
+            if (i == candidate) 
+            {
                 continue;
             }
             
-            if(knows(i, candidate) == false || knows(candidate, i)) {
+            if (!knows(i, candidate) || knows(candidate, i)) 
+            {
                 return -1;
             }
         }

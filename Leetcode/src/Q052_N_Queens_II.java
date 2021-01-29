@@ -42,9 +42,9 @@ public class Q052_N_Queens_II {
         return count;
     }
     
-    public void backtrack(int[] position, int startRow, int n)
+    public void backtrack(int[] position, int curRow, int n)
     {
-        if (startRow > n)
+        if (curRow > n)
         {
             count++;
         } 
@@ -52,11 +52,11 @@ public class Q052_N_Queens_II {
         {
             for (int i = 1; i <= n; i++)
             {
-                position[startRow] = i;
+                position[curRow] = i;
                 
-                if (isValid(position, startRow) == true)
+                if (isValid(position, curRow) == true)
                 {
-                    backtrack(position, startRow + 1, n);
+                    backtrack(position, curRow+1, n);
                 }
             }    
         }

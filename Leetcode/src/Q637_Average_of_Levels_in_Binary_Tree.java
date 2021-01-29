@@ -19,9 +19,54 @@ Note:
 The range of node's value is in the range of 32-bit signed integer.
  *
  */
-public class Q637_Average_of_Levels_in_Binary_Tree {
-	public List<Double> averageOfLevels(TreeNode root) {
-        if (root == null) {
+public class Q637_Average_of_Levels_in_Binary_Tree 
+{
+	public List<Double> averageOfLevels(TreeNode root) 
+    {
+        if (root == null) 
+        {
+            return new LinkedList<Double>();
+        }
+        
+        List<Double> result = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
+            double sum = 0;
+            
+            for (int i = 0; i < size; i++)
+            {
+                TreeNode node = queue.poll();
+                sum += node.val;
+                
+                if (node.left != null)
+                {
+                    queue.offer(node.left);
+                }
+                
+                if (node.right != null)
+                {
+                    queue.offer(node.right);
+                }
+            }
+            
+            result.add(sum / size);
+        }
+        
+        return result;
+    }
+	
+	
+	
+	
+	
+	public List<Double> averageOfLevels2(TreeNode root) 
+	{
+        if (root == null) 
+        {
             return new LinkedList<Double>();
         }
         
@@ -32,17 +77,23 @@ public class Q637_Average_of_Levels_in_Binary_Tree {
         double sum = 0;
         int count = 1;
         
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             TreeNode node = queue.poll();
             sum += node.val;
             
-            if (node.left != null) {
+            if (node.left != null) 
+            {
                 queue.offer(node.left);
             }
-            if (node.right != null) {
+            
+            if (node.right != null)
+            {
                 queue.offer(node.right);
             }
-            if (--size == 0) {
+            
+            if (--size == 0) 
+            {
                 result.add(sum / count);
                 size = queue.size();
                 count = size;

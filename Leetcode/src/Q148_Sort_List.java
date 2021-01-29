@@ -3,17 +3,21 @@ public class Q148_Sort_List {
 	/***************************
 	 *       mergeSort         *
 	 ***************************/
-	public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null) {
+	public ListNode sortList(ListNode head) 
+	{
+        if (head == null || head.next == null) 
+        {
             return head;
         }
         
-        ListNode dummy = new ListNode(0);  // 这里使用dummy的原因是防止只有2个节点head->node->null的情况
+        // 这里使用dummy的原因是防止只有2个节点head->node->null的情况
+        ListNode dummy = new ListNode(0);  
         dummy.next = head;
         ListNode faster = dummy;
         ListNode slower = dummy;
         
-        while (faster != null && faster.next != null) {
+        while (faster != null && faster.next != null) 
+        {
             faster = faster.next.next;
             slower = slower.next;
         }
@@ -25,29 +29,42 @@ public class Q148_Sort_List {
         return mergeList(left, right);
     }
     
-    private ListNode mergeList(ListNode left, ListNode right) {
-        if (left == null) {
+    private ListNode mergeList(ListNode left, ListNode right) 
+    {
+        if (left == null) 
+        {
             return right;
-        } else if (right == null) {
+        } 
+        else if (right == null) 
+        {
             return left;
         }
         
         ListNode dummy = new ListNode(0);
         ListNode traver = dummy;
         
-        while (left != null || right != null) {
-            if (left != null && right != null) {
-                if (left.val < right.val) {
+        while (left != null || right != null) 
+        {
+            if (left != null && right != null) 
+            {
+                if (left.val < right.val) 
+                {
                     traver.next = left;
                     left = left.next;
-                } else {
+                } 
+                else 
+                {
                     traver.next = right;
                     right = right.next;
                 }
-            } else if (left != null) {
+            } 
+            else if (left != null) 
+            {
                 traver.next = left;
                 left = left.next;
-            } else {
+            } 
+            else 
+            {
                 traver.next = right;
                 right = right.next;
             }

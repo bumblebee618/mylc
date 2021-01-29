@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /***
  * 
  * @author jackie
@@ -33,20 +35,15 @@ The length of nums will be in the range [0, 10000].
 Each element nums[i] will be an integer in the range [-1000, 1000].
  */
 public class Q724_Find_Pivot_Index {
-	public int pivotIndex(int[] nums) {
+	public int pivotIndex(int[] nums) 
+    {
         if (nums == null || nums.length == 0)
         {
             return -1;
         }
         
-        long totalSum = 0;
-        
-        for (int num : nums)
-        {
-            totalSum += num;
-        }
-        
-        long curSum = 0;
+        int totalSum = Arrays.stream(nums).sum();
+        int curSum = 0;
         
         for (int i = 0; i < nums.length; i++)
         {

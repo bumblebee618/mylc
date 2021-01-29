@@ -6,26 +6,34 @@ public class Q154_Find_Minimum_in_Rotated_Sorted_Array_II {
 	 * 		（2）最小值必在未排序的那一边
 	 * 
 	 *********************************************************/
-	// by Jackie using binary search
-	public int findMin(int[] nums) {
-		if(nums == null || nums.length == 0){
+	// using binary search
+	public int findMin(int[] nums) 
+	{
+		if (nums == null || nums.length == 0)
+		{
             return -1;
         }
         
         int left = 0, right = nums.length - 1;
         int minValue = Integer.MAX_VALUE;
         
-        while(left + 1 < right){
+        while (left + 1 < right)
+        {
             int mid = left + (right - left) / 2;
             minValue = Math.min(minValue, nums[left]);
             minValue = Math.min(minValue, nums[right]);
             minValue = Math.min(minValue, nums[mid]);
             
-            if(nums[mid] > nums[left] || nums[mid] > nums[right]){           // 这里没等号 ！！！
+            if (nums[mid] > nums[left] || nums[mid] > nums[right])         // 这里没等号 ！！！
+            {
                 left = mid;
-            } else if(nums[mid] < nums[left] || nums[mid] < nums[right]){    // 这里没等号 ！！！
+            } 
+            else if (nums[mid] < nums[left] || nums[mid] < nums[right])    // 这里没等号 ！！！
+            {
                 right = mid;
-            } else {
+            } 
+            else 
+            {
                 right--;
             }
         }
@@ -36,7 +44,11 @@ public class Q154_Find_Minimum_in_Rotated_Sorted_Array_II {
     }
 	
 	
-	public static void main(String[] args){
+	
+	/***************************** main *****************************/
+	
+	public static void main(String[] args)
+	{
 		Q154_Find_Minimum_in_Rotated_Sorted_Array_II t = new Q154_Find_Minimum_in_Rotated_Sorted_Array_II();
 		int[] nums = {1,3};
 		System.out.println(t.findMin(nums));

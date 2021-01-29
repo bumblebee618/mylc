@@ -40,6 +40,7 @@ public class Q408_Valid_Word_Abbreviation {
         
         while (index1 < len1 && index2 < len2) 
         {
+        	// skip the letters
             if (Character.isDigit(letters2[index2])) 
             {
             	if(letters2[index2] == '0') 
@@ -47,15 +48,15 @@ public class Q408_Valid_Word_Abbreviation {
             		return false;
             	}
             	
-                int sum = 0;
+                int skipCount = 0;
                 
                 while (index2 < len2 && Character.isDigit(letters2[index2])) 
                 {
-                    sum = sum * 10 + (letters2[index2] - '0');
+                    skipCount = skipCount * 10 + (letters2[index2] - '0');
                     index2++;
                 }
                 
-                index1 += sum;   // 注意这里是 +sum !!!
+                index1 += skipCount;   // 注意这里是 +sum !!!
             } 
             else 
             {

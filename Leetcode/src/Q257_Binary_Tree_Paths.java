@@ -23,15 +23,15 @@ public class Q257_Binary_Tree_Paths {
 	// solution 1: using recursion
 	public List<String> binaryTreePaths(TreeNode root) 
 	{
-        List<String> ans = new LinkedList<String>();
+        List<String> result = new LinkedList<String>();
         
         if (root == null)
         {
-            return ans;
+            return result;
         }
         
-        dfs(ans, root, "");
-        return ans;
+        dfs(result, root, "");
+        return result;
     }
     
     private void dfs(List<String> result, TreeNode node, String solution)
@@ -68,11 +68,11 @@ public class Q257_Binary_Tree_Paths {
 	// solution 2: using Iterator
 	public List<String> binaryTreePaths2(TreeNode root) 
 	{
-        List<String> ans = new LinkedList<String>();
+        List<String> result = new LinkedList<String>();
         
         if (root == null)
         {
-            return ans;
+            return result;
         }
         
         Queue<List<TreeNode>> queue = new LinkedList<>();
@@ -101,11 +101,11 @@ public class Q257_Binary_Tree_Paths {
             
             if (node.left == null && node.right == null)
             {
-                ans.add(getStr(currentList));
+            	result.add(getStr(currentList));
             }
         }
         
-        return ans;
+        return result;
     }
     
     private String getStr(List<TreeNode> list)
