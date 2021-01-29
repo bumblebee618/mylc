@@ -14,30 +14,37 @@ Note:
  * */
 
 
-public class Q017_Letter_Combinations_of_a_Phone_Number {
-	public List<String> letterCombinations(String digits) {
-        List<String> ans = new ArrayList<>();
+public class Q017_Letter_Combinations_of_a_Phone_Number
+
+{
+	public List<String> letterCombinations(String digits) 
+	{
+        List<String> result = new ArrayList<>();
         
-        if (digits == null || digits.length() == 0) {
-            return ans;
+        if (digits == null || digits.length() == 0) 
+        {
+            return result;
         }
         
-        backtrack(ans, "", digits, 0);
-        return ans;
+        backtrack(result, "", digits, 0);
+        return result;
     }
     
-    public void backtrack(List<String> ans, String solution, String digits, int startPos) {
-        if (startPos == digits.length()) {
-            ans.add(solution);
-            return ;
+    public void backtrack(List<String> result, String solution, String digits, int startPos) 
+    {
+        if (startPos == digits.length()) 
+        {
+            result.add(solution);
+            return;
         }
         
         String[] array = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        int pos = digits.charAt(startPos) - '0';
+        int digit = digits.charAt(startPos) - '0';
         
-        for (int i = 0; i < array[pos].length(); i++) {
-            char c = array[pos].charAt(i);           
-            backtrack(ans, solution + c, digits, startPos + 1);
+        for (int i = 0; i < array[digit].length(); i++) 
+        {
+            char c = array[digit].charAt(i);           
+            backtrack(result, solution + c, digits, startPos + 1);
         }
     }
     

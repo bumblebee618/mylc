@@ -6,8 +6,10 @@
  * */
 
 public class Q073_Set_Matrix_Zeroes {
-	public void setZeroes(int[][] matrix) {
-		if(matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+	public void setZeroes(int[][] matrix) 
+	{
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
+		{
             return ;
         }
 		
@@ -18,24 +20,31 @@ public class Q073_Set_Matrix_Zeroes {
         //先标记第一行和第一列是否有0  
         boolean firstRow = false, firstCol = false;  
         
-        for (j = 0; j < col; j++) {  
-            if (0 == matrix[0][j]) {  
+        for (j = 0; j < col; j++) 
+        {  
+            if (0 == matrix[0][j]) 
+            {  
                 firstRow = true;  
                 break;  
             }  
         }
         
-        for (i = 0; i < row; i++) {  
-            if (0 == matrix[i][0]) {  
+        for (i = 0; i < row; i++) 
+        {  
+            if (0 == matrix[i][0]) 
+            {  
                 firstCol = true;  
                 break;  
             }  
         }  
            
         //从第二行第二列还是遍历，如果遇到0，则把它所在行和列的第一个值设为0     
-        for (i = 1; i < row; i++) {  
-            for (j = 1; j < col; j++) {  
-                if (0 == matrix[i][j]) {  
+        for (i = 1; i < row; i++) 
+        {  
+            for (j = 1; j < col; j++) 
+            {  
+                if (0 == matrix[i][j]) 
+                {  
                     matrix[i][0] = 0;  
                     matrix[0][j] = 0;  
                 }  
@@ -43,23 +52,30 @@ public class Q073_Set_Matrix_Zeroes {
         }  
           
         //把第一列的0所在行都设为0，把第一行的0所在列都设为0  
-        for (i = 1; i < row; i++) {        // 注意，从1开始
-            if (0 == matrix[i][0]) {  
+        for (i = 1; i < row; i++)         // 注意，从1开始
+        {
+            if (0 == matrix[i][0]) 
+            {  
             	setValue(matrix, i, true);   
             }  
         }  
         
-        for (j = 1; j < col; j++) {        // 注意，从1开始
-            if (0 == matrix[0][j]) {  
+        for (j = 1; j < col; j++)         // 注意，从1开始
+        {
+            if (0 == matrix[0][j]) 
+            {  
             	setValue(matrix, i, false);  
             }  
         }  
           
         //根据标记决定第一行和第一列是否全设为0  
-        if (firstRow) {  
+        if (firstRow) 
+        {  
         	setValue(matrix, 0, true);   
         }  
-        if (firstCol) {  
+        
+        if (firstCol) 
+        {  
         	setValue(matrix, 0, false); 
         }  
     }

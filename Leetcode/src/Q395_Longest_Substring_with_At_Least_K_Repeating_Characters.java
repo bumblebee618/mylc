@@ -33,77 +33,82 @@ public class Q395_Longest_Substring_with_At_Least_K_Repeating_Characters
 	// solution 1:
 	public int longestSubstring(String s, int k) 
     {
-        if (s == null || k <= 0)
+        if (s == null || s.length() == 0)
+        {
+            return 0;
+        }
+        else if (k <= 0 || k > s.length())
         {
             return 0;
         }
         
-        char[] letters = s.toCharArray();
-        int[] countMap = new int[26];
-        int maxUniqueLetter = getMaxUniqueLetters(letters);
-        int result = 0;
+        int totalUnique = findTotalUniqueLetters(s);
+        int maxLen = 0;
         
-        for (int curUniqueLetter = 1; curUniqueLetter <= maxUniqueLetter; curUniqueLetter++)
+        for (int curUnique = 1; curUnique <= totalUnique; curUnique++)
         {
-            Arrays.fill(countMap, 0);
-            int unique = 0, front = 0, back = 0, countAtLeastK = 0;
+            int[] countMap = new int[256];
+            int unique = 0, kCount = 0;
+            int front = 0, back = 0;
             
             while (front < s.length())
             {
-                if (unique <= curUniqueLetter)
+                if (unique <= curUnique)
                 {
-                    int pos = letters[front++] - 'a';
+                    char c = s.charAt(front++);
                 
-                    if (countMap[pos]++ == 0)
+                    if (countMap[c]++ == 0)
                     {
                         unique++;
                     }
                 
-                    if (countMap[pos] == k)
+                    if (countMap[c] == k)
                     {
-                        countAtLeastK++;
+                        kCount++;
                     }
                 }
                 else
                 {
-                    int pos = letters[back++] - 'a';
-                
-                    if (countMap[pos]-- == 1)
+                    char c = s.charAt(back++);
+                    
+                    if (countMap[c]-- == 1)
                     {
                         unique--;
                     }
                 
-                    if (countMap[pos] == k-1)
+                    if (countMap[c] == k-1)
                     {
-                        countAtLeastK--;
+                        kCount--;
                     }
                 }
-            
-                if (unique == curUniqueLetter && unique == countAtLeastK)
+                
+                if (unique == curUnique && unique == kCount)
                 {
-                    result = Math.max(result, front-back);
+                    maxLen = Math.max(maxLen, front-back);
                 }
             }
         }
         
-        return result;
+        return maxLen;
     }
     
-    private int getMaxUniqueLetters(char[] letters) 
+    private int findTotalUniqueLetters(String s)
     {
-        int map[] = new int[26];
-        int maxUnique = 0;
+        int[] hash = new int[256];
+        int unique = 0;
         
-        for (int i = 0; i < letters.length; i++) 
+        for (char c : s.toCharArray())
         {
-            if (map[letters[i] - 'a']++ == 0) 
+            if (hash[c]++ == 0)
             {
-                maxUnique++;
+                unique++;
             }
         }
         
-        return maxUnique;
+        return unique;
     }
+
+
 	
     
     

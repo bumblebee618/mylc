@@ -8,20 +8,27 @@ The digits are stored such that the most significant digit is at the head of the
  * 
  * */
 
-public class Q066_Plus_One {
-	public int[] plusOne(int[] digits) {
-        if (digits == null || digits.length == 0) {
+public class Q066_Plus_One 
+{
+	public int[] plusOne(int[] digits) 
+	{
+        if (digits == null || digits.length == 0) 
+        {
             return new int[0];
         }
         
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new LinkedList<>();
         int len = digits.length;
         int sum = 0, flag = 0;
         
-        for (int i = len-1; i >= 0; i--) {
-            if (i == len-1) {
+        for (int i = len-1; i >= 0; i--) 
+        {
+            if (i == len-1) 
+            {
                 sum = digits[i]+flag+1;
-            } else {
+            } 
+            else
+            {
                 sum = digits[i]+flag;
             }
             
@@ -30,13 +37,15 @@ public class Q066_Plus_One {
             list.add(0, sum);
         }
         
-        if (flag > 0) {
+        if (flag > 0) 
+        {
             list.add(0, flag);
         }
         
         int[] result = new int[list.size()];
         
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) 
+        {
             result[i] = list.get(i);
         }
         

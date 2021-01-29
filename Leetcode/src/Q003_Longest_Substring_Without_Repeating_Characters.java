@@ -16,7 +16,8 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
 
 
 // Solution 1: two pointers, time O(n), space O(1)
-public class Q003_Longest_Substring_Without_Repeating_Characters {
+public class Q003_Longest_Substring_Without_Repeating_Characters 
+{
 	public int lengthOfLongestSubstring(String s) 
 	{
         if (s == null || s.length() == 0) 
@@ -37,7 +38,7 @@ public class Q003_Longest_Substring_Without_Repeating_Characters {
             
             while (duplicateCount > 0) 
             {
-            	if (--hash[s.charAt(back++)] == 1) 
+            	if (hash[s.charAt(back++)]-- == 2) 
             	{
             		duplicateCount--;
             	}

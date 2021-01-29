@@ -10,12 +10,15 @@ For example:
  * 
  * */
 
-public class Q102_Binary_Tree_Level_Order_Traversal {
-	public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
+public class Q102_Binary_Tree_Level_Order_Traversal 
+{
+	public List<List<Integer>> levelOrder(TreeNode root) 
+	{
+        List<List<Integer>> result = new LinkedList<>();
         
-        if(root == null) {
-            return ans;
+        if (root == null) 
+        {
+            return result;
         }
         
         Queue<TreeNode> queue = new LinkedList<>();
@@ -23,26 +26,30 @@ public class Q102_Binary_Tree_Level_Order_Traversal {
         int size = queue.size();
         List<Integer> list = new ArrayList<>();
         
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) 
+        {
             TreeNode node = queue.poll();
             list.add(node.val);
             
-            if(node.left != null) {
+            if (node.left != null) 
+            {
                 queue.offer(node.left);
             } 
             
-            if(node.right != null) {
+            if (node.right != null) 
+            {
                 queue.offer(node.right);
             }
             
-            if(--size == 0) {
+            if (--size == 0) 
+            {
                 size = queue.size();
-                ans.add(new ArrayList<Integer>(list));
+                result.add(new LinkedList<>(list));
                 list.clear();
             }
         }
         
-        return ans;
+        return result;
      }
 	
 	

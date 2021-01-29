@@ -19,10 +19,12 @@ Example 2:
  * */
 
 
-public class Q121_Best_Time_to_Buy_and_Sell_Stock {
-	// solution 1: time O(n), space O(n)
-	public int maxProfit(int[] prices) {
-        if(prices == null || prices.length == 0) 
+public class Q121_Best_Time_to_Buy_and_Sell_Stock 
+{
+	// solution 1: time O(n), space O(1)
+	public int maxProfit(int[] prices) 
+	{
+        if (prices == null || prices.length == 0) 
         {
             return 0;
         }
@@ -31,7 +33,8 @@ public class Q121_Best_Time_to_Buy_and_Sell_Stock {
         int minPrice = prices[0];
         int maxProfit = 0;
 
-        for(int i = 1; i < len; i++) {
+        for (int i = 1; i < len; i++) 
+        {
             minPrice = Math.min(minPrice, prices[i]);
             maxProfit = Math.max(maxProfit, prices[i] - minPrice);
         }
@@ -44,8 +47,10 @@ public class Q121_Best_Time_to_Buy_and_Sell_Stock {
 	
 	
 	// solution 2: using only one variable, time O(n), space O(1)
-    public int maxProfit2(int[] prices) {
-        if(prices == null || prices.length == 0) {
+    public int maxProfit2(int[] prices) 
+    {
+        if(prices == null || prices.length == 0) 
+        {
             return 0;
         }
         
@@ -53,7 +58,8 @@ public class Q121_Best_Time_to_Buy_and_Sell_Stock {
         int curMinPrice = prices[0];
         int maxProfit = 0;
         
-        for(int i = 1; i < len; i++) {
+        for(int i = 1; i < len; i++) 
+        {
             curMinPrice = Math.min(curMinPrice, prices[i]);
             maxProfit = Math.max(maxProfit, prices[i] - curMinPrice);
         }
