@@ -1,0 +1,147 @@
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
+public class Q000_Mini_Knight_Move_Obstacle 
+{
+	private int[] dx = {-1, -1, -1, 0, 1, 1,  1, 0};
+	private int[] dy = {-1,  0,  1, 1, 1, 0, -1, -1};
+	private int step1 = 0;
+	private int step2 = 0;
+	
+	public int MiniKnight_Move(int[][] graph, int[] start, int[] end)
+	{
+		Queue<int[]> queue1 = new LinkedList<>();
+		queue1.offer(start);
+		Set<String> visited1 = new HashSet<>();
+		visited1.add(start[0] + "," + start[1]);
+		
+		Queue<int[]> queue2 = new LinkedList<>();
+		queue2.offer(end);
+		Set<String> visited2 = new HashSet<>();
+		visited2.add(end[0] + "," + end[1]);
+		
+		while (!queue1.isEmpty() && !queue2.isEmpty())
+		{
+			if (bfs(graph, queue1, visited1, visited2, true))
+			{
+				return step1 + step2;
+			}
+			
+			if (bfs(graph, queue2, visited2, visited1, false))
+			{
+				return step1 + step2;
+			}
+		}
+		
+		return -1;
+	}
+	
+	private boolean bfs(int[][] graph,
+						Queue<int[]> queue, 
+						Set<String> srcVisited, 
+						Set<String> desVisited,
+						boolean isSrc)
+	{
+		if (isSrc)
+		{
+			step1++;
+		}
+		else
+		{
+			step2++;
+		}
+		
+		int size = queue.size();
+		
+		boolean tag = isSrc;
+		
+		for (int i = 0; i < size; i++)
+		{
+			int[] node = queue.poll();
+			
+			if (tag)
+				System.out.println(String.format("src is [%s][%s] and level is %s", node[0], node[1], step1));
+			
+			for (int j = 0; j < dx.length; j++)
+			{
+				int newX = node[0] + dx[j];
+				int newY = node[1] + dy[j];
+				String newNodeStr = newX + "," + newY;
+				
+				if (newX >= 0 && newX < graph.length 
+					&& newY >= 0 && newY < graph[0].length 
+					&& graph[newX][newY] == 0 
+					&& !srcVisited.contains(newNodeStr))
+				{
+					if (tag)
+						System.out.println(String.format("Move to [%s][%s] and level is %s", newX, newY, step1));
+					
+					if (desVisited.contains(newNodeStr))
+					{
+						System.out.println(String.format("Find [%s][%s] and isSrc is %s", newX, newY, isSrc));
+						return true;
+					}
+					
+					queue.offer(new int[] {newX, newY});
+					srcVisited.add(newNodeStr);
+				}
+			}
+		}
+
+		return false;
+	}
+	
+	
+	
+	public static void main(String[] args)
+	{
+		int[][] graph1 = {
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+		};
+		
+		int[][] graph2 = {
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,1,1,1,1,1,1,1,1,0},
+				{0,0,0,0,0,0,0,0,0,0},
+		};
+		
+		int[][] graph3 = {
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,1},
+				{0,0,0,0,0,0,0,0,1,0},
+		};
+		
+		int[] start = {0, 0};
+		int[] end = {9, 9};
+		
+		Q000_Mini_Knight_Move_Obstacle test = new Q000_Mini_Knight_Move_Obstacle();
+		// System.out.println(test.MiniKnight_Move(graph1, start, end));
+		System.out.println(test.MiniKnight_Move(graph2, start, end));
+		// System.out.println(test.MiniKnight_Move(graph3, start, end));
+	}
+}

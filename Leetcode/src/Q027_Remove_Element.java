@@ -17,28 +17,25 @@ Your function should return length = 2, with the first two elements of nums bein
 
 
 public class Q027_Remove_Element {
-	public int removeElement(int[] nums, int val) {
+	public int removeElement(int[] nums, int val) 
+    {
         if (nums == null || nums.length == 0)
         {
             return 0;
         }
         
-        int front = 0, back = -1;
-        int size = nums.length;
+        int front = 0, back = 0;
         
-        while (front < size)
+        while (front < nums.length)
         {
-            while (front < size && nums[front] == val)
+            if (nums[front] != val)
             {
-                front++;
+                nums[back++] = nums[front];
             }
             
-            if (front < size)
-            {
-                nums[++back] = nums[front++];
-            }
+            front++;
         }
         
-        return back+1;
+        return back;
     }
 }
