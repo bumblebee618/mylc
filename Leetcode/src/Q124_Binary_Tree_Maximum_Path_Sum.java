@@ -22,8 +22,10 @@ public class Q124_Binary_Tree_Maximum_Path_Sum {
 	 **************************************************/
 	private int maxPath = Integer.MIN_VALUE; 
     
-    public int maxPathSum(TreeNode root) {
-        if(root == null){
+    public int maxPathSum(TreeNode root) 
+    {
+        if (root == null)
+        {
             return 0;
         }
         
@@ -31,8 +33,10 @@ public class Q124_Binary_Tree_Maximum_Path_Sum {
         return maxPath;
     }
     
-    public int maxPathHelper(TreeNode node){
-    	if(node == null){
+    private int maxPathHelper(TreeNode node)
+    {
+    	if (node == null)
+    	{
             return 0;
         }
         

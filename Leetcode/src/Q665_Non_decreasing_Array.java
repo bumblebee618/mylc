@@ -27,36 +27,37 @@ Constraints:
  */
 public class Q665_Non_decreasing_Array {
 	// solution 1: Modify the input array
-	public boolean checkPossibility(int[] nums) {
-	        if (nums == null || nums.length == 1)
-	        {
-	            return true;
-	        }
-	        
-	        int count = 0;
-	        
-	        for (int i = 1; i < nums.length; i++)
-	        {
-	            if (nums[i] < nums[i-1])
-	            {
-	                if (count++ > 0)
-	                {
-	                    return false;
-	                }
-	                
-	                if (i - 2 < 0 || nums[i - 2] <= nums[i])
-	                {
-	                    nums[i - 1] = nums[i]; // lower a[i - 1]
-	                }
-	                else 
-	                {
-	                    nums[i] = nums[i - 1]; // rise a[i]
-	                }
-	            }
-	        }
-	        
+	public boolean checkPossibility(int[] nums) 
+	{
+		if (nums == null || nums.length == 1)
+	    {
 	        return true;
 	    }
+	        
+	    int count = 0;
+	        
+	    for (int i = 1; i < nums.length; i++)
+	    {
+	    	if (nums[i] < nums[i-1])
+	        {
+	    		if (count++ > 0)
+	            {
+	                return false;
+	            }
+	                
+	            if (i - 2 < 0 || nums[i - 2] <= nums[i])
+	            {
+	                nums[i - 1] = nums[i]; // lower a[i - 1]
+	            }
+	            else 
+	            {
+	                nums[i] = nums[i - 1]; // rise a[i]
+	            }
+	        }
+	    }
+	        
+	    return true;
+    }
 
 	
 	// solution 2:
@@ -79,7 +80,7 @@ public class Q665_Non_decreasing_Array {
 	        {
 	            if (nums[i] < prev)
 	            {
-	                if (count++ > 0)
+	                if (count++ == 1)
 	                {
 	                    return false;
 	                }

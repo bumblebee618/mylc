@@ -40,7 +40,8 @@ public class Q057_Insert_Interval {
             return intervals;
         }
         
-        Arrays.sort(intervals, (a, b) -> (a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]));
+        // Arrays.sort(intervals, (a, b) -> (a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]));
+        // Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
         int start = newInterval[0];
         int end = newInterval[1];
         List<int[]> list = new LinkedList<>();

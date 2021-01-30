@@ -52,7 +52,7 @@ public class Q091_Decode_Ways {
                     return 0;
                 }
             } 
-            else if (curNum > 0 && curNum <= 6) 
+            else if (curNum >= 1 && curNum <= 6) 
             {
                 if (prevNum == 1 || prevNum == 2) 
                 {

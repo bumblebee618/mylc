@@ -31,7 +31,8 @@ public class Q286_Walls_and_Gates {
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public void wallsAndGates(int[][] rooms) {
+    public void wallsAndGates(int[][] rooms) 
+    {
         if (rooms == null || rooms.length == 0 || rooms[0].length == 0)
         {
             return ;

@@ -1,35 +1,48 @@
 
-public class Q268_Missing_Number {
+public class Q268_Missing_Number 
+{
 	//by other using math
-	public int missingNumber(int[] nums) {  //1～n求和，然后按个减去数组里的元素，剩下的即为所要求的数
-		if(nums == null || nums.length == 0){
+	public int missingNumber(int[] nums)   //1～n求和，然后按个减去数组里的元素，剩下的即为所要求的数
+	{
+		if (nums == null || nums.length == 0)
+		{
             return 0;
         }
         
         int len = nums.length;
         long sum = len * (len + 1) / 2;
         
-        for(int num : nums){
+        for(int num : nums)
+        {
             sum -= num;
         }
         
         return (int) sum;
     }
 	
+	
+	
+	
+	
+	
 	// by Jackie using bit calculation
-	public int missingNumber2(int[] nums) {
-        if(nums == null || nums.length == 0){
+	public int missingNumber2(int[] nums) 
+	{
+        if (nums == null || nums.length == 0)
+        {
             return 0;
         }
         
         int ans = 0;
         int n = nums.length;
         
-        for(int num : nums){
+        for (int num : nums)
+        {
             ans ^= num;
         }
         
-        for(int i = 1; i <= n; i++){
+        for (int i = 1; i <= n; i++)
+        {
             ans ^= i;
         }
         

@@ -10,11 +10,16 @@ Output: 7 -> 0 -> 8
  * 
  * */
 
-public class Q002_Add_Two_Numbers {	
-	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if(l1 == null) {
+public class Q002_Add_Two_Numbers 
+{	
+	public ListNode addTwoNumbers(ListNode l1, ListNode l2) 
+	{
+        if (l1 == null) 
+        {
             return l2;
-        } else if(l2 == null) {
+        } 
+        else if (l2 == null) 
+        {
             return l1;
         }
         
@@ -23,15 +28,21 @@ public class Q002_Add_Two_Numbers {
         int flag = 0;
         int sum = 0;
         
-        while(l1 != null || l2 != null) {
-            if(l1 != null && l2 != null) {
+        while (l1 != null || l2 != null) 
+        {
+            if (l1 != null && l2 != null) 
+            {
                 sum = l1.val + l2.val + flag;
                 l1 = l1.next;
                 l2 = l2.next;
-            } else if(l1 != null) {
+            } 
+            else if (l1 != null) 
+            {
                 sum = l1.val + flag;
                 l1 = l1.next;
-            } else {
+            } 
+            else 
+            {
                 sum = l2.val + flag;
                 l2 = l2.next;
             }
@@ -42,7 +53,8 @@ public class Q002_Add_Two_Numbers {
             node = node.next;
         }
         
-        if(flag != 0) {
+        if (flag != 0) 
+        {
             node.next = new ListNode(flag);
             node = node.next;
         }

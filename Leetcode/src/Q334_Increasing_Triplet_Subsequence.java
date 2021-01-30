@@ -35,14 +35,14 @@ public class Q334_Increasing_Triplet_Subsequence {
 		{
 			if (nums[i] > max1) 
 			{
-				if (max2 != Integer.MIN_VALUE && nums[i] > max2) 
-				{
-					return true;
-				} 
-				else 
-				{
-					max2 = nums[i];
-				}
+                if (max2 == Integer.MIN_VALUE || nums[i] <= max2)
+                {
+                    max2 = nums[i];
+                }
+                else
+                {
+                    return true;
+                }
 			} 
 			else 
 			{

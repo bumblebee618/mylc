@@ -34,18 +34,38 @@ public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
             return 0;
         }
         
-        Arrays.sort(points, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : a[1] - b[1]);
+        // cannot use a[1] - b[1] which will cause the overflow, for example: 
+        // {{-2147483646, -2147483645}, {2147483646, 2147483647}};
+        Arrays.sort(points, (a, b) -> {
+        	if (a[1] < b[1])
+        	{
+        		return -1;
+        	}
+        	else if (a[1] > b[1])
+        	{
+        		return 1;
+        	}
+        	else
+        	{
+        		return 0;
+        	}
+        });
+        
         int minArrow = 1;
         int hitPos = points[0][1];
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.MIN_VALUE);
         
         for (int[] point : points) 
         {
             if (hitPos >= point[0]) 
             {
+            	System.out.println("1: " + point[0] + ", " + point[1]);
                 hitPos = Math.min(hitPos, point[1]);
             } 
             else 
             {
+            	System.out.println("2: " + point[0] + ", " + point[1]);
                 minArrow++;
                 hitPos = point[1];
             }
@@ -62,7 +82,8 @@ public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
 	{
 		Q452_Minimum_Number_of_Arrows_to_Burst_Balloons test = new Q452_Minimum_Number_of_Arrows_to_Burst_Balloons();
 		int[][] points = {{10, 16}, {2, 8}, {1, 6}, {7, 12}};
-		int result = test.findMinArrowShots(points);
+		int[][] points2 = {{-2147483646, -2147483645}, {2147483646, 2147483647}};
+		int result = test.findMinArrowShots(points2);
 		System.out.print(result);
 	}
 }

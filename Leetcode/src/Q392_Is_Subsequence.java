@@ -28,7 +28,8 @@ by one to see if T has its subsequence. In this scenario, how would you change y
 
 public class Q392_Is_Subsequence {
 	// solution 1, time O(m+n)
-	public boolean isSubsequence(String s, String t) {
+	public boolean isSubsequence(String s, String t) 
+	{
         if (s == null || t == null || s.length() > t.length())
         {
             return false;
@@ -61,10 +62,14 @@ public class Q392_Is_Subsequence {
 	
 	
 	// solution 2: using DP, time O(n*m), space O(n*m)
-		public boolean isSubsequence2(String s, String t) {
-	        if(s == null || s.length() == 0) {
+		public boolean isSubsequence2(String s, String t) 
+		{
+	        if (s == null || s.length() == 0) 
+	        {
 	            return true;
-	        } else if(t == null || t.length() == 0) {
+	        } 
+	        else if (t == null || t.length() == 0) 
+	        {
 	            return false;
 	        }
 	        
@@ -73,15 +78,23 @@ public class Q392_Is_Subsequence {
 	        boolean[][] dp = new boolean[sLen+1][tLen+1];
 	        dp[0][0] = true;
 	        
-	        for(int i = 1; i <= tLen; i++) {
+	        for (int i = 1; i <= tLen; i++) 
+	        {
 	            dp[0][i] = true;
 	        }
 	        
-	        for(int i = 1; i <= sLen; i++) {
-	            for(int j = 1; j <= tLen; j++) {
-	                if(s.charAt(i-1) == t.charAt(j-1)) {
+	        for (int i = 1; i <= sLen; i++) 
+	        {
+	            for (int j = 1; j <= tLen; j++) 
+	            {
+	                if (s.charAt(i-1) == t.charAt(j-1)) 
+	                {
+	                	// 用或不用string2的字符
 	                    dp[i][j] = dp[i-1][j-1] || dp[i][j-1];
-	                } else {
+	                } 
+	                else 
+	                {
+	                	// 不用string2的字符
 	                    dp[i][j] = dp[i][j-1];
 	                }
 	            }

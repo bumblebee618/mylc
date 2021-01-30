@@ -32,6 +32,9 @@ Note:
 0 ≤ N ≤ 30.
  */
 public class Q509_Fibonacci_Number {
+	
+	
+	// solution 1: time O(n), space O(n)
 	public int fib(int N) 
 	{
 		if (N <= 1) 
@@ -49,4 +52,23 @@ public class Q509_Fibonacci_Number {
         
     	return cache[N];
     }
+	
+		// solution 2: time O(n), space O(1)
+		public int fib2(int n) 
+	    {
+	        if (n <= 1)
+	        {
+	            return n;
+	        }
+	        
+	        int[] cache = new int[3];
+	        cache[1] = 1;
+	        
+	        for (int i = 2; i <= n; i++)
+	        {
+	            cache[i%3] = cache[(i-1)%3] + cache[(i-2)%3];
+	        }
+	        
+	        return cache[n%3];
+	    }
 }

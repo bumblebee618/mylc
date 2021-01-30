@@ -13,8 +13,10 @@ import java.util.*;
 
 
 public class Q016_3Sum_Closest {
-	public int threeSumClosest(int[] nums, int target) {
-        if(nums == null || nums.length <= 2) {
+	public int threeSumClosest(int[] nums, int target) 
+	{
+        if (nums == null || nums.length <= 2) 
+        {
             return 0;
         }
         
@@ -23,22 +25,30 @@ public class Q016_3Sum_Closest {
         long diff = Long.MAX_VALUE;
         Arrays.sort(nums);
         
-        for(int i = 0; i < len - 2; i++) {
+        for (int i = 0; i < len - 2; i++) 
+        {
             int left = i + 1, right = len - 1;
             
-            while(left < right) {
+            while (left < right) 
+            {
                 long sum = nums[i] + nums[left] + nums[right];
                 
-                if(diff > Math.abs(sum - (long) target)) {
+                if (diff > Math.abs(sum - (long) target))
+                {
                     diff = Math.abs(sum - (long) target);
                     closetSum = sum;
                 }
                 
-                if(sum == (long) target) {
+                if (sum == (long) target) 
+                {
                     break;
-                } else if (sum > (long) target) {
+                } 
+                else if (sum > (long) target)
+                {
                     right--;
-                } else {
+                } 
+                else 
+                {
                     left++;
                 }
             }

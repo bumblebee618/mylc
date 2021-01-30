@@ -17,24 +17,27 @@ It doesn't matter what you leave beyond the new length.
 
 
 public class Q026_Remove_Duplicates_from_Sorted_Array {
-	public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
+	public int removeDuplicates(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
             return 0;
         }
         
-        int len = nums.length;
         int front = 0, back = 0;
         
-        while (front < len) {
-            while (front < len && nums[front] == nums[back]) {
+        while (front < nums.length)
+        {
+            int target = nums[front];
+            
+            while (front < nums.length && nums[front] == target)
+            {
                 front++;
             }
             
-            if (front < len) {
-                nums[++back] = nums[front++];
-            }
+            nums[back++] = target;
         }
         
-        return back+1;
+        return back;
     }
 }

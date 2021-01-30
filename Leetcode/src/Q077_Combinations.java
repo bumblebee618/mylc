@@ -5,29 +5,34 @@ import java.util.List;
 
 public class Q077_Combinations {
 	/*************************************************************/
-	// by Jackie
-	public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        if(n <= 0 || k <= 0 || n < k){
-            return ans;
+	public List<List<Integer>> combine(int n, int k) 
+	{
+        List<List<Integer>> result = new LinkedList<>();
+        
+        if (n <= 0 || k <= 0 || n < k)
+        {
+            return result;
         }
         
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> solution = new LinkedList<>();
         
-        backtrack(ans, list, n, 1, k);
-        return ans;
+        backtrack(result, solution, n, 1, k);
+        return result;
     }
     
-    public void backtrack(List<List<Integer>> ans, List<Integer> list, int n, int start, int k){
-        if(list.size() == k){
-            ans.add(new ArrayList<Integer>(list));
+    private void backtrack(List<List<Integer>> result, List<Integer> solution, int n, int start, int k)
+    {
+        if (solution.size() == k)
+        {
+            result.add(new ArrayList<Integer>(solution));
             return;
         }
         
-        for(int i = start; i <= n; i++){
-            list.add(i);
-            backtrack(ans, list, n, i + 1, k);
-            list.remove(list.size() - 1);
+        for (int i = start; i <= n; i++)
+        {
+            solution.add(i);
+            backtrack(result, solution, n, i + 1, k);
+            solution.remove(solution.size() - 1);
         }
     }
     

@@ -1,41 +1,61 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 
-public class Q094_Binary_Tree_Inorder_Traversal {
-	//stack
-	public ArrayList<Integer> inorderTraversal(TreeNode root) {
-		ArrayList<Integer> res = new ArrayList<Integer>();
-        Stack<TreeNode> s = new Stack<TreeNode>();
+public class Q094_Binary_Tree_Inorder_Traversal 
+{
+	//solution 1: stack
+	public List<Integer> inorderTraversal(TreeNode root) 
+	{
+		List<Integer> result = new LinkedList<>();
+		
+		if (root == null)
+		{
+			return result;
+		}
+		
+        Stack<TreeNode> stack = new Stack<>();
         
-        while(root != null || !s.isEmpty()){
-            while(root != null){
-                s.push(root);
+        while (root != null || !stack.isEmpty())
+        {
+            while (root != null)
+            {
+            	stack.push(root);
                 root = root.left;
             }
-            root = s.pop();
-            res.add(root.val);
+            
+            root = stack.pop();
+            result.add(root.val);
             root = root.right;
         }
-        return res;
+        
+        return result;
     }
 	
-	//recursive
-	public ArrayList<Integer> inorderTraversal_recursive(TreeNode root) {
-		ArrayList<Integer> res = new ArrayList<Integer>();
-		ArrayList<Integer> temp = new ArrayList<Integer>();   //必须要使用一个temp来接受传递出来的值
-        
-        if(root != null){          
-            temp = inorderTraversal_recursive(root.left);
-            for(int i = 0; i < temp.size(); i++)
-                res.add(temp.get(i));
-            temp.clear();
-            res.add(root.val);
-            temp = inorderTraversal_recursive(root.right);
-            for(int i = 0; i < temp.size(); i++)
-                res.add(temp.get(i));
-            temp.clear();
+	
+	
+	
+	
+	//solution 2: recursive
+	private List<Integer> result = new LinkedList<>();
+    
+    public List<Integer> inorderTraversal2(TreeNode root) 
+    {
+        inorderTraverse(root);
+        return result;
+    }
+    
+    private void inorderTraverse(TreeNode node)
+    {
+        if (node == null)
+        {
+            return;
         }
-        return res;
+        
+        inorderTraverse(node.left);
+        result.add(node.val);
+        inorderTraverse(node.right);
     }
 }

@@ -20,7 +20,7 @@ Note:
 public class Q205_Isomorphic_Strings {
 	// solution 1: 
 	public boolean isIsomorphic(String s, String t) {
-		if (s == null || t == null) 
+        if (s == null || t == null) 
         {
             return s == null && t == null;
         } 
@@ -29,7 +29,7 @@ public class Q205_Isomorphic_Strings {
             return false;
         }
 
-        Map<Character, Character> map = new HashMap<Character, Character>();
+        Map<Character, Character> map = new HashMap<>();
 
         for(int i = 0; i < s.length(); i++)
         {
@@ -38,7 +38,7 @@ public class Q205_Isomorphic_Strings {
 
             if (map.containsKey(c1))
             {
-                if(map.get(c1) != c2)
+                if (map.get(c1) != c2)
                 {
                     return false;
                 }

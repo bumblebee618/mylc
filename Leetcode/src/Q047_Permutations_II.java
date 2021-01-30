@@ -15,36 +15,44 @@ For example,
 
 public class Q047_Permutations_II {
 	
-	public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+	public List<List<Integer>> permuteUnique(int[] nums) 
+	{
+        List<List<Integer>> result = new LinkedList<>();
         
-        if(nums == null || nums.length == 0) {
-            return ans;
+        if (nums == null || nums.length == 0) 
+        {
+            return result;
         }
         
         boolean[] visited = new boolean[nums.length];
         Arrays.sort(nums);
-        backtrack(ans, new ArrayList<Integer>(), nums, visited);
-        return ans;
+        List<Integer> solution = new LinkedList<>();
+        backtrack(result, solution, nums, visited);
+        return result;
     }
     
-    public void backtrack(List<List<Integer>> ans, List<Integer> list, int[] nums, boolean[] visited) {
-        if(list.size() == nums.length) {
-            ans.add(new ArrayList<Integer>(list));
+    private void backtrack(List<List<Integer>> result, List<Integer> solution, int[] nums, boolean[] visited)
+    {
+        if (solution.size() == nums.length) 
+        {
+            result.add(new LinkedList<Integer>(solution));
             return ;
         }
         
-        for(int i = 0; i < nums.length; i++) {
-            if(visited[i] == false) {
+        for (int i = 0; i < nums.length; i++) 
+        {
+            if (visited[i] == false) 
+            {
                 visited[i] = true;
-                list.add(nums[i]);
-                backtrack(ans, list, nums, visited);
-                list.remove(list.size() - 1);
+                solution.add(nums[i]);
+                backtrack(result, solution, nums, visited);
+                solution.remove(solution.size() - 1);
                 visited[i] = false;
                 
                 // 重复部分需要写在 visited[i] == false里
                 // 表示当此element被选上时，才跳过相同的element
-                while(i + 1 < nums.length && nums[i] == nums[i + 1]) {
+                while (i + 1 < nums.length && nums[i] == nums[i + 1]) 
+                {
                     i++;
                 }
             }

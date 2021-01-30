@@ -19,15 +19,19 @@ public class Q287_Find_the_Duplicate_Number {
 	// brute force method is to sort the array, and then travel the array, time O(nlogn)
 	
 	// solution 1: time O(n), space O(n)
-	public int findDuplicate(int[] nums) {
-        if (nums == null || nums.length <= 1) {
+	public int findDuplicate(int[] nums) 
+	{
+        if (nums == null || nums.length <= 1) 
+        {
             return -1;
         }
         
-        Set<Integer> visited = new HashSet();
+        Set<Integer> visited = new HashSet<>();
        
-        for(int num : nums) {
-            if(!visited.add(num)) {
+        for (int num : nums) 
+        {
+            if (!visited.add(num)) 
+            {
                 return num;
             }
         }
@@ -44,15 +48,18 @@ public class Q287_Find_the_Duplicate_Number {
 	 *****************************************************************************/
 	
 	// solution 2: time O(n), space O(1)
-	public int findDuplicate2(int[] nums) {
-		if (nums == null || nums.length <= 1) {
+	public int findDuplicate2(int[] nums) 
+	{
+		if (nums == null || nums.length <= 1) 
+		{
             return -1;
         }
         
         int faster = nums[nums[0]];
         int slower = nums[0];
         
-        while (faster != slower) {
+        while (faster != slower) 
+        {
             faster = nums[nums[faster]];
             slower = nums[slower];
         }
@@ -60,7 +67,8 @@ public class Q287_Find_the_Duplicate_Number {
         faster = nums[0];
         slower = nums[slower];
         
-        while (faster != slower) {
+        while (faster != slower) 
+        {
             faster = nums[faster];
             slower = nums[slower];
         }

@@ -36,7 +36,8 @@ Constraints:
 The input strings consist of lowercase English characters only.
  */
 public class Q1143_Longest_Common_Subsequence {
-	public int longestCommonSubsequence(String text1, String text2) {
+	public int longestCommonSubsequence(String text1, String text2) 
+	{
         if (text1 == null || text1.length() == 0 || text2 == null || text2.length() == 0)
         {
             return 0;
@@ -63,4 +64,43 @@ public class Q1143_Longest_Common_Subsequence {
         
         return dp[size1][size2];
     }
+	
+	// follow up: find maximum length of continuous subsequence 
+	public int longestCommonSubsequence2(String text1, String text2) 
+	{
+        if (text1 == null || text1.length() == 0 || text2 == null || text2.length() == 0)
+        {
+            return 0;
+        }
+        
+        int size1 = text1.length();
+        int size2 = text2.length();
+        int[][] dp = new int[size1+1][size2+1];
+        int result = 0;
+        
+        for (int i = 1; i <= size1; i++)
+        {
+            for (int j = 1; j <= size2; j++)
+            {
+                if (text1.charAt(i-1) == text2.charAt(j-1))
+                {
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }
+                
+                result = Math.max(result, dp[i][j]);
+            }
+        }
+        
+        return result;
+    }
+	
+	
+	
+	public static void main(String[] args)
+	{
+		Q1143_Longest_Common_Subsequence test = new Q1143_Longest_Common_Subsequence();
+		String text1 = "abcde";
+		String text2 = "123abc";
+		System.out.println(test.longestCommonSubsequence2(text1, text2));
+	}
 }

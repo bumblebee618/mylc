@@ -38,11 +38,8 @@ public class Q025_Reverse_Nodes_in_kGroup {
         
         while (front != null)
         {
-            int count = 0;
-            
-            while (front != null && count < k)
+            for (int count = 0; count < k && front != null; count++)
             {
-                count++;
                 front = front.next;
             }
             

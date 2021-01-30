@@ -7,8 +7,43 @@ import java.util.Stack;
 
 
 public class Q145_Binary_Tree_Postorder_Traversal {
-	// solution 1:
-	public List<Integer> postorderTraversal(TreeNode root) 
+		// solution 2:
+		public List<Integer> postorderTraversal(TreeNode root) 
+		{
+			List<Integer> result = new ArrayList<>();
+	        
+	        if (root == null)
+	        {
+	            return result;
+	        }
+	        
+	        Stack<TreeNode> s1 = new Stack<>();
+	        s1.push(root);
+	        
+	        while (!s1.isEmpty())
+	        {
+	            TreeNode node = s1.pop();
+	            result.add(0, node.val);
+	            
+	            if (node.left != null)
+	            {
+	                s1.push(node.left);
+	            }
+	            
+	            if (node.right != null)
+	            {
+	                s1.push(node.right);
+	            }
+	        }
+	        
+	        return result;
+	    }
+	
+		
+		
+	
+	// solution 2:
+	public List<Integer> postorderTraversal2(TreeNode root) 
     {
         List<Integer> list = new LinkedList<>();
         
@@ -51,36 +86,7 @@ public class Q145_Binary_Tree_Postorder_Traversal {
     }
 	
 	
-	// solution 2:
-	public List<Integer> postorderTraversal2(TreeNode root) {
-		List<Integer> result = new ArrayList<>();
-        
-        if (root == null)
-        {
-            return result;
-        }
-        
-        Stack<TreeNode> s1 = new Stack<>();
-        s1.push(root);
-        
-        while (!s1.isEmpty())
-        {
-            TreeNode node = s1.pop();
-            result.add(0, node.val);
-            
-            if (node.left != null)
-            {
-                s1.push(node.left);
-            }
-            
-            if (node.right != null)
-            {
-                s1.push(node.right);
-            }
-        }
-        
-        return result;
-    }
+	
     
     public List<Integer> postorderTraversal3(TreeNode root) {
         List<Integer> ans = new ArrayList<Integer>();

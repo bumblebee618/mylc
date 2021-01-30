@@ -24,51 +24,63 @@ Return
 public class Q131_Palindrome_Partitioning {
 	/********************************************************/
 	// by Jackie using backtrack + memoSearch
-	public List<List<String>> partition(String s) {
-        List<List<String>> ans = new ArrayList<List<String>>();
-        if(s == null || s.length() == 0){
-            return ans;
+	public List<List<String>> partition(String s) 
+	{
+        List<List<String>> result = new LinkedList<List<String>>();
+        
+        if (s == null || s.length() == 0)
+        {
+            return result;
         }
         
         boolean[][] canSplit = getMemo(s);
-        List<String> list = new ArrayList<String>();
+        List<String> solution = new LinkedList<String>();
         
-        backtrack(ans, list, s, 0, canSplit);
-        return ans;
+        backtrack(result, solution, s, 0, canSplit);
+        return result;
     }
     
-    public void backtrack(List<List<String>> ans, List<String> list, String s, int start, boolean[][] canSplit){
-        if(start == s.length()){
-            ans.add(new ArrayList<String>(list));
+    private void backtrack(List<List<String>> result, List<String> solution, String s, int start, boolean[][] canSplit)
+    {
+        if (start == s.length())
+        {
+            result.add(new ArrayList<String>(solution));
             return;
         }
         
         int n = s.length();
         
-        for(int i = start; i < n; i++){
-            if(canSplit[start][i] == true){
+        for (int i = start; i < n; i++)
+        {
+            if (canSplit[start][i] == true)
+            {
                 String newStr = s.substring(start, i + 1);
-                list.add(newStr);
-                backtrack(ans, list, s, i + 1, canSplit);
-                list.remove(list.size() - 1);
+                solution.add(newStr);
+                backtrack(result, solution, s, i + 1, canSplit);
+                solution.remove(solution.size() - 1);
             }
         }
     }
     
-    public boolean[][] getMemo(String s){
+    private boolean[][] getMemo(String s)
+    {
         int n = s.length();
         boolean[][] canSplit = new boolean[n][n];
         
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++)
+        {
             canSplit[i][i] = true;
         }
         
-        for(int i = 0; i < n - 1; i++){
+        for (int i = 0; i < n - 1; i++)
+        {
             canSplit[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
         }
         
-        for(int length = 2; length < n; length++){
-            for(int start = 0; start + length < n; start++){
+        for (int length = 2; length < n; length++)
+        {
+            for (int start = 0; start + length < n; start++)
+            {
                 canSplit[start][start + length] = canSplit[start + 1][start + length - 1] && s.charAt(start) == s.charAt(start+ length);
             }
         }

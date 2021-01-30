@@ -21,8 +21,10 @@ Note: m and n will be at most 100.
  * */
 
 public class Q063_Unique_Paths_II {
-	public int uniquePathsWithObstacles(int[][] obstacleGrid) {
-		if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
+	public int uniquePathsWithObstacles(int[][] obstacleGrid) 
+	{
+		if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) 
+		{
 			return 0;
 		}
 		
@@ -30,8 +32,10 @@ public class Q063_Unique_Paths_II {
 		int n = obstacleGrid[0].length;
 		int[][] dp = new int[m][n];
 		
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+		for (int i = 0; i < m; i++) 
+		{
+			for (int j = 0; j < n; j++) 
+			{
 				if (i == 0 && j == 0)
 				{
 					dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : 1;
@@ -44,7 +48,8 @@ public class Q063_Unique_Paths_II {
 				{
 					dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : dp[i-1][j];
 				}
-				else {
+				else 
+				{
 					dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : dp[i-1][j] + dp[i][j-1];
 				}
 			}

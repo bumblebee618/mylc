@@ -34,8 +34,10 @@ public class Q236_Lowest_Common_Ancestor_of_a_Binary_Tree {
 	 **********************************************************/	
 	
 	// solution 1: using recursive
-	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-		if (root == null || root == p || root == q) {
+	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) 
+	{
+		if (root == null || root == p || root == q) 
+		{
             return root;
 		}
         
@@ -45,13 +47,21 @@ public class Q236_Lowest_Common_Ancestor_of_a_Binary_Tree {
         
         // Conquer
         if (left != null && right != null)  // 同时找到p和q，返回root；在下次的迭代中，root的兄弟必为null,
-            return root;                    // 如root在left, 则right必为null
-        if (left != null && right == null)  // 只找到left
-            return left;
-        if (right != null && left == null)  // 只找到right
-            return right;
-        
-        return null;   // left == null && right == null
+        {
+        	return root;                    // 如root在left, 则right必为null
+        }
+        else if (left != null && right == null)  // 只找到left
+        {
+        	return left;
+        }
+        else if (right != null && left == null)  // 只找到right
+        {
+        	return right;
+        }
+        else 
+        {
+        	return null;   // left == null && right == null
+		}
 	}
 	
 	

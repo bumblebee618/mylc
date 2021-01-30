@@ -11,49 +11,74 @@ Some examples:
  * 
  * */
 
-public class Q150_Evaluate_Reverse_Polish_Notation {
+public class Q150_Evaluate_Reverse_Polish_Notation 
+{
 	// solution 1: using stack
-	public int evalRPN(String[] tokens) {
-        if(tokens == null || tokens.length == 0) {
+	public int evalRPN(String[] tokens) 
+	{
+        if (tokens == null || tokens.length == 0) 
+        {
             return 0;
         }
         
         Stack<Integer> stack = new Stack<>();
         
-        for(String str : tokens) {
-            if(str.equals("+")) {
-                if(stack.size() < 2) {
+        for (String str : tokens) 
+        {
+            if (str.equals("+"))
+            {
+                if (stack.size() < 2) 
+                {
                     return -1;
-                } else {
+                } 
+                else
+                {
                     int num2 = stack.pop();
                     int num1 = stack.pop();
                     stack.push(num1 + num2);
                 }
-            } else if(str.equals("-")) {
-                if(stack.size() < 2) {
+            } 
+            else if (str.equals("-")) 
+            {
+                if (stack.size() < 2) 
+                {
                     return -1;
-                } else {
+                } 
+                else
+                {
                     int num2 = stack.pop();
                     int num1 = stack.pop();
                     stack.push(num1 - num2);
                 }
-            } else if(str.equals("*")) {
-                if(stack.size() < 2) {
+            } 
+            else if (str.equals("*")) 
+            {
+                if (stack.size() < 2) 
+                {
                     return -1;
-                } else {
+                }
+                else 
+                {
                     int num2 = stack.pop();
                     int num1 = stack.pop();
                     stack.push(num1 * num2);
                 }
-            } else if(str.equals("/")) { 
-                if(stack.size() < 2) {
+            }
+            else if (str.equals("/")) 
+            { 
+                if (stack.size() < 2) 
+                {
                     return -1;
-                } else {
+                } 
+                else 
+                {
                     int num2 = stack.pop();
                     int num1 = stack.pop();
                     stack.push(num1 / num2);
                 }
-            } else {
+            } 
+            else
+            {
                 stack.push(Integer.parseInt(str));
             }
         }

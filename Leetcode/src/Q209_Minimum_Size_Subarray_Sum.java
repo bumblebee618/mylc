@@ -15,9 +15,12 @@ For example,
  * */
 
 
-public class Q209_Minimum_Size_Subarray_Sum {
-	public int minSubArrayLen(int s, int[] nums) {
-        if(nums == null || nums.length == 0) {
+public class Q209_Minimum_Size_Subarray_Sum 
+{
+	public int minSubArrayLen(int s, int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         
@@ -25,22 +28,21 @@ public class Q209_Minimum_Size_Subarray_Sum {
         int front = 0, len = nums.length;
         int minLen = Integer.MAX_VALUE;
         
-        for(int back = 0; back < len; back++) {
-            while(front < len && sum < s) {
+        for (int back = 0; back < len; back++) 
+        {
+            while (front < len && sum < s) 
+            {
                 sum += nums[front++];
             }    
             
-            if(sum >= s) {
+            if (sum >= s) 
+            {
                 minLen = Math.min(minLen, front - back);
             }
             
             sum -= nums[back];
         }
-//        Map<Integer, List<Integer>> map = new HashMap<>();
-//        
-//        for (int i = 0; i < 2; i++) {
-//            map.con
-//        }
+
         return minLen == Integer.MAX_VALUE ? 0 : minLen;
     }
 }

@@ -15,8 +15,8 @@ Output: 1->4->3->2->5->NULL
 public class Q092_Reverse_Linked_List_II {
 	// solution 1
 	public ListNode reverseBetween(ListNode head, int m, int n) 
-	{
-        if(head == null || head.next == null || n - m <= 0) 
+    {
+        if (head == null || head.next == null || n - m <= 0) 
         {
             return head;
         }
@@ -24,9 +24,8 @@ public class Q092_Reverse_Linked_List_II {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode start = dummy;
-        ListNode end = dummy;
         ListNode m_node = null;
-        ListNode n_node = null;
+        ListNode n_node = dummy;
         
         for (int i = 0; i < m-1 && start != null; i++)
         {
@@ -35,31 +34,29 @@ public class Q092_Reverse_Linked_List_II {
         
         if (start == null)
         {
-            return head;
+        	return head;
         }
         
         m_node = start.next;
         
-        for (int i = 0; i < n && end != null; i++)
+        for (int i = 0; i < n && n_node != null; i++)
         {
-            end = end.next;
+        	n_node = n_node.next;
         }
         
-        if (end == null)
+        if (n_node == null)
         {
-            return head;
+        	return head;
         }
         
-        n_node = end;
-        end = end.next;
-        n_node.next = null;
-        start.next = reverseList(m_node, end);
+        ListNode tail = n_node.next;
+        start.next = reverseList(m_node, tail);
         return dummy.next;
     }
     
     private ListNode reverseList(ListNode head, ListNode tail) 
     {
-        if (head == null || head.next == null) 
+        if (head == tail || head.next == tail) 
         {
             return head;
         }
@@ -68,7 +65,7 @@ public class Q092_Reverse_Linked_List_II {
         ListNode curNext = head.next;
         ListNode curNextNext = head.next.next;
         
-        while (curNextNext != null) 
+        while (curNextNext != tail) 
         {
             curNext.next = current;
             current = curNext;

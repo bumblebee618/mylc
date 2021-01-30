@@ -77,34 +77,34 @@ public class Q430_Flatten_a_Multilevel_Doubly_Linked_List {
         }
         
         Stack<Node> stack = new Stack<>();
-        Node node = head;
-        Node prev = node;
+        Node curNode = head;
+        Node prevNode = curNode;
         
-        while (node != null || !stack.isEmpty())
+        while (curNode != null || !stack.isEmpty())
         {
-            while (node != null)
+            while (curNode != null)
             {
-                if (node.child != null)
+                if (curNode.child != null)
                 {
-                    if (node.next != null)
+                    if (curNode.next != null)
                     {
-                        stack.push(node.next);
+                        stack.push(curNode.next);
                     }
                     
-                    node.next = node.child;
-                    node.child.prev = node;
-                    node.child = null;
+                    curNode.next = curNode.child;
+                    curNode.child.prev = curNode;
+                    curNode.child = null;
                 }
                 
-                prev = node;
-                node = node.next;
+                prevNode = curNode;
+                curNode = curNode.next;
             }
             
             if (!stack.isEmpty())
             {
-                node = stack.pop();
-                prev.next = node;
-                node.prev = prev;
+                curNode = stack.pop();
+                prevNode.next = curNode;
+                curNode.prev = prevNode;
             }
         }
         

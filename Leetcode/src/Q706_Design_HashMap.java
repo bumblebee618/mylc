@@ -32,19 +32,23 @@ All keys and values will be in the range of [0, 1000000].
 The number of operations will be in the range of [1, 10000].
 Please do not use the built-in HashMap library.
  */
-public class Q706_Design_HashMap {
+public class Q706_Design_HashMap 
+{
 	private int capacity = 1024;
     private List<Node>[] list;
     
     /** Initialize your data structure here. */
-    public Q706_Design_HashMap() {
+    public Q706_Design_HashMap() 
+    {
         list = new List[capacity];
     }
     
     /** value will always be non-negative. */
-    public void put(int key, int value) {
+    public void put(int key, int value) 
+    {
         int hash = Objects.hashCode(key);
-        int pos = hash & (capacity-1);
+        int pos = hash % capacity;
+        // int pos = hash & (capacity-1);
         
         if (list[pos] == null)
         {
@@ -69,9 +73,11 @@ public class Q706_Design_HashMap {
     }
     
     /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
-    public int get(int key) {
+    public int get(int key) 
+    {
         int hash = Objects.hashCode(key);
-        int pos = hash & (capacity-1);
+        int pos = hash % capacity;
+        // int pos = hash & (capacity-1);
         
         if (list[pos] == null)
         {
@@ -89,9 +95,11 @@ public class Q706_Design_HashMap {
     }
     
     /** Removes the mapping of the specified value key if this map contains a mapping for the key */
-    public void remove(int key) {
+    public void remove(int key) 
+    {
         int hash = Objects.hashCode(key);
-        int pos = hash & (capacity-1);
+        int pos = hash % capacity;
+        // int pos = hash & (capacity-1);
         
         if (list[pos] == null)
         {

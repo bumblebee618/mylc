@@ -19,28 +19,33 @@ Note: All inputs will be in lower-case.
  * */
 
 public class Q049_Group_Anagrams {
-	public List<List<String>> groupAnagrams(String[] strs) {
+	public List<List<String>> groupAnagrams(String[] strs) 
+	{
         List<List<String>> result = new LinkedList<>();
         
-        if (strs == null || strs.length == 0) {
+        if (strs == null || strs.length == 0) 
+        {
             return result;
         }
         
         Map<String, List<String>> map = new HashMap<>();
         
-        for (String str : strs) {
+        for (String str : strs) 
+        {
             String originalStr = getOriginalStr(str);
             map.computeIfAbsent(originalStr, x -> new LinkedList<String>()).add(str);
         }
         
-        for (String str : map.keySet()) {
+        for (String str : map.keySet()) 
+        {
             result.add(map.get(str));
         }
         
         return result;
     }
     
-    private String getOriginalStr(String word) {
+    private String getOriginalStr(String word) 
+    {
         char[] letters = word.toCharArray();
         Arrays.sort(letters);
         return new String(letters);

@@ -29,27 +29,37 @@ Bonus points if you could solve it both recursively and iteratively.
  * */
 
 
-public class Q101_Symmetric_Tree {
+public class Q101_Symmetric_Tree 
+{
 	// test case:
     // 		root == null
     
 	// solution 1: using recursion
-    public boolean isSymmetric(TreeNode root) {
-        if(root == null) {
+    public boolean isSymmetric(TreeNode root) 
+    {
+        if (root == null) 
+        {
             return true;
         }
         
         return isSymmetric(root.left, root.right);
     }
     
-    public boolean isSymmetric(TreeNode n1, TreeNode n2) {
-        if(n1 == null || n2 == null) {
-            if(n1 == null && n2 == null) {
+    private boolean isSymmetric(TreeNode n1, TreeNode n2) 
+    {
+        if (n1 == null || n2 == null) 
+        {
+            if (n1 == null && n2 == null) 
+            {
                 return true;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
-        } else if(n1.val != n2.val) {
+        } 
+        else if (n1.val != n2.val) 
+        {
             return false;
         }
         

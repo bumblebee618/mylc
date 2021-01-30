@@ -32,27 +32,31 @@ At most 50000 calls will be made to set, snap, and get.
 0 <= snap_id < (the total number of times we call snap())
 0 <= val <= 10^9
  */
-public class Q1146_Snapshot_Array {
+public class Q1146_Snapshot_Array 
+{
 	private List<Map<Integer, Integer>> snapshotList;
-    private HashMap<Integer, Integer> currentMap;
+    private Map<Integer, Integer> currentMap;
     private int capacity;
     
-    public Q1146_Snapshot_Array(int capacity) {
+    public Q1146_Snapshot_Array(int capacity) 
+    {
         this.capacity = capacity;
-        snapshotList = new ArrayList<Map<Integer, Integer>>();
-        currentMap = new HashMap<Integer, Integer>();
+        snapshotList = new ArrayList<>();
+        currentMap = new HashMap<>();
     }
     
-    public void set(int index, int val) {
-        if(index >= 0 && index < capacity)
+    public void set(int index, int val) 
+    {
+        if (index >= 0 && index < capacity)
         {
             currentMap.put(index, val);
         }
     }
     
-    public int snap() {
+    public int snap() 
+    {
         // Map<Integer, Integer> copy = (HashMap<Integer, Integer>)this.currentMap.clone();
-        Map<Integer, Integer> copy = new HashMap<Integer, Integer>(currentMap);
+        Map<Integer, Integer> copy = new HashMap<>(currentMap);
         snapshotList.add(copy);      
         return snapshotList.size()-1;
     }

@@ -22,8 +22,10 @@ Merged tree:
 Note: The merging process must start from the root nodes of both trees.
  *
  */
-public class Q617_Merge_Two_Binary_Trees {
-	public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+public class Q617_Merge_Two_Binary_Trees 
+{
+	public TreeNode mergeTrees(TreeNode t1, TreeNode t2) 
+	{
         if (t1 == null || t2 == null)
         {
             if (t1 == null && t2 == null)
@@ -41,12 +43,19 @@ public class Q617_Merge_Two_Binary_Trees {
         t1.right = mergeTrees(t1.right, t2.right);
         return t1;
     }
+	
+	
+	
 
 	
-	public TreeNode mergeTrees2(TreeNode t1, TreeNode t2) {
-        if (t1 == null) {
+	public TreeNode mergeTrees2(TreeNode t1, TreeNode t2) 
+	{
+        if (t1 == null) 
+        {
             return t2;
-        } else if (t2 == null) {
+        } 
+        else if (t2 == null) 
+        {
             return t1;
         }
         

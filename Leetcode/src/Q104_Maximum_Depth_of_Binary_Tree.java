@@ -10,10 +10,13 @@ the longest path from the root node down to the farthest leaf node.
  * 
  * */
 
-public class Q104_Maximum_Depth_of_Binary_Tree {
+public class Q104_Maximum_Depth_of_Binary_Tree 
+{
 	// solution 1: using recursive
-	public int maxDepth(TreeNode root) {
-        if(root == null) {
+	public int maxDepth(TreeNode root) 
+	{
+        if (root == null) 
+        {
             return 0;
         }
         

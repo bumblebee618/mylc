@@ -17,10 +17,14 @@ Output: 7 -> 8 -> 0 -> 7
  */
 public class Q445_Add_Two_Numbers_II {
 	// solution 1, reverse the list
-	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if (l1 == null) {
+	public ListNode addTwoNumbers(ListNode l1, ListNode l2) 
+	{
+        if (l1 == null) 
+        {
             return l2;
-        } else if (l2 == null) {
+        } 
+        else if (l2 == null) 
+        {
             return l1;
         }
         
@@ -30,20 +34,27 @@ public class Q445_Add_Two_Numbers_II {
         return reverseList(newHead);
     }
     
-    private ListNode addLists(ListNode l1, ListNode l2) {
+    private ListNode addLists(ListNode l1, ListNode l2) 
+    {
         ListNode dummyHead = new ListNode(0);
         ListNode node = dummyHead;
         int sum = 0, flag = 0;
         
-        while (l1 != null || l2 != null) {
-            if (l1 != null && l2 != null) {
+        while (l1 != null || l2 != null) 
+        {
+            if (l1 != null && l2 != null) 
+            {
                 sum = l1.val + l2.val + flag;
                 l1 = l1.next;
                 l2 = l2.next;
-            } else if (l1 != null) {
+            } 
+            else if (l1 != null) 
+            {
                 sum = l1.val + flag;
                 l1 = l1.next;
-            } else {
+            } 
+            else 
+            {
                 sum = l2.val + flag;
                 l2 = l2.next;
             }
@@ -54,7 +65,8 @@ public class Q445_Add_Two_Numbers_II {
             node = node.next;
         }
         
-        if (flag > 0) {
+        if (flag > 0) 
+        {
             node.next = new ListNode(flag);
             node = node.next;
         }
@@ -63,8 +75,10 @@ public class Q445_Add_Two_Numbers_II {
         return dummyHead.next;
     }
     
-    private ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
+    private ListNode reverseList(ListNode head) 
+    {
+        if (head == null || head.next == null) 
+        {
             return head;
         }
         
@@ -72,7 +86,8 @@ public class Q445_Add_Two_Numbers_II {
         ListNode curNext = head.next;
         ListNode curNextNext = head.next.next;
         
-        while (curNextNext != null) {
+        while (curNextNext != null) 
+        {
             curNext.next = curNode;
             curNode = curNext;
             curNext = curNextNext;
@@ -85,37 +100,54 @@ public class Q445_Add_Two_Numbers_II {
     }
     
     
+    
+    
+    
+    
     // solution2: use stack
     public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
-        if (l1 == null) {
+        if (l1 == null) 
+        {
             return l2;
-        } else if (l2 == null) {
+        } 
+        else if (l2 == null) 
+        {
             return l1;
         }
         
-        Stack<Integer> s1 = new Stack();
-        Stack<Integer> s2 = new Stack();
+        Stack<Integer> s1 = new Stack<>();
+        Stack<Integer> s2 = new Stack<>();
         int sum = 0, flag = 0;
         ListNode dummy = new ListNode(0);
         
         ListNode node = l1;
-        while (l1 != null) {
+        
+        while (l1 != null) 
+        {
             s1.push(l1.val);
             l1 = l1.next;
         }
         
         node = l2;
-        while (l2 != null) {
+        
+        while (l2 != null) 
+        {
             s2.push(l2.val);
             l2 = l2.next;
         }
         
-        while (!s1.isEmpty() || !s2.isEmpty()) {
-            if (!s1.isEmpty() && !s2.isEmpty()) {
+        while (!s1.isEmpty() || !s2.isEmpty()) 
+        {
+            if (!s1.isEmpty() && !s2.isEmpty()) 
+            {
                 sum = s1.pop() + s2.pop() + flag;
-            } else if (!s1.isEmpty()) {
+            } 
+            else if (!s1.isEmpty()) 
+            {
                 sum = s1.pop() + flag;
-            } else {
+            } 
+            else 
+            {
                 sum = s2.pop() + flag;
             }
             
@@ -126,7 +158,8 @@ public class Q445_Add_Two_Numbers_II {
             dummy.next = newNode;
         }
         
-        if (flag > 0) {
+        if (flag > 0) 
+        {
             ListNode newNode = new ListNode(flag);
             newNode.next = dummy.next;
             dummy.next = newNode;

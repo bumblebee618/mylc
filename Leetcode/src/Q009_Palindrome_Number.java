@@ -6,15 +6,19 @@ Do this without extra space.
  * */
 
 public class Q009_Palindrome_Number {
-	public static boolean isPalindrome(int x) {
-		if(x < 0 || x >= Integer.MAX_VALUE){
+	public static boolean isPalindrome(int x) 
+    {
+		if(x < 0 || x >= Integer.MAX_VALUE)
+        {
             return false;
         }
         
         int sum = 0, tempNum = x;
         
-        while(tempNum != 0){  // 123
-            sum = sum * 10 + tempNum % 10;
+        while(tempNum != 0) // 123
+        {  
+            int digit = tempNum % 10;
+            sum = sum * 10 + digit;
             tempNum /= 10;
         }
         
