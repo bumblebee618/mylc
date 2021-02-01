@@ -43,13 +43,14 @@ n == nums1.length == nums2.length
 public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
 	public Map<Integer, Integer> map;
     
-	Q1570_Dot_Product_of_Two_Sparse_Vectors(int[] nums) {
+	Q1570_Dot_Product_of_Two_Sparse_Vectors(int[] nums) 
+	{
+		map = new HashMap<>();
+		
         if (nums == null || nums.length == 0)
         {
             return;
         }
-        
-        map = new HashMap<>();
         
         for (int i = 0; i < nums.length; i++)
         {
@@ -61,26 +62,34 @@ public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
     }
     
 	// Return the dotProduct of two sparse vectors
-    public int dotProduct(Q1570_Dot_Product_of_Two_Sparse_Vectors vec) {
-        if (map.size() == 0 || vec.map.size() == 0)
+    public int dotProduct(Q1570_Dot_Product_of_Two_Sparse_Vectors vec) 
+    {
+        if (vec == null)
         {
             return 0;
         }
-        else if (map.size() > vec.map.size()) // 防止current map过大，优化运算时间
+        else if (vec.getSize() < map.size()) // 防止current map过大，优化运算时间
         {
             return vec.dotProduct(this);
         }
         
         int sum = 0;
         
-        for (Map.Entry<Integer, Integer> entry : map.entrySet())
+        for (int index : map.keySet())
         {
-            if (vec.map.containsKey(entry.getKey()))
-            {
-                sum += entry.getValue() * vec.map.get(entry.getKey());
-            }
+        	sum += getValue(index) * vec.getValue(index); 
         }
         
         return sum;
+    }
+    
+    public int getValue(int index)
+    {
+    	return map.getOrDefault(index, 0);
+    }
+    
+    public int getSize()
+    {
+    	return map.size();
     }
 }

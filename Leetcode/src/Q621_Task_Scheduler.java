@@ -58,7 +58,7 @@ public class Q621_Task_Scheduler {
         while (!maxHeap.isEmpty())
         {
             int time = 0;
-            List<Integer> list = new LinkedList<>();
+            List<Integer> list = new LinkedList<>(); // 这里必须用list
             
             // one period
             while (time <= n)
@@ -82,6 +82,7 @@ public class Q621_Task_Scheduler {
                 }
             }
             
+            // 有可能此时的maxHeap里还有元素
             for (int freq : list)
             {
                 maxHeap.offer(freq);

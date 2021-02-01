@@ -44,24 +44,24 @@ public class Q282_Expression_Add_Operators {
             return;
         }
         
-        for (int i = start; i < num.length(); i++)
+        for (int end = start; end < num.length(); end++)
         {
-            if (num.charAt(start) == '0' && i > start)         // 注意这里是start，而不是 i  ！！！
+            if (num.charAt(start) == '0' && end > start)         // 注意这里是start，而不是 i  ！！！
             {                                                  // 可以是 "0", 但不可以是"01"之类的 ！！！
                 return;
             }
             
-            long curNum = Long.parseLong(num.substring(start, i+1));
+            long curNum = Long.parseLong(num.substring(start, end+1));
             
             if (solution.length() == 0)
             {
-                backtrack(result, num, i+1, num.substring(start, i+1), target, curNum, curNum);
+                backtrack(result, num, end+1, num.substring(start, end+1), target, curNum, curNum);
             }
             else
             {
-                backtrack(result, num, i+1, String.format("%s+%s", solution, curNum), target, sum+curNum, curNum);
-                backtrack(result, num, i+1, String.format("%s-%s", solution, curNum), target, sum-curNum, -curNum);
-                backtrack(result, num, i+1, String.format("%s*%s", solution, curNum), target, sum+prevSum*(curNum-1), prevSum*curNum);
+                backtrack(result, num, end+1, String.format("%s+%s", solution, curNum), target, sum+curNum, curNum);
+                backtrack(result, num, end+1, String.format("%s-%s", solution, curNum), target, sum-curNum, -curNum);
+                backtrack(result, num, end+1, String.format("%s*%s", solution, curNum), target, sum+prevSum*(curNum-1), prevSum*curNum);
             }
         }
     }

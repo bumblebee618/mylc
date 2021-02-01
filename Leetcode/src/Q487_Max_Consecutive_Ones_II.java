@@ -27,8 +27,10 @@ public class Q487_Max_Consecutive_Ones_II {
     //  [1, 0, 1, 1, 0]
     
 	// solution 1: use sliding window, time complexity is O(n)
-	public int findMaxConsecutiveOnes(int[] nums) {
-        if (nums == null || nums.length == 0) {
+	public int findMaxConsecutiveOnes(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return 0;
         }
         

@@ -25,56 +25,26 @@ public class Q150_Evaluate_Reverse_Polish_Notation
         
         for (String str : tokens) 
         {
-            if (str.equals("+"))
+            if (str.equals("+") 
+            	|| str.equals("-")
+            	|| str.equals("*")
+            	|| str.equals("/"))
             {
                 if (stack.size() < 2) 
                 {
                     return -1;
                 } 
-                else
+                
+                int num2 = stack.pop();
+                int num1 = stack.pop();
+                
+                switch (str)
                 {
-                    int num2 = stack.pop();
-                    int num1 = stack.pop();
-                    stack.push(num1 + num2);
-                }
-            } 
-            else if (str.equals("-")) 
-            {
-                if (stack.size() < 2) 
-                {
-                    return -1;
-                } 
-                else
-                {
-                    int num2 = stack.pop();
-                    int num1 = stack.pop();
-                    stack.push(num1 - num2);
-                }
-            } 
-            else if (str.equals("*")) 
-            {
-                if (stack.size() < 2) 
-                {
-                    return -1;
-                }
-                else 
-                {
-                    int num2 = stack.pop();
-                    int num1 = stack.pop();
-                    stack.push(num1 * num2);
-                }
-            }
-            else if (str.equals("/")) 
-            { 
-                if (stack.size() < 2) 
-                {
-                    return -1;
-                } 
-                else 
-                {
-                    int num2 = stack.pop();
-                    int num1 = stack.pop();
-                    stack.push(num1 / num2);
+                	case "+": stack.push(num1 + num2); break;
+                	case "-": stack.push(num1 - num2); break;
+                	case "*": stack.push(num1 * num2); break;
+                	case "/": stack.push(num1 / num2); break;
+                	default: 
                 }
             } 
             else

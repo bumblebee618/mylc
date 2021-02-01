@@ -27,12 +27,15 @@ The flattened tree should look like:
  * 
  * */
 
-public class Q114_Flatten_Binary_Tree_to_Linked_List {
+public class Q114_Flatten_Binary_Tree_to_Linked_List 
+{
 	// solution 1: using recursive	
 	private TreeNode prev = null;
 
-	public void flatten(TreeNode root) {
-        if(root == null){
+	public void flatten(TreeNode root) 
+	{
+        if (root == null)
+        {
             return ;
         }
         
@@ -46,29 +49,35 @@ public class Q114_Flatten_Binary_Tree_to_Linked_List {
 	
 	
 	// solution 2: using iterator
-	public void flatten2(TreeNode root) {   
-		if(root == null) {
+	public void flatten2(TreeNode root) 
+	{   
+		if (root == null)
+		{
         	return;
         }
 		
-        Stack<TreeNode> s = new Stack<TreeNode>();
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
+        Queue<TreeNode> queue = new LinkedList<>();
     
-        while(root != null || !s.isEmpty()){
-            while(root != null){
-                s.push(root);
-                q.add(root);
+        while (root != null || !stack.isEmpty())
+        {
+            while (root != null)
+            {
+                stack.push(root);
+                queue.add(root);
                 root = root.left;
             }
-            root = s.pop();
+            
+            root = stack.pop();
             root = root.right;
         }
         
-        root = q.poll();
+        root = queue.poll();
         
-        while(!q.isEmpty()){
+        while (!queue.isEmpty())
+        {
             root.left = null;
-            root.right = q.poll();
+            root.right = queue.poll();
             root = root.right;
         }
     }

@@ -23,9 +23,12 @@ Your code should preferably run in O(n) time and use only O(1) memory.
 
 
 
-public class Q160_Intersection_of_Two_Linked_Lists {
-	public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if(headA == null || headB == null) {
+public class Q160_Intersection_of_Two_Linked_Lists 
+{
+	public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+	{
+        if (headA == null || headB == null) 
+        {
             return null;
         }
         
@@ -33,12 +36,14 @@ public class Q160_Intersection_of_Two_Linked_Lists {
         ListNode node1 = headA;
         ListNode node2 = headB;
         
-        while(node1 != null) {
+        while (node1 != null) 
+        {
             len1++;
             node1 = node1.next;
         }
         
-        while(node2 != null) {
+        while (node2 != null) 
+        {
             len2++;
             node2 = node2.next;
         }
@@ -47,16 +52,22 @@ public class Q160_Intersection_of_Two_Linked_Lists {
         node1 = headA;
         node2 = headB;
         
-        for(int i = 0; i < diff; i++) {
-            if(len1 > len2) {
+        for (int i = 0; i < diff; i++) 
+        {
+            if(len1 > len2) 
+            {
                 node1 = node1.next;
-            } else {
+            } 
+            else 
+            {
                 node2 = node2.next;
             }
         }
         
-        while(node1 != null && node2 != null) {
-            if(node1 == node2) {
+        while (node1 != null && node2 != null) 
+        {
+            if (node1 == node2) 
+            {
                 break;
             }
             

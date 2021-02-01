@@ -10,12 +10,17 @@ For example,
  * 
  * */
 
-public class Q067_Add_Binary {
+public class Q067_Add_Binary 
+{
 	// solution 1:
-	public String addBinary(String a, String b) {
-        if(a == null){
+	public String addBinary(String a, String b) 
+	{
+        if (a == null)
+        {
             return b;
-        } else if(b == null){
+        } 
+        else if (b == null)
+        {
             return a;
         }
         
@@ -24,40 +29,57 @@ public class Q067_Add_Binary {
         char flag = '0';
         StringBuilder builder = new StringBuilder();
         
-        while(index1 >= 0 || index2 >= 0){
-            if(index1 >= 0 && index2 >= 0){
+        while (index1 >= 0 || index2 >= 0)
+        {
+            if (index1 >= 0 && index2 >= 0)
+            {
                 char c1 = a.charAt(index1);
                 char c2 = b.charAt(index2);
                 
-                if(c1 == '1' && c2 == '1'){
+                if (c1 == '1' && c2 == '1')
+                {
                     builder.insert(0, flag);
                     flag = '1';
-                } else if(c1 == '1' || c2 == '1'){
+                } 
+                else if (c1 == '1' || c2 == '1')
+                {
                     builder.insert(0, flag == '1' ? '0' : '1');
-                } else {
+                } 
+                else 
+                {
                     builder.insert(0, flag);
                     flag = '0';
                 }
                 
                 index1--;
                 index2--;
-            } else if(index1 >= 0 && index2 < 0){
+            } 
+            else if (index1 >= 0 && index2 < 0)
+            {
                 char c1 = a.charAt(index1);
                 
-                if(c1 == '1'){
+                if(c1 == '1')
+                {
                     builder.insert(0, flag == '1' ? '0' : '1');
-                } else {
+                } 
+                else 
+                {
                     builder.insert(0, flag);
                     flag = '0';
                 }
                 
                 index1--;
-            } else {
+            } 
+            else 
+            {
                 char c2 = b.charAt(index2);
                 
-                if(c2 == '1'){
+                if (c2 == '1')
+                {
                     builder.insert(0, flag == '1' ? '0' : '1');
-                } else {
+                } 
+                else
+                {
                     builder.insert(0, flag);
                     flag = '0';
                 }
@@ -66,7 +88,8 @@ public class Q067_Add_Binary {
             }
         }
         
-        if(flag == '1'){
+        if (flag == '1')
+        {
             builder.insert(0, flag);
         }
         

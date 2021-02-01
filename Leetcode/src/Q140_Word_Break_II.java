@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.naming.InitialContext;
 
 /******
  * 
@@ -21,7 +20,8 @@ A solution is ["cats and dog", "cat sand dog"].
  * */
 
 
-public class Q140_Word_Break_II {
+public class Q140_Word_Break_II 
+{
 	/********************************************************************************************************
 	 * 此题目不同于题139, 139是通过遍历当前结点之前的结点状态来获取当前结点的状态，时间复杂度O(n * m)，m为wordDict中最长的单词长度。
 	 * 本题从后向前递推，用memo记录已经遍历过的答案，减少重复计算。
@@ -33,7 +33,8 @@ public class Q140_Word_Break_II {
 	private Set<String> wordDict;
     private int maxWordLen = 0;
     
-    public List<String> wordBreak(String s, List<String> wordList) {
+    public List<String> wordBreak(String s, List<String> wordList) 
+    {
         if (s == null || s.length() == 0 || wordList == null || wordList.size() == 0)
         {
             return new LinkedList<>();

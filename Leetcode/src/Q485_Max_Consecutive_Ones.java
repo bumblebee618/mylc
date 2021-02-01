@@ -21,71 +21,68 @@ public class Q485_Max_Consecutive_Ones {
     //      nums = [0,0], nums = [1,0]
     //      nums = [1,0,1,1,0,1]
     
-    // time is O(n)
+    // two pointers, time is O(n)
 	public int findMaxConsecutiveOnes(int[] nums) 
     {
-        if (nums == null || nums.length == 0) 
-        {
-            return 0;
-        }
-        
-        int len = nums.length;
-        int maxLen = 0;
-        int index = 0;
-        
-        while (index < len)
-        {
-            if (nums[index] == 0)
-            {
-                index++;
-                continue;
-            }
-            
-            int count = 0;
-            
-            while (index < len && nums[index] == 1)
-            {
-                index++;
-                count++;
-            }
-            
-            maxLen = Math.max(maxLen, count);
-        }
-        
-        return maxLen;
-    }
-	
-	
-	
-	
-    
-    
-    // two pointers, time O(n)
-    public int findMaxConsecutiveOnes2(int[] nums) {
         if (nums == null || nums.length == 0)
         {
             return 0;
         }
         
+        int front = 0, back = 0;
         int maxLen = 0;
-        int size = nums.length;
-        int front = 0;
         
-        while (front < size)
+        while (front < nums.length)
         {
-            if (nums[front] == 1)
+        	// skip all "0"
+            while (front < nums.length && nums[front] == 0)
             {
-                int back = front;
-                
-                while (front < size && nums[front] == 1)
-                {
-                    front++;
-                }
-                
-                maxLen = Math.max(maxLen, front-back);
+                front++;
             }
             
-            front++;
+            back = front;
+            
+            // count all "1"
+            while (front < nums.length && nums[front] == 1)
+            {
+                front++;
+            }
+            
+            maxLen = Math.max(maxLen, front-back);
+        }
+        
+        return maxLen;
+    }
+    
+    
+	
+	// solution 2: sliding window, time is O(n)
+    public int findMaxConsecutiveOnes2(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        int zeroCount = 0;
+        int maxLen = 0;
+        
+        for (int front = 0, back = 0; front < nums.length; front++)
+        {
+            if (nums[front] == 0)
+            {
+                zeroCount++;
+            }
+            
+            while (zeroCount > 0)
+            {
+                if (nums[back++] == 0)
+                {
+                    zeroCount--;
+                }
+            }
+            
+            maxLen = Math.max(maxLen, front-back+1);
         }
         
         return maxLen;

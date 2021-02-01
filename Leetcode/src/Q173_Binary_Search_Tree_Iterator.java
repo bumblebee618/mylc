@@ -17,19 +17,19 @@ public class Q173_Binary_Search_Tree_Iterator {
 	 *      
 	 *****************************************************/
 	
-	private Stack<TreeNode> s;
+	private Stack<TreeNode> stack;
     private TreeNode root;
     
     public Q173_Binary_Search_Tree_Iterator(TreeNode root) 
     {
-        s = new Stack<TreeNode>();
+        stack = new Stack<>();
         this.root = root;
     }
 
     /** @return whether we have a next smallest number */
     public boolean hasNext() 
     {
-        return root != null || s.size() != 0;
+        return root != null || stack.size() != 0;
     }
 
     /** @return the next smallest number */
@@ -37,11 +37,11 @@ public class Q173_Binary_Search_Tree_Iterator {
     {
         while (root != null)
         {
-            s.push(root);
+            stack.push(root);
             root = root.left;
         }
         
-        root = s.pop();
+        root = stack.pop();
         int val = root.val;
         root = root.right;
         return val;

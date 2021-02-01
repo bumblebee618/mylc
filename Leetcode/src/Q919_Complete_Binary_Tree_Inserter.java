@@ -54,19 +54,19 @@ public class Q919_Complete_Binary_Tree_Inserter
     {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        Map<Integer, Queue<TreeNode>> map = new HashMap<>();
-        int depth = 0;
+        Map<Integer, Queue<TreeNode>> levelMap = new HashMap<>();
+        int level = 0;
         
         while (!queue.isEmpty())
         {
             int size = queue.size();
-            depth++;
-            map.put(depth, new LinkedList<>());
+            level++;
+            levelMap.put(level, new LinkedList<>());
             
             for (int i = 0; i < size; i++)
             {
                 TreeNode node = queue.poll();
-                map.get(depth).offer(node);
+                levelMap.get(level).offer(node);
                 
                 if (node.left != null)
                 {
@@ -80,15 +80,16 @@ public class Q919_Complete_Binary_Tree_Inserter
             }
         }
         
-        if (depth == 1)
+        // only have root
+        if (level == 1)
         {
-            parents = map.get(depth);
+            parents = levelMap.get(level);
             leaves = new LinkedList<>();
         }
         else
         {
-            parents = map.get(depth-1);
-            leaves = map.get(depth);
+            parents = levelMap.get(level-1);
+            leaves = levelMap.get(level);
         }
     }
     

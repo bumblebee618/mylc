@@ -35,8 +35,8 @@ Constraints:
  */
 public class Q1197_Minimum_Knight_Moves 
 {
-	private int[] dx = {-2, -1, 1, 2, 2, 1, -1, -2};
-    private int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
+	private int[] dx = {-2, -1, 1, 2,  2,  1, -1, -2};
+    private int[] dy = { 1,  2, 2, 1, -1, -2, -2, -1};
     
     public int minKnightMoves(int m, int n) 
     {
@@ -47,8 +47,10 @@ public class Q1197_Minimum_Knight_Moves
         
         m = Math.abs(m);
         n = Math.abs(n);
+        
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{0,0});
+        
         Set<String> visited = new HashSet<>();
         visited.add("0,0");
         int steps = 0;
@@ -85,4 +87,19 @@ public class Q1197_Minimum_Knight_Moves
         
         return -1;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    /******************************* main *******************************/
+	
+	public static void main(String[] args)
+	{
+		Q1197_Minimum_Knight_Moves test = new Q1197_Minimum_Knight_Moves();
+		System.out.println(test.minKnightMoves(0, -300));
+	}
 }

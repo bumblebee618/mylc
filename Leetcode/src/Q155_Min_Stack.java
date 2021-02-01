@@ -21,28 +21,35 @@ minStack.getMin();   --> Returns -2.
  * 
  * */
 
-public class Q155_Min_Stack {
+public class Q155_Min_Stack 
+{
 	/**************************************************
 	 * 如何用stack记录当前最小值
 	 * 
 	 **************************************************/
 	
 	// solution 1: using two stacks
-	private Stack<Integer> stack = new Stack<Integer>();
-    private Stack<Integer> min = new Stack<Integer>();  
+	private Stack<Integer> stack = new Stack<>();
+    private Stack<Integer> min = new Stack<>();  
     
-    public void push(int x) {
+    public void push(int x) 
+    {
     	stack.push(x);
     	
-        if(min.isEmpty()){
+        if (min.isEmpty())
+        {
             min.push(x);
-        } else {
+        } 
+        else
+        {
             min.push(Math.min(x, min.peek()));
         }
     }
 
-    public void pop() {
-        if(stack.isEmpty()){
+    public void pop() 
+    {
+        if (stack.isEmpty())
+        {
             return;
         }
         
@@ -50,17 +57,23 @@ public class Q155_Min_Stack {
         min.pop();
     }
 
-    public int top() {
-        if(stack.isEmpty()){
+    public int top() 
+    {
+        if (stack.isEmpty())
+        {
             return -1;
         }
+        
         return stack.peek();
     }
 
-    public int getMin() {
-        if(min.isEmpty()){
+    public int getMin() 
+    {
+        if (min.isEmpty())
+        {
             return -1;
         }
+        
         return min.peek();
     }
     

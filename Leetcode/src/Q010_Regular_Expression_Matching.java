@@ -72,7 +72,9 @@ public class Q010_Regular_Expression_Matching {
                 } 
                 else   // 第三部分test case: [a, a] [a, *]
                 { 
-                    canMatch[i][j] = (j >= 2 && canMatch[i][j-2]) || (canMatch[i][j-1]) || (canMatch[i-1][j] && (j >= 2 && p.charAt(j-2) == '.' || p.charAt(j-2) == s.charAt(i-1)));
+                    canMatch[i][j] = (j >= 2 && canMatch[i][j-2]) 
+                    				|| (canMatch[i][j-1]) 
+                    				|| (canMatch[i-1][j] && (j >= 2 && p.charAt(j-2) == '.' || p.charAt(j-2) == s.charAt(i-1)));
                 }
             }
         }

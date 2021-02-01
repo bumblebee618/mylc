@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -39,7 +38,8 @@ public class Q127_Word_Ladder {
     // beginWord == endWord
     // wordList is empty
 	
-	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+	public int ladderLength(String beginWord, String endWord, List<String> wordList) 
+    {
         if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0)
         {
             return 0;
@@ -49,46 +49,43 @@ public class Q127_Word_Ladder {
             return 0;
         }
         
-        Set<String> dict = new HashSet<>();
+        Set<String> wordDict = getWordDict(wordList);
         
-        for (String word : wordList)
+        if (!wordDict.contains(endWord))
         {
-            dict.add(word);
-        }
-        
-        if (!dict.contains(endWord))
-        {
-        	return 0;
+            return 0;
         }
         
         Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
         Set<String> visited = new HashSet<>();
         visited.add(beginWord);
-        int step = 1;        
+        int step = 1;
         
         while (!queue.isEmpty())
         {
-            step++;
             int size = queue.size();
             
             for (int i = 0; i < size; i++)
             {
                 String curWord = queue.poll();
                 
-                for (String newWord : expends(curWord, dict))
+                if (curWord.equals(endWord))
                 {
-                	if (newWord.equals(endWord))
+                    return step;
+                }
+                
+                for (String nextWord : expends(curWord, wordDict))
+                {
+                    if (!visited.contains(nextWord))
                     {
-                        return step;
-                    }
-                	else if (!visited.contains(newWord))
-                    {
-                    	visited.add(newWord);
-                        queue.offer(newWord);
+                        queue.offer(nextWord);
+                        visited.add(nextWord);
                     }
                 }
             }
+            
+            step++;
         }
         
         return 0;
@@ -123,5 +120,17 @@ public class Q127_Word_Ladder {
         }
             
         return list;
+    }
+    
+    private Set<String> getWordDict(List<String> wordList)
+    {
+        Set<String> wordDict = new HashSet<>();
+        
+        for (String word : wordList)
+        {
+            wordDict.add(word);
+        }
+        
+        return wordDict;
     }
 }

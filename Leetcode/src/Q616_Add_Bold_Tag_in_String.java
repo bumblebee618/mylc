@@ -22,104 +22,92 @@ Note:
 The given dict won't contain duplicates, and its length won't exceed 100.
 All the strings in input have length in range [1, 1000].
  */
-public class Q616_Add_Bold_Tag_in_String {
-private Trie root = new Trie();
+public class Q616_Add_Bold_Tag_in_String 
+{
+    private Trie root;
     
-    public String addBoldTag(String s, String[] dict) {
-        if (s == null || s.length() == 0)
+    public String addBoldTag(String s, String[] dict) 
+    {
+        if (s == null || s.length() == 0
+        	|| dict == null || dict.length == 0)
         {
             return s;
         }
-        else if (dict == null || dict.length == 0)
-        {
-        	return s;
-        }
         
+        root = new Trie();
         buildTrie(dict);
-        int size = s.length(); 
-        List<Interval> list = new LinkedList();
+        List<int[]> intervals = new LinkedList<>();
         
-        for (int i = 0; i < size; i++)
+        for (int startIndex = 0; startIndex < s.length(); startIndex++)
         {
-            int pos = findPos(s, i);
+            int endIndex = findPos(s, startIndex);
             
-            if (pos == -1)
+            if (endIndex != -1)
             {
-                continue;
+                intervals.add(new int[] {startIndex, endIndex});
             }
- 
-            list.add(new Interval(i, pos));
         }
         
-        List<Interval> mergedList = merge(list);
+        intervals = mergeInterval(intervals);
         StringBuilder builder = new StringBuilder();
-        int needed = 0;
+        int pointer = 0;
         
-        for (Interval inter : mergedList)
+        for (int[] interval : intervals)
         {
-            if (needed != inter.start)
+            if (pointer < interval[0])
             {
-            	String str1 = s.substring(needed, inter.start);
-                builder.append(str1);
+                builder.append(s.substring(pointer, interval[0]));
             }
             
-            String str = s.substring(inter.start, inter.end+1);
-            builder.append("<b>").append(str).append("</b>");
-            needed = inter.end+1;
+            builder.append("<b>").append(s.substring(interval[0], interval[1]+1)).append("</b>");
+            pointer = interval[1]+1;
         }
         
-        if (needed < size)
+        if (pointer < s.length())
         {
-        	String str = s.substring(needed, size);
-            builder.append(str);
+            builder.append(s.substring(pointer));
         }
         
         return builder.toString();
     }
     
-    private List<Interval> merge(List<Interval> list)
+    private List<int[]> mergeInterval(List<int[]> intervals)
     {
-    	List<Interval> result = new LinkedList<>();
-    	
-    	if (list.size() == 0)
+        if (intervals.size() == 0)
     	{
-    		return result;
+    		return intervals;
     	}
         
-        int start = -1, end = -1;
+        List<int[]> result = new LinkedList<>();
+        int start = intervals.get(0)[0];
+        int end = intervals.get(0)[1];
         
-        for (Interval inter : list)
+        for (int[] interval : intervals)
         {
-            if (start == -1)
+            if (interval[0] <= end+1)
             {
-                start = inter.start;
-                end = inter.end;
-            }
-            else if (end+1 >= inter.start)
-            {
-                start = Math.min(start, inter.start);
-                end = Math.max(end, inter.end);
+                start = Math.min(start, interval[0]);
+                end = Math.max(end, interval[1]);
             }
             else
             {
-                result.add(new Interval(start, end));
-                start = inter.start;
-                end = inter.end;
+                result.add(new int[] {start, end});
+                start = interval[0];
+                end = interval[1];
             }
         }
         
-        result.add(new Interval(start, end));
+        result.add(new int[] {start, end});
         return result;
     }
     
-    private int findPos(String s, int start)
+    private int findPos(String str, int index)
     {
         Trie node = root;
-        int index = start;
         
-        while (index < s.length())
+        while (index < str.length())
         {
-            char c = s.charAt(index);
+            char c = str.charAt(index);
             
             if (node.children[c] == null)
             {
@@ -135,8 +123,13 @@ private Trie root = new Trie();
     
     private void buildTrie(String[] dict)
     {
-    	for (String word : dict)
+        for (String word : dict)
         {
+            if (word == null || word.length() == 0)
+            {
+                continue;
+            }
+            
             Trie node = root;
             
             for (char c : word.toCharArray())
@@ -164,21 +157,10 @@ private Trie root = new Trie();
             isWord = false;
         }
     }
-    
-    class Interval
-    {
-        public int start;
-        public int end;
-        
-        public Interval(int s, int e)
-        {
-            start = s;
-            end = e;
-        }
-    }
+
 
     
-    
+    /**************************************** main ****************************************/ 
     
     public static void main(String[] args)
     {

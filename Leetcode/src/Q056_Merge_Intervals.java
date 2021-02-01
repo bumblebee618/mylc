@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
+import java.util.LinkedList;
 /*******
  * 
 Given a collection of intervals, merge all overlapping intervals.
@@ -19,26 +20,20 @@ public class Q056_Merge_Intervals {
     // intervals is empty
     // intervals is sorted?
     // invalid input: interval.start >= intervals.end
-	
-	public int[][] merge(int[][] intervals) {
-        if (intervals == null || intervals.length == 0 || intervals[0].length == 0)
+	public int[][] merge(int[][] intervals) 
+    {
+        if (intervals == null || intervals.length == 0 || intervals[0].length != 2)
         {
-            return new int[0][0];
+            return intervals;
         }
         
-        Arrays.sort(intervals, (a, b) -> (a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]));
-        Integer start = null, end = null;
-        List<int[]> list = new ArrayList<>();
+        Arrays.sort(intervals, (a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);
+        List<int[]> result = new LinkedList<>();
+        int start = intervals[0][0];
+        int end = intervals[0][1];
         
         for (int[] interval : intervals)
         {
-            if (start == null && end == null)
-            {
-                start = interval[0];
-                end = interval[1];
-                continue;
-            }
-            
             if (interval[0] <= end)
             {
                 start = Math.min(start, interval[0]);
@@ -46,14 +41,14 @@ public class Q056_Merge_Intervals {
             }
             else
             {
-                list.add(new int[] {start, end});
+                result.add(new int[] {start, end});
                 start = interval[0];
                 end = interval[1];
             }
         }
         
-        list.add(new int[] {start, end});
-        return list.toArray(new int[list.size()][]);
+        result.add(new int[] {start, end});
+        return result.toArray(new int[result.size()][]);    
     }
 
 

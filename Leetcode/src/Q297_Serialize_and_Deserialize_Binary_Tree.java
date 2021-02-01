@@ -41,7 +41,7 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.add(root);
         StringBuilder serial = new StringBuilder();
-        int lastPos = 0;
+        int lastValidPos = 0;
         
         while (!queue.isEmpty())
         {
@@ -50,9 +50,9 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
             if (node != null)
             {
                 serial.append(node.val).append(",");
+                lastValidPos = serial.length() - 2;
                 queue.add(node.left);
                 queue.add(node.right);
-                lastPos = serial.length() - 2;
             } 
             else 
             {
@@ -60,7 +60,7 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
             }
         }
         
-        return serial.substring(0, lastPos + 1);
+        return serial.substring(0, lastValidPos + 1);
     }
 
     // Decodes your encoded data to tree.
@@ -88,6 +88,7 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
             if (!array[i].equals("#"))
             {
                 TreeNode node = new TreeNode(Integer.parseInt(array[i]));
+                list.add(node);   
                 
                 if (i % 2 == 1)
                 {
@@ -97,8 +98,6 @@ public class Q297_Serialize_and_Deserialize_Binary_Tree {
                 {
                     list.get(index).right = node;
                 }
-                
-                list.add(node);   
             }
             
             if (i % 2 == 0)

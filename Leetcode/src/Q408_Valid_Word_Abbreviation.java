@@ -43,7 +43,7 @@ public class Q408_Valid_Word_Abbreviation {
         	// skip the letters
             if (Character.isDigit(letters2[index2])) 
             {
-            	if(letters2[index2] == '0') 
+            	if (letters2[index2] == '0') 
             	{
             		return false;
             	}

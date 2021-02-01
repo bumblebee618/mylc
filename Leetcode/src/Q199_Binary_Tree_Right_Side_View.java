@@ -30,26 +30,29 @@ public class Q199_Binary_Tree_Right_Side_View
         
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        int size = 1;
         
         while (!queue.isEmpty()) 
         {
-            TreeNode node = queue.poll();
+            int size = queue.size();
             
-            if (node.left != null) 
+            for (int i = 0; i < size; i++)
             {
-                queue.offer(node.left);
-            }
-            
-            if (node.right != null) 
-            {
-                queue.offer(node.right);
-            }
-            
-            if (--size == 0) 
-            {
-                size = queue.size();
-                result.add(node.val);
+                TreeNode node = queue.poll();
+                
+                if (i == size-1)
+                {
+                    result.add(node.val);
+                }
+                
+                if (node.left != null)
+                {
+                    queue.offer(node.left);
+                }
+                
+                if (node.right != null)
+                {
+                    queue.offer(node.right);
+                }
             }
         }
         

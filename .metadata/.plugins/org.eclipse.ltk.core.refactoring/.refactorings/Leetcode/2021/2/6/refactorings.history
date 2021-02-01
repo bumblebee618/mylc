@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;i&apos; in &apos;Q282_Expression_Add_Operators.backtrack(...)&apos; to &apos;end&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q282_Expression_Add_Operators.backtrack(List&lt;String&gt;, String, int, String, int, long, long).i&apos;&#x0A;- Renamed element: &apos;i&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;i&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q282_Expression_Add_Operators.java[Q282_Expression_Add_Operators~backtrack~QList\&lt;QString;&gt;;~QString;~I~QString;~I~J~J@i!1256!1268!1260!1260!I!0!false" name="end" references="true" stamp="1612161808231" version="1.0"/>
+</session>

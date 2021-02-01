@@ -100,8 +100,10 @@ public class Q048_Rotate_Image {
 	 * 7 8 9     9 8 7     1 4 7
 	*/
 	
-	public void anticlock_rotate(int[][] matrix) {
-		if(matrix == null || matrix.length == 0){
+	public void anticlock_rotate(int[][] matrix) 
+	{
+		if (matrix == null || matrix.length == 0)
+		{
 			return ;
 		}
 		
@@ -109,18 +111,23 @@ public class Q048_Rotate_Image {
 		int left = 0, right = n - 1;
 		int temp = 0;
 		
-		while (left < right) {
-			for (int row = 0; row < n; ++row) {
+		while (left < right)
+		{
+			for (int row = 0; row < n; ++row) 
+			{
 				temp = matrix[row][left];
 				matrix[row][left] = matrix[row][right];
 				matrix[row][right] = temp;
 			}
+			
 			left++;
 			right--;
 		}
 		
-		for(int i = 0; i < n; ++i){
-			for(int j = i + 1; j < n; ++j){
+		for (int i = 0; i < n; ++i) 
+		{
+			for (int j = i + 1; j < n; ++j)
+			{
 				temp = matrix[i][j];
 				matrix[i][j] = matrix[j][i];
 				matrix[j][i] = temp;

@@ -9,42 +9,52 @@ import java.util.LinkedList;
  * */
 
 
-public class Q155_Min_Queue {
+public class Q155_Min_Queue 
+{
 	private Queue<Integer> queue = new LinkedList<>();
     private Deque<Integer> dq = new LinkedList<>();  
     
-    public void add(int x) {
+    public void add(int x) 
+    {
     	queue.offer(x);
     	
-        while(!dq.isEmpty() && x < dq.peekLast()) {
+        while (!dq.isEmpty() && x < dq.peekLast()) 
+        {
         	dq.pollLast();
         }
         
         dq.offer(x);
     }
 
-    public void poll() {
-        if(queue.isEmpty()){
+    public void poll() 
+    {
+        if (queue.isEmpty())
+        {
             return;
         }
         
         int num = queue.poll();
         
-        if(dq.peekFirst() == num) {
+        if (dq.peekFirst() == num) 
+        {
         	dq.pollFirst();
         }
     }
 
-    public int top() {
-        if(queue.isEmpty()){
+    public int top() 
+    {
+        if (queue.isEmpty())
+        {
             return -1;
         }
         
         return queue.peek();
     }
 
-    public int getMin() {
-        if(dq.isEmpty()){
+    public int getMin() 
+    {
+        if (dq.isEmpty())
+        {
             return -1;
         }
         

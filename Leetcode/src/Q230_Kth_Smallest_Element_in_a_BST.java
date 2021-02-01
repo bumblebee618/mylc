@@ -46,55 +46,69 @@ public class Q230_Kth_Smallest_Element_in_a_BST {
     
     
     // solution 2: using inorder + iterator, time is O(k)
-    public int kthSmallest2(TreeNode root, int k) {
-        if(root == null) {
+    public int kthSmallest2(TreeNode root, int k) 
+    {
+        if (root == null) 
+        {
             return 0;      
         }
         
         Stack<TreeNode> stack = new Stack<>();
         int count = 0;
-        int ans = 0;
+        int result = 0;
         
-        while(!stack.isEmpty() || root != null) {
-            while(root != null) {
+        while (!stack.isEmpty() || root != null)
+        {
+            while (root != null) 
+            {
                 stack.push(root);
                 root = root.left;
             }
             
             root = stack.pop();
             
-            if(++count == k) {
-                ans = root.val;
+            if (++count == k) 
+            {
+                result = root.val;
                 break;
             }
             
             root = root.right;
         }
         
-        return ans;
+        return result;
     }
        
     
     
     // solution 3: using binary search, time is O(logn + n);
-    public int kthSmallest3(TreeNode root, int k) {
-        if (root == null || k <= 0) {
+    public int kthSmallest3(TreeNode root, int k) 
+    {
+        if (root == null || k <= 0) 
+        {
             return -1;
         }
         
         int count = getCount(root.left);
         
-        if(k < count + 1) {
+        if (k < count + 1) 
+        {
             return kthSmallest(root.left, k);
-        } else if(k > count + 1) {
+        } 
+        else if (k > count + 1) 
+        {
             return kthSmallest(root.right, k - (count + 1));
-        } else {
+        } 
+        else 
+        {
             return root.val;
         }
     }
     
-    public int getCount(TreeNode node) {
-        if(node == null) {
+    public int getCount(TreeNode node) 
+    {
+        if (node == null) 
+        {
             return 0;
         }
         
