@@ -41,12 +41,12 @@ public class Q708_Insert_into_a_Sorted_Circular_Linked_List
 {
 	public Node insert(Node head, int insertVal) 
 	{
-        Node node = new Node(insertVal);
+        Node insert = new Node(insertVal);
         
         if (head == null)
         {
-            node.next = node;
-            return node;
+            insert.next = insert;
+            return insert;
         }
         
         Node cur = head.next;
@@ -63,8 +63,8 @@ public class Q708_Insert_into_a_Sorted_Circular_Linked_List
             cur = cur.next;
         }
         
-        prev.next = node;
-        node.next = cur;
+        prev.next = insert;
+        insert.next = cur;
         return head;
     }
 	

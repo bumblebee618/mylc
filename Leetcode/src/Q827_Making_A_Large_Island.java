@@ -47,7 +47,7 @@ public class Q827_Making_A_Large_Island {
         int col = grid[0].length;
         boolean[][] visited = new boolean[row][col];
         int[][] uf = new int[row][col];
-        Map<Integer, List<int[]>> islands = new HashMap<>();
+        Map<Integer, List<int[]>> islandMap = new HashMap<>();
         
         for (int i = 0; i < row; i++)
         {
@@ -56,30 +56,31 @@ public class Q827_Making_A_Large_Island {
                 if (grid[i][j] == 1 && !visited[i][j])
                 {
                     int parendId = i * col + j + 1; // parentId starts from 1
-                    islands.put(parendId, new LinkedList<>());
-                    dfs(islands, grid, visited, uf, i, j, parendId);
+                    islandMap.put(parendId, new LinkedList<>());
+                    dfs(islandMap, grid, visited, uf, i, j, parendId);
                 }
             }
         }
         
-        if (islands.size() == 0)
+        if (islandMap.size() == 0)
         {
         	return maxArea + 1;
         }
         
-        for (int islandId : islands.keySet())
+        for (int islandId : islandMap.keySet())
         {
-        	bfs(islands, grid, uf, visited, islands.get(islandId));
+        	// bfs per island
+        	bfs(islandMap, grid, uf, visited, islandMap.get(islandId));
         }
         
         return maxArea;
     }
     
-    private void dfs(Map<Integer, List<int[]>> islands, int[][] grid, boolean[][] visited, int[][] uf, int x, int y, int parendId)
+    private void dfs(Map<Integer, List<int[]>> islandMap, int[][] grid, boolean[][] visited, int[][] uf, int x, int y, int parendId)
     {
         visited[x][y] = true;
         uf[x][y] = parendId;
-        islands.get(parendId).add(new int[] {x, y});
+        islandMap.get(parendId).add(new int[] {x, y});
         
         for (int i = 0; i < dx.length; i++)
         {
@@ -88,13 +89,13 @@ public class Q827_Making_A_Large_Island {
             
             if (newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length && grid[newX][newY] == 1 && !visited[newX][newY])
             {
-                dfs(islands, grid, visited, uf, newX, newY, parendId);
+                dfs(islandMap, grid, visited, uf, newX, newY, parendId);
             }
         }
     }
     
     private void bfs(
-    		Map<Integer, List<int[]>> islands, 
+    		Map<Integer, List<int[]>> islandMap, 
     		int[][] grid, 
     		int[][] uf, 
     		boolean[][] visited,
@@ -106,16 +107,17 @@ public class Q827_Making_A_Large_Island {
     	for (int[] rootNode : nodes)
     	{
     		int rootIslandId = uf[rootNode[0]][rootNode[1]];
-        	maxArea = Math.max(maxArea, islands.get(rootIslandId).size());
+        	maxArea = Math.max(maxArea, islandMap.get(rootIslandId).size());
         	
-    		for (int j = 0; j < dx.length; j++)
+    		for (int i = 0; i < dx.length; i++)
             {
-                int newX = rootNode[0] + dx[j];
-                int newY = rootNode[1] + dy[j];
+                int newX = rootNode[0] + dx[i];
+                int newY = rootNode[1] + dy[i];
                 
                 if (newX >= 0 && newX < grid.length 
                 	&& newY >= 0 && newY < grid[0].length 
-                	&& grid[newX][newY] == 0 && !visited[newX][newY])
+                	&& grid[newX][newY] == 0 
+                	&& !visited[newX][newY])
                 {
                     queue.offer(new int[] {newX, newY});
                     visited[newX][newY] = true;
@@ -140,8 +142,8 @@ public class Q827_Making_A_Large_Island {
                     && grid[newX][newY] == 1 
                     && !visitedIslands.contains(uf[newX][newY]))
                 {
-                	int area2 = islands.get(uf[newX][newY]).size();
-                	area += area2;
+                	int area1 = islandMap.get(uf[newX][newY]).size();
+                	area += area1;
                 	visitedIslands.add(uf[newX][newY]);
                 }
             }

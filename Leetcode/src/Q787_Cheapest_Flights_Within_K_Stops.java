@@ -58,14 +58,14 @@ public class Q787_Cheapest_Flights_Within_K_Stops
             prices.computeIfAbsent(flight[0], x -> new HashMap<>()).put(flight[1], flight[2]);
         }
         
-        Queue<Tuple> pq = new PriorityQueue<>((a, b) -> (a.cost - b.cost));
+        Queue<Node> pq = new PriorityQueue<>((a, b) -> (a.cost - b.cost));
         
         // cost, city and steps left
-        pq.add(new Tuple(0, src, K+1));
+        pq.add(new Node(src, 0, K+1));
         
         while (!pq.isEmpty()) 
         {
-            Tuple node = pq.poll();
+        	Node node = pq.poll();
             
             if (node.city == dst) 
             {
@@ -79,7 +79,7 @@ public class Q787_Cheapest_Flights_Within_K_Stops
                 // bfs
                 for (int nextCity : priceMap.keySet()) 
                 {
-                    pq.add(new Tuple(node.cost + priceMap.get(nextCity), nextCity, node.stopLeft - 1));
+                    pq.add(new Node(nextCity, node.cost + priceMap.get(nextCity), node.stopLeft - 1));
                 }
             }
         }
@@ -87,16 +87,16 @@ public class Q787_Cheapest_Flights_Within_K_Stops
         return -1;
     }
     
-    class Tuple
+    class Node
     {
+    	public int city;
         public int cost;
-        public int city;
         public int stopLeft;
         
-        public Tuple(int cost, int city, int stopLeft)
+        public Node(int city, int cost, int stopLeft)
         {
-            this.cost = cost;
             this.city = city;
+            this.cost = cost;
             this.stopLeft = stopLeft;
         }
     }

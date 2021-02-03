@@ -4,7 +4,7 @@ public enum Coin
 	
 	private int denomination;
 	
-	private Coin (int denomination)
+	private Coin(int denomination)
 	{
 		this.denomination = denomination;
 	}

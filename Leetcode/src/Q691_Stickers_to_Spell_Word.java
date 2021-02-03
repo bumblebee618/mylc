@@ -103,7 +103,7 @@ public class Q691_Stickers_to_Spell_Word
 	
 	
 	
-	// Solution 2: backtrack
+	// Solution 2: backtrack (wrong solution)
 	private int minStep = Integer.MAX_VALUE;
 	
     public int minStickers2(String[] stickers, String target) 

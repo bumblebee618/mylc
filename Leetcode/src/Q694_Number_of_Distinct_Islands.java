@@ -34,13 +34,15 @@ and
 are considered different island shapes, because we do not consider reflection / rotation.
 Note: The length of each dimension in the given grid does not exceed 50.
  */
-public class Q694_Number_of_Distinct_Islands {
+public class Q694_Number_of_Distinct_Islands 
+{
 	private int[][] grid;
     private boolean[][] visited;
     private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public int numDistinctIslands(int[][] grid) {
+    public int numDistinctIslands(int[][] grid) 
+    {
         if (grid == null || grid.length == 0 || grid[0].length == 0)
         {
             return 0;
@@ -48,7 +50,7 @@ public class Q694_Number_of_Distinct_Islands {
         
         this.grid = grid;
         visited = new boolean[grid.length][grid[0].length];
-        Set<List<Integer>> shapes = new HashSet<>();
+        Set<String> shapes = new HashSet<>();
 
         for (int x = 0; x < grid.length; x++) 
         {
@@ -56,12 +58,12 @@ public class Q694_Number_of_Distinct_Islands {
             {
                 if (grid[x][y] == 1 && !visited[x][y])
                 {
-                    List<Integer> shape = new LinkedList<>();
+                    StringBuilder shape = new StringBuilder();
                     dfs(x, y, 0, shape);
                     
-                    if (!shape.isEmpty()) 
+                    if (shape.length() > 0) 
                     {
-                        shapes.add(shape);
+                        shapes.add(shape.toString());
                     }
                 }
             }
@@ -70,10 +72,10 @@ public class Q694_Number_of_Distinct_Islands {
         return shapes.size();
     }
     
-    private void dfs(int x, int y, int direct, List<Integer> shape) 
+    private void dfs(int x, int y, int direct, StringBuilder shape) 
     {
         visited[x][y] = true;
-        shape.add(direct);
+        shape.append(direct);
         
         for (int i = 0; i < dx.length; i++)
         {
@@ -87,23 +89,16 @@ public class Q694_Number_of_Distinct_Islands {
         }
         
         // tail, 也可以用其他数字like "5"
-        shape.add(0);
+        shape.append(dx.length);
     }
+
     
     
     
-    /*****************************************************************************************/
     
-    private void printList(List<Integer> list)
-    {
-    	for (int num : list)
-    	{
-    		System.out.print(num + ", ");
-    	}
-    	
-    	System.out.println();
-    }
     
+    
+    /***************************** main *********************************************/
     
     public static void main(String[] args)
     {

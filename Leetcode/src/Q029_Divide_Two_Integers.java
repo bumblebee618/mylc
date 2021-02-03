@@ -8,7 +8,8 @@ If it is overflow, return MAX_INT.
 
 public class Q029_Divide_Two_Integers {	
 	// solution 1: binary search
-	public int divide(int dividend, int divisor) {
+	public int divide(int dividend, int divisor) 
+	{
         if (dividend == Integer.MIN_VALUE && divisor == -1)
         {
             return Integer.MAX_VALUE;

@@ -18,7 +18,8 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 Note: The length of the given binary array will not exceed 50,000.
  */
 public class Q525_Contiguous_Array {
-	public int findMaxLength(int[] nums) {
+	public int findMaxLength(int[] nums) 
+	{
         if (nums == null || nums.length == 0)
         {
             return 0;
@@ -26,7 +27,7 @@ public class Q525_Contiguous_Array {
         
         Map<Integer, Integer> map = new HashMap<>();
         map.put(0, -1);
-        int maxlen = 0, count = 0;
+        int maxLen = 0, count = 0;
         
         for (int i = 0; i < nums.length; i++) 
         {
@@ -34,7 +35,7 @@ public class Q525_Contiguous_Array {
             
             if (map.containsKey(count)) 
             {
-                maxlen = Math.max(maxlen, i - map.get(count));
+                maxLen = Math.max(maxLen, i - map.get(count));
             } 
             else 
             {
@@ -42,6 +43,6 @@ public class Q525_Contiguous_Array {
             }
         }
         
-        return maxlen;
+        return maxLen;
     }
 }

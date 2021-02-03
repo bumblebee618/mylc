@@ -56,21 +56,24 @@ public class Q1498_Number_of_Subsequences_That_Satisfy_the_Given_Sum_Condition {
         
         Arrays.sort(nums);
         int result = 0;
-        int size = nums.length;
-        int left = 0, right = size - 1, mod = (int)1e9 + 7;
-        int[] pows = new int[size];
-        pows[0] = 1;
+        int mod = (int) 1e9+7;
+        int left = 0, right = nums.length-1;
         
-        for (int i = 1 ; i < size ; ++i)
+        // dp[i] means the number of subsequences in subarray with length i 
+        int[] dp = new int[nums.length+1];
+        dp[1] = 1;
+        
+        
+        for (int i = 2; i < dp.length; i++)
         {
-            pows[i] = pows[i-1] * 2 % mod;
+            dp[i] = dp[i-1] * 2 % mod;   
         }
         
         while (left <= right) 
         {
             if (nums[left] + nums[right] <= target) 
             {
-                result = (result + pows[right - left]) % mod;
+                result = (result + dp[right - left + 1]) % mod;
                 left++;
             } 
             else 

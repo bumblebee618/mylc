@@ -59,7 +59,82 @@ public class Q296_Best_Meeting_Point
         return totalDistance;
     }
 	
+    
+    
+    
 
+    // solution 2: time exceed limit
+    private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+    
+    public int minTotalDistance2(int[][] grid) 
+    {
+        if (grid == null || grid.length == 0 || grid[0].length == 0)
+        {
+            return 0;
+        }
+        
+        int row = grid.length, col = grid[0].length;
+        int[][] distance = new int[row][col];
+        int minDistance = Integer.MAX_VALUE;
+        
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (grid[i][j] == 1)
+                {
+                    bfs(grid, distance, i, j);
+                }
+            }
+        }
+        
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                minDistance = Math.min(minDistance, distance[i][j]);
+            }
+        }
+        
+        return minDistance;
+    }
+    
+    private void bfs(int[][] grid, int[][] distance, int x, int y)
+    {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] {x, y});
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        visited[x][y] = true;
+        int step = 0;
+        
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
+            
+            for (int i = 0; i < size; i++)
+            {
+                int[] curNode = queue.poll();
+                distance[curNode[0]][curNode[1]] += step;
+            
+                for (int j = 0; j < dx.length; j++)
+                {
+                    int newX = curNode[0] + dx[j];
+                    int newY = curNode[1] + dy[j];
+                
+                    if (newX >= 0 && newX < grid.length
+                        && newY >= 0 && newY < grid[0].length
+                        && !visited[newX][newY])
+                    {
+                        queue.offer(new int[] {newX, newY});
+                        visited[newX][newY] = true;
+                    }
+                }
+            }
+            
+            step++;
+        }
+    }
 	
 	
 	

@@ -44,27 +44,26 @@ public class Q332_Reconstruct_Itinerary {
 	public List<String> findItinerary(List<List<String>> tickets) {
         List<String> result = new ArrayList<String>();
 
-        if(tickets == null || tickets.size() == 0)
+        if (tickets == null || tickets.size() == 0)
         {
             return result;
         }
 
         // 注意只有linkedlist有poll() API ！！！
         Map<String, LinkedList<String>> graph = new HashMap<>();
-        int size = tickets.size();
 
-        for(int i = 0; i < size; ++i)
+        for (List<String> ticket : tickets)
         {
-            graph.computeIfAbsent(tickets.get(i).get(0), k -> new LinkedList<String>()).add(tickets.get(i).get(1));
+            graph.computeIfAbsent(ticket.get(0), k -> new LinkedList<String>()).add(ticket.get(1));
         }
         
-        for(Map.Entry<String, LinkedList<String>> entry : graph.entrySet())
+        for (Map.Entry<String, LinkedList<String>> entry : graph.entrySet())
         {
             Collections.sort(entry.getValue());
         }
         
         Stack<String> stack = new Stack<>();
-        stack.add("JFK");
+        stack.push("JFK");
         
         // 以下是深度优先搜索的写法，必须写成这样；注释部分写法不正确
         // stack不断push之后，stack的peek()是不断变化的

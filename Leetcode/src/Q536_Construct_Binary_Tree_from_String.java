@@ -31,7 +31,7 @@ public class Q536_Construct_Binary_Tree_from_String
         }
         
         int index = 0;
-        StringBuilder builder = new StringBuilder();
+        StringBuilder numBuilder = new StringBuilder();
         TreeNode root = null;
         int flag = 1;
         
@@ -41,11 +41,11 @@ public class Q536_Construct_Binary_Tree_from_String
             
             if (Character.isDigit(c))
             {
-                builder.append(c);
+                numBuilder.append(c);
                 
                 if (index == s.length()-1)
                 {
-                    int num = Integer.parseInt(builder.toString()) * flag;
+                    int num = Integer.parseInt(numBuilder.toString()) * flag;
                     root = new TreeNode(num);
                 }
                 
@@ -67,7 +67,7 @@ public class Q536_Construct_Binary_Tree_from_String
                     break;
                 }
             	
-                int num = Integer.parseInt(builder.toString()) * flag;
+                int num = Integer.parseInt(numBuilder.toString()) * flag;
                 root = new TreeNode(num);
                 int leftEnd = -1;
                 int rightEnd = -1;

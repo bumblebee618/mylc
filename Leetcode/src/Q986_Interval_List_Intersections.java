@@ -29,9 +29,12 @@ Note:
 0 <= A[i].start, A[i].end, B[i].start, B[i].end < 10^9
 NOTE: input types have been changed on April 15, 2019. Please reset to default code definition to get new method signature.
  */
-public class Q986_Interval_List_Intersections {
-	public int[][] intervalIntersection(int[][] Intervals1, int[][] Intervals2) {
-        if (Intervals1 == null || Intervals1.length == 0 || Intervals1[0].length == 0 || Intervals2 == null || Intervals2.length == 0 || Intervals2[0].length == 0)
+public class Q986_Interval_List_Intersections 
+{
+	public int[][] intervalIntersection(int[][] Intervals1, int[][] Intervals2) 
+	{
+        if (Intervals1 == null || Intervals1.length == 0 || Intervals1[0].length == 0 
+        	|| Intervals2 == null || Intervals2.length == 0 || Intervals2[0].length == 0)
         {
             return new int[0][0];
         }

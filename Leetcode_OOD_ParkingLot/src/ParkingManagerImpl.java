@@ -11,7 +11,7 @@ public class ParkingManagerImpl implements ParkingManager
 	private Map<String, ParkingTicket> idToTickets;
 	private Map<String, Vehicle> plateNumToVehicles;
 	
-	public static ParkingManagerImpl instance;
+	private static ParkingManagerImpl instance;
 	
 	private ParkingManagerImpl()
 	{		

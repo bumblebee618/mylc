@@ -84,7 +84,7 @@ public class Q616_Add_Bold_Tag_in_String
         
         for (int[] interval : intervals)
         {
-            if (interval[0] <= end+1)
+            if (interval[0] <= end+1)  // test case: [0,1], [2,3] -> [0,3]
             {
                 start = Math.min(start, interval[0]);
                 end = Math.max(end, interval[1]);

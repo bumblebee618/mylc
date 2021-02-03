@@ -84,7 +84,7 @@ public class Q489_Robot_Room_Cleaner
                 if (robot.move())
                 {
                     backtrack(newRow, newCol, newDirection);
-                    goBack();
+                    goBack();  // backtracking思想，恢复原样
                 }
             }
             

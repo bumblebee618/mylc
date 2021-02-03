@@ -39,41 +39,42 @@ Every string in deadends and the string target will be a string of 4 digits from
  */
 public class Q752_Open_the_Lock {
 	public int openLock(String[] deadends, String target) 
-	{
+    {
         if (target == null || target.length() != 4)
         {
             return -1;
         }
         
-        Set<String> deadendSet = new HashSet<>();
+        Set<String> visited = new HashSet<>();
         
-        for (String deadend : deadends)
+        if (deadends != null)
         {
-            deadendSet.add(deadend);
+            for (String deadend : deadends)
+            {
+                visited.add(deadend);
+            }
         }
         
-        if (deadendSet.contains("0000"))
+        if (visited.contains("0000") || visited.contains(target))
         {
             return -1;
         }
         
         Queue<String> queue = new LinkedList<>();
         queue.offer("0000");
-        Set<String> visited = new HashSet<>();
         visited.add("0000");
-        int step = -1;
+        int step = 0;
         int[] moves = {1, -1};
         
         while (!queue.isEmpty())
         {
-            step++;
             int size = queue.size();
             
             for (int i = 0; i < size; i++)
             {
                 String node = queue.poll();
                 
-                if (target.equals(node))
+                if (node.equals(target))
                 {
                     return step;
                 }
@@ -82,23 +83,25 @@ public class Q752_Open_the_Lock {
                 
                 for (int j = 0; j < digits.length; j++)
                 {
-                    int temp = digits[j]-'0';
+                    int basePos = digits[j] - '0';
                     
                     for (int move : moves)
                     {
-                        digits[j] = (char) ((temp+move+10)%10 + '0');
-                        String newNode = new String(digits);
+                        digits[j] = (char) ((basePos + move + 10) % 10 + '0');
+                        String nextNode = new String(digits);
                         
-                        if (!deadendSet.contains(newNode) && !visited.contains(newNode))
+                        if (!visited.contains(nextNode))
                         {
-                            queue.offer(newNode);
-                            visited.add(newNode);
+                            queue.offer(nextNode);
+                            visited.add(nextNode);
                         }
                     }
                     
-                    digits[j] = (char) (temp+'0');
+                    digits[j] = (char) (basePos + '0');
                 }
             }
+            
+            step++;
         }
         
         return -1;
