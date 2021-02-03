@@ -60,7 +60,7 @@ public class Q488_Zuma_Game {
     
     private int backtrack(String board, int[] count)
     {
-        if(board == null || board.length() == 0) 
+        if (board == null || board.length() == 0) 
         {
             return 0;
         }

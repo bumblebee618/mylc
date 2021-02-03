@@ -41,6 +41,120 @@ n == nums1.length == nums2.length
 0 <= nums1[i], nums2[i] <= 100
  */
 public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
+	// solution 1: using List and binary search
+	public List<int[]> pairs;
+    
+	Q1570_Dot_Product_of_Two_Sparse_Vectors(int[] nums)
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return;
+        }
+        
+        pairs = new ArrayList<>();
+        
+        for (int i = 0; i < nums.length; i++)
+        {
+            if (nums[i] != 0)
+            {
+                 pairs.add(new int[] {i, nums[i]});
+            }
+        }
+    }
+    
+    public int dotProduct(Q1570_Dot_Product_of_Two_Sparse_Vectors vec) 
+    {
+        if (vec == null)
+        {
+            return 0;
+        }
+        else if (vec.pairs.size() < pairs.size())
+        {
+            return vec.dotProduct(this);
+        }
+        
+        return getResult_binary_search(vec);
+    }
+    
+    private int getResult_binary_search(Q1570_Dot_Product_of_Two_Sparse_Vectors vec)
+    {
+        int result = 0;
+        
+        for (int[] pair : pairs)
+        {
+            int pos = binarySearch(vec.pairs, pair[0]);
+            
+            if (pos != -1)
+            {
+                result += pair[1] * vec.pairs.get(pos)[1];
+            }
+        }
+        
+        return result;
+    }
+    
+    private int binarySearch(List<int[]> pairs, int target)
+    {
+        int left = 0, right = pairs.size()-1;
+        
+        while (left < right)
+        {
+            int mid = left + (right-left)/2;
+            int[] pair = pairs.get(mid);
+            
+            if (pair[0] < target)
+            {
+                left = mid+1;
+            }
+            else if (pair[0] > target)
+            {
+                right = mid-1;
+            }
+            else
+            {
+                return mid;
+            }
+        }
+        
+        return pairs.get(left)[0] == target ? left : -1;
+    }
+    
+    // solution 2: using List and two pointers
+    /*** 
+    private int getResult_two_pointers(SparseVector vec)
+    {
+        int result = 0;
+        int index1 = 0, index2 = 0;
+        
+        while (index1 < pairs.size() && index2 < vec.pairs.size())
+        {
+            int[] pair1 = pairs.get(index1);
+            int[] pair2 = vec.pairs.get(index2);
+            
+            if (pair1[0] == pair2[0])
+            {
+                result += pair1[1] * pair2[1];
+                index1++;
+                index2++;
+            }
+            else if (pair1[0] < pair2[0])
+            {
+                index1++;
+            }
+            else
+            {
+                index2++;
+            }
+        }
+        
+        return result;
+    }
+	***/
+	
+	
+    
+    // solution 3: using hashmap
+	/***
 	public Map<Integer, Integer> map;
     
 	Q1570_Dot_Product_of_Two_Sparse_Vectors(int[] nums) 
@@ -92,4 +206,5 @@ public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
     {
     	return map.size();
     }
+    ***/
 }
