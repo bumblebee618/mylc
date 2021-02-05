@@ -66,8 +66,13 @@ public class Q875_Koko_Eating_Bananas {
         for (int pile : piles)
         {
             time += (pile-1)/speed + 1;
+            
+            if (time > targetHour)
+            {
+            	return false;
+            }
         }
         
-        return time <= targetHour;
+        return true;
     }
 }

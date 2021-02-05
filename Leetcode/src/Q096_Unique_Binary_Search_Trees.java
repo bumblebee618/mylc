@@ -40,10 +40,10 @@ public class Q096_Unique_Binary_Search_Trees {
         memo[0] = 0;             
         memo[1] = 1;
         
-        return helper(memo, 1, n);
+        return search(memo, 1, n);
     }
     
-    public int helper(int[] memo, int start, int end)
+    public int search(int[] memo, int start, int end)
     {
         if (start > end)
         {
@@ -56,8 +56,8 @@ public class Q096_Unique_Binary_Search_Trees {
         
         for (int root = start; root <= end; root++)
         {
-            int left = helper(memo, start, root - 1);
-            int right = helper(memo, root + 1, end);
+            int left = search(memo, start, root - 1);
+            int right = search(memo, root + 1, end);
             
             if (left == 0 || right == 0)
             {

@@ -9,19 +9,31 @@ Note:
  * 
  * */
 
-public class Q106_Construct_Binary_Tree_from_Inorder_and_Postorder_Traversal {
-	public TreeNode buildTree(int[] inorder, int[] postorder) {
-        Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
+public class Q106_Construct_Binary_Tree_from_Inorder_and_Postorder_Traversal 
+{
+	public TreeNode buildTree(int[] inorder, int[] postorder) 
+	{
+		if (inorder == null || inorder.length == 0 
+			|| postorder == null || postorder.length == 0
+			|| inorder.length != postorder.length)
+		{
+			return null;
+		}
+		
+        Map<Integer, Integer> inMap = new HashMap<>();
         
         for(int i = 0; i < inorder.length; ++i)
+        {
             inMap.put(inorder[i], i);
+        }
             
         TreeNode root = buildTree(inorder, 0, inorder.length-1, postorder, 0, postorder.length-1, inMap);
         return root;
     }
     
-    public TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int posStart, int posEnd, Map<Integer, Integer> inMap){
-        if(inStart > inEnd || posStart > posEnd || posEnd < 0) {
+    private TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int posStart, int posEnd, Map<Integer, Integer> inMap)
+    {
+        if (inStart > inEnd || posStart > posEnd || posEnd < 0) {
         	return null;
         }
         // root表示当前子树的根结点

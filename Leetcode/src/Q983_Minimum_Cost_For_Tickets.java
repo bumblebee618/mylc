@@ -46,15 +46,17 @@ days is in strictly increasing order.
 costs.length == 3
 1 <= costs[i] <= 1000
  */
-public class Q983_Minimum_Cost_For_Tickets {
-	public int mincostTickets(int[] days, int[] costs) {
+public class Q983_Minimum_Cost_For_Tickets 
+{
+	public int mincostTickets(int[] days, int[] costs) 
+	{
         if (days == null || days.length == 0 || costs == null || costs.length != 3)
         {
             return 0;
         }
         
-        int size = days.length;
-        Integer[] memo = new Integer[366];
+        int[] memo = new int[366];
+        Arrays.fill(memo, -1);
         Set<Integer> daySet = new HashSet<>();
         
         for (int day : days)
@@ -62,27 +64,28 @@ public class Q983_Minimum_Cost_For_Tickets {
             daySet.add(day);
         }
         
-        return dp(days[0], daySet, memo, costs);
+        return search(days[0], daySet, memo, costs);
     }
     
-    private int dp(int day, Set<Integer> daySet, Integer[] memo, int[] costs)
+    private int search(int day, Set<Integer> daySet, int[] memo, int[] costs)
     {
+    	// 递归退出条件
         if (day > 365)
         {
             return 0;
         }
-        else if (memo[day] != null)
+        else if (memo[day] != -1)
         {
             return memo[day];
         }
         
         if (daySet.contains(day))
         {
-            memo[day] = Math.min(dp(day+1, daySet, memo, costs)+costs[0], Math.min(dp(day+7, daySet, memo, costs)+costs[1], dp(day+30, daySet, memo, costs)+costs[2]));
+            memo[day] = Math.min(search(day+1, daySet, memo, costs)+costs[0], Math.min(search(day+7, daySet, memo, costs)+costs[1], search(day+30, daySet, memo, costs)+costs[2]));
         }
         else
         {
-            memo[day] = dp(day+1, daySet, memo, costs);
+            memo[day] = search(day+1, daySet, memo, costs);
         }
         
         return memo[day];

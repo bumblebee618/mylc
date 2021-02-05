@@ -13,13 +13,58 @@ Follow up:
  * 
  * */
 
-public class Q230_Kth_Smallest_Element_in_a_BST {
+public class Q230_Kth_Smallest_Element_in_a_BST 
+{
+	// Binary search, time is O(logn)
+	public int kthSmallest(TreeNode root, int k) 
+    {
+        if (root == null || k <= 0)
+        {
+            return -1;
+        }
+        
+        while (root != null)
+        {
+            int count = dfs(root.left);
+            
+            if (k < count+1)
+            {
+                root = root.left;
+            }
+            else if (k > count+1)
+            {
+                root = root.right; 
+                k = k - (count + 1);
+            }
+            else
+            {
+                return root.val;
+            }
+        }
+        
+        return -1;
+    }
+    
+    private int dfs(TreeNode node)
+    {
+        if (node == null)
+        {
+            return 0;
+        }
+        
+        return dfs(node.left) + dfs(node.right) + 1;
+    }
+	
+	
+	
 	// solution 1: using inorder travel + recursive, time is O(k)
 	int ans = Integer.MAX_VALUE;
 	int count = 0;
 	
-	public int kthSmallest(TreeNode root, int k) {
-        if(root == null) {
+	public int kthSmallest2(TreeNode root, int k)
+	{
+        if (root == null) 
+        {
         	return 0;      
         }
         
@@ -27,15 +72,18 @@ public class Q230_Kth_Smallest_Element_in_a_BST {
         return ans;
     }
     
-    public void inOrder(TreeNode node, int k){
-        if(node == null) {
-        	return ;
+    private void inOrder(TreeNode node, int k)
+    {
+        if (node == null) 
+        {
+        	return;
         }
         
         inOrder(node.left, k); 
         count++;
         
-        if(count == k){
+        if (count == k)
+        {
         	ans = node.val;
         	return;
         }
@@ -46,7 +94,7 @@ public class Q230_Kth_Smallest_Element_in_a_BST {
     
     
     // solution 2: using inorder + iterator, time is O(k)
-    public int kthSmallest2(TreeNode root, int k) 
+    public int kthSmallest3(TreeNode root, int k) 
     {
         if (root == null) 
         {
@@ -82,7 +130,7 @@ public class Q230_Kth_Smallest_Element_in_a_BST {
     
     
     // solution 3: using binary search, time is O(logn + n);
-    public int kthSmallest3(TreeNode root, int k) 
+    public int kthSmallest4(TreeNode root, int k) 
     {
         if (root == null || k <= 0) 
         {

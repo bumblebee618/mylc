@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 /*******
  * 
@@ -29,7 +29,7 @@ public class Q095_Unique_Binary_Search_Trees_II {
 	 **********************************************************/
 	public List<TreeNode> generateTrees(int n) 
 	{
-        List<TreeNode> result = new ArrayList<>();
+        List<TreeNode> result = new LinkedList<>();
         
         if (n <= 0) 
         {
@@ -44,7 +44,7 @@ public class Q095_Unique_Binary_Search_Trees_II {
     public List<TreeNode> search(List<TreeNode>[][] memo, int start, int end) {
         if (start > end) 
         {
-            List<TreeNode> list = new ArrayList<>();
+            List<TreeNode> list = new LinkedList<>();
             list.add(null);                 // this step is important !!!
             return list;
         } 
@@ -53,7 +53,7 @@ public class Q095_Unique_Binary_Search_Trees_II {
             return memo[start][end];
         }
         
-        memo[start][end] = new ArrayList<>();
+        memo[start][end] = new LinkedList<>();
         
         for (int node = start; node <= end; node++) 
         {

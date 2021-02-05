@@ -42,9 +42,9 @@ public class Q606_Construct_String_from_Binary_Tree
             return "";
         }
         
+        StringBuilder builder = new StringBuilder().append(root.val);
         String left = tree2str(root.left);
         String right = tree2str(root.right);
-        StringBuilder builder = new StringBuilder().append(root.val);
         
         if (left != "")
         {

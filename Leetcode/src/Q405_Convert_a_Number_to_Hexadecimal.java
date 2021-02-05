@@ -20,22 +20,27 @@ Example 2:
  * */
 
 
-public class Q405_Convert_a_Number_to_Hexadecimal {
+public class Q405_Convert_a_Number_to_Hexadecimal 
+{
 	// test case: [0],  [-1],  [-2] -> "fffffffe", [1],  [26],  [291]
     
-    public String toHex(int num) {
-        if(num == 0) {
+	public String toHex(int num) 
+    {
+        if (num == 0) 
+        {
             return "0";
         } 
             
         char[] digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         StringBuilder builder = new StringBuilder();
         
-        while(num > 0) {
+        while (num != 0) 
+        {
             builder.insert(0, digits[(num & 15)]);
+            num >>>= 4;
         }
         
-        return builder.toString();
+        return builder.toString();    
     }
     
     

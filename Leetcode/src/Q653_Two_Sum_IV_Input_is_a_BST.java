@@ -31,26 +31,35 @@ Output: False
 
  *
  */
-public class Q653_Two_Sum_IV_Input_is_a_BST {
+public class Q653_Two_Sum_IV_Input_is_a_BST 
+{
 	// solution 1: use hashset, time is O(n), space is O(n)
-	public boolean findTarget(TreeNode root, int k) {
-        if (root == null) {
+	public boolean findTarget(TreeNode root, int k) 
+	{
+        if (root == null) 
+        {
             return false;
         }
         
         Set<Integer> set = new HashSet<>();
-        Stack<TreeNode> stack = new Stack();
+        Stack<TreeNode> stack = new Stack<>();
         
-        while (root != null || !stack.isEmpty()) {
-            while (root != null) {
+        while (root != null || !stack.isEmpty()) 
+        {
+            while (root != null) 
+            {
                 stack.push(root);
                 root = root.left;
             }
+            
             root = stack.pop();
             
-            if (set.contains(k - root.val)) {
+            if (set.contains(k - root.val)) 
+            {
                 return true;
-            } else {
+            } 
+            else 
+            {
                 set.add(root.val);
             }
             

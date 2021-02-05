@@ -45,6 +45,7 @@ public class Q1262_Greatest_Sum_Divisible_by_Three {
             
             for (int i = 0; i < 3; ++i)
             {
+            	// 老的值和新的值取最大值
                 nextDp[(i + num) % 3] = Math.max(dp[(i + num) % 3], dp[i] + num);
             }
                 

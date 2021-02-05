@@ -57,6 +57,7 @@ public class Q1361_Validate_Binary_Tree_Nodes
             return false;
         }
         
+        // 入度
         int[] indegree = new int[n];
         
         for (int i = 0; i < n; i++) 
@@ -72,6 +73,7 @@ public class Q1361_Validate_Binary_Tree_Nodes
             }
         }
         
+        // 找root节点
         int root = -1;
         
         for (int i = 0; i < n; i++)
@@ -94,6 +96,7 @@ public class Q1361_Validate_Binary_Tree_Nodes
             return false;
         }
         
+        // bfs来确认可以访问的节点数是否为n
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(root);
         int count = 0;

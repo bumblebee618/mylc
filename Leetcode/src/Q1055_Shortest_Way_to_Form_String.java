@@ -45,7 +45,8 @@ public class Q1055_Shortest_Way_to_Form_String
         int s_index = 0, t_index = 0;
         int step = 0;
         
-        while (t_index < target.length() && step <= t_index) // step <= t_index 防止死循环
+        // while (t_index < target.length() && step <= t_index) // step <= t_index 防止死循环
+        while (t_index < target.length())
         {
             while (s_index < source.length() && source.charAt(s_index) != target.charAt(t_index))
             {
@@ -90,6 +91,6 @@ public class Q1055_Shortest_Way_to_Form_String
 			}
 		}
 		
-		return false;
+		return true;
 	}
 }

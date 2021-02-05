@@ -44,15 +44,16 @@ public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
     private TreeNode r2 = null;
     private Integer num1 = null;
     private Integer num2 = null;
+    private Stack<TreeNode> s1 = new Stack<>();
+    private Stack<TreeNode> s2 = new Stack<>();
         
-    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) 
+    {
         List<Integer> result = new LinkedList<>();
         r1 = root1;
         r2 = root2;
-        Stack<TreeNode> s1 = new Stack<>();
-        Stack<TreeNode> s2 = new Stack<>();
-        getNext(r1, s1, true);
-        getNext(r2, s2, false);
+        refreshNext(true);
+        refreshNext(false);
         
         while (num1 != null || num2 != null)
         {
@@ -61,23 +62,23 @@ public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
                 if (num1 < num2)
                 {
                     result.add(num1);
-                    getNext(r1, s1, true);
+                    refreshNext(true);
                 }
                 else
                 {
                     result.add(num2);
-                    getNext(r2, s2, false);
+                    refreshNext(false);
                 }
             }
             else if (num1 != null)
             {
                 result.add(num1);
-                getNext(r1, s1, true);
+                refreshNext(true);
             }
             else
             {
                 result.add(num2);
-                getNext(r2, s2, false);
+                refreshNext(false);
             }
         }
         
@@ -89,8 +90,11 @@ public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
         return root != null || !stack.isEmpty();
     }
 
-    private void getNext(TreeNode root, Stack<TreeNode> stack, boolean isFirst)
+    private void refreshNext(boolean isFirst)
     {      
+        Stack<TreeNode> stack = isFirst ? s1 : s2;
+        TreeNode root = isFirst ? r1 : r2;
+        
         if (!hasNext(root, stack))
         {   
             if (isFirst)

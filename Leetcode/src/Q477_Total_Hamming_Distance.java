@@ -23,21 +23,52 @@ Note:
 
 
 public class Q477_Total_Hamming_Distance {
+	// follow up: time is O(n)
+	public int totalHammingDistance(int[] nums) 
+	{
+		if (nums == null || nums.length <= 1) 
+		{
+			return 0;
+		}
+
+		int size = nums.length;
+		int result = 0;
+
+		for (int i = 0; i < 32; i++) 
+		{
+			int count = 0;
+
+			for (int j = 0; j < size; j++) 
+			{
+				count += (nums[j] >> i) & 1;
+			}
+
+			result += count * (size - count);
+		}
+
+		return result;
+	}
+	
 	// naive method, time is O(n^2)
-	public int totalHammingDistance(int[] nums) {
-        if(nums == null || nums.length <= 1) {
+	public int totalHammingDistance2(int[] nums) 
+	{
+        if (nums == null || nums.length <= 1) 
+        {
             return 0;
         }
         
         int len = nums.length;
         int ans = 0;
         
-        for(int i = 0; i < len; i++) {
-            for(int j = i + 1; j < len; j++) {
+        for (int i = 0; i < len; i++) 
+        {
+            for (int j = i + 1; j < len; j++) 
+            {
                 int result = nums[i] ^ nums[j];
                 int count = 0;
                 
-                while(result != 0) {
+                while (result != 0) 
+                {
                     count += (result & 1);
                     result >>= 1;
                 }
@@ -52,25 +83,5 @@ public class Q477_Total_Hamming_Distance {
 	
 	
 	
-	// follow up: time is O(n)
-	public int totalHammingDistance2(int[] nums) {
-        if(nums == null || nums.length <= 1) {
-            return 0;
-        }
-     
-        int len = nums.length;
-        int ans = 0;   
-        
-        for(int i = 0; i < 32; i++) {
-            int count = 0;
-            
-            for(int j = 0; j < len; j++) {
-                count += (nums[j] >> i) & 1;
-            }
-            
-            ans += count * (len - count);
-        }
-        
-        return ans;
-    }
+	
 }

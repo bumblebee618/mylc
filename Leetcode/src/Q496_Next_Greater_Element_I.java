@@ -29,8 +29,11 @@ The length of both nums1 and nums2 would not exceed 1000.
 
  */
 public class Q496_Next_Greater_Element_I {
-	public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || nums1.length > nums2.length)
+	public int[] nextGreaterElement(int[] nums1, int[] nums2) 
+	{
+        if (nums1 == null || nums1.length == 0 
+        	|| nums2 == null || nums2.length == 0 
+            || nums1.length > nums2.length)
         {
             return new int[0];
         }
@@ -52,7 +55,7 @@ public class Q496_Next_Greater_Element_I {
         
         for (int i = 0; i < nums1.length; i++)
         {
-            result[i] = map.containsKey(nums1[i]) ? map.get(nums1[i]) : -1;
+            result[i] = map.getOrDefault(nums1[i], -1);
         }
         
         return result;

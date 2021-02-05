@@ -62,8 +62,73 @@ Explanation:The maximum width existing in the fourth level with the length 8 (6,
 
 Note: Answer will in the range of 32-bit signed integer.
  */
-public class Q662_Maximum_Width_of_Binary_Tree {
-	public int widthOfBinaryTree(TreeNode root) {
+public class Q662_Maximum_Width_of_Binary_Tree 
+{
+	// solution 1:
+	public int widthOfBinaryTree(TreeNode root) 
+    {
+        if (root == null)
+        {
+            return 0;
+        }
+        
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(new Node(root, 0, 0));
+        int maxWidth = 0;
+        
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
+            int left = 0;
+            
+            for (int i = 0; i < size; i++)
+            {
+                Node current = queue.poll();
+                
+                if (i == 0)
+                {
+                    left = current.col;
+                }
+                
+                if (i == size-1)
+                {
+                    maxWidth = Math.max(maxWidth, current.col-left+1);
+                }
+                    
+                if (current.node.left != null)
+                {
+                    queue.offer(new Node(current.node.left, current.row+1, current.col*2));
+                }
+                
+                if (current.node.right != null)
+                {
+                    queue.offer(new Node(current.node.right, current.row+1, current.col*2+1));
+                }
+            }
+        }
+        
+        return maxWidth;
+    }
+    
+    class Node
+    {
+        public TreeNode node;
+        public int row;
+        public int col;
+        
+        public Node(TreeNode node, int row, int col)
+        {
+            this.node = node;
+            this.row = row;
+            this.col = col;
+        }
+    }
+	
+	
+	
+    
+    // solution 2:
+	public int widthOfBinaryTree2(TreeNode root) {
         if (root == null)
         {
             return 0;

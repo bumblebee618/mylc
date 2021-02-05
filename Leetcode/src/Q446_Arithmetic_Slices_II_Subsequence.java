@@ -67,10 +67,14 @@ public class Q446_Arithmetic_Slices_II_Subsequence
                 }
                 
                 int diff = (int) gap;
-                int count = counts[j].getOrDefault(diff, 0);
+                
+                // count比实际要多一个1，用来区别数组长度为2的情况和为1的情况
+                int count = counts[j].getOrDefault(diff, 0); 
                 int origin = counts[i].getOrDefault(diff, 0);
                 counts[i].put(diff, origin + count + 1);
-                // 这里加的是j的sum, 防止subarray长度只有2的情况
+                
+                // 这里加的是j的sum, 防止subarray长度只有2的情况；
+                // 因为count的值比实际多1，所以相当于已经包含了新增数组[i-1, i, i+1]的情况
                 result += count;
             }
         }

@@ -61,12 +61,12 @@ public class Q919_Complete_Binary_Tree_Inserter
         {
             int size = queue.size();
             level++;
-            levelMap.put(level, new LinkedList<>());
+            Queue<TreeNode> tmpQueue = new LinkedList<>();
             
             for (int i = 0; i < size; i++)
             {
                 TreeNode node = queue.poll();
-                levelMap.get(level).offer(node);
+                tmpQueue.offer(node);
                 
                 if (node.left != null)
                 {
@@ -78,6 +78,8 @@ public class Q919_Complete_Binary_Tree_Inserter
                     queue.offer(node.right);
                 }
             }
+            
+            levelMap.put(level, tmpQueue);
         }
         
         // only have root
