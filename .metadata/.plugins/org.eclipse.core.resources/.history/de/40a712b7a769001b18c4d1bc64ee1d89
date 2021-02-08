@@ -41,7 +41,7 @@ public class Q560_Subarray_Sum_Equals_K {
 	
 	
 	
-	/***************************** main *****************************/
+	
 	
 	public static void main(String[] args)
 	{
