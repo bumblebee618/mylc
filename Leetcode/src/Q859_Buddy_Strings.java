@@ -47,12 +47,12 @@ public class Q859_Buddy_Strings {
             
             for (char c : A.toCharArray())
             {
-                if (hash[c] >= 1)
+            	hash[c]++;
+            	
+                if (hash[c] == 2)
                 {
                     return true;
                 }
-                
-                hash[c]++;
             }
             
             return false;

@@ -23,8 +23,10 @@ Note:
 1 <= n <= 2000.
 Elements in the given array will be in range [-1,000,000, 1,000,000].
  */
-public class Q548_Split_Array_with_Equal_Sum {
-	public boolean splitArray(int[] nums) {
+public class Q548_Split_Array_with_Equal_Sum 
+{
+	public boolean splitArray(int[] nums) 
+	{
         if (nums.length < 7)
         {
             return false;
@@ -41,19 +43,19 @@ public class Q548_Split_Array_with_Equal_Sum {
         
         for (int j = 3; j < size-3; j++) 
         {
-            Set<Integer> set = new HashSet<>();
+            Set<Integer> candidates = new HashSet<>();
             
             for (int i = 1; i < j-1; i++) 
             {
                 if (sum[i-1] == sum[j-1] - sum[i])
                 {
-                    set.add(sum[i-1]);
+                    candidates.add(sum[i-1]);
                 }
             }
             
             for (int k = j+2; k < size-1; k++) 
             {
-                if (sum[size-1] - sum[k] == sum[k-1] - sum[j] && set.contains(sum[k-1] - sum[j]))
+                if (sum[size-1] - sum[k] == sum[k-1] - sum[j] && candidates.contains(sum[k-1] - sum[j]))
                 {
                     return true;
                 }

@@ -39,15 +39,15 @@ public class Q939_Minimum_Area_Rectangle {
         
         for(int[] point : points)
         {
-            allPoints.add(new Point(point[0],point[1]));
+            allPoints.add(new Point(point[0], point[1]));
         }
         
         /* Assume p1 and p2 are diagonals, check if there are p3, p4 available in given points*/
-        for(Point p1 : allPoints)
+        for (Point p1 : allPoints)
         {
-            for(Point p2 : allPoints)
+            for (Point p2 : allPoints)
             {
-                if(p1.equals(p2) || p1.x == p2.x || p1.y == p2.y) 
+                if (p1.equals(p2) || p1.x == p2.x || p1.y == p2.y) 
                 {
                     continue;
                 }
@@ -55,7 +55,7 @@ public class Q939_Minimum_Area_Rectangle {
                 Point p3 = new Point(p1.x,p2.y);
                 Point p4 = new Point(p2.x,p1.y);
                 
-                if(allPoints.contains(p3) && allPoints.contains(p4))
+                if (allPoints.contains(p3) && allPoints.contains(p4))
                 {
                     int area = Math.abs(p1.x-p2.x) * Math.abs(p1.y-p2.y);
                     result = Math.min(area, result);

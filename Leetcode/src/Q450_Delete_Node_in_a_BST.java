@@ -71,13 +71,14 @@ public class Q450_Delete_Node_in_a_BST {
     }
     
 	// time is O(logn)
-    public TreeNode findParenForDeleteNode(TreeNode parent, TreeNode node, int key) {
-        if(node == null || node.val == key) 
+    private TreeNode findParenForDeleteNode(TreeNode parent, TreeNode node, int key) 
+    {
+        if (node == null || node.val == key) 
         {
             return parent;
         }
         
-        if(key < node.val) 
+        if (key < node.val) 
         {
             return findParenForDeleteNode(node, node.left, key);
         } 
@@ -88,10 +89,11 @@ public class Q450_Delete_Node_in_a_BST {
     }
     
     // time is O(logn)
-    public void deleteNode(TreeNode parent, TreeNode node) {
+    private void deleteNode(TreeNode parent, TreeNode node) 
+    {
         if (node.right == null) 
         {
-            if(parent.left == node) 
+            if (parent.left == node) 
             {
                 parent.left = node.left;
             } 
@@ -102,7 +104,7 @@ public class Q450_Delete_Node_in_a_BST {
         } 
         else if (node.left == null) 
         {
-            if(parent.left == node) 
+            if (parent.left == node) 
             {
                 parent.left = node.right;
             } 
@@ -116,7 +118,7 @@ public class Q450_Delete_Node_in_a_BST {
             TreeNode father = node;
             TreeNode current = node.right;
             
-            while(current.left != null) 
+            while (current.left != null) 
             {
                 father = current;
                 current = current.left;
@@ -131,7 +133,7 @@ public class Q450_Delete_Node_in_a_BST {
                 father.right = current.right;
             }
             
-            if(parent.left == node) 
+            if (parent.left == node) 
             {
                 parent.left = current;
             } 

@@ -34,7 +34,7 @@ public class Q169_Majority_Element {
                 recordNum = nums[i];
                 count = 1;
             }
-            else 
+            else    // count--放在 count == 0之后，防止第一次进入的时候不会出错！！！
             {
                 count--;
             }

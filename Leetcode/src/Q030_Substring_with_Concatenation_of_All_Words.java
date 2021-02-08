@@ -18,8 +18,10 @@ You should return the indices: [0,9].
  * 
  **************************************/
 
-public class Q030_Substring_with_Concatenation_of_All_Words {
-	public List<Integer> findSubstring(String s, String[] words) {
+public class Q030_Substring_with_Concatenation_of_All_Words 
+{
+	public List<Integer> findSubstring(String s, String[] words) 
+	{
         List<Integer> result = new LinkedList<>();
         
         if (s == null || s.length() == 0 || words == null || words.length == 0)

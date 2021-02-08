@@ -65,7 +65,6 @@ public class Q547_Friend_Circles {
                 if (matrix[curNode][i] == 1 && !visited.contains(i))
                 {
                     queue.offer(i);
-                    visited.add(i);
                 }
             }
         }

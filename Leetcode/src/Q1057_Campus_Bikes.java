@@ -62,13 +62,7 @@ public class Q1057_Campus_Bikes {
             for (int j = 0; j < bikes.length; j++)
             {
                 int dist = Math.abs(workers[i][0]-bikes[j][0]) + Math.abs(workers[i][1]-bikes[j][1]);
-                
-                if (!map.containsKey(dist))
-                {
-                    map.put(dist, new LinkedList<int[]>());
-                }
-                
-                map.get(dist).add(new int[] {i, j});
+                map.computeIfAbsent(dist, x -> new LinkedList<>()).add(new int[] {i, j});
                 maxDist = Math.max(maxDist, dist);
                 minDist = Math.min(minDist, dist);
             }

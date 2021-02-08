@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /***
  * Given a string s and an integer array indices of the same length.
 
@@ -43,24 +45,23 @@ All values of indices are unique (i.e. indices is a permutation of the integers 
  *
  */
 public class Q1528_Shuffle_String {
-	public String restoreString(String s, int[] indices) {
-        if (s == null || s.length() == 0 || indices == null || indices.length != s.length())
+	public String restoreString(String s, int[] indices) 
+    {
+        if (s == null || s.length() == 0 || indices == null || indices.length == 0)
         {
-            return "";
+            return "";        
         }
         
-        int size = s.length();
-        char[] letters = new char[size];
-        boolean[] visited = new boolean[size];
+        char[] letters = new char[s.length()];
+        Arrays.fill(letters, ' ');
         
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < s.length(); i++)
         {
-            if (indices[i] >= size || visited[indices[i]])
+            if (letters[indices[i]] != ' ')
             {
                 return "";
             }
             
-            visited[indices[i]] = true;
             letters[indices[i]] = s.charAt(i);
         }
         

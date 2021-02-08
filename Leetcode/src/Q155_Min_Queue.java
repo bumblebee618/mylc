@@ -18,6 +18,7 @@ public class Q155_Min_Queue
     {
     	queue.offer(x);
     	
+    	// x == dq.peekLast() 不能去除，防止有重复元素的情况
         while (!dq.isEmpty() && x < dq.peekLast()) 
         {
         	dq.pollLast();

@@ -15,8 +15,10 @@ The input strings only contain lower case letters.
 The length of both given strings is in range [1, 10,000].
  *
  */
-public class Q567_Permutation_in_String {
-	public boolean checkInclusion(String s1, String s2) {
+public class Q567_Permutation_in_String 
+{
+	public boolean checkInclusion(String s1, String s2) 
+    {
         if (s1 == null || s1.length() == 0)
         {
             return true;
@@ -25,7 +27,7 @@ public class Q567_Permutation_in_String {
         {
             return false;
         }
-        else if (s2.length() < s1.length())
+        else if (s1.length() > s2.length())
         {
             return false;
         }
@@ -38,29 +40,27 @@ public class Q567_Permutation_in_String {
             hash1[c]++;
         }
         
-        for (int i = 0; i < s1.length()-1; i++)
+        for (int i = 0; i < s2.length(); i++)
         {
             hash2[s2.charAt(i)]++;
+            
+            if (i >= s1.length()-1)
+            {
+                if (isValid(hash1, hash2))
+                {
+                    return true;
+                }
+                
+                hash2[s2.charAt(i - (s1.length()-1))]--;
+            }
         }
         
-        for (int i = s1.length()-1; i < s2.length(); i++)
-        {
-            hash2[s2.charAt(i)]++;
-            
-            if (isValid(hash1, hash2))
-            {
-                return true;
-            }
-            
-            hash2[s2.charAt(i-s1.length()+1)]--;
-        }
-         
         return false;
     }
     
     private boolean isValid(int[] hash1, int[] hash2)
     {
-        for (int i = 0; i < 256; i++)
+        for (int i = 0; i < hash1.length; i++)
         {
             if (hash1[i] != hash2[i])
             {

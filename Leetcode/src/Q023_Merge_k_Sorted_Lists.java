@@ -6,68 +6,73 @@ import java.util.*;
  * 
  * */
 
-public class Q023_Merge_k_Sorted_Lists {
+public class Q023_Merge_k_Sorted_Lists 
+{
 	// Solution 1: using priorityQueue
-		public ListNode mergeKLists(ListNode[] lists) {
-	        if (lists == null || lists.length == 0)
-	        {
-	            return null;
-	        }
-	        
-	        /***
-	        Queue<ListNode> heap = new PriorityQueue<>(size, new Comparator<ListNode>(){
-	            @Override
-	            public int compare(ListNode node1, ListNode node2)
-	            {
-	                return node1.val - node2.val;
-	            }
-	        });
-	        ***/
-	        
-	        int size = lists.length;
-	        Queue<ListNode> heap = new PriorityQueue<>(size, (a, b) -> a.val - b.val);
-	        
-	        for (ListNode list : lists)
-	        {
-	            if (list != null)
-	            {
-	                heap.offer(list);
-	            }
-	        }
-	        
-	        ListNode dummy = new ListNode(0);
-	        ListNode pointer = dummy;
-	        
-	        while (!heap.isEmpty())
-	        {
-	            ListNode node = heap.poll();
-	            pointer.next = node;
-	            pointer = pointer.next;
-	            
-	            if (node.next != null)
-	            {
-	                heap.offer(node.next);
-	            }
-	        }
-	        
-	        return dummy.next;
-	    }
+	public ListNode mergeKLists(ListNode[] lists) 
+	{
+		if (lists == null || lists.length == 0) 
+		{
+			return null;
+		}
+
+		/***
+		 * Queue<ListNode> heap = new PriorityQueue<>(size, new
+		 * Comparator<ListNode>(){
+		 * 
+		 * @Override public int compare(ListNode node1, ListNode node2) { return
+		 *           node1.val - node2.val; } });
+		 ***/
+
+		Queue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);
+
+		for (ListNode list : lists) 
+		{
+			if (list != null) 
+			{
+				heap.offer(list);
+			}
+		}
+
+		ListNode dummy = new ListNode(0);
+		ListNode pointer = dummy;
+
+		while (!heap.isEmpty()) 
+		{
+			ListNode node = heap.poll();
+			pointer.next = node;
+			pointer = pointer.next;
+
+			if (node.next != null) 
+			{
+				heap.offer(node.next);
+			}
+		}
+
+		return dummy.next;
+	}
 		
 		
 		
 	// Solution 2: using divide & conquer
-	public ListNode mergeKLists2(ListNode[] lists) {
-		if (lists == null || lists.length == 0) {
+	public ListNode mergeKLists2(ListNode[] lists) 
+	{
+		if (lists == null || lists.length == 0) 
+		{
 			return null;
 		}
 
-		return mergeList(lists, 0, lists.length - 1);
+		return mergeList(lists, 0, lists.length-1);
 	}
 
-	public ListNode mergeList(ListNode[] lists, int start, int end) {
-		if (start > end) {
+	public ListNode mergeList(ListNode[] lists, int start, int end) 
+	{
+		if (start > end) 
+		{
 			return null;
-		} else if (start == end) {
+		} 
+		else if (start == end) 
+		{
 			return lists[start];
 		}
 
@@ -76,29 +81,38 @@ public class Q023_Merge_k_Sorted_Lists {
 		ListNode rightList = mergeList(lists, mid + 1, end);
 
 		ListNode dummy = new ListNode(0);
-		ListNode node = dummy;
+		ListNode pointer = dummy;
 
-		while (leftList != null || rightList != null) {
-			if (leftList != null && rightList != null) {
-				if (leftList.val < rightList.val) {
-					node.next = leftList;
+		while (leftList != null || rightList != null) 
+		{
+			if (leftList != null && rightList != null) 
+			{
+				if (leftList.val < rightList.val) 
+				{
+					pointer.next = leftList;
 					leftList = leftList.next;
-				} else {
-					node.next = rightList;
+				} 
+				else 
+				{
+					pointer.next = rightList;
 					rightList = rightList.next;
 				}
-			} else if (leftList != null && rightList == null) {
-				node.next = leftList;
+			} 
+			else if (leftList != null && rightList == null)
+			{
+				pointer.next = leftList;
 				leftList = leftList.next;
-			} else {
-				node.next = rightList;
+			} 
+			else 
+			{
+				pointer.next = rightList;
 				rightList = rightList.next;
 			}
 
-			node = node.next;
+			pointer = pointer.next;
 		}
 
-		node.next = null;
+		pointer.next = null;
 		return dummy.next;
 	}
 

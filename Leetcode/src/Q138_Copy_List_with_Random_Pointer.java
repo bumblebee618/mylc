@@ -24,13 +24,9 @@ public class Q138_Copy_List_with_Random_Pointer {
         
         while (head != null) 
         {
-        	RandomListNode newNode = null;
-        	
-            if (map.containsKey(head)) 
-            {
-                newNode = map.get(head);
-            } 
-            else 
+        	RandomListNode newNode = map.getOrDefault(head, null);
+
+            if (newNode == null) 
             {
                 newNode = new RandomListNode(head.label);
                 map.put(head, newNode);
@@ -40,19 +36,18 @@ public class Q138_Copy_List_with_Random_Pointer {
 
             if (head.random != null) 
             {
-                if (map.containsKey(head.random)) 
+            	RandomListNode random = map.getOrDefault(head.random, null);
+
+                if (random == null) 
                 {
-                    newNode.random = map.get(head.random);
-                } 
-                else 
-                {
-                	RandomListNode random = new RandomListNode(head.random.label);
-                    newNode.random = random;
+                	random = new RandomListNode(head.random.label);
                     map.put(head.random, random);
                 }
+                
+                newNode.random = random;
             }
 
-            pointer = newNode;
+            pointer = pointer.next;
             head = head.next;
         }
         

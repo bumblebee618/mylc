@@ -15,50 +15,61 @@ For example,
  * */
 
 
-public class Q166_Fraction_to_Recurring_Decimal {
-	public String fractionToDecimal(int numerator, int denominator) {
-        if(numerator == 0) {
+public class Q166_Fraction_to_Recurring_Decimal 
+{
+	public String fractionToDecimal(int numerator, int denominator) 
+	{
+        if (numerator == 0) 
+        {
             return "0";
-        } else if(denominator == 0){
+        } 
+        else if (denominator == 0)
+        {
             return "";
         }
         
-        StringBuilder sb = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         
-        if(numerator > 0 && denominator < 0 || numerator < 0 && denominator > 0) {
-            sb.append("-");
+        if (numerator > 0 && denominator < 0 || numerator < 0 && denominator > 0) 
+        {
+            builder.append("-");
         }
         
         long num = Math.abs((long) numerator);
         long denom = Math.abs((long) denominator);
         
-        sb.append(num / denom);
+        builder.append(num / denom);
         num %= denom;
         
-        if(num == 0) {
-            return sb.toString();
+        if (num == 0) 
+        {
+            return builder.toString();
         }
         
-        sb.append(".");
+        builder.append(".");
         Map<Long, Integer> insertMap = new HashMap<>();   // 记录余数以及此余数后头第一个insert avail的位置
-        insertMap.put(num, sb.length());   
+        insertMap.put(num, builder.length());   
         
-        while(num > 0) {
+        while (num > 0) 
+        {
             num *= 10;           // 将小数点后的第一位乘10
-            sb.append(num / denom);
+            builder.append(num / denom);
             num %= denom;
             
-            if(insertMap.containsKey(num)) {
+            if (insertMap.containsKey(num)) 
+            {
                 int pos = insertMap.get(num);
-                sb.insert(pos, "(");
-                sb.append(")");
+                builder.insert(pos, "(");
+                builder.append(")");
                 break;
-            } else {
-                insertMap.put(num, sb.length());
+            } 
+            else
+            {
+                insertMap.put(num, builder.length());
             }
         }
         
-        return sb.toString();
+        return builder.toString();
     }
 	
 	

@@ -62,12 +62,10 @@ public class Q1029_Two_City_Scheduling
             if (countA == size)
             {
                 totalCost += cost[1];
-                countB++;
             }
             else if (countB == size)
             {
                 totalCost += cost[0];
-                countA++;
             }
             else
             {

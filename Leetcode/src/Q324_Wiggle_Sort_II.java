@@ -17,7 +17,8 @@ Follow Up:
  * 
  * */
 
-public class Q324_Wiggle_Sort_II {	
+public class Q324_Wiggle_Sort_II 
+{	
 	public void wiggleSort(int[] nums) 
 	{
         if (nums == null || nums.length == 0)
@@ -37,7 +38,7 @@ public class Q324_Wiggle_Sort_II {
             
             if (index + 1 < len)
             {
-                temp[index + 1] = nums[len - 1 - i];
+                temp[index + 1] = nums[(len - 1) - i];
             }
             
             index += 2;

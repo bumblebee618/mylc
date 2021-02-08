@@ -46,9 +46,11 @@ All characters have an ASCII value in [35, 126].
 1 <= len(chars) <= 1000.
  *
  */
-public class Q443_String_Compression {
+public class Q443_String_Compression 
+{
 	// solution 1: Time complexity is O(n) and space is O(1)
-	public int compress(char[] chars) {
+	public int compress(char[] chars) 
+    {
         if (chars == null || chars.length == 0)
         {
             return 0;
@@ -72,17 +74,15 @@ public class Q443_String_Compression {
                 count++;
             }
             
-            chars[back] = target;
+            chars[back++] = target;
             
             if (count > 1)
             {
                 for (char c : Integer.toString(count).toCharArray())
                 {
-                    chars[++back] = c; 
+                    chars[back++] = c; 
                 }
             }
-            
-            back++;
         }
         
         return back;

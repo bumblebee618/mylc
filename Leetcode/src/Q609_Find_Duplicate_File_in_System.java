@@ -64,11 +64,11 @@ List<List<String>> result = new LinkedList<>();
             }
         }
         
-        for (String key : map.keySet())
+        for (Map.Entry<String, List<String>> entry : map.entrySet())
         {
-            if (map.get(key).size() > 1)
+            if (entry.getValue().size() > 1)
             {
-                result.add(map.get(key));
+                result.add(entry.getValue());
             }
         }
         

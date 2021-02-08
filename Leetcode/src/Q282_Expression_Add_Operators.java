@@ -47,7 +47,7 @@ public class Q282_Expression_Add_Operators {
         for (int end = start; end < num.length(); end++)
         {
             if (num.charAt(start) == '0' && end > start)         // 注意这里是start，而不是 i  ！！！
-            {                                                  // 可以是 "0", 但不可以是"01"之类的 ！！！
+            {                                                    // 可以是 "0", 但不可以是"01"之类的 ！！！
                 return;
             }
             
@@ -61,7 +61,7 @@ public class Q282_Expression_Add_Operators {
             {
                 backtrack(result, num, end+1, String.format("%s+%s", solution, curNum), target, sum+curNum, curNum);
                 backtrack(result, num, end+1, String.format("%s-%s", solution, curNum), target, sum-curNum, -curNum);
-                backtrack(result, num, end+1, String.format("%s*%s", solution, curNum), target, sum+prevSum*(curNum-1), prevSum*curNum);
+                backtrack(result, num, end+1, String.format("%s*%s", solution, curNum), target, sum-prevSum + prevSum*curNum, prevSum*curNum);
             }
         }
     }

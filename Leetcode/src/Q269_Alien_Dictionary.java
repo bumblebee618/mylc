@@ -28,9 +28,11 @@ There may be multiple valid order of letters, return any one of them is fine.
  * */
 
 
-public class Q269_Alien_Dictionary {
+public class Q269_Alien_Dictionary 
+{
 	// using topology sort
-	public String alienOrder(String[] words) {
+	public String alienOrder(String[] words) 
+	{
         if (words == null || words.length == 0)
         {
             return "";
@@ -86,11 +88,11 @@ public class Q269_Alien_Dictionary {
             }
         }
         
-        for (char c : dependencyMap.keySet())
+        for (Map.Entry<Character, Integer> entry : dependencyMap.entrySet())
         {
-            if (dependencyMap.get(c) == 0)
+            if (entry.getValue() == 0)
             {
-                queue.offer(c);
+                queue.offer(entry.getKey());
             }
         }
         

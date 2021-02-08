@@ -65,6 +65,7 @@ public class Q940_Distinct_Subsequences_II
             
             if (lastIndex[pos] >= 0)
             {
+            	// remove some duplicated subarrays
                 dp[i] -= dp[lastIndex[pos]-1];
             }
             

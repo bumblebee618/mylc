@@ -22,9 +22,10 @@ n == mat[i].length
 1 <= m, n <= 100
 1 <= mat[i][j] <= 100
  */
-public class Q1329_Sort_the_Matrix_Diagonally {
-	private int row;
-    private int col;
+public class Q1329_Sort_the_Matrix_Diagonally 
+{
+	private int row = 0;
+    private int col = 0;
     
     public int[][] diagonalSort(int[][] mat) 
     {
@@ -54,7 +55,7 @@ public class Q1329_Sort_the_Matrix_Diagonally {
         for (int i_x = x, i_y = y; i_x < row && i_y < col; i_x++, i_y++)
         {
             int candidate = mat[i_x][i_y];
-            int candidate_x = -1, candidate_y = -1;
+            int candidate_x = i_x, candidate_y = i_y;
               
             for (int j_x = i_x+1, j_y = i_y+1; j_x < row && j_y < col; j_x++, j_y++)
             {	
@@ -66,7 +67,7 @@ public class Q1329_Sort_the_Matrix_Diagonally {
                 }
             }
             
-            if (candidate_x != -1)
+            if (candidate_x != i_x)
             {
             	int temp = mat[i_x][i_y];
                 mat[i_x][i_y] = mat[candidate_x][candidate_y];
@@ -81,7 +82,8 @@ public class Q1329_Sort_the_Matrix_Diagonally {
     
     
     
-    /**************************************************************************/
+    /************************************* main *************************************/
+    
     private static void printMat(int[][] mat)
     {
     	for (int[] row : mat)

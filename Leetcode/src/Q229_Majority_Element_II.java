@@ -16,31 +16,41 @@ public class Q229_Majority_Element_II {
 	 * Finally, output the numbers appearing more than n/3 times.
 	 *********************************************************************************************************/
 	// using Moore's Voting Algorithm
-	public List<Integer> majorityElement(int[] nums) {
+	public List<Integer> majorityElement(int[] nums) 
+	{
         List<Integer> result = new LinkedList<>();
         
-        if (nums == null || nums.length == 0) {
+        if (nums == null || nums.length == 0) 
+        {
             return result;
         }
         
-        int majorNum1 = nums[0];
-        int majorNum2 = nums[0];
-        int count1 = 0;
-        int count2 = 0;
-        int len = nums.length;
+        int majorNum1 = nums[0], majorNum2 = nums[0];
+        int count1 = 0, count2 = 0;
+        int size = nums.length;
         
-        for (int num : nums) {
-            if (num == majorNum1) {
+        for (int num : nums) 
+        {
+            if (num == majorNum1) 
+            {
                 count1++;
-            } else if (num == majorNum2) {
+            } 
+            else if (num == majorNum2) 
+            {
                 count2++;
-            } else if (count1 == 0) {
+            } 
+            else if (count1 == 0) 
+            {
                 majorNum1 = num;
                 count1 = 1;
-            } else if (count2 == 0) {
+            } 
+            else if (count2 == 0) 
+            {
                 majorNum2 = num;
                 count2 = 1; 
-            } else {         // count--放在 count == 0之后，防止第一次进入的时候不会出错！！！
+            } 
+            else   // count--放在 count == 0之后，防止第一次进入的时候不会出错！！！
+            {         
                 count1--;
                 count2--;
             }
@@ -48,19 +58,25 @@ public class Q229_Majority_Element_II {
         
         count1 = count2 = 0;     // Count again for x1, x2
         
-        for (int num : nums) {
-            if (num == majorNum1) {
+        for (int num : nums) 
+        {
+            if (num == majorNum1) 
+            {
                 count1++;
-            } else if (num == majorNum2) {
+            } 
+            else if (num == majorNum2) 
+            {
                 count2++;
             } 
         }
         
-        if (count1 > len/3) {
+        if (count1 > size/3) 
+        {
             result.add(majorNum1);
         }
         
-        if (count2 > len/3) {
+        if (count2 > size/3) 
+        {
             result.add(majorNum2);
         }
         

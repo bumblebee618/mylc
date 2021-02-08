@@ -54,7 +54,7 @@ public class Q388_Longest_Absolute_File_Path
         
         int curLen = 0;
         int maxLen = 0;
-        Stack<Integer> stack = new Stack<Integer>();  // use stack to keep length of sub-path for each level
+        Stack<Integer> stack = new Stack<>();  // use stack to keep length of sub-path for each level
         
         for (String str : array)
         {

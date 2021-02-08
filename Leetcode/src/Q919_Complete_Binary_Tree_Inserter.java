@@ -97,9 +97,6 @@ public class Q919_Complete_Binary_Tree_Inserter
     
     public int insert(int v) 
     {
-        TreeNode insert = new TreeNode(v);
-        leaves.offer(insert);
-        
         while (!parents.isEmpty() && parents.peek().left != null && parents.peek().right != null)
         {
             parents.poll();
@@ -111,6 +108,8 @@ public class Q919_Complete_Binary_Tree_Inserter
             leaves = new LinkedList<>();
         }
         
+        TreeNode insert = new TreeNode(v);
+        leaves.offer(insert);
         TreeNode parent = parents.peek();     
         
         if (parent.left == null)

@@ -54,7 +54,8 @@ public class Q211_Add_and_Search_Word_Data_structure_design
     }
     
     /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
-    public boolean search(String word) {
+    public boolean search(String word) 
+    {
         if (word == null || word.length() == 0)
         {
             return false;

@@ -68,9 +68,57 @@ public class Q766_Toeplitz_Matrix {
     }
 	
 	
+	// solution 2:
+	public boolean isToeplitzMatrix2(int[][] matrix) 
+    {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+        {
+            return false;
+        }
+        
+        int row = matrix.length;
+        int col = matrix[0].length;
+        
+        for (int i = 0; i < col; i++)
+        {
+            if (!isValid(matrix, 0, i))
+            {
+                return false;
+            }
+        }
+        
+        for (int i = 1; i < row; i++)
+        {
+            if (!isValid(matrix, i, 0))
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private boolean isValid(int[][] matrix, int x, int y)
+    {
+        int target = matrix[x][y];
+        
+        while (x < matrix.length && y < matrix[0].length)
+        {
+            if (matrix[x][y] != target)
+            {
+                return false;
+            }
+            
+            x++;
+            y++;
+        }
+        
+        return true;
+    }
 	
-	// solution 2
-	public boolean isToeplitzMatrix2(int[][] matrix) {
+	
+	// solution 3
+	public boolean isToeplitzMatrix3(int[][] matrix) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
         {
             return true;

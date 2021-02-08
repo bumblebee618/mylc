@@ -53,19 +53,15 @@ public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
         
         int minArrow = 1;
         int hitPos = points[0][1];
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Integer.MIN_VALUE);
         
         for (int[] point : points) 
         {
             if (hitPos >= point[0]) 
             {
-            	System.out.println("1: " + point[0] + ", " + point[1]);
                 hitPos = Math.min(hitPos, point[1]);
             } 
             else 
             {
-            	System.out.println("2: " + point[0] + ", " + point[1]);
                 minArrow++;
                 hitPos = point[1];
             }
@@ -77,6 +73,10 @@ public class Q452_Minimum_Number_of_Arrows_to_Burst_Balloons {
 	
 	
 	
+	
+	
+	
+	/************************************* main *************************************/
 	
 	public static void main(String[] args)
 	{

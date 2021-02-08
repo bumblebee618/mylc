@@ -7,7 +7,7 @@ import java.util.Stack;
 
 
 public class Q145_Binary_Tree_Postorder_Traversal {
-		// solution 2:
+		// solution 1:
 		public List<Integer> postorderTraversal(TreeNode root) 
 		{
 			List<Integer> result = new ArrayList<>();

@@ -35,14 +35,14 @@ public class Q1197_Minimum_Knight_Moves_Follow_Up
 			{
 				step1++;
 				
-				if (bfs(graph, queue1, visited1, visited2, true))
+				if (bfs(graph, queue1, visited1, visited2))
 				{
 					return step1 + step2;
 				}
 				
 				step2++;
 				
-				if (bfs(graph, queue2, visited2, visited1, false))
+				if (bfs(graph, queue2, visited2, visited1))
 				{
 					return step1 + step2;
 				}
@@ -54,8 +54,7 @@ public class Q1197_Minimum_Knight_Moves_Follow_Up
 		private boolean bfs(int[][] graph,
 							Queue<int[]> queue, 
 							Set<String> srcVisited, 
-							Set<String> desVisited,
-							boolean isSrc)
+							Set<String> desVisited)
 		{
 			int size = queue.size();
 			
