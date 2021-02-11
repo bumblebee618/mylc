@@ -87,6 +87,7 @@ public class Q752_Open_the_Lock {
                     
                     for (int move : moves)
                     {
+                    	// 负数的处理
                         digits[j] = (char) ((basePos + move + 10) % 10 + '0');
                         String nextNode = new String(digits);
                         

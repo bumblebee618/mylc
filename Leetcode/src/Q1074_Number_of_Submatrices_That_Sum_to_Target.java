@@ -31,8 +31,60 @@ Note:
 -1000 <= matrix[i] <= 1000
 -10^8 <= target <= 10^8
  */
-public class Q1074_Number_of_Submatrices_That_Sum_to_Target {
-	public int numSubmatrixSumTarget(int[][] matrix, int target) {
+public class Q1074_Number_of_Submatrices_That_Sum_to_Target 
+{
+	// solution 1:
+	public int numSubmatrixSumTarget(int[][] matrix, int target) 
+    {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+		{
+			return 0;
+		}
+		
+		int row = matrix.length, col = matrix[0].length;
+		int[][] dp = new int[row][col];
+        int result = 0;
+		
+		for (int i = 0; i < row; i++)
+		{
+			int rowSum = 0;
+			
+			for (int j = 0; j < col; j++)
+			{
+				rowSum += matrix[i][j];
+				dp[i][j] += rowSum;
+				
+				if (i > 0)
+				{
+					dp[i][j] += dp[i-1][j];
+				}
+			}
+		}
+		
+		for (int startRow = 0; startRow < row; startRow++)
+		{
+			for (int endRow = startRow; endRow < row; endRow++)
+			{
+				Map<Integer, Integer> map = new HashMap<>();
+				map.put(0, 1);
+				
+				for (int j = 0; j < col; j++)
+				{
+					int part1 = startRow > 0 ? dp[startRow-1][j] : 0;
+					int sum = dp[endRow][j] - part1;
+					result += map.getOrDefault(sum-target, 0);
+					map.put(sum, map.getOrDefault(sum, 0) + 1);
+				}
+			}
+		}
+		
+		return result; 
+    }
+	
+	
+	
+	// solution 2:
+	public int numSubmatrixSumTarget2(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
         {
             return 0;
@@ -74,5 +126,24 @@ public class Q1074_Number_of_Submatrices_That_Sum_to_Target {
         }
 
         return count;
+    }
+    
+    
+    
+    
+    public static void main(String[] args)
+    {
+    	Q1074_Number_of_Submatrices_That_Sum_to_Target test = new Q1074_Number_of_Submatrices_That_Sum_to_Target();
+    	
+    	int[][] matrix = 
+    		{
+    				{0,1,0},
+    				{1,1,1},
+    				{0,1,0}
+    		};
+    	
+    	int target = 0;
+    	
+    	System.out.println(test.numSubmatrixSumTarget(matrix, target));
     }
 }

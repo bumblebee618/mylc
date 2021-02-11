@@ -70,7 +70,7 @@ public class Q827_Making_A_Large_Island {
         for (int islandId : islandMap.keySet())
         {
         	// bfs per island
-        	bfs(islandMap, grid, uf, visited, islandMap.get(islandId));
+        	bfs(islandMap, grid, uf, islandMap.get(islandId));
         }
         
         return maxArea;
@@ -98,7 +98,6 @@ public class Q827_Making_A_Large_Island {
     		Map<Integer, List<int[]>> islandMap, 
     		int[][] grid, 
     		int[][] uf, 
-    		boolean[][] visited,
     		List<int[]> nodes)
     {
     	Queue<int[]> queue = new LinkedList<>();
@@ -116,11 +115,9 @@ public class Q827_Making_A_Large_Island {
                 
                 if (newX >= 0 && newX < grid.length 
                 	&& newY >= 0 && newY < grid[0].length 
-                	&& grid[newX][newY] == 0 
-                	&& !visited[newX][newY])
+                	&& grid[newX][newY] == 0)
                 {
                     queue.offer(new int[] {newX, newY});
-                    visited[newX][newY] = true;
                 }
             }
     	}

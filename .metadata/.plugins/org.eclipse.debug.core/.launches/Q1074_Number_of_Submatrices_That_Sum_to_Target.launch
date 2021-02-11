@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/Leetcode/src/Q1074_Number_of_Submatrices_That_Sum_to_Target.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="Q1074_Number_of_Submatrices_That_Sum_to_Target"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Leetcode"/>
+</launchConfiguration>

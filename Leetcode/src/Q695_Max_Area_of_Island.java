@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 
  * 
@@ -21,11 +24,14 @@ Given the above grid, return 0.
 Note: The length of each dimension in the given grid does not exceed 50.
  *
  */
-public class Q695_Max_Area_of_Island {
+public class Q695_Max_Area_of_Island 
+{
+	// solution 1:
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public int maxAreaOfIsland(int[][] grid) {
+    public int maxAreaOfIsland(int[][] grid) 
+    {
         if (grid == null || grid.length == 0 || grid[0].length == 0)
         {
             return 0;
@@ -69,10 +75,70 @@ public class Q695_Max_Area_of_Island {
         return count;
     }
 
+    // solution 2:
+    public int maxAreaOfIsland2(int[][] grid) 
+    {
+        if (grid == null || grid.length == 0 || grid[0].length == 0)
+        {
+            return 0;
+        }
+        
+        int row = grid.length, col = grid[0].length;
+        boolean[][] visited = new boolean[row][col];
+        int maxArea = 0;
+        
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (grid[i][j] == 1 && !visited[i][j])
+                {
+                    maxArea = Math.max(maxArea, bfs(grid, visited, i, j));
+                }
+            }
+        }
+        
+        return maxArea;
+    }
+    
+    private int bfs(int[][] grid, boolean[][] visited, int x, int y)
+    {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] {x, y});
+        visited[x][y] = true;
+        int area = 1;
+        
+        while (!queue.isEmpty())
+        {
+            int[] node = queue.poll();
+            
+            for (int i = 0; i < dx.length; i++)
+            {
+                int newX = node[0] + dx[i];
+                int newY = node[1] + dy[i];
+                
+                if (newX >= 0 && newX < grid.length 
+                	&& newY >= 0 && newY < grid[0].length 
+                	&& grid[newX][newY] == 1 && !visited[newX][newY])
+                {
+                    queue.offer(new int[] {newX, newY});
+                    area++;
+                    visited[newX][newY] = true;
+                }
+            }
+        }
+        
+        return area;
+    }
     
     
     
-    public static void main(String[] args) {
+    
+    
+    /************************************* main *************************************/ 
+    
+    public static void main(String[] args) 
+    {
     	int[][] grid = {
     			{1,1,0,0,0},
     			{1,1,0,0,0},
@@ -82,5 +148,6 @@ public class Q695_Max_Area_of_Island {
     	
     	Q695_Max_Area_of_Island test = new Q695_Max_Area_of_Island();
     	System.out.println(test.maxAreaOfIsland(grid));
+    	System.out.println(test.maxAreaOfIsland2(grid));
     }
 }
