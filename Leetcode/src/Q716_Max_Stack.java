@@ -25,62 +25,83 @@ Number of operations won't exceed 10000.
 The last four operations won't be called when stack is empty.
  *
  */
-public class Q716_Max_Stack {
+public class Q716_Max_Stack 
+{
 	private Stack<Integer> stack;
     private Stack<Integer> maxStack;
     
     /** initialize your data structure here. */
-    public Q716_Max_Stack() {
-        stack = new Stack();
-        maxStack = new Stack();
+    public Q716_Max_Stack() 
+    {
+        stack = new Stack<>();
+        maxStack = new Stack<>();
     }
     
-    public void push(int x) {
+    public void push(int x) 
+    {
         stack.push(x);
         
-        if (maxStack.isEmpty()) {
+        if (maxStack.isEmpty()) 
+        {
             maxStack.push(x);
-        } else {
+        } 
+        else 
+        {
             maxStack.push(Math.max(x, maxStack.peek()));
         }
     }
     
-    public int pop() {
-        if (stack.isEmpty()) {
+    public int pop() 
+    {
+        if (stack.isEmpty()) 
+        {
             return -1;
-        } else {
+        } 
+        else 
+        {
             maxStack.pop();
             return stack.pop();
         }
     }
     
-    public int top() {
-        if (stack.isEmpty()) {
+    public int top() 
+    {
+        if (stack.isEmpty()) 
+        {
             return -1;
-        } else {
+        } 
+        else 
+        {
             return stack.peek();
         }
     }
     
-    public int peekMax() {
-        if (maxStack.isEmpty()) {
+    public int peekMax() 
+    {
+        if (maxStack.isEmpty()) 
+        {
             return -1;
-        } else {
+        } 
+        else 
+        {
             return maxStack.peek();
         }
     }
     
-    public int popMax() {
+    public int popMax() 
+    {
         int max = maxStack.peek();
-        Stack<Integer> buffer = new Stack();
+        Stack<Integer> buffer = new Stack<>();
         
-        while (top() != max) {
+        while (top() != max) 
+        {
             buffer.push(pop());
         }
         
         pop();
         
-        while (!buffer.isEmpty()) {
+        while (!buffer.isEmpty()) 
+        {
             push(buffer.pop());
         }
         

@@ -1,0 +1,104 @@
+import java.util.Arrays;
+import java.util.Stack;
+
+/***
+ * 
+ * @author jackie
+ * 
+ * Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 109 + 7.
+
+ 
+
+Example 1:
+
+Input: arr = [3,1,2,4]
+Output: 17
+Explanation: 
+Subarrays are [3], [1], [2], [4], [3,1], [1,2], [2,4], [3,1,2], [1,2,4], [3,1,2,4]. 
+Minimums are 3, 1, 2, 4, 1, 1, 2, 1, 1, 1.
+Sum is 17.
+Example 2:
+
+Input: arr = [11,81,94,43,3]
+Output: 444
+ 
+
+Constraints:
+
+1 <= arr.length <= 3 * 104
+1 <= arr[i] <= 3 * 104
+ */
+public class Q907_Sum_of_Subarray_Minimums 
+{
+	public int sumSubarrayMins(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        int size = nums.length;
+        int result = 0;
+        int mod = 1_000_000_000 + 7;
+        
+        int[] right = new int[size];
+        Arrays.fill(right, Integer.MAX_VALUE);
+        Stack<Integer> stack = new Stack<>();
+        
+        for (int i = 0; i < size; i++)
+        {
+            while (!stack.isEmpty() && nums[i] < nums[stack.peek()])
+            {
+                right[stack.pop()] = i;
+            }
+            
+            stack.push(i);
+        }
+        
+        int[] left = new int[size];
+        Arrays.fill(left, Integer.MAX_VALUE);
+        stack = new Stack<>();
+        
+        for (int i = size-1; i >= 0; i--)
+        {
+            while (!stack.isEmpty() && nums[i] < nums[stack.peek()])
+            {
+                left[stack.pop()] = i;
+            }
+            
+            stack.push(i);
+        }
+        
+        for (int i = 0; i < size; i++)
+        {
+            int leftDist = left[i] == Integer.MAX_VALUE ? 1 : i - left[i];
+            int rightDist = right[i] == Integer.MAX_VALUE ? 1 : right[i] - i;
+            result = (result + leftDist*rightDist*nums[i]) % mod;
+        }
+        
+        printArray(left);
+        printArray(right);
+        
+        return result;
+    }
+	
+	
+	
+	
+	public void printArray(int[] array)
+	{
+		for (int num : array)
+		{
+			System.out.print(num + ", ");
+		}
+		
+		System.out.println();
+	}
+	
+	public static void main(String[] args)
+	{
+		Q907_Sum_of_Subarray_Minimums test = new Q907_Sum_of_Subarray_Minimums();
+		int[] nums = {3,1,2,4};
+		System.out.println(test.sumSubarrayMins(nums));
+	}
+}

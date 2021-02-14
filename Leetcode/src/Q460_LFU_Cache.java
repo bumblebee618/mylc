@@ -28,8 +28,84 @@ cache.get(4);       // returns 4
  * 
  ***/
 
-public class Q460_LFU_Cache {
-	// solution 1: using treeSet, time O(nlogn)
+public class Q460_LFU_Cache 
+{
+	// solution 1: time is O(1)
+	private Map<Integer, Cache> map;
+	// LinkedHashSet可以保证插入顺序和迭代输出的顺序一致
+    private Map<Integer, LinkedHashSet<Integer>> countList; 
+    private int capacity = 0;
+    private int minCount = 0;
+    
+    public Q460_LFU_Cache(int capacity) 
+    {
+        map = new HashMap<>();
+        countList = new HashMap<>();
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) 
+    {
+        if (capacity <= 0 || !map.containsKey(key))
+        {
+            return -1;
+        }
+        
+        Cache cache = map.get(key);
+        int prevCount = cache.count;
+        cache.count++;
+        countList.get(prevCount).remove(key);
+        countList.computeIfAbsent(cache.count, x -> new LinkedHashSet<>()).add(key);
+        
+        if (prevCount == minCount && countList.get(prevCount).size() == 0)
+        {
+            minCount++;
+        }
+        
+        return cache.value;
+    }
+    
+    public void put(int key, int value) 
+    {
+        if (capacity <= 0)
+        {
+            return;
+        }
+        
+        if (map.containsKey(key))
+        {
+            map.get(key).value = value;
+            get(key);
+            return;
+        }
+        
+        if (map.size() == capacity)
+        {
+            int delete = countList.get(minCount).iterator().next();
+            countList.get(minCount).remove(delete);
+            map.remove(delete);
+        }
+        
+        map.put(key, new Cache(value));
+        minCount = 1;
+        countList.computeIfAbsent(minCount, x -> new LinkedHashSet<>()).add(key);
+    }
+    
+    class Cache
+    {
+        public int value;
+        public int count;
+        
+        public Cache(int value)
+        {
+            this.value = value;
+            count = 1;
+        }
+    }
+	
+	
+	/***
+	// solution 2: using treeSet, time O(nlogn)
 	class LFUCache {
 		private int capacity;
 		private Map<Integer, Pair> map = new HashMap<>();
@@ -114,16 +190,16 @@ public class Q460_LFU_Cache {
 	        }
 	    }
 	    
+	    ***/
 	    
-	    
-	    // solution 2: using doubleList, time O(1)
-	    public class LFUCache2 {
+	    // solution 3: using doubleList, time O(1)
+	    public class LFUCache3 {
 	        private Node head = null;
 	        private int cap = 0;
 	        private HashMap<Integer, Integer> valueHash = null;
 	        private HashMap<Integer, Node> nodeHash = null;
 	        
-	        public LFUCache2(int capacity) {
+	        public LFUCache3(int capacity) {
 	            this.cap = capacity;
 	            valueHash = new HashMap<Integer, Integer>();
 	            nodeHash = new HashMap<Integer, Node>();
@@ -231,5 +307,4 @@ public class Q460_LFU_Cache {
 	            }
 	        }
 	    }
-	}
 }

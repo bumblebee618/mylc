@@ -27,49 +27,56 @@ public class Q315_Count_of_Smaller_Numbers_After_Self {
 	 * 
 	 ***************************************************************************************************************/
 	// solution 1: using binary search + list
-	public List<Integer> countSmaller(int[] nums) {
-        if(nums == null || nums.length == 0){
-            return new ArrayList<Integer>();
+	public List<Integer> countSmaller(int[] nums) 
+    {
+        List<Integer> result = new LinkedList<>();
+        
+        if (nums == null || nums.length == 0)
+        {
+            return result;
         }
         
-        List<Integer> list = new ArrayList<Integer>();
-        int len = nums.length;
-        Integer[] position = new Integer[len];
+        int size = nums.length;
+        List<Integer> list = new ArrayList<>();
         
-        for(int i = len - 1; i >= 0; i--){
+        for (int i = size-1; i >= 0; i--)
+        {
             int pos = findPos(list, nums[i]);
-            position[i] = pos;
             list.add(pos, nums[i]);
+            result.add(0, pos);
         }
         
-        return Arrays.asList(position);
+        return result;
     }
     
-    public int findPos(List<Integer> list, int target){
-        if(list.size() == 0 || target <= list.get(0)){
+    private int findPos(List<Integer> list, int target)
+    {
+        if (list.size() == 0 || target <= list.get(0))
+        {
             return 0;
-        } else if(target > list.get(list.size() - 1)){
+        }
+        else if (target > list.get(list.size()-1))
+        {
             return list.size();
         }
         
-        int left = 0, right = list.size() - 1;
+        int left = 0, right = list.size()-1;
         
-        while(left + 1 < right){
-            int midIndex = left + (right - left) / 2;
-            int mid = list.get(midIndex);
+        while (left + 1 < right)
+        {
+            int mid = left + (right - left) / 2;
             
-            if(mid < target){
-                left = midIndex;
-            } else {
-                right = midIndex;
+            if (list.get(mid) < target)
+            {
+                left = mid;
+            }
+            else
+            {
+                right = mid;
             }
         }
         
-        if(list.get(left) >= target){
-            return left;
-        } else {
-            return right;
-        }
+        return list.get(left) >= target ? left : right;
     }
 	
 	
@@ -77,8 +84,10 @@ public class Q315_Count_of_Smaller_Numbers_After_Self {
     
     
     // solution 2: using binary search + Arrays.binarySearch()
-    public List<Integer> countSmaller2(int[] nums) {
-        if (nums == null || nums.length == 0) {
+    public List<Integer> countSmaller2(int[] nums) 
+    {
+        if (nums == null || nums.length == 0) 
+        {
             return new ArrayList<>();
         }
         
@@ -87,13 +96,15 @@ public class Q315_Count_of_Smaller_Numbers_After_Self {
         Integer[] position = new Integer[len];
         int arrayLen = 0;	
         
-        for(int i = len - 1; i >= 0; i--) {
+        for (int i = len - 1; i >= 0; i--) 
+        {
             int pos = Arrays.binarySearch(array, 0, arrayLen, nums[i]);            
             pos = (pos < 0) ? -(pos + 1) : pos;
             array[pos] = nums[i];
             position[i] = pos;
             
-            if(pos == arrayLen) {
+            if (pos == arrayLen) 
+            {
                 arrayLen++;
             } 
         }

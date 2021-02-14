@@ -11,8 +11,10 @@ Input:
 Output: 3
 Hint: The number of elements in the given matrix will not exceed 10,000.
  */
-public class Q562_Longest_Line_of_Consecutive_One_in_Matrix {
-	public int longestLine(int[][] matrix) {
+public class Q562_Longest_Line_of_Consecutive_One_in_Matrix 
+{
+	public int longestLine(int[][] matrix) 
+	{
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
         {
             return 0;
