@@ -2,3 +2,5 @@
 1613263894644	Rename field 'calender'
 1613281189229	Rename type 'Q000_Minimum_Degree_of_a_Connected_Trio_in_a_Graph'
 1613281238608	Rename type 'Q000_Minimum_Limit_of_Balls_in_a_Bag'
+1613324053798	Rename method 'isValid'
+1613359343812	Rename field 'id'

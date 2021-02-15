@@ -36,8 +36,59 @@ Note:
 All worker and bike locations are distinct.
 1 <= workers.length <= bikes.length <= 10
  */
-public class Q1066_Campus_Bikes_II {
-	public int assignBikes(int[][] workers, int[][] bikes) {
+public class Q1066_Campus_Bikes_II 
+{
+	// solution 1:
+	private int minDistance = Integer.MAX_VALUE;
+    
+    public int assignBikes(int[][] workers, int[][] bikes) 
+    {
+        if (workers == null || workers.length == 0 || bikes == null || bikes.length == 0)
+        {
+            return 0;
+        }
+        else if (workers.length > bikes.length)
+        {
+            return 0;
+        }
+        
+        backtrack(workers, bikes, new boolean[bikes.length], 0, 0);
+        return minDistance;
+    }
+    
+    private void backtrack(int[][] workers, int[][] bikes, boolean[] visited, int workerId, int curDistance)
+    {
+        if (workerId == workers.length)
+        {
+            minDistance = Math.min(minDistance, curDistance);
+            return;
+        }
+        else if (curDistance > minDistance)
+        {
+            return;
+        }
+        
+        for (int i = 0; i < bikes.length; i++)
+        {
+            if (!visited[i])
+            {
+                visited[i] = true;
+                backtrack(workers, bikes, visited, workerId+1, curDistance+getDistance(workers[workerId], bikes[i]));
+                visited[i] = false;
+            }
+        }
+    }
+    
+    private int getDistance(int[] p1, int[] p2) 
+    {
+        return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
+    }
+	
+	
+    
+    // solution 2:
+	public int assignBikes2(int[][] workers, int[][] bikes) 
+	{
         if (workers == null || workers.length == 0 || workers[0].length != 2)
         {
             return 0;

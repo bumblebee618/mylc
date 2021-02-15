@@ -38,49 +38,64 @@ directory.check(2);
  * 
  * */
 
-public class Q379_Design_Phone_Directory {
-	private Queue<Integer> numberPool = new LinkedList<Integer>();
-    private Set<Integer> used = new HashSet<Integer>();
-    private int capacity;
-    
+public class Q379_Design_Phone_Directory 
+{
+	private Queue<Integer> queue;
+    private Set<Integer> occupidedNums;
+    private int guid = 0;
+    private int capacity = 0;
+
     /** Initialize your data structure here
         @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
-    public Q379_Design_Phone_Directory(int maxNumbers) {
-        capacity = maxNumbers;
+    public Q379_Design_Phone_Directory(int maxNumbers) 
+    {
+        queue = new LinkedList<>();
+        occupidedNums = new HashSet<>();
         
-        for(int i = 0; i < capacity; i++){
-            numberPool.offer(i);
+        if (maxNumbers <= 0)
+        {
+            return;
         }
+        
+        capacity = maxNumbers;
     }
     
     /** Provide a number which is not assigned to anyone.
         @return - Return an available number. Return -1 if none is available. */
-    public int get() {
-    	if(used.size() == capacity) {
+    public int get() 
+    {
+        if (occupidedNums.size() == capacity)
+        {
             return -1;
         }
         
-        int ans = numberPool.poll();
-        used.add(ans);
-        return ans;
+        if (queue.isEmpty())
+        {
+            for (int i = 0; i < 10 && guid < capacity; i++)
+            {
+                queue.offer(guid++);
+            }
+        }
+        
+        int number = queue.poll();
+        occupidedNums.add(number);
+        return number;
     }
     
     /** Check if a number is available or not. */
-    public boolean check(int number) {
-        if(number < 0 || number >= capacity){
-            return false;
-        } else {
-            return !used.contains(number);
-        }
+    public boolean check(int number) 
+    {
+        return !occupidedNums.contains(number);    
     }
     
     /** Recycle or release a number. */
-    public void release(int number) {
-    	if(!used.contains(number)) {
-            return;
+    public void release(int number) 
+    {
+        if (occupidedNums.contains(number))
+        {
+            occupidedNums.remove(number);
+            queue.offer(number);
         }
-        
-        used.remove(number);
-        numberPool.offer(number);
     }
+
 }

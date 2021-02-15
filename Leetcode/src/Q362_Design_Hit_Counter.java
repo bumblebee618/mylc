@@ -39,66 +39,46 @@ Follow up:
  * */
 
 public class Q362_Design_Hit_Counter {
-	// solution 1: using array, similar to hashmap
-	/************************************************************************
-	private int[] timeStamps;
-    private int[] hitCounts;
-    
-    
-    public Q362_Design_Hit_Counter() {
-        timeStamps = new int[300];
-        hitCounts = new int[300];
-    }
-    
-    public void hit(int timestamp) {
-        int index = timestamp % 300;
-        
-        if(timestamp != timeStamps[index]) {
-            timeStamps[index] = timestamp;
-            hitCounts[index] = 1;
-        } else {
-            hitCounts[index]++;
-        }
-    }
-    
-    public int getHits(int timestamp) {
-        int count = 0;
-        
-        for(int i = 0; i < 300; i++) {
-            if(timestamp - timeStamps[i] < 300) {
-                count += hitCounts[i];
-            }
-        }
-        
-        return count;
-    }
-    
-    ************************************************************************/
-    
-    
-	
-    // solution 2: using queue
+	// solution 2: using queue
 	private Queue<Integer> queue;
     
     /** Initialize your data structure here. */
-    public Q362_Design_Hit_Counter() {
+    public Q362_Design_Hit_Counter() 
+    {
         queue = new LinkedList<>();
     }
     
     /** Record a hit.
         @param timestamp - The current timestamp (in seconds granularity). */
-    public void hit(int timestamp) {
+    public void hit(int timestamp) 
+    {
+        if (timestamp < 1)
+        {
+            return;
+        }
+        
+        updateQueue(timestamp);
         queue.offer(timestamp);
     }
     
     /** Return the number of hits in the past 5 minutes.
         @param timestamp - The current timestamp (in seconds granularity). */
-    public int getHits(int timestamp) {
-        while(!queue.isEmpty() && timestamp - queue.peek() >= 300) {
-            queue.poll();
+    public int getHits(int timestamp) 
+    {
+        if (timestamp < 1)
+        {
+            return -1;
         }
         
-        return queue.size();
+        updateQueue(timestamp);
+        return queue.size();    
     }
     
+    private void updateQueue(int timestamp)
+    {
+        while (!queue.isEmpty() && timestamp - queue.peek() >= 300)
+        {
+            queue.poll();
+        }
+    }
 }

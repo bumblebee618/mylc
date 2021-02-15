@@ -37,25 +37,32 @@ public class Q359_Logger_Rate_Limiter {
 	private Map<String, Integer> map;
     
     /** Initialize your data structure here. */
-    public Q359_Logger_Rate_Limiter() {
-        map = new HashMap<String, Integer>();
+    public Q359_Logger_Rate_Limiter() 
+    {
+        map = new HashMap<>();
     }
     
     /** Returns true if the message should be printed in the given timestamp, otherwise returns false.
         If this method returns false, the message will not be printed.
         The timestamp is in seconds granularity. */
-    public boolean shouldPrintMessage(int timestamp, String message) {
-        if(map.containsKey(message)){
-            int preTimestamp = map.get(message);
-            if(timestamp - preTimestamp >= 10){
-                map.put(message, timestamp);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+    public boolean shouldPrintMessage(int timestamp, String message) 
+    {
+        if (timestamp < 0 || message == null || message.length() == 0)
+        {
+            return false;
+        }
+        
+        int prevTime = map.getOrDefault(message, -1);
+        
+        if (prevTime == -1 || timestamp >= prevTime + 10)
+        {
             map.put(message, timestamp);
             return true;
         }
+        else
+        {
+            return false;
+        }
     }
+
 }

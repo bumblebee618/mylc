@@ -66,20 +66,21 @@ It is guaranteed that all the employees can be informed.
 
 public class Q1376_Time_Needed_to_Inform_All_Employees 
 {
-	private int maxTime = 0;
-    
-    public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) 
+	public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) 
     {
-        if (n <= 0 || headID < 0 || manager.length == 0 || informTime.length == 0 || manager.length != informTime.length)
-        {
-            return 0;        
-        }
-        else if (manager[headID] != -1)
+        if (n <= 0 || headID < 0 
+            || manager == null || manager.length != n
+            || informTime == null || informTime.length != n)
         {
             return 0;
         }
         
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        Set<Integer>[] graph = new Set[n];
+        
+        for (int i = 0; i < n; i++)
+        {
+            graph[i] = new HashSet<>();
+        }
         
         for (int i = 0; i < manager.length; i++)
         {
@@ -88,25 +89,21 @@ public class Q1376_Time_Needed_to_Inform_All_Employees
                 continue;
             }
             
-            map.computeIfAbsent(manager[i], x -> new LinkedList<>()).add(i);
+            graph[manager[i]].add(i);
         }
         
-        dfs(map, headID, informTime[headID], informTime);
-        return maxTime;
+        return dfs(graph, headID, informTime);
     }
     
-    private void dfs(Map<Integer, List<Integer>> map, int node, int curTime, int[] informTime)
+    private int dfs(Set<Integer>[] graph, int curEmployee, int[] informTime)
     {
-        if (!map.containsKey(node))
+        int time = 0;
+        
+        for (int next : graph[curEmployee])
         {
-            return;
+            time = Math.max(time, dfs(graph, next, informTime));
         }
         
-        maxTime = Math.max(maxTime, curTime);
-        
-        for (int next : map.get(node))
-        {
-            dfs(map, next, curTime + informTime[next], informTime);
-        }
+        return time + informTime[curEmployee];
     }
 }
