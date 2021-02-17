@@ -54,7 +54,7 @@ public class Q380_Insert_Delete_GetRandom_O_1
         rand = new Random();
     }
     
-    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    /** Inserts a minValue to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) 
     {
         if (map.containsKey(val))
@@ -67,7 +67,7 @@ public class Q380_Insert_Delete_GetRandom_O_1
         return true;
     }
     
-    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    /** Removes a minValue from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) 
     {
         if (!map.containsKey(val))

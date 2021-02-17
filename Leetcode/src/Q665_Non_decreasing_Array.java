@@ -65,7 +65,7 @@ public class Q665_Non_decreasing_Array {
 	Without modify the input array
 	We can also do it without modifying the input by using a variable prev to hold the a[i-1]; if we have to lower a[i] to match a[i-1] instead of raising a[i-1], simply skip updating prev; 
 
-	Two situtations to modify the array element, current one or previous one. perv is used to keep record  value of last array element
+	Two situtations to modify the array element, current one or previous one. perv is used to keep record  minValue of last array element
 	***/
 	public boolean checkPossibility2(int[] nums) {
 	        if (nums == null || nums.length == 1)

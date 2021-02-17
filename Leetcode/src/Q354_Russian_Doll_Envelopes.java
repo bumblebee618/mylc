@@ -28,21 +28,58 @@ public class Q354_Russian_Doll_Envelopes {
 	 * 
 	 ***************************************************************************************/
 	
+		// solution 1: using binarySearch, time O(nlogn), space O(n)
+		public int maxEnvelopes(int[][] envelopes) 
+		{
+			if (envelopes == null || envelopes.length == 0 || envelopes[0].length == 0) 
+			{
+	            return 0;
+	        } 
+			else if (envelopes.length == 1) 
+			{
+	            return 1;
+	        }
+	        
+			// 这里的顺序是 先 array1[0] - array2[0] 再 array2[1] - array1[1] ！！！
+			Arrays.sort(envelopes, (a, b) -> a[0] != b[0] ? a[0] - b[0] : b[1] - a[1]);
+			
+			/***
+	        Arrays.sort(envelopes, new Comparator<int[]>(){
+	            public int compare(int[] array1, int[] array2) {     
+	                return array1[0] != array2[0] ? array1[0] - array2[0] : array2[1] - array1[1];
+	            }
+	        });
+	        ***/
+	        
+	        int len = envelopes.length;
+	        int[] dp = new int[len];
+	        int maxLen = 0;
+	        
+	        for (int[] envelope : envelopes) 
+	        {
+	            int index = Arrays.binarySearch(dp, 0, maxLen, envelope[1]);
+	            index = (index < 0) ? -(index + 1) : index;
+	            dp[index] = envelope[1];
+	            
+	            if (index == maxLen) // index == dpLen时，dpLen++ ！！！
+	            {       
+	                maxLen++;
+	            }
+	        }
+	        
+	        return maxLen;
+	    }
+	
 	// test case: [4, 5], [4, 6] ->  [4, 6], [4, 5]
-	// solution 1: using DP, time O(n^2), space O(n)
-	public int maxEnvelopes(int[][] envelopes) {
+	// solution 2: using DP, time O(n^2), space O(n)
+	public int maxEnvelopes2(int[][] envelopes) {
         if(envelopes == null || envelopes.length == 0 || envelopes[0].length == 0) {
             return 0;
         } else if(envelopes.length == 1) {
             return 1;
         }
         
-        Arrays.sort(envelopes, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] array1, int[] array2) {   // 这里的顺序是 先 array1[0] - array2[0] 再 array2[1] - array1[1] ！！！
-                return array1[0] != array2[0] ? array1[0] - array2[0] : array2[1] - array1[1];
-            }
-        });
+        Arrays.sort(envelopes, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : b[1] - a[1]);
         
         int len = envelopes.length;
         int[] dp = new int[len];
@@ -63,68 +100,12 @@ public class Q354_Russian_Doll_Envelopes {
         return maxLen;
     }
 	
-	// lamda expression
-	public int maxEnvelopes2(int[][] envelopes) {
-        if (envelopes == null || envelopes.length == 0 || envelopes[0].length == 0) {
-            return 0;
-        }
-        
-        Arrays.sort(envelopes, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : b[1] - a[1]);
-        int len = envelopes.length, maxLen = 1;
-        int[] dp = new int[len];
-        
-        for (int i = 0; i < len; i++) {
-            dp[i] = 1;
-            
-            for (int j = 0; j < i; j++) {
-                if (envelopes[i][1] > envelopes[j][1]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-                
-                maxLen = Math.max(maxLen, dp[i]);
-            }
-        }
-        
-        return maxLen;
-    }
 	
-	
-	
-	// solution 2: using binarySearch, time O(nlogn), space O(n)
-	public int maxEnvelopes3(int[][] envelopes) {
-		if(envelopes == null || envelopes.length == 0 || envelopes[0].length == 0) {
-            return 0;
-        } else if(envelopes.length == 1) {
-            return 1;
-        }
-        
-        Arrays.sort(envelopes, new Comparator<int[]>(){
-            public int compare(int[] array1, int[] array2) {     // 这里的顺序是 先 array1[0] - array2[0] 再 array2[1] - array1[1] ！！！
-                return array1[0] != array2[0] ? array1[0] - array2[0] : array2[1] - array1[1];
-            }
-        });
-        
-        int len = envelopes.length;
-        int[] dp = new int[len];
-        int maxLen = 0;
-        
-        for(int[] envelope : envelopes) {
-            int index = Arrays.binarySearch(dp, 0, maxLen, envelope[1]);
-            index = (index < 0) ? -(index + 1) : index;
-            dp[index] = envelope[1];
-            
-            if(index == maxLen) {       // index == dpLen时，dpLen++ ！！！
-                maxLen++;
-            }
-        }
-        
-        return maxLen;
-    }
     
 
 	
 	// solution 3: using Binary Search, time complexity is O(nlogn)
-    public int maxEnvelopes4(int[][] envelopes) {
+    public int maxEnvelopes3(int[][] envelopes) {
     	if (envelopes == null || envelopes.length == 0 || envelopes[0].length == 0) {
             return 0;
         }

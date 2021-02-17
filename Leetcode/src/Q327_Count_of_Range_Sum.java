@@ -20,8 +20,10 @@ Example:
 
 public class Q327_Count_of_Range_Sum {
 	// using segment tree
-	public int countRangeSum(int[] nums, int lower, int upper) {
-        if (nums == null || nums.length == 0 || lower > upper) {
+	public int countRangeSum(int[] nums, int lower, int upper) 
+	{
+        if (nums == null || nums.length == 0 || lower > upper) 
+        {
             return 0;
         }
         
@@ -29,7 +31,8 @@ public class Q327_Count_of_Range_Sum {
         Set<Long> set = new HashSet<>();     // 用于去除重复的sum值
         long sum = 0;
         
-        for(int i = 0; i < nums.length; i++) {
+        for(int i = 0; i < nums.length; i++) 
+        {
             sum += (long) nums[i];
             set.add(sum);
         }
@@ -37,14 +40,16 @@ public class Q327_Count_of_Range_Sum {
         long[] array = new long[set.size()];
         int index = 0;
         
-        for (long num : set) {
+        for (long num : set) 
+        {
             array[index++] = num;
         }
         
         Arrays.sort(array);
         SegmentTreeNode root = buildTree(array, 0, array.length - 1);
 
-        for(int i = nums.length - 1; i >= 0; i--) {
+        for(int i = nums.length - 1; i >= 0; i--) 
+        {
             modify(root, sum);
             sum -= (long) nums[i];
             ans += query(root, (long)lower + sum, (long)upper + sum);
@@ -54,10 +59,14 @@ public class Q327_Count_of_Range_Sum {
     }
     
     
-    public SegmentTreeNode buildTree(long[] nums, int start, int end) {
-        if (start > end) {
+    private SegmentTreeNode buildTree(long[] nums, int start, int end) 
+    {
+        if (start > end) 
+        {
             return null;
-        } else if (start == end) {
+        } 
+        else if (start == end) 
+        {
             return new SegmentTreeNode(nums[start], nums[end]);
         }
         
@@ -68,34 +77,49 @@ public class Q327_Count_of_Range_Sum {
         return root;
     }
     
-    public int query(SegmentTreeNode node, long min, long max) {
-        if (node == null) {
+    private int query(SegmentTreeNode node, long min, long max) 
+    {
+        if (node == null) 
+        {
             return 0;
-        } else if (min > node.max || max < node.min) {
+        } 
+        else if (min > node.max || max < node.min) 
+        {
             return 0;
-        } else if (min <= node.min && node.max <= max) {
+        } 
+        else if (min <= node.min && node.max <= max)
+        {
             return node.count;
-        } else {
+        } 
+        else 
+        {
             return query(node.left, min, max) + query(node.right, min, max);
         }
     }
     
-    public void modify(SegmentTreeNode node, long value) {
-        if (node == null) {
-            return ;
-        } else if (node.min <= value && value <= node.max) {
+    private void modify(SegmentTreeNode node, long value) 
+    {
+        if (node == null) 
+        {
+            return;
+        } 
+        
+        if (node.min <= value && value <= node.max) 
+        {
             node.count++;
             modify(node.left, value);
             modify(node.right, value);
         }
     }
     
-    class SegmentTreeNode {
+    class SegmentTreeNode 
+    {
         int count;
         long max, min;
         SegmentTreeNode left, right;
         
-        public SegmentTreeNode(long min, long max) {
+        public SegmentTreeNode(long min, long max) 
+        {
             this.max = max;
             this.min = min;
             count = 0;
@@ -103,6 +127,13 @@ public class Q327_Count_of_Range_Sum {
         }
     }
 	
+    
+    
+    
+    
+    
+    
+    
 	
 	/*******************************************************/
 	// by other using divide and conquer， O(nlogn)

@@ -4,7 +4,7 @@ import java.util.*;
 Design and implement a TwoSum class. It should support the following operations: add and find.
 
 add - Add the number to an internal data structure.
-find - Find if there exists any pair of numbers which sum is equal to the value.
+find - Find if there exists any pair of numbers which sum is equal to the minValue.
 
 For example,
 	add(1); add(3); add(5);
@@ -32,7 +32,7 @@ public class Q170_Two_Sum_III_Data_structure_design {
 	    }
     }
 
-    // Find if there exists any pair of numbers which sum is equal to the value.
+    // Find if there exists any pair of numbers which sum is equal to the minValue.
     public boolean find(int value) {
     	for(int i = 0; i < list.size(); i++){
 	        int num1 = list.get(i);
@@ -73,11 +73,11 @@ public class Q170_Two_Sum_III_Data_structure_design {
 //	    map.put(number, map.containsKey(number) ? map.get(number) + 1 : 1);
 //	}
 //
-//    // Find if there exists any pair of numbers which sum is equal to the value.
-//	public boolean find(int value) {
+//    // Find if there exists any pair of numbers which sum is equal to the minValue.
+//	public boolean find(int minValue) {
 //	    for(Map.Entry<Integer, Integer> entry : map.entrySet()){
 //	    	int i = entry.getKey();
-//	    	int j = value - i;
+//	    	int j = minValue - i;
 //	    	if(i == j && entry.getValue() > 1 || i != j && map.containsKey(j)){
 //	    		return true;
 //	    	}

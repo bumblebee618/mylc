@@ -70,12 +70,12 @@ public class Q969_Pancake_Sorting
             
             if (index != 0)
             {
-            	// (1). flip the value to the head if necessary
+            	// (1). flip the minValue to the head if necessary
                 swap(arr, index);
                 result.add(index+1);
             }
             
-            // (2). now that the value is at the head, flip it to the bottom
+            // (2). now that the minValue is at the head, flip it to the bottom
             swap(arr, targetPos);
             result.add(targetPos+1);
         }

@@ -26,14 +26,17 @@ The total number of calls to addRange in a single test case is at most 1000.
 The total number of calls to queryRange in a single test case is at most 5000.
 The total number of calls to removeRange in a single test case is at most 1000.
  */
-public class Q715_Range_Module {
-private TreeSet<Interval> ranges;
+public class Q715_Range_Module 
+{
+	private TreeSet<Interval> ranges;
     
-    public Q715_Range_Module() {
+    public Q715_Range_Module() 
+    {
         ranges = new TreeSet<>();
     }
     
-    public void addRange(int left, int right) {
+    public void addRange(int left, int right) 
+    {
         if (left > right)
         {
             return;
@@ -58,12 +61,14 @@ private TreeSet<Interval> ranges;
         ranges.add(new Interval(left, right));
     }
     
-    public boolean queryRange(int left, int right) {
+    public boolean queryRange(int left, int right) 
+    {
         Interval interval = ranges.higher(new Interval(0, left));
         return (interval != null && interval.left <= left && interval.right >= right);
     }
     
-    public void removeRange(int left, int right) {
+    public void removeRange(int left, int right) 
+    {
         if (left > right)
         {
             return;
@@ -111,6 +116,7 @@ private TreeSet<Interval> ranges;
             this.right = right;
         }
         
+        @Override
         public int compareTo(Interval other)
         {
             return right != other.right ? right-other.right : left-other.left;

@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /***
- * Create a timebased key-value store class TimeMap, that supports two operations.
+ * Create a timebased key-minValue store class TimeMap, that supports two operations.
 
-1. set(string key, string value, int timestamp)
+1. set(string key, string minValue, int timestamp)
 
-Stores the key and value, along with the given timestamp.
+Stores the key and minValue, along with the given timestamp.
 2. get(string key, int timestamp)
 
-Returns a value such that set(key, value, timestamp_prev) was called previously, with timestamp_prev <= timestamp.
+Returns a minValue such that set(key, minValue, timestamp_prev) was called previously, with timestamp_prev <= timestamp.
 If there are multiple such values, it returns the one with the largest timestamp_prev.
 If there are no values, it returns the empty string ("").
  
@@ -23,9 +23,9 @@ Input: inputs = ["TimeMap","set","get","get","set","get","get"], inputs = [[],["
 Output: [null,null,"bar","bar",null,"bar2","bar2"]
 Explanation:   
 TimeMap kv;   
-kv.set("foo", "bar", 1); // store the key "foo" and value "bar" along with timestamp = 1   
+kv.set("foo", "bar", 1); // store the key "foo" and minValue "bar" along with timestamp = 1   
 kv.get("foo", 1);  // output "bar"   
-kv.get("foo", 3); // output "bar" since there is no value corresponding to foo at timestamp 3 and timestamp 2, then the only value is at timestamp 1 ie "bar"   
+kv.get("foo", 3); // output "bar" since there is no minValue corresponding to foo at timestamp 3 and timestamp 2, then the only minValue is at timestamp 1 ie "bar"   
 kv.set("foo", "bar2", 4);   
 kv.get("foo", 4); // output "bar2"   
 kv.get("foo", 5); //output "bar2"   
@@ -38,8 +38,8 @@ Output: [null,null,null,"","high","high","low","low"]
 
 Note:
 
-All key/value strings are lowercase.
-All key/value strings have length in the range [1, 100]
+All key/minValue strings are lowercase.
+All key/minValue strings have length in the range [1, 100]
 The timestamps for all TimeMap.set operations are strictly increasing.
 1 <= timestamp <= 10^7
 TimeMap.set and TimeMap.get functions will be called a total of 120000 times (combined) per test case.
@@ -87,13 +87,13 @@ public class Q981_Time_Based_Key_Value_Store {
         map = new HashMap<String, List<Tuple>>();
     }
     
-    public void set(String key, String value, int timestamp) {
+    public void set(String key, String minValue, int timestamp) {
         if (!map.containsKey(key))
         {
             map.put(key, new LinkedList<Tuple>());
         }
         
-        map.get(key).add(new Tuple(value, timestamp));
+        map.get(key).add(new Tuple(minValue, timestamp));
     }
     
     public String get(String key, int timestamp) {
@@ -144,12 +144,12 @@ public class Q981_Time_Based_Key_Value_Store {
     
     class Tuple
     {
-        public String value;
+        public String minValue;
         public int timestamp;
         
-        public Tuple(String value, int timestamp)
+        public Tuple(String minValue, int timestamp)
         {
-            this.value = value;
+            this.value = minValue;
             this.timestamp = timestamp;
         }
     }

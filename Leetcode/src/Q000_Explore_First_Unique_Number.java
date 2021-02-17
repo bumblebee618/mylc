@@ -7,8 +7,8 @@ import java.util.*;
  * You have a queue of integers, you need to retrieve the first unique integer in the queue.
 Implement the FirstUnique class:
 	• FirstUnique(int[] nums) Initializes the object with the numbers in the queue.
-	• int showFirstUnique() returns the value of the first unique integer of the queue, and returns -1 if there is no such integer.
-	• void add(int value) insert value to the queue.
+	• int showFirstUnique() returns the minValue of the first unique integer of the queue, and returns -1 if there is no such integer.
+	• void add(int minValue) insert minValue to the queue.
  
 Example 1:
 Input: 
@@ -55,7 +55,7 @@ firstUnique.showFirstUnique(); // return -1
 Constraints:
 	• 1 <= nums.length <= 10^5
 	• 1 <= nums[i] <= 10^8
-	• 1 <= value <= 10^8
+	• 1 <= minValue <= 10^8
 	• At most 50000 calls will be made to showFirstUnique and add.
  */
 public class Q000_Explore_First_Unique_Number {

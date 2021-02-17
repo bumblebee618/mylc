@@ -18,22 +18,24 @@ Explanation:
 There are 8 records with length 2 will be regarded as rewardable:
 "PP" , "AP", "PA", "LP", "PL", "AL", "LA", "LL"
 Only "AA" won't be regarded as rewardable owing to more than one absent times. 
-Note: The value of n won't exceed 100,000.
+Note: The minValue of n won't exceed 100,000.
  */
-public class Q552_Student_Attendance_Record_II {
-	public int checkRecord(int n) {
+public class Q552_Student_Attendance_Record_II 
+{
+	public int checkRecord2(int n) 
+	{
         if (n <= 0)
         {
             return 0;
         }
         
-        long[] endWithPorL = new long[n+1];
-        long[] endWithP = new long[n+1];
+        long[] endWithPorL = new long[n+1]; // doesn't contain 'A'
+        long[] endWithP = new long[n+1];    // doesn't contain 'A'
         endWithPorL[0] = 1;
         endWithP[0] = 1;
         endWithPorL[1] = 2;
         endWithP[1] = 1;
-        int M = 1000000007;
+        int M = 1_000_000_007;
         
         for (int i = 2; i <= n; i++)
         {
@@ -45,7 +47,8 @@ public class Q552_Student_Attendance_Record_II {
         
         for (int i = 0; i < n; i++)
         {
-            long sum = (endWithPorL[i] * endWithPorL[n-i-1]) % M;
+        	// insert 'A' into position i, [0.... i-1, A, .... n]
+            long sum = (endWithPorL[i] * endWithPorL[n-(i+1)]) % M;
             result = (result + sum) % M;
         }
         

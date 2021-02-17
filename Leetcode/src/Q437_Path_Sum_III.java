@@ -1,8 +1,8 @@
 /******
  * 
-You are given a binary tree in which each node contains an integer value.
+You are given a binary tree in which each node contains an integer minValue.
 
-Find the number of paths that sum to a given value.
+Find the number of paths that sum to a given minValue.
 
 The path does not need to start or end at the root or a leaf, 
 but it must go downwards (traveling only from parent nodes to child nodes).

@@ -117,7 +117,7 @@ public class Q505_The_Maze_II {
                 if (distance[newX][newY] > distance[current[0]][current[1]] + count) 
                 {
                     distance[newX][newY] = distance[current[0]][current[1]] + count;
-                    queue.add(new int[] {newX, newY});
+                    queue.offer(new int[] {newX, newY});
                 }
             }
         }

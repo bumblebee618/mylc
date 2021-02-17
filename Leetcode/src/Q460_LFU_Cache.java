@@ -4,8 +4,8 @@ import java.util.*;
  * 
 Design and implement a data structure for Least Frequently Used (LFU) cache. It should support the following operations: get and set.
 
-get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
-set(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least frequently used item before inserting a new item. For the purpose of this problem, when there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted.
+get(key) - Get the minValue (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+set(key, minValue) - Set or insert the minValue if the key is not already present. When the cache reaches its capacity, it should invalidate the least frequently used item before inserting a new item. For the purpose of this problem, when there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted.
 
 Follow up:
 	Could you do both operations in O(1) time complexity?
@@ -140,7 +140,7 @@ public class Q460_LFU_Cache
 	        return p.value;
 	    }
 	    
-	    public void set(int key, int value) {
+	    public void set(int key, int minValue) {
 	        if(capacity == 0){
 	            return;
 	        } 
@@ -152,26 +152,26 @@ public class Q460_LFU_Cache
 	                
 	        if(map.containsKey(key)){
 	           Pair p = map.get(key);
-	           p.value = value;
+	           p.value = minValue;
 	           treeSet.remove(p);
 	           p.increment();
 	           treeSet.add(p);	           
 	        } else{
-	            Pair n = new Pair(key, value, 1);
+	            Pair n = new Pair(key, minValue, 1);
 	            map.put(key, n);
 	            treeSet.add(n);
 	        }
 	    }
 	    	    
 	    class Pair {
-	        int value;
+	        int minValue;
 	        int key;
 	        int count;
 	        long timestamp;
 	        
-	        Pair(int key, int value, int count){
+	        Pair(int key, int minValue, int count){
 	            this.key= key;
-	            this.value = value;
+	            this.value = minValue;
 	            this.count = count;
 	            this.timestamp = System.nanoTime();
 	        }

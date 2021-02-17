@@ -37,7 +37,7 @@ Output: [1,1,8,8]
 Constraints:
 
 Each tree has at most 5000 nodes.
-Each node's value is between [-10^5, 10^5].
+Each node's minValue is between [-10^5, 10^5].
  */
 public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
 	private TreeNode r1 = null;

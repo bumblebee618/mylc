@@ -34,7 +34,7 @@ Example 3:
 Input: 11
 Output: false
 Explanation: 
-We get 11 after rotating 11, 11 is a valid number but the value remains the same, thus 11 is not a confusing number.
+We get 11 after rotating 11, 11 is a valid number but the minValue remains the same, thus 11 is not a confusing number.
 Example 4:
 
 

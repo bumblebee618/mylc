@@ -34,7 +34,7 @@ public class Q307_Range_Sum_Query_Mutable {
      * sum of BIT[7], BIT[6], BIT[4], i.e., for current [i], the next
      * summand [j] is j=i-(i&-i) // delete the last 1-bit from [i].
      * 
-     * To obtain the original value of a[7] (corresponding to index [8] of
+     * To obtain the original minValue of a[7] (corresponding to index [8] of
      * BIT), we have to subtract BIT[7], BIT[6], BIT[4] from BIT[8], i.e.,
      * starting from [idx-1], for current [i], the next subtrahend [j] is
      * j=i-(i&-i), up to j==idx-(idx&-idx) exclusive. (However, a quicker
@@ -147,18 +147,18 @@ public class Q307_Range_Sum_Query_Mutable {
         return leftSum + rightSum;
     }
     
-    public void modify(SegmentTreeNode node, int index, int value){
+    public void modify(SegmentTreeNode node, int index, int minValue){
         if(node.start == index && node.end == index){
-            node.sum = value;
+            node.sum = minValue;
             return;
         }
         
         int mid = (node.start + node.end) / 2;
         if(node.start <= index && index <= mid){
-            modify(node.left, index, value);
+            modify(node.left, index, minValue);
         }
         if(mid < index && index <= node.end) {
-            modify(node.right, index, value);
+            modify(node.right, index, minValue);
         }
         
         node.sum = node.left.sum + node.right.sum;

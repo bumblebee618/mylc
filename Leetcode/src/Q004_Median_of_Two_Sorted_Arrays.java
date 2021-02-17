@@ -101,7 +101,7 @@ public class Q004_Median_of_Two_Sorted_Arrays {
     }
 	
 	// 转化成查找A和B数组里第k小的数
-	// find the Kth smallest value in the array nums1 and array nums2;
+	// find the Kth smallest minValue in the array nums1 and array nums2;
 	public int findKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) 
 	{
         if (start1 >= nums1.length)          // 注意有等号 ！！！

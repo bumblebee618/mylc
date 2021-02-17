@@ -21,7 +21,7 @@ public class Q149_Max_Points_on_a_Line {
     // 		points is empty
     // 		points contains only one element
     // 		contains duplicate points
-    // 		all the point in the points have the same coordinate value
+    // 		all the point in the points have the same coordinate minValue
 	
 	// solution 1:
 	public int maxPoints(Point[] points) {

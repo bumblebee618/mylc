@@ -1,7 +1,7 @@
 import java.util.Stack;
 /*******
  * 
-Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+Evaluate the minValue of an arithmetic expression in Reverse Polish Notation.
 Valid operators are +, -, *, /. Each operand may be an integer or another expression.
 
 Some examples:

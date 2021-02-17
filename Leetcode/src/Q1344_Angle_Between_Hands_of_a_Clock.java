@@ -38,7 +38,7 @@ Constraints:
 
 1 <= hour <= 12
 0 <= minutes <= 59
-Answers within 10^-5 of the actual value will be accepted as correct.
+Answers within 10^-5 of the actual minValue will be accepted as correct.
  */
 public class Q1344_Angle_Between_Hands_of_a_Clock 
 {

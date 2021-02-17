@@ -19,7 +19,7 @@ public class Q060_Permutation_Sequence {
 		Meaning there would be a total of 24 permutations in this particular one. 
 		So if you were to look for the (k = 14) 14th permutation, it would be in the
 		3 + (permutations of 1, 2, 4) subset.
-		To programmatically get that, you take k = 13 (subtract 1 because of things always starting at 0) and divide that by the 6 we got from the factorial, which would give you the index of the number you want. In the array {1, 2, 3, 4}, k/(n-1)! = 13/(4-1)! = 13/3! = 13/6 = 2. The array {1, 2, 3, 4} has a value of 3 at index 2. So the first number is a 3.
+		To programmatically get that, you take k = 13 (subtract 1 because of things always starting at 0) and divide that by the 6 we got from the factorial, which would give you the index of the number you want. In the array {1, 2, 3, 4}, k/(n-1)! = 13/(4-1)! = 13/3! = 13/6 = 2. The array {1, 2, 3, 4} has a minValue of 3 at index 2. So the first number is a 3.
 		
 		Then the problem repeats with less numbers.
 		The permutations of {1, 2, 4} would be:

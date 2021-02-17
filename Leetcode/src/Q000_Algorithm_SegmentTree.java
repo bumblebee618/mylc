@@ -113,7 +113,7 @@ public class Q000_Algorithm_SegmentTree
         	update(root.right, index, value);
         }
                
-        // update value
+        // update minValue
         root.max = Math.max(root.left.max, root.right.max);
     }
 	

@@ -24,7 +24,7 @@ Example 2:
 
 Input: [1,2,3,4,5,null,7]
 Output: false
-Explanation: The node with value 7 isn't as far left as possible.
+Explanation: The node with minValue 7 isn't as far left as possible.
  
 Note:
 

@@ -28,7 +28,7 @@ Explanation: The path 0 -> 1 -> 1 is a sequence, but it is not a valid sequence.
 Constraints:
 	• 1 <= arr.length <= 5000
 	• 0 <= arr[i] <= 9
-	• Each node's value is between [0 - 9].
+	• Each node's minValue is between [0 - 9].
  */
 public class Q000_Explore_Check_If_a_String_Is_a_Valid_Sequence_from_Root_to_Leaves_Path_in_a_Binary_Tree {
 	public boolean isValidSequence(TreeNode root, int[] arr) {

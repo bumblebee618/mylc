@@ -37,7 +37,8 @@ Example 5:
  * 
  * */
 
-public class Q471_Encode_String_with_Shortest_Length {
+public class Q471_Encode_String_with_Shortest_Length 
+{
 	/*******************************************************************************************************
 	 * 区间dp:
 	 * We will form 2-D array of Strings. dp[i][j] = string from index i to index j in encoded form.
@@ -47,41 +48,50 @@ public class Q471_Encode_String_with_Shortest_Length {
 	 * 
 	 *******************************************************************************************************/
 	
-	public String encode(String s) {
-		if(s == null || s.length() == 0) {
+	public String encode(String s) 
+	{
+		if (s == null || s.length() == 0) 
+		{
 			return s;
 		}
 		
 		int len = s.length();
 		String[][] dp = new String[len][len];
 
-		for (int length = 0; length < len; length++) {
-			for (int start = 0; start + length < len; start++) {
-				int end = start + length;
+		for (int length = 1; length <= len; length++) 
+		{
+			for (int start = 0; start + length <= len; start++) 
+			{
+				int end = start + length - 1;
 				String substr = s.substring(start, end + 1);
+				dp[start][end] = substr;
 				
 				// Checking if string length < 5. In that case, we know that encoding will not help.
-				if (end - start < 4) {
-					dp[start][end] = substr;
-				} else {
-					dp[start][end] = substr;
-					
+				if (length >= 5) 
+				{
 					// Loop for trying all results that we get after dividing
 					// the strings into 2 and combine the results of 2 substrings
-					for (int k = start; k < end; k++) {
-						if ((dp[start][k] + dp[k + 1][end]).length() < dp[start][end].length()) {
+					for (int k = start; k < end; k++) 
+					{
+						if ((dp[start][k] + dp[k + 1][end]).length() < dp[start][end].length())
+						{
 							dp[start][end] = dp[start][k] + dp[k + 1][end];
 						}
 					}
 
 					// Loop for checking if string can itself found some pattern in it which could be repeated.
-					for (int k = 0; k < substr.length(); k++) {
+					for (int k = 0; k < substr.length(); k++) 
+					{
 						String repeatStr = substr.substring(0, k + 1);
 						
-						if (repeatStr != null && substr.length() % repeatStr.length() == 0 && substr.replaceAll(repeatStr, "").length() == 0) {
-							String ss = substr.length() / repeatStr.length() + "[" + dp[start][start + k] + "]";
+						if (repeatStr != null 
+							&& substr.length() % repeatStr.length() == 0 
+							&& substr.replaceAll(repeatStr, "").length() == 0) 
+						{
+							String ss = String.format("%d[%s]", substr.length() / repeatStr.length(), dp[start][start + k]);
 							
-							if (dp[start][end].length() > ss.length()) {
+							if (dp[start][end].length() > ss.length()) 
+							{
 								dp[start][end] = ss;
 							}
 						}

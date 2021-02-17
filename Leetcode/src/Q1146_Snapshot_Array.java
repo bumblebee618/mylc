@@ -8,7 +8,7 @@ import java.util.*;
 SnapshotArray(int capacity) initializes an array-like data structure with the given capacity.  Initially, each element equals 0.
 void set(index, val) sets the element at the given index to be equal to val.
 int snap() takes a snapshot of the array and returns the snap_id: the total number of times we called snap() minus 1.
-int get(index, snap_id) returns the value at the given index, at the time we took the snapshot with the given snap_id
+int get(index, snap_id) returns the minValue at the given index, at the time we took the snapshot with the given snap_id
  
 
 Example 1:
@@ -21,7 +21,7 @@ SnapshotArray snapshotArr = new SnapshotArray(3); // set the capacity to be 3
 snapshotArr.set(0,5);  // Set array[0] = 5
 snapshotArr.snap();  // Take a snapshot, return snap_id = 0
 snapshotArr.set(0,6);
-snapshotArr.get(0,0);  // Get the value of array[0] with snap_id = 0, return 5
+snapshotArr.get(0,0);  // Get the minValue of array[0] with snap_id = 0, return 5
  
 
 Constraints:

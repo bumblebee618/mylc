@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Q164_Maximum_Gap {
 	/************************************************************************************
-	 * (1). The first step is to find the maximum value in nums array,                  *
+	 * (1). The first step is to find the maximum minValue in nums array,                  *
 	 * 		it will be the threshold to end while loop.                                 *
 	 * (2). Then use the radix sort algorithm to sort based on each digit               *
 	 * 		from Least Significant Bit (LSB) to Most Significant Bit (MSB),             *

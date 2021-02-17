@@ -20,7 +20,7 @@ Input: A = [2,1,2,4,2,2], B = [5,2,6,2,3,2]
 Output: 2
 Explanation: 
 The first figure represents the dominoes as given by A and B: before we do any rotations.
-If we rotate the second and fourth dominoes, we can make every value in the top row equal to 2, as indicated by the second figure.
+If we rotate the second and fourth dominoes, we can make every minValue in the top row equal to 2, as indicated by the second figure.
 Example 2:
 
 Input: A = [3,5,1,2,3], B = [3,6,3,3,4]

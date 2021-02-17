@@ -78,7 +78,7 @@ public class Q313_Super_Ugly_Number {
 		
         int[] ugly = new int[n];
         int[] index = new int[primes.length];  // store index of ugly
-        int[] value = new int[primes.length];  // store value of ugly
+        int[] value = new int[primes.length];  // store minValue of ugly
         Arrays.fill(value, 1);
         int nextUgly = 1;
         

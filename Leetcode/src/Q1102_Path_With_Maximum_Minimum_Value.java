@@ -6,7 +6,7 @@ import java.util.Queue;
  * @author jackie
  * 
  * Given a matrix of integers A with R rows and C columns, find the maximum score of a path starting at [0,0] and ending at [R-1,C-1].
-The score of a path is the minimum value in that path.  For example, the value of the path 8 →  4 →  5 →  9 is 4.
+The score of a path is the minimum minValue in that path.  For example, the minValue of the path 8 →  4 →  5 →  9 is 4.
 A path moves some number of times from one visited cell to any neighbouring unvisited cell in one of the 4 cardinal directions (north, east, west, south).
  
 Example 1:
@@ -44,7 +44,7 @@ public class Q1102_Path_With_Maximum_Minimum_Value
         
         int row = matrix.length;
         int col = matrix[0].length;
-        Queue<Tuple> heap = new PriorityQueue<>((a, b) -> b.value - a.value);
+        Queue<Tuple> heap = new PriorityQueue<>((a, b) -> b.minValue - a.minValue);
         heap.offer(new Tuple(0, 0, matrix[0][0]));
         boolean[][] visited = new boolean[row][col];
         visited[0][0] = true;
@@ -56,7 +56,7 @@ public class Q1102_Path_With_Maximum_Minimum_Value
             
             if (node.x == row-1 && node.y == col-1)
             {
-                return node.value;
+                return node.minValue;
             }
             
             for (int i = 0; i < dx.length; i++)
@@ -66,7 +66,7 @@ public class Q1102_Path_With_Maximum_Minimum_Value
                 
                 if (newX >= 0 && newX < row && newY >= 0 && newY < col && !visited[newX][newY])
                 {
-                    heap.offer(new Tuple(newX, newY, Math.min(node.value, matrix[newX][newY])));
+                    heap.offer(new Tuple(newX, newY, Math.min(node.minValue, matrix[newX][newY])));
                     visited[newX][newY] = true;
                 }
             }
@@ -79,13 +79,13 @@ public class Q1102_Path_With_Maximum_Minimum_Value
     {
         public int x;
         public int y;
-        public int value;
+        public int minValue;
         
-        public Tuple(int x, int y, int value)
+        public Tuple(int x, int y, int minValue)
         {
             this.x = x;
             this.y = y;
-            this.value = value;
+            this.minValue = minValue;
         }
     }
 }

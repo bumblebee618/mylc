@@ -1,7 +1,7 @@
 import java.util.*;
 /*******
  * 
-Given a singly linked list, return a random node's value from the linked list. Each node must have the same probability of being chosen.
+Given a singly linked list, return a random node's minValue from the linked list. Each node must have the same probability of being chosen.
 
 Follow up:
 	What if the linked list is extremely large and its length is unknown to you? Could you solve this efficiently without using extra space?
@@ -38,7 +38,7 @@ public class Q382_Linked_List_Random_Node {
         }   
     }
     
-    /** Returns a random node's value. */
+    /** Returns a random node's minValue. */
     public int getRandom() {
         return map.get(rand.nextInt(map.size()));
     }

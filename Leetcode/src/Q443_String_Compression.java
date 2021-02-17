@@ -42,7 +42,7 @@ Explanation:
 Since the character "a" does not repeat, it is not compressed. "bbbbbbbbbbbb" is replaced by "b12".
 Notice each digit has it's own entry in the array.
 Note:
-All characters have an ASCII value in [35, 126].
+All characters have an ASCII minValue in [35, 126].
 1 <= len(chars) <= 1000.
  *
  */

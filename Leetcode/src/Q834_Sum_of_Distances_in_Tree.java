@@ -34,7 +34,7 @@ public class Q834_Sum_of_Distances_in_Tree
 {
 	// solution 1: time is O(N), space is O(N)
 	private int[] result, count;
-    private List<Set<Integer>> graph;
+    private Set<Integer>[] graph;
     private int N;
     
     public int[] sumOfDistancesInTree(int N, int[][] edges) 
@@ -49,30 +49,33 @@ public class Q834_Sum_of_Distances_in_Tree
         }
         
         this.N = N;
-        graph = new ArrayList<Set<Integer>>();
+        graph = new Set[N];
         result = new int[N];
         count = new int[N];
         Arrays.fill(count, 1);
 
         for (int i = 0; i < N; ++i)
         {
-            graph.add(new HashSet<Integer>());
+            graph[i] = new HashSet<>();
         }
         
         for (int[] edge: edges) 
         {
-            graph.get(edge[0]).add(edge[1]);
-            graph.get(edge[1]).add(edge[0]);
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
         }
         
+        // 字底向上后续遍历后，parent有其所有子节点的distance (但不含父节点distance)
         postOrder(0, -1);
+        
+        // 自后续遍历后，只有root节点有正确的distance minValue，因此需要前序遍历
         preOrder(0, -1);
         return result;
     }
 
-    public void postOrder(int node, int parent) 
+    private void postOrder(int node, int parent) 
     {
-        for (int child: graph.get(node))
+        for (int child: graph[node])
         {
             if (child != parent) 
             {
@@ -83,9 +86,9 @@ public class Q834_Sum_of_Distances_in_Tree
         }
     }
 
-    public void preOrder(int node, int parent) 
+    private void preOrder(int node, int parent) 
     {
-        for (int child: graph.get(node))
+        for (int child: graph[node])
         {
             if (child != parent) 
             {

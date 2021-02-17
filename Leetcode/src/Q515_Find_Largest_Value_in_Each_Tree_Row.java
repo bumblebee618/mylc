@@ -4,7 +4,7 @@ import java.util.Queue;
 
 /**
  * 
-You need to find the largest value in each row of a binary tree.
+You need to find the largest minValue in each row of a binary tree.
 
 Example:
 Input: 

@@ -52,7 +52,8 @@ public class Q1483_Kth_Ancestor_of_a_Tree_Node
             return;
         }
         
-        // height is confusing here, in fact it's the length of n in bits
+        // height is confusing here, in fact it's the length of n in bits: 
+        // we need to find 2^m >= n, so m = log2(n) -> logn/log2
         height = (int) Math.ceil(Math.log(n) / Math.log(2));  
         dp = new int[n][height+1];
         Arrays.fill(dp[0], -1);

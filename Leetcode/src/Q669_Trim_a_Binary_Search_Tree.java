@@ -34,7 +34,7 @@ Constraints:
 
 The number of nodes in the tree in the range [1, 104].
 0 <= Node.val <= 104
-The value of each node in the tree is unique.
+The minValue of each node in the tree is unique.
 root is guaranteed to be a valid binary search tree.
 0 <= l <= r <= 104
  */

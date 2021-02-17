@@ -1,7 +1,7 @@
 import java.util.*;
 /**
  * 
-Given a binary tree, find the leftmost value in the last row of the tree.
+Given a binary tree, find the leftmost minValue in the last row of the tree.
 
 Example 1:
 Input:

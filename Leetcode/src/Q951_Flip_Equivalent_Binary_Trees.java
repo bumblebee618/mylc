@@ -21,7 +21,7 @@ Flipped Trees Diagram
 Note:
 
 Each tree will have at most 100 nodes.
-Each value in each tree will be a unique integer in the range [0, 99].
+Each minValue in each tree will be a unique integer in the range [0, 99].
  */
 public class Q951_Flip_Equivalent_Binary_Trees {
 	public boolean flipEquiv(TreeNode root1, TreeNode root2) {

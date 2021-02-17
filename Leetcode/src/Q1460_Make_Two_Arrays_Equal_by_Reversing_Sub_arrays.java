@@ -31,7 +31,7 @@ Example 4:
 
 Input: target = [3,7,9], arr = [3,7,11]
 Output: false
-Explanation: arr doesn't have value 9 and it can never be converted to target.
+Explanation: arr doesn't have minValue 9 and it can never be converted to target.
 Example 5:
 
 Input: target = [1,1,1,1,1], arr = [1,1,1,1,1]

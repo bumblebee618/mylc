@@ -106,8 +106,8 @@ public class Q089_Gray_Code {
 	/***************************************************/
 	// by other
 	// so the pattern is when n=n -> add 0 in front of all the result of (n-1)'s
-	// binary value (This is just same as all the result of (n-1)
-	// and add 1 in front of all the result of(n-1)'s binary value (This need to
+	// binary minValue (This is just same as all the result of (n-1)
+	// and add 1 in front of all the result of(n-1)'s binary minValue (This need to
 	// calculate.)
 
 	public List<Integer> grayCode3(int n) {
@@ -116,15 +116,15 @@ public class Q089_Gray_Code {
 
 		for (int i = 1; i <= n; i++) {
 			int front = 1;
-		// Create the correct value for binary format (10...0) which the
-		// value has i digi
+		// Create the correct minValue for binary format (10...0) which the
+		// minValue has i digi
 		// so shift 1 to right (i-1) times
 			for (int j = 1; j < i; j++) {
 				front = front << 1;
 			}
 
-		// add the new generated value to the result list
-		// the new generated value is the last result add front value
+		// add the new generated minValue to the result list
+		// the new generated minValue is the last result add front minValue
 			int size = result.size();
 		// we want to loop through the (n-1) result from end to start. This
 		// is just because want to make the test case match the Leetcode

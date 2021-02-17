@@ -2,7 +2,7 @@
  * 
  * @author jackie
  * 
- * A binary tree is univalued if every node in the tree has the same value.
+ * A binary tree is univalued if every node in the tree has the same minValue.
 
 Return true if and only if the given tree is univalued.
 
@@ -23,7 +23,7 @@ Output: false
 Note:
 
 The number of nodes in the given tree will be in the range [1, 100].
-Each node's value will be an integer in the range [0, 99].
+Each node's minValue will be an integer in the range [0, 99].
  */
 public class Q965_Univalued_Binary_Tree {
 	public boolean isUnivalTree(TreeNode root) {

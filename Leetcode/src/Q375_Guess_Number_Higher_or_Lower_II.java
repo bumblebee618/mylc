@@ -36,21 +36,27 @@ Given a particular n ≥ 1, find out how much money you need to have to guarante
  * 
  *****************************************************************************************/
 
-public class Q375_Guess_Number_Higher_or_Lower_II {
+public class Q375_Guess_Number_Higher_or_Lower_II 
+{
 	// time O(n^3), space O(n^2)
-	public int getMoneyAmount(int n) {
-        if(n <= 1){
+	public int getMoneyAmount(int n) 
+	{
+        if (n <= 1) 
+        {
             return 0;
         }
         
         int[][] cost = new int[n + 1][n + 1];
         
-        for(int length = 1; length <= n; length++){   // start=1表示从1开始猜
-            for(int start = 1; start + length <= n; start++){
+        for (int length = 1; length <= n; length++)  
+        {   
+            for (int start = 1; start + length <= n; start++)  // start=1表示从1开始猜
+            {
                 int end = start + length;
                 cost[start][end] = Integer.MAX_VALUE;
                 
-                for(int guess = start; guess <= end; guess++){
+                for (int guess = start; guess <= end; guess++)
+                {
                     int leftPart = guess - 1 >= start ? cost[start][guess - 1] : 0;
                     int rightPart = guess + 1 <= end ? cost[guess + 1][end] : 0;
                     cost[start][end] = Math.min(cost[start][end], guess + Math.max(leftPart, rightPart));

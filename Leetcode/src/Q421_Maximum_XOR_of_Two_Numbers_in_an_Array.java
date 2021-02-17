@@ -44,11 +44,11 @@ public class Q421_Maximum_XOR_of_Two_Numbers_in_an_Array {
             }
         }
        
-        // travel the array and choose a number, and then try to find the other number in the array which will make the maximum XOR value
+        // travel the array and choose a number, and then try to find the other number in the array which will make the maximum XOR minValue
         // start from most significant bit to the least significant bit of each number, that is from 31 to 0: 
-        // (1). if we find the opposite value of current digit is non-null, that means we find the number which will make the maximum XOR value with the current number 
+        // (1). if we find the opposite minValue of current digit is non-null, that means we find the number which will make the maximum XOR minValue with the current number 
         // 		so we need to focus on that number.
-        // (2). if we find the opposite value of current digit is null, that means we don't find the number, 
+        // (2). if we find the opposite minValue of current digit is null, that means we don't find the number, 
         //		so we just need to stay on current number and move on to next least significant bit.
         for(int num: nums) {      
             Trie node = root;

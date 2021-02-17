@@ -61,7 +61,7 @@ public class Q137_Single_Number_II {
             // if now one is nums[i], it clears the content since a^a = 0
             // if now one is other number, it just accumulates
             one ^= nums[i]; 
-            // if now one and two has the same value, it means the 
+            // if now one and two has the same minValue, it means the 
             // number shows 3 times, thus
             three = one & two;
             // if three is the number, clear this number from the one and two

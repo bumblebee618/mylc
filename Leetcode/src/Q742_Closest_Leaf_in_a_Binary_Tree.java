@@ -3,7 +3,7 @@ import java.util.*;
 /***
  * 
  * @author jackie
- * Given a binary tree where every node has a unique value, and a target key k, find the value of the nearest leaf node to target k in the tree.
+ * Given a binary tree where every node has a unique minValue, and a target key k, find the minValue of the nearest leaf node to target k in the tree.
 
 Here, nearest to a leaf means the least number of edges travelled on the binary tree to reach any leaf of the tree. Also, a node is called a leaf if it has no children.
 
@@ -44,7 +44,7 @@ Diagram of binary tree:
      6
 
 Output: 3
-Explanation: The leaf node with value 3 (and not the leaf node with value 6) is nearest to the node with value 2.
+Explanation: The leaf node with minValue 3 (and not the leaf node with minValue 6) is nearest to the node with minValue 2.
 Note:
 root represents a binary tree with at least 1 node and at most 1000 nodes.
 Every node has a unique node.val in range [1, 1000].

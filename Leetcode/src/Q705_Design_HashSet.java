@@ -11,9 +11,9 @@ import java.util.Objects;
 
 To be specific, your design should include these functions:
 
-add(value): Insert a value into the HashSet. 
-contains(value) : Return whether the value exists in the HashSet or not.
-remove(value): Remove a value in the HashSet. If the value does not exist in the HashSet, do nothing.
+add(minValue): Insert a minValue into the HashSet. 
+contains(minValue) : Return whether the minValue exists in the HashSet or not.
+remove(minValue): Remove a minValue in the HashSet. If the minValue does not exist in the HashSet, do nothing.
 
 Example:
 

@@ -1,7 +1,7 @@
 /***
  * 
  * @author jackie
- * Given the root of a binary tree, find the maximum value V for which there exists different nodes A and B where V = |A.val - B.val| and A is an ancestor of B.
+ * Given the root of a binary tree, find the maximum minValue V for which there exists different nodes A and B where V = |A.val - B.val| and A is an ancestor of B.
 
 (A node A is an ancestor of B if either: any child of A is equal to B, or any child of A is an ancestor of B.)
 
@@ -19,13 +19,13 @@ We have various ancestor-node differences, some of which are given below :
 |3 - 7| = 4
 |8 - 1| = 7
 |10 - 13| = 3
-Among all possible differences, the maximum value of 7 is obtained by |8 - 1| = 7.
+Among all possible differences, the maximum minValue of 7 is obtained by |8 - 1| = 7.
  
 
 Note:
 
 The number of nodes in the tree is between 2 and 5000.
-Each node will have value between 0 and 100000.
+Each node will have minValue between 0 and 100000.
  */
 public class Q1026_Maximum_Difference_Between_Node_and_Ancestor 
 {

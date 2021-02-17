@@ -26,7 +26,7 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	 * The main idea is the following:
 	 * 		Traverse the matrix. For each building, use BFS to compute the shortest distance from each '0' to 
 	 * 		this building. After we do this for all the buildings, we can get the sum of shortest distance
-	 * 		from every '0' to all reachable buildings. This value is stored in 'distance[][]'. 
+	 * 		from every '0' to all reachable buildings. This minValue is stored in 'distance[][]'. 
 	 * 		For example, if grid[2][2] == 0, distance[2][2] is the sum of shortest distance from this block to all reachable buildings.
 	 * 		Time complexity: O(number of 1)O(number of 0) ~ O(m^2 * n^2)
 	 * 

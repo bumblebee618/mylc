@@ -8,7 +8,7 @@ import java.util.Stack;
 ImmutableListNode: An interface of immutable linked list, you are given the head of the list.
 You need to use the following functions to access the linked list (you can't access the ImmutableListNode directly):
 
-ImmutableListNode.printValue(): Print value of the current node.
+ImmutableListNode.printValue(): Print minValue of the current node.
 ImmutableListNode.getNext(): Return the next node.
 The input is only given to initialize the linked list internally. You must solve this problem without modifying the linked list. In other words, you must operate the linked list using only the mentioned APIs.
 
@@ -39,7 +39,7 @@ Output: [-6,4,4,6,0,-2]
 Constraints:
 
 The length of the linked list is between [1, 1000].
-The value of each node in the linked list is between [-1000, 1000].
+The minValue of each node in the linked list is between [-1000, 1000].
  * 
  */
 public class Q1265_Print_Immutable_Linked_List_in_Reverse {

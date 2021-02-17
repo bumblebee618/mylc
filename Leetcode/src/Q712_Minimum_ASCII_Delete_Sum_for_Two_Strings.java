@@ -6,7 +6,7 @@ Given two strings s1, s2, find the lowest ASCII sum of deleted characters to mak
 Example 1:
 Input: s1 = "sea", s2 = "eat"
 Output: 231
-Explanation: Deleting "s" from "sea" adds the ASCII value of "s" (115) to the sum.
+Explanation: Deleting "s" from "sea" adds the ASCII minValue of "s" (115) to the sum.
 Deleting "t" from "eat" adds 116 to the sum.
 At the end, both strings are equal, and 115 + 116 = 231 is the minimum sum possible to achieve this.
 Example 2:
@@ -19,7 +19,7 @@ If instead we turned both strings into "lee" or "eet", we would get answers of 4
 Note:
 
 0 < s1.length, s2.length <= 1000.
-All elements of each string will have an ASCII value in [97, 122].
+All elements of each string will have an ASCII minValue in [97, 122].
  *
  */
 public class Q712_Minimum_ASCII_Delete_Sum_for_Two_Strings {

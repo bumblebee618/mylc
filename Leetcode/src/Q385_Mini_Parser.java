@@ -26,11 +26,11 @@ Example 2:
 
 	Return a NestedInteger object containing a nested list with 2 elements:
 
-	1. An integer containing value 123.
+	1. An integer containing minValue 123.
 	2. A nested list containing two elements:
-    	i.  An integer containing value 456.
+    	i.  An integer containing minValue 456.
     	ii. A nested list with one element:
-         	a. An integer containing value 789.
+         	a. An integer containing minValue 789.
          
  * 
  * */

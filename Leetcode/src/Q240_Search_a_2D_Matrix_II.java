@@ -1,6 +1,6 @@
 /*********
  * 
-Write an efficient algorithm that searches for a value in an m row n matrix. 
+Write an efficient algorithm that searches for a minValue in an m row n matrix. 
 This matrix has the following properties:
 
 Integers in each row are sorted in ascending from left to right.

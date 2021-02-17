@@ -14,7 +14,7 @@ Note: Duplicate elements are allowed.
 insert(val): Inserts an item val to the collection.
 remove(val): Removes an item val from the collection if present.
 getRandom: Returns a random element from current collection of elements. 
-The probability of each element being returned is linearly related to the number of same value the collection contains.
+The probability of each element being returned is linearly related to the number of same minValue the collection contains.
 
 Example:
 
@@ -55,7 +55,7 @@ public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed
         rand = new Random();
     }
     
-    /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
+    /** Inserts a minValue to the collection. Returns true if the collection did not already contain the specified element. */
     public boolean insert(int val) 
     {
         boolean result = false;
@@ -71,7 +71,7 @@ public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed
         return result;
     }
     
-    /** Removes a value from the collection. Returns true if the collection contained the specified element. */
+    /** Removes a minValue from the collection. Returns true if the collection contained the specified element. */
     public boolean remove(int val) 
     {
         if (!map.containsKey(val) || !map.get(val).iterator().hasNext())

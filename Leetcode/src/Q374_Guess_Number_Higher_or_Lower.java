@@ -19,47 +19,70 @@ Example:
  * 
  * */
 
-public class Q374_Guess_Number_Higher_or_Lower {
+public class Q374_Guess_Number_Higher_or_Lower 
+{
 	private static int target = 3;
 	
-	public int guessNumber(int n) {
-        if(n <= 0) {
+	public int guessNumber(int n) 
+	{
+        if (n <= 0) 
+        {
             return 0;
         }
         
         int left = 1, right = n;
         
-        while(left + 1 < right) {
+        while (left + 1 < right) 
+        {
             int mid = left + (right - left) / 2;
             int result = guess(mid);
             
-            if(result < 0) {
+            if (result < 0) 
+            {
                 right = mid;
-            } else if(result > 0) {
+            } 
+            else if (result > 0) 
+            {
                 left = mid;
-            } else {
+            } 
+            else 
+            {
                 return mid;
             }
         }
         
-        if(guess(left) == 0) {
+        if (guess(left) == 0) 
+        {
             return left;
-        } else {
+        } 
+        else 
+        {
             return right;
         }
     }
 	
-	public int guess(int num) {
-		if(num == target) {
+	
+	
+	/*********************************** main ***********************************/
+	
+	private int guess(int num) 
+	{
+		if (num == target) 
+		{
 			return 0;
-		} else if(num > target) {
+		} 
+		else if (num > target) 
+		{
 			return -1;
-		} else {
+		} 
+		else 
+		{
 			return 1;
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Q374_Guess_Number_Higher_or_Lower t = new Q374_Guess_Number_Higher_or_Lower();
 		System.out.println(t.guessNumber(10));
 	}

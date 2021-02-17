@@ -25,7 +25,8 @@ The length of accounts[i][j] will be in the range [1, 30].
  *
  */
 public class Q721_Accounts_Merge {
-	public List<List<String>> accountsMerge(List<List<String>> accounts) {
+	public List<List<String>> accountsMerge(List<List<String>> accounts) 
+	{
         List<List<String>> result = new LinkedList<>();
 
         if (accounts == null || accounts.size() == 0)

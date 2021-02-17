@@ -27,14 +27,17 @@ K will be in the range [1, N].
 The length of times will be in the range [1, 6000].
 All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 0 <= w <= 100.
  */
-public class Q743_Network_Delay_Time {
-	public int networkDelayTime(int[][] times, int N, int K) {
+public class Q743_Network_Delay_Time 
+{
+	// solution 1: BFS
+	public int networkDelayTime(int[][] times, int N, int K) 
+	{
         if (times == null || times.length == 0 || times[0].length == 0 || N <= 0 || K <= 0)
         {
             return 0;
         }
         
-        Set<Tuple>[] graph = new Set[N+1];
+        Set<Node>[] graph = new Set[N+1];
         
         for (int[] time : times)
         {
@@ -43,31 +46,31 @@ public class Q743_Network_Delay_Time {
                 graph[time[0]] = new HashSet<>();
             }
             
-            graph[time[0]].add(new Tuple(time[1], time[2]));
+            graph[time[0]].add(new Node(time[1], time[2]));
         }
         
-        Queue<Tuple> queue = new LinkedList<>();
-        queue.offer(new Tuple(K, 0));
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(new Node(K, 0));
         Set<Integer> visited = new HashSet<>();
         visited.add(K);
         int[] costs = new int[N+1];
         
         while (!queue.isEmpty())
         {
-            Tuple t = queue.poll();
+        	Node t = queue.poll();
             
             if (graph[t.node] == null)
             {
                 continue;
             }
             
-            for (Tuple next : graph[t.node])
+            for (Node next : graph[t.node])
             {
                 if (!visited.contains(next.node) || costs[next.node] > costs[t.node] + next.time)
                 {
+                	visited.add(next.node);
                     costs[next.node] = costs[t.node] + next.time;
                     queue.offer(next);
-                    visited.add(next.node);
                 }
             }
         }
@@ -86,13 +89,61 @@ public class Q743_Network_Delay_Time {
 
         return result;
     }
+	
+	
+	// solution 2: DFS
+	public int networkDelayTime2(int[][] times, int N, int K) 
+    {
+        if (times == null || times.length == 0 || times[0].length == 0 || N <= 0 || K <= 0)
+        {
+            return 0; 
+        }
+        
+        Set<Node>[] graph = new Set[N+1];
+        int[] cost = new int[N+1];
+        Arrays.fill(cost, Integer.MAX_VALUE);
+        
+        for (int i = 1; i <= N; i++)
+        {
+            graph[i] = new HashSet<>();
+        }
+        
+        for (int[] time : times)
+        {
+            graph[time[0]].add(new Node(time[1], time[2]));
+        }
+        
+        cost[K] = 0;
+        dfs(graph, cost, K);
+        int maxTime = Integer.MIN_VALUE;
+        
+        for (int i = 1; i <= N; i++)
+        {
+            maxTime = Math.max(maxTime, cost[i]);
+        }
+        
+        return maxTime == Integer.MAX_VALUE ? -1 : maxTime;
+    }
     
-    class Tuple 
+    private void dfs(Set<Node>[] graph, int[] cost, int curNode)
+    {
+        for (Node next : graph[curNode])
+        {
+            if (cost[next.node] > cost[curNode] + next.time)
+            {
+                cost[next.node] = cost[curNode] + next.time;
+                dfs(graph, cost, next.node);
+            }
+        }
+    }
+    
+    
+    class Node 
     {
         public int node;
         public int time;
         
-        public Tuple(int n, int t)
+        public Node(int n, int t)
         {
             node = n;
             time = t;

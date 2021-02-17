@@ -2,7 +2,7 @@
  * 
  * @author jackie
  * 
- * Alice and Bob continue their games with piles of stones. There are several stones arranged in a row, and each stone has an associated value which is an integer given in the array stoneValue.
+ * Alice and Bob continue their games with piles of stones. There are several stones arranged in a row, and each stone has an associated minValue which is an integer given in the array stoneValue.
 
 Alice and Bob take turns, with Alice starting first. On each player's turn, that player can take 1, 2 or 3 stones from the first remaining stones in the row.
 
@@ -26,8 +26,8 @@ Example 2:
 Input: values = [1,2,3,-9]
 Output: "Alice"
 Explanation: Alice must choose all the three piles at the first move to win and leave Bob with negative score.
-If Alice chooses one pile her score will be 1 and the next move Bob's score becomes 5. The next move Alice will take the pile with value = -9 and lose.
-If Alice chooses two piles her score will be 3 and the next move Bob's score becomes 3. The next move Alice will take the pile with value = -9 and also lose.
+If Alice chooses one pile her score will be 1 and the next move Bob's score becomes 5. The next move Alice will take the pile with minValue = -9 and lose.
+If Alice chooses two piles her score will be 3 and the next move Bob's score becomes 3. The next move Alice will take the pile with minValue = -9 and also lose.
 Remember that both play optimally so here Alice will choose the scenario that makes her win.
 Example 3:
 

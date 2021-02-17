@@ -4,3 +4,5 @@
 1613281238608	Rename type 'Q000_Minimum_Limit_of_Balls_in_a_Bag'
 1613324053798	Rename method 'isValid'
 1613359343812	Rename field 'id'
+1613523687704	Rename field 'res'
+1613585160431	Rename field 'value'

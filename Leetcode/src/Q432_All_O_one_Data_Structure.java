@@ -6,10 +6,10 @@ import java.util.*;
  * 
  * Implement a data structure supporting the following operations:
 
-Inc(Key) - Inserts a new key with value 1. Or increments an existing key by 1. Key is guaranteed to be a non-empty string.
-Dec(Key) - If Key's value is 1, remove it from the data structure. Otherwise decrements an existing key by 1. If the key does not exist, this function does nothing. Key is guaranteed to be a non-empty string.
-GetMaxKey() - Returns one of the keys with maximal value. If no element exists, return an empty string "".
-GetMinKey() - Returns one of the keys with minimal value. If no element exists, return an empty string "".
+Inc(Key) - Inserts a new key with minValue 1. Or increments an existing key by 1. Key is guaranteed to be a non-empty string.
+Dec(Key) - If Key's minValue is 1, remove it from the data structure. Otherwise decrements an existing key by 1. If the key does not exist, this function does nothing. Key is guaranteed to be a non-empty string.
+GetMaxKey() - Returns one of the keys with maximal minValue. If no element exists, return an empty string "".
+GetMinKey() - Returns one of the keys with minimal minValue. If no element exists, return an empty string "".
 Challenge: Perform all these in O(1) time complexity.
  */
 public class Q432_All_O_one_Data_Structure 
@@ -26,7 +26,7 @@ public class Q432_All_O_one_Data_Structure
         maxHeap = new PriorityQueue<Node>((a, b) -> b.val - a.val);
     }
     
-    /** Inserts a new key <Key> with value 1. Or increments an existing key by 1. */
+    /** Inserts a new key <Key> with minValue 1. Or increments an existing key by 1. */
     public void inc(String key) 
     {
         if (!map.containsKey(key)) 
@@ -48,7 +48,7 @@ public class Q432_All_O_one_Data_Structure
         }
     }
     
-    /** Decrements an existing key by 1. If Key's value is 1, remove it from the data structure. */
+    /** Decrements an existing key by 1. If Key's minValue is 1, remove it from the data structure. */
     public void dec(String key) 
     {
         if (map.containsKey(key)) 
@@ -73,13 +73,13 @@ public class Q432_All_O_one_Data_Structure
         }
     }
     
-    /** Returns one of the keys with maximal value. */
+    /** Returns one of the keys with maximal minValue. */
     public String getMaxKey() 
     {
         return maxHeap.isEmpty() ? "" : maxHeap.peek().key;
     }
     
-    /** Returns one of the keys with Minimal value. */
+    /** Returns one of the keys with Minimal minValue. */
     public String getMinKey() 
     {
         return minHeap.isEmpty() ? "" : minHeap.peek().key;

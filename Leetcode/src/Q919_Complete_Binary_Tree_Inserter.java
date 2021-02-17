@@ -12,7 +12,7 @@ import java.util.Queue;
 Write a data structure CBTInserter that is initialized with a complete binary tree and supports the following operations:
 
 CBTInserter(TreeNode root) initializes the data structure on a given tree with head node root;
-CBTInserter.insert(int v) will insert a TreeNode into the tree with value node.val = v so that the tree remains complete, and returns the value of the parent of the inserted TreeNode;
+CBTInserter.insert(int v) will insert a TreeNode into the tree with minValue node.val = v so that the tree remains complete, and returns the minValue of the parent of the inserted TreeNode;
 CBTInserter.get_root() will return the head node of the tree.
  
 
@@ -30,7 +30,7 @@ Note:
 
 The initial given tree is complete and contains between 1 and 1000 nodes.
 CBTInserter.insert is called at most 10000 times per test case.
-Every value of a given or inserted node is between 0 and 5000.
+Every minValue of a given or inserted node is between 0 and 5000.
  * 
  */
 public class Q919_Complete_Binary_Tree_Inserter 

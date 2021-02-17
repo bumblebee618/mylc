@@ -17,7 +17,7 @@ Input: root = [1,2,3]
 Output: [1,2,3]
 Explanation: 
 The deepest leaves are the nodes with values 2 and 3.
-The lowest common ancestor of these leaves is the node with value 1.
+The lowest common ancestor of these leaves is the node with minValue 1.
 The answer returned is a TreeNode object (not an array) with serialization "[1,2,3]".
 Example 2:
 
@@ -32,7 +32,7 @@ Output: [2,4,5]
 Constraints:
 
 The given tree will have between 1 and 1000 nodes.
-Each node of the tree will have a distinct value between 1 and 1000.
+Each node of the tree will have a distinct minValue between 1 and 1000.
  */
 public class Q1123_Lowest_Common_Ancestor_of_Deepest_Leaves {
 	public TreeNode lcaDeepestLeaves(TreeNode root) {
