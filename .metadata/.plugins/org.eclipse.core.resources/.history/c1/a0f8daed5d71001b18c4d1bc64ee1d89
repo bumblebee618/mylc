@@ -28,60 +28,70 @@ Notes:
 0 <= len(words[i]) <= 100.
 S and all words in words consist only of lowercase letters
  */
-public class Q809_Expressive_Words 
-{
-	public int expressiveWords(String S, String[] words) 
-    {
-        if (words == null || words.length == 0)
+public class Q809_Expressive_Words {
+	public int expressiveWords(String str, String[] words) {
+        if (str == null || str.length() == 0 || words == null || words.length == 0)
         {
             return 0;
         }
         
-        int count = 0;
+        int result = 0;
         
         for (String word : words)
         {
-            count += isStretchy(S, word) ? 1 : 0;
+            if (isExpressive(str, word))
+            {
+                result++;
+            }
         }
         
-        return count;
+        return result;
     }
     
-    private boolean isStretchy(String S, String word)
+    private boolean isExpressive(String str, String input)
     {
         int index1 = 0, index2 = 0;
-        int size1 = S.length(), size2 = word.length();
+        int len1 = str.length();
+        int len2 = input.length();
         
-        while (index1 < size1 && index2 < size2)
+        while (index1 < len1 && index2 < len2)
         {
-            if (S.charAt(index1) != word.charAt(index2))
+            if (str.charAt(index1) != input.charAt(index2))
             {
                 return false;
             }
             
             int count1 = 1, count2 = 1;
             
-            while (index1+1 < size1 && S.charAt(index1) == S.charAt(index1+1))
+            while (index1+1 < len1 && str.charAt(index1) == str.charAt(index1+1))
             {
                 index1++;
                 count1++;
             }
             
-            while (index2+1 < size2 && word.charAt(index2) == word.charAt(index2+1))
+            while (index2+1 < len2 && input.charAt(index2) == input.charAt(index2+1))
             {
                 index2++;
                 count2++;
             }
             
-            if (count1 < count2 || (count1 > count2 && count1 < 3))
+            index1++;
+            index2++;
+            
+            if (count1 < count2)
             {
                 return false;
             }
-            
-            index1++;
-            index2++;
+            else if (count1 == count2)
+            {
+                continue;
+            }
+            else if (count1 < 3)
+            {
+                return false;
+            }
         }
         
-        return index1 == size1 && index2 == size2;
+        return index1 == len1 && index2 == len2;
     }
 }
