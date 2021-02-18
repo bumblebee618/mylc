@@ -20,7 +20,8 @@ Output:
 One possible longest palindromic subsequence is "bb".
  */
 public class Q516_Longest_Palindromic_Subsequence {
-	public int longestPalindromeSubseq(String s) {
+	public int longestPalindromeSubseq(String s) 
+	{
         if (s == null || s.length() == 0)
         {
             return 0;
@@ -39,11 +40,11 @@ public class Q516_Longest_Palindromic_Subsequence {
             dp[i][i+1] = s.charAt(i) == s.charAt(i+1) ? 2 : 1;
         }
         
-        for (int length = 2; length < len; length++)
+        for (int length = 3; length <= len; length++)
         {
-            for (int start = 0; start+length < len; start++)
+            for (int start = 0; start+length <= len; start++)
             {
-                int end = start + length;
+                int end = start + length - 1;
                 
                 if (s.charAt(start) == s.charAt(end))
                 {

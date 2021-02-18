@@ -33,12 +33,13 @@ public class Q312_Burst_Balloons
         int size = nums.length;
         int[][] score = new int[size][size];
         
-        for (int length = 0; length < size; length++)
+        for (int length = 1; length <= size; length++)
         {
-            for (int start = 0; start + length < size; start++)
+            for (int start = 0; start + length <= size; start++)
             {
-                int end = start + length;
+                int end = start + length - 1;
                 
+                // pick up one balloon from [start, end] to be the last one to burst
                 for (int k = start; k <= end; k++)
                 {
                     int leftScore = (start == 0) ? 1 : nums[start-1];

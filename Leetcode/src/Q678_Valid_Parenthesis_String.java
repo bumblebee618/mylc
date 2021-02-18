@@ -21,7 +21,8 @@ Output: True
 Note:
 The string size will be in the range [1, 100].
  */
-public class Q678_Valid_Parenthesis_String {
+public class Q678_Valid_Parenthesis_String 
+{
 	public boolean checkValidString(String s) 
 	{
         if (s == null || s.length() == 0)
@@ -42,11 +43,11 @@ public class Q678_Valid_Parenthesis_String {
             dp[i][i+1] = isValid(s, i, i+1);
         }
         
-        for (int length = 2; length < size; length++)
+        for (int length = 3; length <= size; length++)
         {
-            for (int start = 0; start+length < size; start++)
+            for (int start = 0; start+length <= size; start++)
             {
-                int end = start+length;
+                int end = start+length-1;
                 
                 if (dp[start+1][end-1] && isValid(s, start, end))
                 {

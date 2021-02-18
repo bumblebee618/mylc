@@ -16,7 +16,8 @@ Note:
 The input string length won't exceed 1000.
  *
  */
-public class Q647_Palindromic_Substrings {
+public class Q647_Palindromic_Substrings 
+{
 	public int countSubstrings(String s) 
     {
         if (s == null || s.length() == 0)
@@ -25,32 +26,32 @@ public class Q647_Palindromic_Substrings {
         }
         
         int size = s.length();
-        int[][] dp = new int[size][size];
+        boolean[][] dp = new boolean[size][size];
         int result = size;
         
         for (int i = 0; i < size; i++)
         {
-            dp[i][i] = 1;
+            dp[i][i] = true;
         }
         
         for (int i = 0; i < size-1; i++)
         {
-            dp[i][i+1] = s.charAt(i) == s.charAt(i+1) ? 1 : 0;
-            result += dp[i][i+1];
+            dp[i][i+1] = s.charAt(i) == s.charAt(i+1);
+            result += dp[i][i+1] ? 1 : 0;
         }
         
-        for (int length = 2; length < size; length++)
+        for (int length = 3; length <= size; length++)
         {
-            for (int start = 0; start+length < size; start++)
+            for (int start = 0; start+length <= size; start++)
             {
-                int end = start + length;
+                int end = start + length - 1;
                 
-                if (dp[start+1][end-1] == 1 && s.charAt(start) == s.charAt(end))
+                if (dp[start+1][end-1] && s.charAt(start) == s.charAt(end))
                 {
-                    dp[start][end] = 1;
+                    dp[start][end] = true;
                 }
                 
-                result += dp[start][end];
+                result += dp[start][end] ? 1 : 0;
             }
         }
         
