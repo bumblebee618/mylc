@@ -56,7 +56,9 @@ public class Q471_Encode_String_with_Shortest_Length
 		}
 		
 		int len = s.length();
-		String[][] dp = new String[len][len];
+		
+		// this DP array keeps the best solution for substring[i, j] 
+		String[][] subStrSolution = new String[len][len];
 
 		for (int length = 1; length <= len; length++) 
 		{
@@ -64,7 +66,7 @@ public class Q471_Encode_String_with_Shortest_Length
 			{
 				int end = start + length - 1;
 				String substr = s.substring(start, end + 1);
-				dp[start][end] = substr;
+				subStrSolution[start][end] = substr;
 				
 				// Checking if string length < 5. In that case, we know that encoding will not help.
 				if (length >= 5) 
@@ -73,9 +75,9 @@ public class Q471_Encode_String_with_Shortest_Length
 					// the strings into 2 and combine the results of 2 substrings
 					for (int k = start; k < end; k++) 
 					{
-						if ((dp[start][k] + dp[k + 1][end]).length() < dp[start][end].length())
+						if ((subStrSolution[start][k] + subStrSolution[k + 1][end]).length() < subStrSolution[start][end].length())
 						{
-							dp[start][end] = dp[start][k] + dp[k + 1][end];
+							subStrSolution[start][end] = subStrSolution[start][k] + subStrSolution[k + 1][end];
 						}
 					}
 
@@ -88,11 +90,11 @@ public class Q471_Encode_String_with_Shortest_Length
 							&& substr.length() % repeatStr.length() == 0 
 							&& substr.replaceAll(repeatStr, "").length() == 0) 
 						{
-							String ss = String.format("%d[%s]", substr.length() / repeatStr.length(), dp[start][start + k]);
+							String ss = String.format("%d[%s]", substr.length() / repeatStr.length(), subStrSolution[start][start + k]);
 							
-							if (dp[start][end].length() > ss.length()) 
+							if (subStrSolution[start][end].length() > ss.length()) 
 							{
-								dp[start][end] = ss;
+								subStrSolution[start][end] = ss;
 							}
 						}
 					}
@@ -100,6 +102,6 @@ public class Q471_Encode_String_with_Shortest_Length
 			}
 		}
 
-		return dp[0][len - 1];
+		return subStrSolution[0][len - 1];
 	}
 }

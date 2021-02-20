@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /***
  * 
  * @author jackie
@@ -34,7 +36,7 @@ It is guaranteed that the answer fits into a 32-bit signed integer (ie. it is le
 
 public class Q1130_Minimum_Cost_Tree_From_Leaf_Values 
 {
-	// 区间DP, time O(n^3), space O(n^2)
+	// solution 1: 区间DP, time O(n^3), space O(n^2)
 	public int mctFromLeafValues(int[] arr) 
     {
         if (arr == null || arr.length <= 1)
@@ -69,4 +71,36 @@ public class Q1130_Minimum_Cost_Tree_From_Leaf_Values
         
         return sum[0][size-1];
     }
+	
+	
+		// solution 2: stack, time O(n), space O(n)
+		public int mctFromLeafValues2(int[] A) 
+	    {
+	        if (A == null || A.length <= 1)
+	        {
+	            return 0;
+	        }
+	        
+	        int res = 0;
+	        Stack<Integer> stack = new Stack<>();
+	        stack.push(Integer.MAX_VALUE);
+	        
+	        for (int a : A) 
+	        {
+	            while (stack.peek() <= a) 
+	            {
+	                int mid = stack.pop();
+	                res += mid * Math.min(stack.peek(), a);
+	            }
+	            
+	            stack.push(a);
+	        }
+	        
+	        while (stack.size() > 2) 
+	        {
+	            res += stack.pop() * stack.peek();
+	        }
+	        
+	        return res;
+	    }
 }

@@ -28,59 +28,124 @@ The second player will win by choosing 10 and get a total = 11, which is >= desi
 Same with other integers chosen by the first player, the second player will always win.
  *
  */
-public class Q464_Can_I_Win {
-	public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
-        if (maxChoosableInteger >= desiredTotal || desiredTotal <= 0) {
+public class Q464_Can_I_Win 
+{
+	// solution 1： 使用string来记录选择情况，适用于总选择数超过32的情况（32种以内可以考虑用Integer来记录）
+	public boolean canIWin(int maxChoosableInteger, int desiredTotal) 
+    {
+        if (maxChoosableInteger >= desiredTotal || desiredTotal <= 0) 
+        {
             return true;
         }
         
         int sum = (maxChoosableInteger + 1) * maxChoosableInteger / 2;
         
-        if (sum < desiredTotal) {
+        if (sum < desiredTotal) 
+        {
+            return false;
+        }
+        
+        Map<String, Boolean> dp = new HashMap<>();
+        char[] used = new char[maxChoosableInteger + 1];
+        Arrays.fill(used, '0');
+        return search(dp, used, desiredTotal);  
+    }
+    
+    private boolean search(Map<String, Boolean> dp, char[] used, int desiredTotal)
+    {
+        if (desiredTotal <= 0) 
+        {
+            return false;
+        }
+        
+        String key = new String(used);
+        
+        if (dp.containsKey(key))
+        {
+            return dp.get(key);
+        }
+        
+        for (int i = 1; i < used.length; i++)
+        {
+            if (used[i] == '0')
+            {
+                used[i] = '1';
+                
+                if (!search(dp, used, desiredTotal - i))
+                {
+                    used[i] = '0';
+                    dp.put(key, true);
+                    return true;
+                }
+                
+                used[i] = '0';
+            }
+        }
+        
+        dp.put(key, false);
+        return false;
+    }
+	
+    
+	// Solution 2: 使用Integer来记录选择情况，适用于选择总数 <= 32种的情况
+    public boolean canIWin2(int maxChoosableInteger, int desiredTotal) 
+    {
+        if (maxChoosableInteger >= desiredTotal || desiredTotal <= 0) 
+        {
+            return true;
+        }
+        
+        int sum = (maxChoosableInteger + 1) * maxChoosableInteger / 2;
+        
+        if (sum < desiredTotal) 
+        {
             return false;
         }
         
         Map<Integer, Boolean> map = new HashMap<>();
         boolean[] used = new boolean[maxChoosableInteger + 1];
-        return helper(map, used, desiredTotal);        
+        return search(map, used, desiredTotal);   
     }
     
-    private boolean helper(Map<Integer, Boolean> map, boolean[] used, int desiredTotal) {
-        if (desiredTotal <= 0) {
+    private boolean search(Map<Integer, Boolean> map, boolean[] used, int desiredTotal) 
+    {
+        if (desiredTotal <= 0) 
+        {
             return false;
         }
         
-        int key = formate(used);
+        // get key
+        int key = 0;
         
-        if (!map.containsKey(key)) {
-            for (int i = 1; i < used.length; i++) {
-                if (!used[i]) {
-                    used[i] = true;
+        for (boolean status : used) 
+        {
+            key <<= 1;
+            key |= (status ? 1 : 0);
+        }
+        
+        if (map.containsKey(key))
+        {
+            return map.get(key);
+        }
+        
+        for (int i = 1; i < used.length; i++) 
+        {
+            if (!used[i]) 
+            {
+                used[i] = true;
                     
-                    if (!helper(map, used, desiredTotal - i)) {
-                        map.put(key, true);
-                        used[i] = false;
-                        return true;
-                    }
-                    
+                if (!search(map, used, desiredTotal - i)) 
+                {
+                    map.put(key, true);
                     used[i] = false;
+                    return true;
                 }
+                    
+                used[i] = false;
             }
+        }
             
-            map.put(key, false);
-        }
-        
-        return map.get(key);
-    }
-    
-    private int formate(boolean[] used) {
-        int result = 0;
-        
-        for (boolean flag : used) {
-            result <<= 1;
-            result |= (flag ? 1 : 0);
-        }
-        
-        return result;
+        map.put(key, false);
+        return false;
     }
 }

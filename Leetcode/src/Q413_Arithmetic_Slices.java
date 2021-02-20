@@ -49,7 +49,7 @@ public class Q413_Arithmetic_Slices
             if (nums[i] - nums[i-1] == nums[i-1] - nums[i-2])
             {
             	// expends (i-1)'s arithmetic slice, then add a new one [i-2, i]
-                dp[i] += dp[i-1] + 1;
+                dp[i] = dp[i-1] + 1;
                 result += dp[i];
             }
         }

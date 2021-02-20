@@ -67,6 +67,50 @@ public class Q446_Arithmetic_Slices_II_Subsequence
                 }
                 
                 int diff = (int) gap;
+                int prevCount = counts[j].getOrDefault(diff, 0);
+                
+                // this means current subarray's len is 2
+                // each time add 1 to previous result:  
+                // 		[1,2] = 1 and add 3 ==>  [1,2] and [1,2,3] (new one)
+                if (prevCount == 0)
+                {
+                    counts[i].put(diff, counts[i].getOrDefault(diff, 0) + 1);
+                }
+                else
+                {
+                    counts[i].put(diff, counts[i].getOrDefault(diff, 0) + prevCount + 1);
+                    result += prevCount;
+                }
+            }
+        }
+        
+        return result;     
+    }
+	
+	public int numberOfArithmeticSlices2(int[] nums) 
+    {
+        if (nums == null || nums.length < 3) 
+        {
+            return 0;
+        } 
+        
+        int result = 0;
+        Map<Integer, Integer>[] counts = new Map[nums.length];
+        
+        for (int i = 0; i < nums.length; i++) 
+        {
+            counts[i] = new HashMap<>(i);
+            
+            for (int j = 0; j < i; j++) 
+            {
+                long gap = (long) nums[i] - (long) nums[j];
+                
+                if (gap < Integer.MIN_VALUE || gap > Integer.MAX_VALUE) 
+                {
+                    continue;
+                }
+                
+                int diff = (int) gap;
                 
                 // count比实际要多一个1，用来区别数组长度为2的情况和为1的情况
                 int count = counts[j].getOrDefault(diff, 0); 

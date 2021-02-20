@@ -76,12 +76,15 @@ public class Q1000_Minimum_Cost_to_Merge_Stones {
                 int end = start+length-1;
                 dp[start][end] = Integer.MAX_VALUE;
                 
+                // we don't need to check any subarray within [start, start+(K-1)]
+                // for example: [start, t] and [t, start+(k-1)] will never be merged together to form
+                // an K-length array [start, start+(k-1)], so we can skip K-1 step
                 for (int mid = start; mid < end; mid += K-1)
                 {
                     dp[start][end] = Math.min(dp[start][end], dp[start][mid] + dp[mid+1][end]);
                 }
                 
-                // when the current subarray can be merged:
+                // when the current subarray [start, end] can be merged:
                 if ((end-start) % (K-1) == 0)
                 {
                     int cost = start > 0 ? stonesCost[end] - stonesCost[start-1] : stonesCost[end];
