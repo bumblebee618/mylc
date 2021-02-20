@@ -78,7 +78,7 @@ public class Q1766_Tree_of_Coprimes
 		// dfs the tree from root 0
 		int[] result = new int[nums.length];
         
-        /*HashMap: value, Node*/
+        /*HashMap: idx, Node*/
         dfs(0, result, 0, new HashMap<Integer, Node>(), new HashSet<>());
         return result;
     }
