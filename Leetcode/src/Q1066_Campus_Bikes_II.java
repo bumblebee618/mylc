@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /***
  * 
  * @author jackie
@@ -38,10 +42,119 @@ All worker and bike locations are distinct.
  */
 public class Q1066_Campus_Bikes_II 
 {
-	// solution 1:
+    private int getDistance(int[] p1, int[] p2) 
+    {
+        return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
+    }
+	
+	// solution 1: use Integer to record choosing status, limitation: Integer only have 32 bit
+	public int assignBikes(int[][] workers, int[][] bikes) 
+	{
+		if (workers == null || workers.length == 0 || workers[0].length != 2) 
+		{
+			return 0;
+		} 
+		else if (bikes == null || bikes.length == 0 || bikes[0].length != 2) 
+		{
+			return 0;
+		} 
+		else if (workers.length > bikes.length) 
+		{
+			return 0;
+		}
+
+		int[] memo = new int[1 << bikes.length];
+		return backtrack(workers, bikes, 0, 0, memo);
+	}
+
+	private int backtrack(int[][] workers, int[][] bikes, int index, int usedStatus, int[] memo) 
+	{
+		if (index == workers.length) 
+		{
+			return 0;
+		} 
+		else if (memo[usedStatus] > 0) 
+		{
+			return memo[usedStatus];
+		}
+
+		int result = Integer.MAX_VALUE;
+
+		for (int i = 0; i < bikes.length; i++) 
+		{
+			if ((usedStatus & (1 << i)) != 0) 
+			{
+				continue;
+			}
+
+			result = Math.min(result, getDistance(workers[index], bikes[i]) + backtrack(workers, bikes, index + 1, usedStatus | (1 << i), memo));
+		}
+
+		memo[usedStatus] = result;
+		return memo[usedStatus];
+	}
+	
+	
+	// solution 2: use string to record the choosing status
+	public int assignBikes2(int[][] workers, int[][] bikes) 
+    {
+        if (workers == null || workers.length == 0 || workers[0].length != 2) 
+        {
+            return 0;
+        } 
+        else if (bikes == null || bikes.length == 0 || bikes[0].length != 2) 
+        {
+            return 0;
+        } 
+        else if (workers.length > bikes.length) 
+        {
+            return 0;
+        }
+
+        Map<String, Integer> memo = new HashMap<>();
+        char[] status = new char[bikes.length];
+        Arrays.fill(status, '0');
+        return backtrack(workers, bikes, 0, memo, status);
+    }
+
+    private int backtrack(int[][] workers, int[][] bikes, int index, Map<String, Integer> memo, char[] status) 
+    {
+        if (index == workers.length) 
+        {
+            return 0;
+        } 
+    
+        String statusStr = new String(status);
+    
+        if (memo.containsKey(statusStr)) 
+        {
+            return memo.get(statusStr);
+        }
+
+        int result = Integer.MAX_VALUE;
+
+        for (int i = 0; i < bikes.length; i++) 
+        {
+            if (status[i] == '1') 
+            {
+                continue;
+            }
+        
+            status[i] = '1';
+            result = Math.min(result, getDistance(workers[index], bikes[i]) + backtrack(workers, bikes, index + 1, memo, status));
+            status[i] = '0';
+        }
+
+        memo.put(statusStr, result);
+        return result;
+    }
+
+	
+	
+	// solution 3: backtrack without any memo used
 	private int minDistance = Integer.MAX_VALUE;
     
-    public int assignBikes(int[][] workers, int[][] bikes) 
+    public int assignBikes3(int[][] workers, int[][] bikes) 
     {
         if (workers == null || workers.length == 0 || bikes == null || bikes.length == 0)
         {
@@ -77,59 +190,5 @@ public class Q1066_Campus_Bikes_II
                 visited[i] = false;
             }
         }
-    }
-    
-    private int getDistance(int[] p1, int[] p2) 
-    {
-        return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
-    }
-	
-	
-    
-    // solution 2:
-	public int assignBikes2(int[][] workers, int[][] bikes) 
-	{
-        if (workers == null || workers.length == 0 || workers[0].length != 2)
-        {
-            return 0;
-        }
-        else if (bikes == null || bikes.length == 0 || bikes[0].length != 2)
-        {
-            return 0;
-        }
-        else if (workers.length > bikes.length)
-        {
-            return 0;
-        }
-        
-        int[] memo = new int[1 << bikes.length];
-	    return backtrack(workers, bikes, 0, 0, memo);
-    }
-    
-    private int backtrack(int[][] workers, int[][] bikes, int index, int used, int[] memo) 
-    {
-	    if (index == workers.length) 
-        {
-            return 0;
-        }
-        else if (memo[used] > 0) 
-        {
-            return memo[used];
-        }
-        
-	    int result = Integer.MAX_VALUE;
-	
-        for (int i = 0; i < bikes.length; i++) 
-        {
-		    if ((used & (1 << i)) != 0) 
-            {
-                continue;
-            }
-            
-		    result = Math.min(result, Math.abs(workers[index][0] - bikes[i][0]) + Math.abs(workers[index][1] - bikes[i][1]) + backtrack(workers, bikes, index+1, used | (1<<i), memo));
-	    }
-        
-        memo[used] = result;
-	    return memo[used];
     }
 }
