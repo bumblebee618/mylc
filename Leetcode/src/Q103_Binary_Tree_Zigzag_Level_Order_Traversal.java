@@ -23,44 +23,53 @@ return its zigzag level order traversal as:
  * */
 
 public class Q103_Binary_Tree_Zigzag_Level_Order_Traversal {
-	public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
+	public List<List<Integer>> zigzagLevelOrder(TreeNode root) 
+    {
+        List<List<Integer>> result = new LinkedList<>();
         
-        if(root == null) {
-            return ans;
+        if (root == null)
+        {
+            return result;
         }
         
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        int size = queue.size();
         int level = 1;
-        List<Integer> list = new ArrayList<>();
         
-        while(!queue.isEmpty()) {
-            TreeNode node = queue.poll();
+        while (!queue.isEmpty())
+        {
+            int size = queue.size();
+            List<Integer> list = new LinkedList<>();
             
-            if(level % 2 == 1) {
-                list.add(node.val);
-            } else {
-                list.add(0, node.val);
+            for (int i = 0; i < size; i++)
+            {
+                TreeNode node = queue.poll();
+                
+                if (level % 2 == 1)
+                {
+                    list.add(node.val);
+                }
+                else
+                {
+                    list.add(0, node.val);
+                }
+                
+                
+                if (node.left != null)
+                {
+                    queue.offer(node.left);
+                }
+                
+                if (node.right != null)
+                {
+                    queue.offer(node.right);
+                }
             }
             
-            if(node.left != null) {
-                queue.offer(node.left);
-            } 
-            
-            if(node.right != null) {
-                queue.offer(node.right);
-            }
-            
-            if(--size == 0) {
-                size = queue.size();
-                level++;
-                ans.add(new ArrayList<Integer>(list));
-                list.clear();
-            }
+            level++;
+            result.add(list);
         }
         
-        return ans;
+        return result;
     }
 }

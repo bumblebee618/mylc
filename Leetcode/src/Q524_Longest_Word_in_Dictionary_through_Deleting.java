@@ -24,8 +24,10 @@ The size of the dictionary won't exceed 1,000.
 The length of all the strings in the input won't exceed 1,000.
 
  */
-public class Q524_Longest_Word_in_Dictionary_through_Deleting {
-	public String findLongestWord(String s, List<String> d) {
+public class Q524_Longest_Word_in_Dictionary_through_Deleting 
+{
+	public String findLongestWord(String s, List<String> d) 
+	{
         if (s == null || s.length() == 0 || d == null || d.size() == 0)
         {
             return "";
@@ -49,28 +51,27 @@ public class Q524_Longest_Word_in_Dictionary_through_Deleting {
         return result;
     }
     
-    private boolean isSubString(String target, String word)
+    private boolean isSubString(String s, String word)
     {
-        int len1 = target.length();
-        int len2 = word.length();
-        int index1 = 0, index2 = 0;
+    	int index1 = 0, index2 = 0;
+        int size1 = s.length(), size2 = word.length();
         
-        while (index1 < len1 && index2 < len2)
+        while (index1 < size1 && index2 < size2)
         {
-            int c1 = target.charAt(index1);
-            int c2 = word.charAt(index2);
-            
-            if (c1 == c2)
+            while (index1 < size1 && s.charAt(index1) != word.charAt(index2))
             {
                 index1++;
-                index2++;
             }
-            else
+            
+            if (index1 == size1)
             {
-                index1++;    
+                return false;
             }
+            
+            index1++;
+            index2++;
         }
         
-        return index2 == len2;
+        return index2 == size2;
     }
 }

@@ -1,0 +1,50 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+
+public class Q077_Combinations {
+	/*************************************************************/
+	public List<List<Integer>> combine(int n, int k) 
+	{
+        List<List<Integer>> result = new LinkedList<>();
+        
+        if (n <= 0 || k <= 0 || n < k)
+        {
+            return result;
+        }
+        
+        List<Integer> solution = new LinkedList<>();
+        
+        backtrack(result, solution, n, 1, k);
+        return result;
+    }
+    
+    private void backtrack(List<List<Integer>> result, List<Integer> solution, int n, int start, int k)
+    {
+        if (solution.size() == k)
+        {
+            result.add(new ArrayList<Integer>(solution));
+            return;
+        }
+        
+        for (int i = start; i <= n; i++)
+        {
+            solution.add(i);
+            backtrack(result, solution, n, i + 1, k);
+            solution.remove(solution.size() - 1);
+        }
+    }
+    
+    
+    public static void main(String[] args){
+    	Q077_Combinations t = new Q077_Combinations();
+    	List<List<Integer>> res = t.combine(4, 2);
+    	for(int i = 0; i < res.size(); ++i){
+    		for(int j = 0; j < res.get(i).size(); ++j){
+    			System.out.print(res.get(i).get(j) + ", ");
+    		}
+    		System.out.println();
+    	}
+    }
+}

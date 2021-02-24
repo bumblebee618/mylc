@@ -23,23 +23,29 @@ Note:
 0 < prices[i] < 50000.
 0 <= fee < 50000.
  */
-public class Q714_Best_Time_to_Buy_and_Sell_Stock_with_Transaction_Fee {
-	public int maxProfit(int[] prices, int fee) {
+public class Q714_Best_Time_to_Buy_and_Sell_Stock_with_Transaction_Fee 
+{
+	public int maxProfit(int[] prices, int fee) 
+	{
         if (prices == null || prices.length <= 1) 
         {
             return 0;
         }
         
         int size = prices.length;
+        
+        // this is the profit after buying operation, not the cost. 
+        // 即当天持股时的最大获利
         int[] buy = new int[size];
-        int[] sell = new int[size];
         buy[0] = -prices[0];
+        
+        // 当天不持股时的最大获利
+        int[] sell = new int[size];
         
         for (int i = 1; i < prices.length; i++) 
         {
             buy[i] = Math.max(buy[i-1], sell[i-1] - prices[i]);
             sell[i] = Math.max(sell[i-1], buy[i-1] + prices[i] - fee);
-            
         }
         
         return sell[size-1];

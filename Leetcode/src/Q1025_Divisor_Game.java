@@ -25,15 +25,17 @@ Input: 3
 Output: false
 Explanation: Alice chooses 1, Bob chooses 1, and Alice has no more moves.
  */
-public class Q1025_Divisor_Game {
-	public boolean divisorGame(int N) {
-        if (N <= 0)
+public class Q1025_Divisor_Game 
+{
+	public boolean divisorGame(int N) 
+    {
+        if (N <= 1)
         {
             return false;
         }
         
-        boolean[] dp = new boolean[N+1];
-        dp[0] = dp[1] = false;
+        boolean[] memo = new boolean[N+1];
+        memo[0] = memo[1] = false;
         
         for (int i = 2; i <= N; i++)
         {
@@ -41,15 +43,15 @@ public class Q1025_Divisor_Game {
             {
                 if (i % j == 0)
                 {
-                    if (dp[i-j] == false)
+                    if (!memo[i - j])
                     {
-                        dp[i] = true;
+                        memo[i] = true;
                         break;
                     }
                 }
             }
         }
         
-        return dp[N];
+        return memo[N];
     }
 }

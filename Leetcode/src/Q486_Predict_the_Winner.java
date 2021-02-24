@@ -33,7 +33,43 @@ If the scores of both players are equal, then player 1 is still the winner.
 
 public class Q486_Predict_the_Winner 
 {
+	// solution 1: 自底向上 recursion + memo
 	public boolean PredictTheWinner(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return false;
+        }
+        else if (nums.length == 1)
+        {
+            return true;
+        }
+        
+        int size = nums.length;
+        Integer[][] memo = new Integer[size][size];
+        return search(nums, memo, 0, size-1) >= 0;
+    }   
+    
+    private int search(int[] nums, Integer[][] memo, int left, int right)
+    {
+        if (left == right)
+        {
+            return nums[left];
+        }
+        else if (memo[left][right] != null)
+        {
+            return memo[left][right];
+        }
+        
+        int takeLeft = nums[left] - search(nums, memo, left+1, right);
+        int takeRight = nums[right] - search(nums, memo, left, right-1);
+        memo[left][right] = Math.max(takeLeft, takeRight);
+        return memo[left][right];
+    }
+	
+    
+	// solution 2: 区间DP
+	public boolean PredictTheWinner2(int[] nums) 
     {
         if (nums == null || nums.length == 0)
         {

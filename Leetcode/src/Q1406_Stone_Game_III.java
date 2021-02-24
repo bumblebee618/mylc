@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /***
  * 
  * @author jackie
@@ -51,33 +53,25 @@ Constraints:
  */
 public class Q1406_Stone_Game_III 
 {
-	public String stoneGameIII(int[] stoneValue) 
+	private int[] stoneValue;
+    
+    public String stoneGameIII(int[] stoneValue) 
     {
         if (stoneValue == null || stoneValue.length == 0)
         {
             return "Tie";
         }
         
-        int size = stoneValue.length;
-        int[] dp = new int[size+1];
+        int sum = Arrays.stream(stoneValue).sum();
+        this.stoneValue = stoneValue;
+        Integer[] memo = new Integer[stoneValue.length];
+        int score = search(0, memo);
         
-        for (int i = size-1; i >= 0; i--)
-        {
-            int take = 0;
-            dp[i] = Integer.MIN_VALUE;
-            
-            for (int k = 0; k < 3 && i+k < size; k++)
-            {
-                take += stoneValue[i+k];
-                dp[i] = Math.max(dp[i], take - dp[i+k+1]);
-            }
-        }
-        
-        if (dp[0] > 0)
+        if (score * 2 > sum)
         {
             return "Alice";
         }
-        else if (dp[0] < 0)
+        else if (score * 2 < sum)
         {
             return "Bob";
         }
@@ -86,4 +80,77 @@ public class Q1406_Stone_Game_III
             return "Tie";
         }
     }
+    
+    private int search(int startIndex, Integer[] memo)
+    {
+        if (startIndex >= stoneValue.length)
+        {
+            return 0;
+        }
+        else if (memo[startIndex] != null)
+        {
+            return memo[startIndex];
+        }
+        
+        int take1 = stoneValue[startIndex] + search(startIndex+1, memo);
+        
+        int take2 = (startIndex+1 < stoneValue.length) ? 
+            stoneValue[startIndex] + stoneValue[startIndex+1] + search(startIndex+2, memo) 
+            : 0;
+        
+        int take3 = (startIndex+2 < stoneValue.length) ? 
+            stoneValue[startIndex] + stoneValue[startIndex+1] + stoneValue[startIndex+2] + search(startIndex+3, memo) 
+            : 0;
+        
+        memo[startIndex] = Math.max(take1, Math.max(take2, take3)); 
+        return memo[startIndex];
+    }
+	
+	
+	public String stoneGameIII2(int[] stoneValue) 
+    {
+        if (stoneValue == null || stoneValue.length == 0)
+        {
+            return "Tie";
+        }
+        
+        int size = stoneValue.length;
+        int[] score = new int[size+1];
+        
+        for (int i = size-1; i >= 0; i--)
+        {
+            int take = 0;
+            score[i] = Integer.MIN_VALUE;
+            
+            for (int k = 0; k < 3 && i+k < size; k++)
+            {
+                take += stoneValue[i+k];
+                score[i] = Math.max(score[i], take - score[i+k+1]);
+            }
+        }
+        
+        if (score[0] > 0)
+        {
+            return "Alice";
+        }
+        else if (score[0] < 0)
+        {
+            return "Bob";
+        }
+        else
+        {
+            return "Tie";
+        }
+    }
+	
+	
+
+	
+	public static void main(String[] args)
+	{
+		Q1406_Stone_Game_III test = new Q1406_Stone_Game_III();
+		
+		int[] stoneValue1 = {1,2,3,7};
+		System.out.println(test.stoneGameIII(stoneValue1));
+	}
 }

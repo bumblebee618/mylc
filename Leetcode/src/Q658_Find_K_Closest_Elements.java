@@ -30,7 +30,7 @@ arr is sorted in ascending order.
 -104 <= arr[i], x <= 104
  */
 public class Q658_Find_K_Closest_Elements {
-	// Time complexity O(logn)
+	// Solution 1: time complexity O(logn)
 	public List<Integer> findClosestElements(int[] arr, int k, int x) 
 	{
         List<Integer> result = new ArrayList<>();
@@ -52,7 +52,7 @@ public class Q658_Find_K_Closest_Elements {
             }
             else
             {
-                 right = mid;  // 尽量往左靠，因为|a - x| == |b - x| and a < b
+                 right = mid;  // 尽量往左靠，因为答案需要满足|a - x| == |b - x| and a < b
             }
         }
         
@@ -65,12 +65,48 @@ public class Q658_Find_K_Closest_Elements {
     }
 
 	
-	
+	// Solution 2: binary search + two pointer, time O(logn + k + klogk)
+	public List<Integer> findClosestElements2(int[] arr, int k, int x) 
+    {
+        List<Integer> result = new ArrayList<>();
+        
+        if (arr == null || arr.length == 0 || k <= 0 || k > arr.length)
+        {
+            return result;            
+        }
+        
+        int right = Arrays.binarySearch(arr, x);
+        right = right < 0 ? -right-1 : right;
+        int left = right-1;
+            
+        for (int i = 0; i < k; i++)
+        {
+            int elem = 0;
+            
+            if (left >= 0 && right < arr.length)
+            {
+                elem = (Math.abs(x-arr[left]) <= Math.abs(x-arr[right])) ? arr[left--] : arr[right++];
+            }
+            else if (left >= 0)
+            {
+                elem = arr[left--];
+            }
+            else
+            {
+                elem = arr[right++];
+            }
+            
+            result.add(elem);
+        }
+        
+        Collections.sort(result);
+        return result;
+    }
 	
     
 	
-	// Time complexity O(n-k)
-    public List<Integer> findClosestElements2(int[] arr, int k, int x) {
+	// Solution 3: time complexity O(n-k)
+    public List<Integer> findClosestElements3(int[] arr, int k, int x) {
         List<Integer> result = new LinkedList<>();
         
         if (arr == null || k <= 0 || arr.length < k)

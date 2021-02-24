@@ -24,16 +24,22 @@ Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-
              Then buy on day 5 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
  */
 
-public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
-	/******************************************************/
-	public int maxProfit(int k, int[] prices) {
-		if(prices == null || prices.length == 0){
+public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV 
+{
+	public int maxProfit(int k, int[] prices) 
+	{
+		if (prices == null || prices.length == 0)
+		{
             return 0;
-        } else if(k >= prices.length / 2){
+        } 
+		else if (k >= prices.length / 2)
+		{
             int profit = 0;
             
-            for(int i = 0; i < prices.length - 1; i++){
-                if(prices[i] < prices[i+1]){
+            for (int i = 0; i < prices.length - 1; i++)
+            {
+                if (prices[i] < prices[i+1])
+                {
                     profit += prices[i+1] - prices[i];
                 }
             }
@@ -41,12 +47,14 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
             return profit;
         }
         
-        int[] costs = new int[k + 1];
-        int[] profits = new int[k + 1];
+        int[] costs = new int[k + 1];   // buy the stock
+        int[] profits = new int[k + 1]; // sell the stock
         Arrays.fill(costs, Integer.MAX_VALUE);
         
-        for(int price : prices) {
-            for(int i = 1; i <= k; i++) {
+        for (int price : prices) 
+        {
+            for (int i = 1; i <= k; i++) 
+            {
                 costs[i] = Math.min(costs[i], price - profits[i-1]);
                 profits[i] = Math.max(profits[i], price - costs[i]);
             }
@@ -54,6 +62,10 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV {
         
         return profits[k];
     }
+	
+	
+	
+	
 	
 	// by ninechapter using DP, O(nk) with O(n^2) space
 	public int maxProfit2(int k, int[] prices) {

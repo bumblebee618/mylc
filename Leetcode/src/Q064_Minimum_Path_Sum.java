@@ -44,9 +44,6 @@ public class Q064_Minimum_Path_Sum {
         
         return dp[row - 1][col - 1];
     }
-    
-    
-	
 	
 	// solution 2: time O(n^2), space O(n), optimize the space complexity
     public int minPathSum2(int[][] grid) {
@@ -73,5 +70,35 @@ public class Q064_Minimum_Path_Sum {
         }
         
         return dp[(row - 1) % 2][col - 1];
+    }
+    
+    // solution 3: 自底向上，backtrack + memo
+    public int minPathSum3(int[][] grid) 
+	{
+        if (grid == null || grid.length == 0 || grid[0].length == 0) 
+        {
+            return 0;
+        }
+        
+        Integer[][] memo = new Integer[grid.length][grid[0].length];       
+        return search(grid, memo, grid.length-1, grid[0].length-1);
+    }
+    
+    private int search(int[][] grid, Integer[][] memo, int x, int y)
+    {
+        if (x == 0 && y == 0)
+        {
+            return grid[0][0];
+        }
+        else if (memo[x][y] != null)
+        {
+            return memo[x][y];
+        }
+
+        int fromUp = (x-1 >= 0) ? search(grid, memo, x-1, y) : Integer.MAX_VALUE;
+        int fromLeft = (y-1 >= 0) ? search(grid, memo, x, y-1) : Integer.MAX_VALUE;
+        
+        memo[x][y] = Math.min(fromUp, fromLeft) + grid[x][y];
+        return memo[x][y];
     }
 }

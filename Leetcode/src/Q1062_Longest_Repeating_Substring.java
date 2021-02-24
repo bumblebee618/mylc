@@ -34,8 +34,10 @@ Note:
 The string S consists of only lowercase English letters from 'a' - 'z'.
 1 <= S.length <= 1500
  */
-public class Q1062_Longest_Repeating_Substring {
-	public int longestRepeatingSubstring(String S) {
+public class Q1062_Longest_Repeating_Substring 
+{
+	public int longestRepeatingSubstring(String S) 
+	{
         if (S == null || S.length() == 0)
         {
             return 0;
@@ -76,7 +78,7 @@ public class Q1062_Longest_Repeating_Substring {
         int size = S.length();
         Set<String> set = new HashSet<>();
         
-        for (int start = 0; start < size-L+1; start++)
+        for (int start = 0; start+L-1 < size; start++)
         {
             String subStr = S.substring(start, start+L);
             

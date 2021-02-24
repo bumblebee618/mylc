@@ -95,14 +95,14 @@ public class Q716_Max_Stack
         
         while (top() != max) 
         {
-            buffer.push(pop());
+            buffer.push(pop()); // 注意call的是 pop()
         }
         
         pop();
         
         while (!buffer.isEmpty()) 
         {
-            push(buffer.pop());
+            push(buffer.pop()); // 注意call的是push()
         }
         
         return max;

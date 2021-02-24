@@ -35,6 +35,8 @@ public class Q727_Minimum_Window_Subsequence {
         }
         
         int sLen = S.length(), tLen = T.length();
+        
+        // dp[i][j] uses to keep the start index when S[0,i] contains T[0,j]
         int[][] dp = new int[sLen][tLen];
         int minLen = Integer.MAX_VALUE;
         int startIndex = -1;
@@ -46,7 +48,8 @@ public class Q727_Minimum_Window_Subsequence {
             if (S.charAt(i) == T.charAt(0)) 
             {
                 dp[i][0] = i;
-            } else if (i > 0) 
+            } 
+            else if (i > 0) 
             {
                 dp[i][0] = dp[i-1][0];
             }

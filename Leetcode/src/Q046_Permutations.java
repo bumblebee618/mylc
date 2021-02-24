@@ -21,29 +21,35 @@ public class Q046_Permutations {
     // nums is empty
     
 	// using backtrack
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+    public List<List<Integer>> permute(int[] nums) 
+    {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
         
-        if(nums == null || nums.length == 0) {
-            return ans;
+        if (nums == null || nums.length == 0) 
+        {
+            return result;
         }
         
         boolean[] visited = new boolean[nums.length];
-        backtrack(ans, new ArrayList<Integer>(), nums, visited);
-        return ans;
+        backtrack(result, new ArrayList<Integer>(), nums, visited);
+        return result;
     }
     
-    public void backtrack(List<List<Integer>> ans, List<Integer> list, int[] nums, boolean[] visited) {
-        if(list.size() == nums.length) {
-            ans.add(new ArrayList<Integer>(list));
+    private void backtrack(List<List<Integer>> result, List<Integer> list, int[] nums, boolean[] visited) 
+    {
+        if (list.size() == nums.length) 
+        {
+            result.add(new ArrayList<Integer>(list));
             return ;
         }
         
-        for(int i = 0; i < nums.length; i++) {
-            if(visited[i] == false) {
+        for (int i = 0; i < nums.length; i++) 
+        {
+            if (visited[i] == false) 
+            {
                 visited[i] = true;
                 list.add(nums[i]);
-                backtrack(ans, list, nums, visited);
+                backtrack(result, list, nums, visited);
                 list.remove(list.size() - 1);
                 visited[i] = false;
             }

@@ -20,12 +20,18 @@ public class Q213_House_Robber_II {
 	 * 
 	 ***************************************************************/
 	
-	public int rob(int[] nums) {
-        if(nums == null || nums.length == 0){
+	public int rob(int[] nums)  
+	{
+        if (nums == null || nums.length == 0)
+        {
             return 0;
-        } else if(nums.length == 1){
+        } 
+        else if (nums.length == 1)
+        {
             return nums[0];
-        } else if(nums.length == 2){
+        } 
+        else if (nums.length == 2)
+        {
             return Math.max(nums[0], nums[1]);
         }
         
@@ -38,11 +44,13 @@ public class Q213_House_Robber_II {
         profit2[1] = nums[1];
         profit2[2] = Math.max(nums[1], nums[2]);
         
-        for(int i = 2; i < n - 1; ++i){
+        for (int i = 2; i < n - 1; ++i)
+        {
             profit1[i] = Math.max(profit1[i - 2] + nums[i], profit1[i - 1]);
         }
         
-        for(int i = 3; i < n; ++i){
+        for (int i = 3; i < n; ++i)
+        {
             profit2[i] = Math.max(profit2[i - 2] + nums[i], profit2[i - 1]);
         }
         
@@ -60,7 +68,8 @@ public class Q213_House_Robber_II {
 	
 	/************************* main function ****************************/
 	//by jackie using DP
-	public int rob2(int[] nums) {
+	public int rob2(int[] nums) 
+	{
         if(nums == null || nums.length == 0) return 0;
         if(nums.length == 1) return nums[0];
         int n = nums.length;

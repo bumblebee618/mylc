@@ -53,6 +53,7 @@ public class Q395_Longest_Substring_with_At_Least_K_Repeating_Characters
             
             while (front < s.length())
             {
+            	// increase window size
                 if (unique <= curUnique)
                 {
                     char c = s.charAt(front++);
@@ -67,6 +68,7 @@ public class Q395_Longest_Substring_with_At_Least_K_Repeating_Characters
                         kCount++;
                     }
                 }
+                // decrease window size
                 else
                 {
                     char c = s.charAt(back++);

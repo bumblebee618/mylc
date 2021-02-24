@@ -37,6 +37,8 @@ public class Q300_Longest_Increasing_Subsequence {
         for (int num : nums)
         {
             int index = Arrays.binarySearch(queue, 0, maxLen, num);
+            
+            // 1-indexed when index < 0 (cannot find any num in this array)
             index = index < 0 ? -index-1 : index;
             queue[index] = num;
             
@@ -51,7 +53,8 @@ public class Q300_Longest_Increasing_Subsequence {
 	
 	
 	// solution 2: using customized binary search, time O(nlogn)
-	public int lengthOfLIS2(int[] nums) {
+	public int lengthOfLIS2(int[] nums) 
+	{
         if (nums == null || nums.length == 0)
         {
             return 0;
@@ -103,12 +106,33 @@ public class Q300_Longest_Increasing_Subsequence {
     
     
     
+    
+    
+    
+    
+    
+    /************************************** main **************************************/
+    
+    public static void main(String[] args)
+    {
+    	Q300_Longest_Increasing_Subsequence test = new Q300_Longest_Increasing_Subsequence();
+    	int[] array1 = {1,2,3,4,5,6,7,8};
+    	int[] array2 = {1,2,3,4,6,7,8};
+    	
+    	System.out.println(Arrays.binarySearch(array1, 5));
+    	System.out.println(Arrays.binarySearch(array2, 5));
+    	System.out.println(Arrays.binarySearch(array1, 0));
+    	System.out.println(Arrays.binarySearch(array1, 9));
+    }
+    
+    
 	
 	// solution 2: using ArrayList, time complexity O(nlogn), space O(n)
 	private int[] array;
     private int arrayLen = 0;
     
-    public int lengthOfLIS_2(int[] nums) {
+    public int lengthOfLIS_2(int[] nums) 
+    {
         if (nums == null || nums.length == 0)
         {
             return 0;

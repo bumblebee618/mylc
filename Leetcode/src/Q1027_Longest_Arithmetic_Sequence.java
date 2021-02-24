@@ -35,22 +35,24 @@ Note:
  */
 public class Q1027_Longest_Arithmetic_Sequence {
 	// 转化问题（-sum, sum）到 (0, 2sum)，类似416
-	public int longestArithSeqLength(int[] nums) {
+	public int longestArithSeqLength(int[] nums) 
+	{
         if (nums == null || nums.length == 0)
         {
             return 0;
         }
         
+        int base = 10000;
         int size = nums.length;       
         int result = 1;
         // dp[i][diff] means in the sequece of length i, the length of max Arithmetic sequency with difference "diff" is minValue;
-        int[][] dp = new int[size][20001];
+        int[][] dp = new int[size][base * 2 + 1];
         
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < i; j++)
             {
-                int diff = nums[i] - nums[j] + 10000;
+                int diff = nums[i] - nums[j] + base;
                 dp[i][diff] = (dp[j][diff] == 0) ? 2 : dp[j][diff]+1;
                 result = Math.max(result, dp[i][diff]);
             }

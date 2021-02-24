@@ -27,9 +27,11 @@ Note:
 1 <= words[i].length <= 16
 words[i] only consists of English lowercase letters.
  */
-public class Q1048_Longest_String_Chain {
+public class Q1048_Longest_String_Chain 
+{
 	// solution 1:
-	public int longestStrChain(String[] words) {
+	public int longestStrChain(String[] words) 
+	{
         if (words == null || words.length == 0)
         {
             return 0;

@@ -79,7 +79,7 @@ public class Q446_Arithmetic_Slices_II_Subsequence
                 else
                 {
                     counts[i].put(diff, counts[i].getOrDefault(diff, 0) + prevCount + 1);
-                    result += prevCount;
+                    result += prevCount; // add prevCount since this is the increasing number
                 }
             }
         }

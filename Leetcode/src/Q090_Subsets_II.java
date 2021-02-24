@@ -19,29 +19,35 @@ If nums = [1,2,2], a solution is:
  * 
  * */
 
-public class Q090_Subsets_II {
+public class Q090_Subsets_II 
+{
 	// using backtrack
-	public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
+	public List<List<Integer>> subsetsWithDup(int[] nums) 
+	{
+        List<List<Integer>> result = new ArrayList<>();
         
-        if(nums == null || nums.length == 0) {
-            return ans;
+        if (nums == null || nums.length == 0) 
+        {
+            return result;
         }
         
         Arrays.sort(nums);
-        backtrack(ans, new ArrayList<Integer>(), nums, 0);
-        return ans;
+        backtrack(result, new ArrayList<Integer>(), nums, 0);
+        return result;
     }
     
-    public void backtrack(List<List<Integer>> ans, List<Integer> list, int[] nums, int start) {
-        ans.add(new ArrayList<Integer>(list));
+    private void backtrack(List<List<Integer>> result, List<Integer> list, int[] nums, int start) 
+    {
+        result.add(new ArrayList<Integer>(list));
         
-        for(int i = start; i < nums.length; i++) {
+        for (int i = start; i < nums.length; i++) 
+        {
             list.add(nums[i]);
-            backtrack(ans, list, nums, i + 1);
+            backtrack(result, list, nums, i + 1);
             list.remove(list.size() - 1);
             
-            while(i + 1 < nums.length && nums[i] == nums[i + 1]) {
+            while (i + 1 < nums.length && nums[i] == nums[i + 1]) 
+            {
                 i++;
             }
         }

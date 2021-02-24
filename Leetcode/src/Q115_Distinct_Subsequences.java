@@ -14,7 +14,8 @@
 	 * */
 
 
-public class Q115_Distinct_Subsequences {
+public class Q115_Distinct_Subsequences 
+{
 	/**************************************************************************************************************************************************
 	 * 双序列动态规划 - (String类)
 	 * 		state:      f[i][j] 表示str1的前i个字符中选取str2中的前j个字符有多少种方案; i表示被选取的str的当前字符数， j表示目标str的当前字符数
@@ -29,8 +30,10 @@ public class Q115_Distinct_Subsequences {
 	 * 
 	 **************************************************************************************************************************************************/
 	
-	public int numDistinct(String s, String t) {		
-        if(s == null || s.length() == 0 || t == null || t.length() == 0){
+	public int numDistinct(String s, String t) 
+	{		
+        if (s == null || s.length() == 0 || t == null || t.length() == 0)
+        {
             return 0;
         }
         
@@ -41,18 +44,22 @@ public class Q115_Distinct_Subsequences {
         int[][] dp = new int[len1 + 1][len2 + 1]; 
         
         // initial: any substring of s can find one "null"
-        for(int i = 0; i <= len1; ++i){
+        for (int i = 0; i <= len1; ++i)
+        {
             dp[i][0] = 1;
         }
         
-        for(int i = 1; i <= len1; ++i){
-            for(int j = 1; j <= len2; ++j){
-            	// 如果S和T的当前字符相等，那么有两种选法；否则S的当前字符不能要
-            	// 可以由dp[i-1][j]在字符串i上加一个和j最后一个字符相等的字符来构成，
-            	// 也可以由dp[i-1][j-1]共同加上一个相等的字符来构成
-                if(s.charAt(i - 1) == t.charAt(j - 1)){
-                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
-                } else {
+        for (int i = 1; i <= len1; ++i)
+        {
+            for (int j = 1; j <= len2; ++j)
+            {
+            	// 如果S和T的当前字符相等，那么有两种选法，即用和不用当前S的字符；否则S的当前字符不能用
+                if (s.charAt(i - 1) == t.charAt(j - 1))
+                {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]; 
+                } 
+                else 
+                {
                     dp[i][j] = dp[i - 1][j];
                 }
             }
