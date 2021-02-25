@@ -13,7 +13,7 @@ A knight has 8 possible moves it can make, as illustrated below. Each move is tw
 
 
 
-Return the minimum number of steps needed to move the knight to the square [row, col].  It is guaranteed the answer exists.
+Return the minimum number of steps needNum to move the knight to the square [row, col].  It is guaranteed the answer exists.
 
  
 

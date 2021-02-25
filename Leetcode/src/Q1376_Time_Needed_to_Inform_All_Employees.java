@@ -10,7 +10,7 @@ The head of the company wants to inform all the employees of the company of an u
 
 The i-th employee needs informTime[i] minutes to inform all of his direct subordinates (i.e After informTime[i] minutes, all his direct subordinates can start spreading the news).
 
-Return the number of minutes needed to inform all the employees about the urgent news.
+Return the number of minutes needNum to inform all the employees about the urgent news.
 
  
 

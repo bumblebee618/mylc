@@ -28,7 +28,7 @@ public class Q284_Peeking_Iterator_FollowUp implements Iterator<Object> {
 	}
 
 	// hasNext() and next() should behave the same as in the Iterator interface.
-	// Override them if needed.
+	// Override them if needNum.
 	@Override
 	public Object next() {
 		Object ans = next;

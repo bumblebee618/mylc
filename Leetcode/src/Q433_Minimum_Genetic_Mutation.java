@@ -9,12 +9,12 @@ For example, "AACCGGTT" -> "AACCGGTA" is 1 mutation.
 
 Also, there is a given gene "bank", which records all the valid gene mutations. A gene must be in the bank to make it a valid gene string.
 
-Now, given 3 things - start, end, bank, your task is to determine what is the minimum number of mutations needed to mutate from "start" to "end". If there is no such a mutation, return -1.
+Now, given 3 things - start, end, bank, your task is to determine what is the minimum number of mutations needNum to mutate from "start" to "end". If there is no such a mutation, return -1.
 
 Note:
 
 Starting point is assumed to be valid, so it might not be included in the bank.
-If multiple mutations are needed, all mutations during in the sequence must be valid.
+If multiple mutations are needNum, all mutations during in the sequence must be valid.
 You may assume start and end string is not the same.
 Example 1:
 

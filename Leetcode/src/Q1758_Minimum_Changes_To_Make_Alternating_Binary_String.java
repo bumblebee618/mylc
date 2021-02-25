@@ -6,7 +6,7 @@
 
 The string is called alternating if no two adjacent characters are equal. For example, the string "010" is alternating, while the string "0100" is not.
 
-Return the minimum number of operations needed to make s alternating.
+Return the minimum number of operations needNum to make s alternating.
 
  
 

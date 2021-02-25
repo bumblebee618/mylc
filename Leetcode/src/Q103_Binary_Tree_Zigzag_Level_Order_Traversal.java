@@ -22,7 +22,8 @@ return its zigzag level order traversal as:
  * 
  * */
 
-public class Q103_Binary_Tree_Zigzag_Level_Order_Traversal {
+public class Q103_Binary_Tree_Zigzag_Level_Order_Traversal 
+{
 	public List<List<Integer>> zigzagLevelOrder(TreeNode root) 
     {
         List<List<Integer>> result = new LinkedList<>();

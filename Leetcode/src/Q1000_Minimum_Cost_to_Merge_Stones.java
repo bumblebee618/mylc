@@ -57,7 +57,7 @@ public class Q1000_Minimum_Cost_to_Merge_Stones {
 
         int len = stones.length;
         
-        // dp[i][j] means the minimum cost needed to merge stones[i] ~ stones[j]
+        // dp[i][j] means the minimum cost needNum to merge stones[i] ~ stones[j]
         int[][] dp = new int[len][len];
         
         // stoneSum[i] is the total cost to remove stones[0] ~ stones[i] together

@@ -38,12 +38,14 @@ public class Q241_Different_Ways_to_Add_Parentheses
             return new LinkedList<Integer>();
         }
         
-        initLists(input);
-        List<Integer>[][] memo = new List[nums.size()][nums.size()]; // use memo to reduce duplicated calculation
+        init(input);
+        
+        // use memo to reduce duplicated calculation
+        List<Integer>[][] memo = new List[nums.size()][nums.size()]; 
         return backtrack(0, nums.size()-1, memo);
     }
     
-    private void initLists(String input)
+    private void init(String input)
     {
         int num = 0;
         

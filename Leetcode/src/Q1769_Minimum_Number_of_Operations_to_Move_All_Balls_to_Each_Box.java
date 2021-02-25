@@ -9,7 +9,7 @@ import java.util.List;
 
 In one operation, you can move one ball from a box to an adjacent box. Box i is adjacent to box j if abs(i - j) == 1. Note that after doing so, there may be more than one ball in some boxes.
 
-Return an array answer of size n, where answer[i] is the minimum number of operations needed to move all the balls to the ith box.
+Return an array answer of size n, where answer[i] is the minimum number of operations needNum to move all the balls to the ith box.
 
 Each answer[i] is calculated considering the initial state of the boxes.
 
