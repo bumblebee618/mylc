@@ -58,6 +58,7 @@ public class Q113_Path_Sum_II {
         
         dfs(node.left, result, solution, curSum + node.val, target);
         dfs(node.right, result, solution, curSum + node.val, target);
+        
         solution.remove(solution.size() - 1);
     }
 	

@@ -53,7 +53,8 @@ return [3, 4]
 
 public class Q310_Minimum_Height_Trees {
 	// Solution 1:Prune leaves
-	public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+	public List<Integer> findMinHeightTrees(int n, int[][] edges) 
+	{
 	        List<Integer> result = new LinkedList<>();
 	        
 	        if (n <= 0 || edges == null)
@@ -66,23 +67,17 @@ public class Q310_Minimum_Height_Trees {
 	            return result;
 	        }
 	        
+            // Construct adjencent graph 
 	        Set<Integer>[] graph = new Set[n];
-	        
-	        // Construct adjencent graph        
+        
+            for (int i = 0; i < n; i++)
+            {
+                graph[i] = new HashSet<>();
+            }
+	               
 	        for (int[] edge : edges)
 	        {
-	            if (graph[edge[0]] == null)
-	            {
-	                graph[edge[0]] = new HashSet<>();
-	            }
-	            
 	            graph[edge[0]].add(edge[1]);
-	            
-	            if (graph[edge[1]] == null)
-	            {
-	                graph[edge[1]] = new HashSet<>();
-	            }
-	            
 	            graph[edge[1]].add(edge[0]);
 	        }
 	        
@@ -97,7 +92,9 @@ public class Q310_Minimum_Height_Trees {
 	            }
 	        }
 	        
-	        while (n > 2)
+	        // 这里只能是 n > 2 而不是 queue.size() > 2
+	        // 例如从2个叶子开始的情况
+	        while (n > 2)  
 	        {
 	            int size = queue.size();
 	            
@@ -105,11 +102,6 @@ public class Q310_Minimum_Height_Trees {
 	            {
 	                int leave = queue.poll();
 	                n--;    // remove one leave
-	                
-	                if (graph[leave] == null)
-	                {
-	                    continue;
-	                }
 	                
 	                for (int next : graph[leave])
 	                {

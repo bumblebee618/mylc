@@ -50,7 +50,7 @@ public class Q666_Path_Sum_IV
         for (int num : nums)
         {
             int row = num / 100;
-            int col = (num / 10) - row * 10;
+            int col = (num - row * 100) / 10;
             int value = num % 10;
             tree[row][col] = value;
             nodes.add(row * tree[0].length + col);

@@ -15,3 +15,5 @@
 1614229861589	Rename local variable 'stack1'
 1614229871481	Rename local variable 'stack2'
 1614233828461	Rename method 'refreshBoard'
+1614284486766	Rename local variable 'start'
+1614284496417	Rename local variable 'end'

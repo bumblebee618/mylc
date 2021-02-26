@@ -40,12 +40,16 @@ public class Q1120_Maximum_Average_Subtree
     {
         if (node == null)
         {
+        	
             return new int[] {0, 0};
         }
         
         int[] left = dfs(node.left);
         int[] right = dfs(node.right);
+        
+        // current[0] -> sum and current[1] -> count
         int[] current = new int[2];
+        
         current[0] = left[0] + right[0] + node.val;
         current[1] = left[1] + right[1] + 1;
         maxAvg = Math.max(maxAvg, (double) current[0] / current[1]);

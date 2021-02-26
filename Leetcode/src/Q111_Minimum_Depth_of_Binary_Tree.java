@@ -10,8 +10,10 @@ down to the nearest leaf node.
  * 
  * */
 
-public class Q111_Minimum_Depth_of_Binary_Tree {
-	public int minDepth(TreeNode root) {
+public class Q111_Minimum_Depth_of_Binary_Tree 
+{
+	public int minDepth(TreeNode root) 
+	{
         if (root == null)
         {
             return 0;

@@ -8,26 +8,34 @@ of the two subtrees of every node never differ by more than 1.
  * 
  * */
 
-public class Q110_Balanced_Binary_Tree {
-	public boolean isBalanced(TreeNode root) {
-        if(root == null){
+public class Q110_Balanced_Binary_Tree 
+{
+	public boolean isBalanced(TreeNode root) 
+	{
+        if (root == null)
+        {
             return true;
         }
         
         return (pathHelper(root) != -1);
     }
     
-    public int pathHelper(TreeNode node){
-    	if(node == null){
+    private int pathHelper(TreeNode node)
+    {
+    	if (node == null)
+    	{
             return 0;
         }
         
         int left = pathHelper(node.left);
         int right = pathHelper(node.right);
         
-        if(left == -1 || right == -1 || Math.abs(left - right) > 1){  
+        if (left == -1 || right == -1 || Math.abs(left - right) > 1)
+        {  
             return -1;
-        } else {
+        } 
+        else 
+        {
             return Math.max(left, right) + 1; 
         }
     }

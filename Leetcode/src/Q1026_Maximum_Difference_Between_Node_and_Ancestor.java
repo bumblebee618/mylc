@@ -31,7 +31,8 @@ public class Q1026_Maximum_Difference_Between_Node_and_Ancestor
 {
 	private int maxDiff = Integer.MIN_VALUE;
     
-    public int maxAncestorDiff(TreeNode root) {
+    public int maxAncestorDiff(TreeNode root) 
+    {
         if (root == null)
         {
             return 0;

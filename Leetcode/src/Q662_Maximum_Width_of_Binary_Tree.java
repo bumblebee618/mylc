@@ -85,12 +85,12 @@ public class Q662_Maximum_Width_of_Binary_Tree
             {
                 Node current = queue.poll();
                 
-                if (i == 0)
+                if (i == 0)  // start
                 {
                     left = current.col;
                 }
                 
-                if (i == size-1)
+                if (i == size-1)  // end
                 {
                     maxWidth = Math.max(maxWidth, current.col-left+1);
                 }
