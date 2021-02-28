@@ -15,8 +15,42 @@ Follow up:
 
 public class Q230_Kth_Smallest_Element_in_a_BST 
 {
-	// Binary search, time is O(logn)
+	// solution 1: use inorder traverse, time is O(k)
 	public int kthSmallest(TreeNode root, int k) 
+    {
+        if (root == null || k <= 0)
+        {
+            return -1;
+        }
+        
+        Stack<TreeNode> stack = new Stack<>();
+        int count = 0;
+        
+        while (root != null || !stack.isEmpty())
+        {
+        	while (root != null) 
+        	{
+        		stack.push(root);
+        		root = root.left;
+        	}
+        	
+        	root = stack.pop();
+        	
+        	if (++count == k)
+        	{
+        		return root.val;
+        	}
+        	
+        	root = root.right;
+        }
+        
+        return -1;
+    }
+	
+	
+	
+	// solution 2: Binary search, time is O(2n)
+	public int kthSmallest2(TreeNode root, int k) 
     {
         if (root == null || k <= 0)
         {
@@ -57,11 +91,11 @@ public class Q230_Kth_Smallest_Element_in_a_BST
 	
 	
 	
-	// solution 1: using inorder travel + recursive, time is O(k)
+	// solution 3: using inorder travel + recursive, time is O(k)
 	int ans = Integer.MAX_VALUE;
 	int count = 0;
 	
-	public int kthSmallest2(TreeNode root, int k)
+	public int kthSmallest3(TreeNode root, int k)
 	{
         if (root == null) 
         {
@@ -93,8 +127,8 @@ public class Q230_Kth_Smallest_Element_in_a_BST
     
     
     
-    // solution 2: using inorder + iterator, time is O(k)
-    public int kthSmallest3(TreeNode root, int k) 
+    // solution 4: using inorder + iterator, time is O(k)
+    public int kthSmallest4(TreeNode root, int k) 
     {
         if (root == null) 
         {
@@ -129,8 +163,8 @@ public class Q230_Kth_Smallest_Element_in_a_BST
        
     
     
-    // solution 3: using binary search, time is O(logn + n);
-    public int kthSmallest4(TreeNode root, int k) 
+    // solution 5: using binary search, time is O(2n);
+    public int kthSmallest5(TreeNode root, int k) 
     {
         if (root == null || k <= 0) 
         {

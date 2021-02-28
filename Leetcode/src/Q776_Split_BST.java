@@ -42,19 +42,27 @@ public class Q776_Split_BST {
         {
             return new TreeNode[] {null, null};
         }
-        else if (root.val <= target) // split point is in right subtree 
+        
+        TreeNode[] result = new TreeNode[2];
+        
+        if (root.val <= target) // split point is in right subtree 
         {
-            TreeNode[] result = splitBST(root.right, target);
-            root.right = result[0];
+            result = splitBST(root.right, target);
+            
+            // update the right subtree to only include node less than or equal to target
+            root.right = result[0]; 
             result[0] = root;
-            return result;
         } 
         else   // split point is in left subtree 
         {
-            TreeNode[] result = splitBST(root.left, target);
+            result = splitBST(root.left, target);
+            
+            // update the left subtree to only include node greater than target
             root.left = result[1];
             result[1] = root;
             return result;
         }
+        
+        return result;
     }
 }

@@ -19,9 +19,84 @@ Follow up:
  * 
  * */
 
-public class Q272_Closest_Binary_Search_Tree_Value_II {
-	// solution 1:  using heap, time complexity O(nlogk + klogk)
+public class Q272_Closest_Binary_Search_Tree_Value_II 
+{
+	// solution 1: time O(n), space O(n)
 	public List<Integer> closestKValues(TreeNode root, double target, int k) 
+    {
+        List<Integer> result = new LinkedList<Integer>();
+        
+        if (root == null || k <= 0)
+        {
+            return result;
+        }
+        
+        // dfs, time O(n), space O(n)
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> list = new ArrayList<Integer>();
+        
+        while (root != null || !stack.isEmpty())
+        {
+            while (root != null)
+            {
+                stack.push(root);
+                root = root.left;
+            }
+            
+            root = stack.pop();
+            list.add(root.val);
+            root = root.right;
+        }
+        
+        // find the start position, time O(n)
+        int end = 0;
+        
+        while (end < list.size())
+        {
+            if ((double) list.get(end) > target)
+            {
+                break;
+            }
+            
+            end++;
+        }
+        
+        int start = end-1;
+        
+        // get k result, time O(k)
+        for (int i = 0; i < k; i++)
+        {
+            if (start >= 0 && end < list.size())
+            {
+                double diff1 = Math.abs((double) list.get(start) - target);
+                double diff2 = Math.abs((double) list.get(end) - target);
+                
+                if (diff1 < diff2)
+                {
+                    result.add(list.get(start--));
+                }
+                else
+                {
+                    result.add(list.get(end++));
+                }
+            }
+            else if (start >= 0)
+            {
+                result.add(list.get(start--));
+            }
+            else
+            {
+                result.add(list.get(end++));
+            }
+        }
+        
+        return result;
+    }
+
+	
+	
+	// solution 2:  using heap, time complexity O(nlogk + klogk)
+	public List<Integer> closestKValues2(TreeNode root, double target, int k) 
     {
         List<Integer> result = new LinkedList<>();
         
@@ -72,7 +147,7 @@ public class Q272_Closest_Binary_Search_Tree_Value_II {
      * 
      *******************************************************************************************************************************/
     // solution 2: using two stacks + inorder traversal, time complexity O(n + k)
-    public List<Integer> closestKValues2(TreeNode root, double target, int k) {
+    public List<Integer> closestKValues3(TreeNode root, double target, int k) {
     	  List<Integer> ans = new ArrayList<>();
     	  
     	  if(root == null || k <= 0) {
@@ -121,7 +196,7 @@ public class Q272_Closest_Binary_Search_Tree_Value_II {
 	
     
 	// follow up: solution 3: using two stack + merge sort, time complexity is O(klogn + k)
-	public List<Integer> closestKValues3(TreeNode root, double target, int k) {
+	public List<Integer> closestKValues4(TreeNode root, double target, int k) {
         List<Integer> ans = new ArrayList<>();
         
         if(root == null || k <= 0) {
@@ -208,5 +283,22 @@ public class Q272_Closest_Binary_Search_Tree_Value_II {
         }
         
         return ans;
+    }
+    
+    
+    
+    
+    
+    
+    
+    public static void main(String[] args)
+    {
+    	Q272_Closest_Binary_Search_Tree_Value_II test = new Q272_Closest_Binary_Search_Tree_Value_II();
+    	TreeNode root = new TreeNode(1500000000);
+    	root.left = new TreeNode(1400000000);
+    	double target = -1500000000;
+    	int k = 1;
+    	
+    	System.out.println(test.closestKValues(root, target, k));
     }
 }

@@ -63,6 +63,7 @@ public class Q1297_Maximum_Number_of_Occurrences_of_a_Substring
         
         for (int index = 0; index < s.length(); index++)
         {
+        	// 先加再移除
         	if (hash[s.charAt(index)]++ == 0)
             {
                 uniqueLetters++;

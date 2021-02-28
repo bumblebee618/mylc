@@ -39,21 +39,22 @@ Constraints:
 Each tree has at most 5000 nodes.
 Each node's minValue is between [-10^5, 10^5].
  */
-public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
+public class Q1305_All_Elements_in_Two_Binary_Search_Trees 
+{
 	private TreeNode r1 = null;
     private TreeNode r2 = null;
     private Integer num1 = null;
     private Integer num2 = null;
-    private Stack<TreeNode> s1 = new Stack<>();
-    private Stack<TreeNode> s2 = new Stack<>();
+    private Stack<TreeNode> stack1 = new Stack<>();
+    private Stack<TreeNode> stack2 = new Stack<>();
         
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) 
     {
         List<Integer> result = new LinkedList<>();
         r1 = root1;
         r2 = root2;
-        refreshNext(true);
-        refreshNext(false);
+        refreshNext(root1, stack1, true);
+        refreshNext(root2, stack2, false);
         
         while (num1 != null || num2 != null)
         {
@@ -62,23 +63,23 @@ public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
                 if (num1 < num2)
                 {
                     result.add(num1);
-                    refreshNext(true);
+                    refreshNext(r1, stack1, true);
                 }
                 else
                 {
                     result.add(num2);
-                    refreshNext(false);
+                    refreshNext(r2, stack2, false);
                 }
             }
             else if (num1 != null)
             {
                 result.add(num1);
-                refreshNext(true);
+                refreshNext(r1, stack1, true);
             }
             else
             {
                 result.add(num2);
-                refreshNext(false);
+                refreshNext(r2, stack2, false);
             }
         }
         
@@ -90,42 +91,32 @@ public class Q1305_All_Elements_in_Two_Binary_Search_Trees {
         return root != null || !stack.isEmpty();
     }
 
-    private void refreshNext(boolean isFirst)
+    private void refreshNext(TreeNode root, Stack<TreeNode> stack, boolean isFirst)
     {      
-        Stack<TreeNode> stack = isFirst ? s1 : s2;
-        TreeNode root = isFirst ? r1 : r2;
+        Integer num = null;
         
-        if (!hasNext(root, stack))
+        if (hasNext(root, stack))
         {   
-            if (isFirst)
+            while (root != null)
             {
-                num1 = null;
-            }
-            else
-            {
-                num2 = null;
+                stack.push(root);
+                root = root.left;
             }
             
-            return;
+            root = stack.pop();
+            num = root.val;
+            root = root.right;
         }
         
-        while (root != null)
-        {
-            stack.push(root);
-            root = root.left;
-        }
-            
-        root = stack.pop();
-            
         if (isFirst)
         {
-            num1 = root.val;
-            r1 = root.right;
+            num1 = num;
+            r1 = root;
         }
         else
         {
-            num2 = root.val;
-            r2 = root.right;
+            num2 = num; 
+            r2 = root;
         }
     }
 }

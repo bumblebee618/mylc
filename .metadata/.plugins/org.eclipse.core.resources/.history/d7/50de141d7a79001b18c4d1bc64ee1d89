@@ -1,0 +1,169 @@
+import java.util.*;
+
+public class Q000_Contest {
+	public int minOperations(int[] nums1, int[] nums2) 
+    {
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0)
+        {
+            return -1;
+        }
+        
+        int size1 = num1.length, size2 = num2.length;
+        int sum1 = Arrays.stream(num1).sum();
+        int sum2 = Arrays.stream(num2).sum(); 
+        int max1 = size1 * 6, min1 = size1;
+        int max2 = size2 * 6, min2 = size2;
+        
+        if (sum1 > max2 || sum1 < min2 || sum2 > max1 || sum2 < min1)
+        {
+            return -1;
+        }
+        else if (sum1 == sum2)
+        {
+            return 0;
+        }
+        
+        int diff = Math.abs(sum1, sum2);
+        
+        int[] minArray = sum1 < sum2 ? num1 : num2;
+        int[] maxArray = sum1 < sum2 ? num2 : num1;
+        Arrays.sort(minArray);
+        Arrays.sort(maxArray);
+        
+        int index1 = 0, index2 = maxArray.length()-1;
+        int step = 0;
+        
+        while (diff > 0)
+        {
+            step++;
+            
+            if (diff <= 6-minArray[index1] || diff < maxArray[index2]-1)
+            {
+                break;
+            }
+            
+            if (index1 < minArray.length && index2 >= 0)
+            {
+                if (6-minArray[index1] > maxArray[index2]-1)
+                {
+                    diff -= 6-minArray[index1++];
+                }
+                else
+                {
+                    diff -= maxArray[index2--]-1;
+                }
+            }
+            else if (index2 >= 0)
+            {
+                diff -= maxArray[index2--]-1;
+            }
+            else
+            {
+                diff -= 6-minArray[index1++];
+            }
+        }
+        
+        return step;
+    }
+	
+	
+	
+	
+	private int gap = Integer.MAX_VALUE;
+    private int resultPrice = 0;
+    // private Map<String, Integer> memo = new HashMap<>();
+    private int target = 0;
+    
+    public int closestCost(int[] baseCosts, int[] toppingCosts, int target) 
+    {
+        if (baseCosts == null || baseCosts.length == 0 
+            || toppingCosts == null || toppingCosts.length == 0 || target <= 0)
+        {
+            return 0;
+        }
+        
+        this.target = target;
+        Arrays.sort(toppingCosts);
+        
+        for (int base : baseCosts)
+        {
+            if (base == target)
+            {
+                return target;        
+            }
+            
+            boolean[] visited = new boolean[toppingCosts.length];
+            search(toppingCosts, 0, visited, base);
+        }
+        
+        return resultPrice;
+    }
+    
+    private void search(int[] toppingCosts, int start, boolean[] visited, int price)
+    {
+    	if (gap > Math.abs(price - target) 
+           || (gap == Math.abs(price - target) && price < resultPrice))
+        {
+    		gap = Math.abs(price - target);
+            resultPrice = price;
+        }
+    	
+    	if (price > target)
+    	{
+    		return;
+    	}
+        
+        for (int i = start; i < toppingCosts.length; i++)
+        {
+            if (visited[i])
+            {
+                continue;
+            }
+            
+            visited[i] = true;
+            
+            for (int j = 1; j <= 2; j++)
+            {
+                int curPrice = price + toppingCosts[i] * j;
+                search(toppingCosts, i, visited, curPrice);
+            }
+            
+            visited[i] = false;
+        }
+    }
+    
+    
+    /***
+     *     	
+        if (gap > Math.abs(price - target) 
+            || (gap == Math.abs(price - target) && price < resultPrice))
+        {
+            gap = Math.abs(price - target);
+            resultPrice = price;
+        }
+     * @param args
+     */
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_Contest test = new Q000_Contest();
+    	int[] baseCosts = {4};
+    	int[] toppingCosts = {9};
+    	int target = 9;
+    	
+    	int[] baseCosts2 = {1,7};
+    	int[] toppingCosts2 = {3,4};
+    	int target2 = 10;
+    	
+    	
+    	// System.out.println(test.closestCost(baseCosts2, toppingCosts2, target2));
+    	
+    	
+    	int[] nums1_1 = {1,2,3,4,5,6};
+    	int[] nums2_1 = {1,1,2,2,2,2};
+    	
+    	System.out.println(test.minOperations(nums1_1, nums2_1));
+    }
+    
+}

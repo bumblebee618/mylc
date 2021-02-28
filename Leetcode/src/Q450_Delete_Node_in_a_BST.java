@@ -40,110 +40,110 @@ Another valid answer is [5,2,6,null,4,null,7].
  * 
  * */
 
-public class Q450_Delete_Node_in_a_BST {
+public class Q450_Delete_Node_in_a_BST 
+{
 	// time is O(logn)
-	public TreeNode deleteNode(TreeNode root, int key) {
-        if(root == null) 
+	public TreeNode deleteNode(TreeNode root, int key) 
+    {
+        if (root == null)
         {
-            return root;
+            return null;
         }
         
-        TreeNode dummy = new TreeNode(0);
+        TreeNode dummy = new TreeNode(-1);
         dummy.left = root;
-        TreeNode parent = findParenForDeleteNode(dummy, root, key);
-        TreeNode deleteNode = null;
+        TreeNode parent = findParent(root, dummy, key);
         
-        if (parent.left != null && parent.left.val == key) 
+        if (parent != null)
         {
-            deleteNode = parent.left;
-        } 
-        else if (parent.right != null && parent.right.val == key) 
-        {
-            deleteNode = parent.right;
-        } 
-        else 
-        {
-            return dummy.left;
+            TreeNode delete = (parent.left != null && parent.left.val == key) ? parent.left : parent.right;
+        
+            deleteNodeFromTree(delete, parent);
         }
         
-        deleteNode(parent, deleteNode);
         return dummy.left;
     }
     
 	// time is O(logn)
-    private TreeNode findParenForDeleteNode(TreeNode parent, TreeNode node, int key) 
+    private TreeNode findParent(TreeNode node, TreeNode parent, int key)
     {
-        if (node == null || node.val == key) 
+        while (node != null)
         {
-            return parent;
+            if (node.val > key)
+            {
+                parent = node;
+                node = node.left;
+            }
+            else if (node.val < key)
+            {
+                parent = node;
+                node = node.right;
+            }
+            else
+            {
+                return parent;
+            }
         }
         
-        if (key < node.val) 
-        {
-            return findParenForDeleteNode(node, node.left, key);
-        } 
-        else 
-        {
-            return findParenForDeleteNode(node, node.right, key);
-        }
+        return null;
     }
     
     // time is O(logn)
-    private void deleteNode(TreeNode parent, TreeNode node) 
+    private void deleteNodeFromTree(TreeNode delete, TreeNode parent)
     {
-        if (node.right == null) 
+        if (delete.left == null)
         {
-            if (parent.left == node) 
+            if (parent.left == delete)
             {
-                parent.left = node.left;
-            } 
-            else 
-            {
-                parent.right = node.left;
+                parent.left = delete.right;
             }
-        } 
-        else if (node.left == null) 
+            else
+            {
+                parent.right = delete.right;
+            }
+        }
+        else if (delete.right == null)
         {
-            if (parent.left == node) 
+            if (parent.left == delete)
             {
-                parent.left = node.right;
-            } 
-            else 
-            {
-                parent.right = node.right;
+                parent.left = delete.left;
             }
-        } 
-        else 
+            else
+            {
+                parent.right = delete.left;
+            }
+        }
+        else
         {
-            TreeNode father = node;
-            TreeNode current = node.right;
+            TreeNode father = delete;
+            TreeNode node = delete.right;
             
-            while (current.left != null) 
+            while (node.left != null)
             {
-                father = current;
-                current = current.left;
+                father = node;
+                node = node.left;
             }
             
-            if (father.left == current) 
+            if (father.left == node)
             {
-                father.left = current.right;
-            } 
-            else 
+                father.left = node.right;
+            }
+            else
             {
-                father.right = current.right;
+                father.right = node.right;
             }
             
-            if (parent.left == node) 
+            if (parent.left == delete)
             {
-                parent.left = current;
-            } 
-            else 
+                parent.left = node;
+            }
+            else
             {
-                parent.right = current;
+                parent.right = node;
             }
             
-            current.left = node.left;
-            current.right = node.right;
+            node.left = delete.left;
+            node.right = delete.right;
         }
     }
 }

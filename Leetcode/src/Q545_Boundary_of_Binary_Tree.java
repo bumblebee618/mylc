@@ -56,7 +56,8 @@ public class Q545_Boundary_of_Binary_Tree
     
     private void leftBoundary(TreeNode root) 
     {
-        if (root == null || (root.left == null && root.right == null)) 
+        if (root == null 
+        	|| (root.left == null && root.right == null)) // 排除叶子的情况
         {
             return;
         }
@@ -75,7 +76,8 @@ public class Q545_Boundary_of_Binary_Tree
     
     private void rightBoundary(TreeNode root) 
     {
-        if (root == null || (root.right == null && root.left == null)) 
+        if (root == null 
+        	|| (root.right == null && root.left == null)) // 排除叶子的情况
         {
             return;
         }

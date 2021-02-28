@@ -45,8 +45,10 @@ Constraints:
 Each tree has at most 3000 nodes.
 Each node's minValue is between [1, 1000].
  */
-public class Q1325_Delete_Leaves_With_a_Given_Value {
-	public TreeNode removeLeafNodes(TreeNode root, int target) {
+public class Q1325_Delete_Leaves_With_a_Given_Value 
+{
+	public TreeNode removeLeafNodes(TreeNode root, int target) 
+	{
         if (root == null)
         {
             return null;
@@ -64,12 +66,12 @@ public class Q1325_Delete_Leaves_With_a_Given_Value {
             return true;
         }
         
-        boolean left = deleteNode(node, node.left, target);
-        boolean right = deleteNode(node, node.right, target);
+        boolean isLeftNull = deleteNode(node, node.left, target);
+        boolean isRightNull = deleteNode(node, node.right, target);
         
         if (node.val == target)
         {
-            if (left && right)
+            if (isLeftNull && isRightNull)
             {
                 if (parent.left == node)
                 {

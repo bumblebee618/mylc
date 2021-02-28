@@ -33,7 +33,7 @@ Submissions
 public class Q834_Sum_of_Distances_in_Tree 
 {
 	// solution 1: time is O(N), space is O(N)
-	private int[] result, count;
+	private int[] result, nodeCount;
     private Set<Integer>[] graph;
     private int N;
     
@@ -51,9 +51,10 @@ public class Q834_Sum_of_Distances_in_Tree
         this.N = N;
         graph = new Set[N];
         result = new int[N];
-        count = new int[N];
-        Arrays.fill(count, 1);
+        nodeCount = new int[N];
+        Arrays.fill(nodeCount, 1);
 
+        // build graph
         for (int i = 0; i < N; ++i)
         {
             graph[i] = new HashSet<>();
@@ -65,7 +66,7 @@ public class Q834_Sum_of_Distances_in_Tree
             graph[edge[1]].add(edge[0]);
         }
         
-        // 字底向上后续遍历后，parent有其所有子节点的distance (但不含父节点distance)
+        // 自底向上后续遍历后，parent有其所有子节点的distance (但不含父节点distance)
         postOrder(0, -1);
         
         // 自后续遍历后，只有root节点有正确的distance minValue，因此需要前序遍历
@@ -79,9 +80,10 @@ public class Q834_Sum_of_Distances_in_Tree
         {
             if (child != parent) 
             {
+            	// 先遍历子树
                 postOrder(child, node);
-                count[node] += count[child];
-                result[node] += result[child] + count[child];
+                nodeCount[node] += nodeCount[child];
+                result[node] += result[child] + nodeCount[child];
             }
         }
     }
@@ -92,7 +94,8 @@ public class Q834_Sum_of_Distances_in_Tree
         {
             if (child != parent) 
             {
-                result[child] = result[node] - count[child] + (N - count[child]);
+            	// 从parent角度update children的result值
+                result[child] = result[node] - nodeCount[child] + (N - nodeCount[child]);
                 preOrder(child, node);
             }
         }

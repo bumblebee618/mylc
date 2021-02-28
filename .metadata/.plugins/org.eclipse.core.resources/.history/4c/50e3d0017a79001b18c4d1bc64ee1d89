@@ -1,0 +1,97 @@
+import java.util.*;
+
+public class Q000_Contest {
+	private int gap = Integer.MAX_VALUE;
+    private int resultPrice = 0;
+    // private Map<String, Integer> memo = new HashMap<>();
+    private int target = 0;
+    
+    public int closestCost(int[] baseCosts, int[] toppingCosts, int target) 
+    {
+        if (baseCosts == null || baseCosts.length == 0 
+            || toppingCosts == null || toppingCosts.length == 0 || target <= 0)
+        {
+            return 0;
+        }
+        
+        this.target = target;
+        char[] status = new char[toppingCosts.length];
+        Arrays.sort(toppingCosts);
+        
+        for (int base : baseCosts)
+        {
+            if (base == target)
+            {
+                return target;        
+            }
+            
+            boolean[] visited = new boolean[toppingCosts.length];
+            search(toppingCosts, 0, visited, base);
+        }
+        
+        return resultPrice;
+    }
+    
+    private void search(int[] toppingCosts, int start, boolean[] visited, int price)
+    {
+    	if (gap > Math.abs(price - target) 
+           || (gap == Math.abs(price - target) && price < resultPrice))
+        {
+    		gap = Math.abs(price - target);
+            resultPrice = price;
+        }
+    	
+    	if (price > target)
+    	{
+    		return;
+    	}
+        
+        for (int i = start; i < toppingCosts.length; i++)
+        {
+            if (visited[i])
+            {
+                continue;
+            }
+            
+            visited[i] = true;
+            
+            for (int j = 1; j <= 2; j++)
+            {
+                int curPrice = price + toppingCosts[i] * j;
+                // System.out.println(curPrice +  ", " + toppingCosts[i]);
+                search(toppingCosts, i, visited, curPrice);
+            }
+            
+            visited[i] = false;
+        }
+    }
+    
+    
+    /***
+     *     	
+        if (gap > Math.abs(price - target) 
+            || (gap == Math.abs(price - target) && price < resultPrice))
+        {
+            gap = Math.abs(price - target);
+            resultPrice = price;
+        }
+     * @param args
+     */
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_Contest test = new Q000_Contest();
+    	int[] baseCosts = {4};
+    	int[] toppingCosts = {9};
+    	int target = 9;
+    	
+    	int[] baseCosts2 = {1,7};
+    	int[] toppingCosts2 = {3,4};
+    	int target2 = 10;
+    	
+    	
+    	System.out.println(test.closestCost(baseCosts2, toppingCosts2, target2));
+    }
+    
+}

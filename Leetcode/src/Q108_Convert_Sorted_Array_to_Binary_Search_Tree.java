@@ -8,18 +8,23 @@ convert it to a height balanced BST.
  * 
  * */
 
-public class Q108_Convert_Sorted_Array_to_Binary_Search_Tree {
+public class Q108_Convert_Sorted_Array_to_Binary_Search_Tree 
+{
 	// using recursive
-	public TreeNode sortedArrayToBST(int[] nums) {
-        if(nums == null || nums.length == 0) {
+	public TreeNode sortedArrayToBST(int[] nums) 
+	{
+        if (nums == null || nums.length == 0) 
+        {
             return null;
         }
         
         return buildTree(nums, 0, nums.length - 1);
     }
     
-    public TreeNode buildTree(int[] nums, int start, int end) {
-        if(start > end) {
+    public TreeNode buildTree(int[] nums, int start, int end) 
+    {
+        if (start > end) 
+        {
             return null;
         }
         

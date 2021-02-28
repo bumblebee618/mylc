@@ -27,8 +27,10 @@ Note:
 1 <= N <= 20
  * 
  */
-public class Q894_All_Possible_Full_Binary_Trees {
-	public List<TreeNode> allPossibleFBT(int N) {
+public class Q894_All_Possible_Full_Binary_Trees 
+{
+	public List<TreeNode> allPossibleFBT(int N) 
+	{
         if (N <= 0)
         {
             return new LinkedList<TreeNode>();

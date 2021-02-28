@@ -35,8 +35,10 @@ Explanation:
 Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 The substring "BBBB" has the longest repeating letters, which is 4.
  */
-public class Q424_Longest_Repeating_Character_Replacement {
-	public int characterReplacement(String s, int k) {
+public class Q424_Longest_Repeating_Character_Replacement 
+{
+	public int characterReplacement(String s, int k) 
+	{
         if (s == null || s.length() == 0 || k < 0 || s.length() < k)
         {
             return 0;

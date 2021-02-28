@@ -6,7 +6,8 @@ If it is overflow, return MAX_INT.
  * 
  * */
 
-public class Q029_Divide_Two_Integers {	
+public class Q029_Divide_Two_Integers 
+{	
 	// solution 1: binary search
 	public int divide(int dividend, int divisor) 
 	{
@@ -20,7 +21,9 @@ public class Q029_Divide_Two_Integers {
         }
         
         int flag = (long) dividend * divisor > 0 ? 1 : -1;
-        long divd = Math.abs((long) dividend);
+        
+        // 注意(long) 在Math.abs里，防止溢出，例如test case [-2147483648, 2]
+        long divd = Math.abs((long) dividend);  
         long divs = Math.abs((long) divisor);
         long result = binarySearch(divd, divs) * flag;
         return result > Integer.MAX_VALUE || result < Integer.MIN_VALUE ? Integer.MAX_VALUE : (int) result;   
@@ -30,6 +33,7 @@ public class Q029_Divide_Two_Integers {
     {
         long left = 1, right = divd;
         
+        // 这里使用left < right，简洁
         while (left < right)
         {
             long mid = left + (right - left) / 2;

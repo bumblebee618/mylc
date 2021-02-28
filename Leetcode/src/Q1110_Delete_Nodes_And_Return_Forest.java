@@ -28,9 +28,10 @@ to_delete.length <= 1000
 to_delete contains distinct values between 1 and 1000.
  */
 public class Q1110_Delete_Nodes_And_Return_Forest {
-private List<TreeNode> result = new LinkedList<>();
+	private List<TreeNode> result = new LinkedList<>();
     
-    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) 
+    {
         if (root == null)
         {
             return result;
@@ -41,53 +42,51 @@ private List<TreeNode> result = new LinkedList<>();
             return result;
         }
         
-        Set<Integer> set = new HashSet<>();
+        Set<Integer> deleteNode = new HashSet<>();
         
-        for (int delete : to_delete)
+        for (int node : to_delete)
         {
-            set.add(delete);
+            deleteNode.add(node);
         }
         
-        if (!set.contains(root.val))
-        {
-            result.add(root);
-        }
-        
-        dfs(null, root, set);
-        return result;
+        TreeNode dummy = new TreeNode(-1);
+        dummy.left = root;
+        dfs(root, dummy, deleteNode, true);
+        return result;   
     }
     
-    private void dfs(TreeNode parent, TreeNode node, Set<Integer> set)
+    private void dfs(
+        TreeNode node, 
+        TreeNode parent,
+        Set<Integer> deleteNode, 
+        boolean isParentDeleted)
     {
         if (node == null)
         {
             return;
         }
         
-        if (set.contains(node.val))
+        // only when parent is deleted then we add current node to result
+        if (isParentDeleted && !deleteNode.contains(node.val))
         {
-            if (node.left != null && !set.contains(node.left.val))
-            {
-                result.add(node.left);
-            }
-            
-            if (node.right != null && !set.contains(node.right.val))
-            {
-                result.add(node.right);
-            }
-            
-            if (parent != null && parent.left == node)
+            result.add(node);
+        }
+        
+        boolean isCurrentDeleted = deleteNode.contains(node.val);
+        
+        if (isCurrentDeleted)
+        {
+            if (parent.left == node)
             {
                 parent.left = null;
             }
-            
-            if (parent != null && parent.right == node)
+            else
             {
                 parent.right = null;
             }
         }
         
-        dfs(node, node.left, set);
-        dfs(node, node.right, set);
+        dfs(node.left, node, deleteNode, isCurrentDeleted);
+        dfs(node.right, node, deleteNode, isCurrentDeleted);
     }
 }

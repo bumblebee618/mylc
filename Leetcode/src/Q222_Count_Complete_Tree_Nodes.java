@@ -18,18 +18,21 @@ public class Q222_Count_Complete_Tree_Nodes {
         {
             int rightHeight = getHeight(root.right); // compare the height of the whole tree with right subtree
             
-            if (rightHeight == treeHeight - 1) // Left is full and height of left is h - 1 and has h levels. Add left plus root, 2^h - 1 + 1.
+            // Left is full and height of left is h - 1 and has h levels. Add left plus root, 2^h - 1 + 1.
+            if (rightHeight == treeHeight - 1) 
             {       
-                count += 1 << (treeHeight - 1);      // 2^(h) - 1 + 1: count the root node.
+            	int leftHeight = treeHeight - 1;
+                count += 1 << leftHeight;      // 2^(h) - 1 + 1: count the root node.
                 root = root.right;
             } 
+            // Right is full and height of right is h - 2 and has h - 1 levels. Add right plus root 2^(h-1) - 1 + 1.
             else 
-            {                                 // Right is full and height of right is h - 2 and has h - 1 levels. Add right plus root 2^(h-1) - 1 + 1.
+            {                                 
                 count += (1 << rightHeight);
                 root = root.left;
             }
             
-            treeHeight--;                            // 需要注意每次循环里h要--
+            treeHeight--;   // 需要注意每次循环里h要--
         }
         
         return count;
@@ -44,6 +47,12 @@ public class Q222_Count_Complete_Tree_Nodes {
         
         return getHeight(node.left) + 1;             // 树的高度一定等于左子树的高度 ！！！
     }
+	
+	
+	
+	
+	
+	
 	
 
 	/****************************************
