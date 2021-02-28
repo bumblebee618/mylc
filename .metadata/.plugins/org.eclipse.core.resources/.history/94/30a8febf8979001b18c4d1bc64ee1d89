@@ -50,28 +50,29 @@ public class Q1775_Equal_Sum_Arrays_With_Minimum_Number_of_Operations
             return -1;
         }
         
-        int max1 = nums1.length * 6, min1 = nums1.length;
-        int max2 = nums2.length * 6, min2 = nums2.length;
+        int size1 = nums1.length, size2 = nums2.length;
+        int max1 = size1 * 6, min1 = size1;
+        int max2 = size2 * 6, min2 = size2;
+        
+        int sum1 = Arrays.stream(nums1).sum();
+        int sum2 = Arrays.stream(nums2).sum(); 
         
         if (max1 < min2 || max2 < min1)
         {
             return -1;
         }
-        
-        int sum1 = Arrays.stream(nums1).sum();
-        int sum2 = Arrays.stream(nums2).sum(); 
-        
-        if (sum1 == sum2)
+        else if (sum1 == sum2)
         {
             return 0;
         }
+        
+        int diff = Math.abs(sum1 - sum2);
         
         int[] minArray = sum1 < sum2 ? nums1 : nums2;
         int[] maxArray = sum1 < sum2 ? nums2 : nums1;
         Arrays.sort(minArray);
         Arrays.sort(maxArray);
         
-        int diff = Math.abs(sum1 - sum2);
         int index1 = 0, index2 = maxArray.length-1;
         int step = 0;
         
