@@ -45,7 +45,7 @@ public class Q1773_Count_Items_Matching_a_Rule
         
         int index = -1;
         
-        switch (ruleKey)
+        switch(ruleKey)
         {
             case "type": index=0; break; 
             case "color": index=1; break; 

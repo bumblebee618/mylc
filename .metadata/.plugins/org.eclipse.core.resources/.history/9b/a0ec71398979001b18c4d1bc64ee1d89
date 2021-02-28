@@ -43,17 +43,18 @@ public class Q1773_Count_Items_Matching_a_Rule
             return 0;
         }
         
-        int index = -1;
+        Map<String, Integer> map = new HashMap<>();
+        map.put("type", 0);
+        map.put("color", 1);
+        map.put("name", 2);
         
-        switch (ruleKey)
+        if (!map.containsKey(ruleKey))
         {
-            case "type": index=0; break; 
-            case "color": index=1; break; 
-            case "name": index=2; break; 
-            default: return 0;
+            return 0;
         }
         
         int count = 0;
+        int index = map.get(ruleKey);
         
         for (List<String> item : items)
         {
