@@ -233,7 +233,7 @@ public class Q000_A_Contest {
     	int[][] cars1 = {{1,2},{2,1},{4,3},{7,2}};
     	int[][] cars2 = {{3,4},{5,4},{6,3},{9,1}};
     	
-    	double[] result = test.getCollisionTimes(cars2);
+    	double[] result = test.getCollisionTimes2(cars2);
     	
     	for (double time : result)
     	{

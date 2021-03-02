@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /***
  * 
  * @author jackie
@@ -57,6 +59,67 @@ m == toppingCosts.length
 1 <= baseCosts[i], toppingCosts[i] <= 104
 1 <= target <= 104
  */
-public class Q1774_Closest_Dessert_Cost {
-	
+public class Q1774_Closest_Dessert_Cost 
+{
+	private int gap = Integer.MAX_VALUE;
+    private int resultPrice = 0;
+    private int target = 0;
+    
+    public int closestCost(int[] baseCosts, int[] toppingCosts, int target) 
+    {
+        if (baseCosts == null || baseCosts.length == 0 
+            || toppingCosts == null || toppingCosts.length == 0 || target <= 0)
+        {
+            return 0;
+        }
+        
+        this.target = target;
+        Arrays.sort(toppingCosts);
+        
+        for (int base : baseCosts)
+        {
+            if (base == target)
+            {
+                return target;        
+            }
+            
+            boolean[] visited = new boolean[toppingCosts.length];
+            search(toppingCosts, 0, visited, base);
+        }
+        
+        return resultPrice;
+    }
+    
+    private void search(int[] toppingCosts, int start, boolean[] visited, int price)
+    {
+    	if (gap > Math.abs(price - target) 
+           || (gap == Math.abs(price - target) && price < resultPrice))
+        {
+    		gap = Math.abs(price - target);
+            resultPrice = price;
+        }
+    	
+    	if (price > target)
+    	{
+    		return;
+    	}
+        
+        for (int i = start; i < toppingCosts.length; i++)
+        {
+            if (visited[i])
+            {
+                continue;
+            }
+            
+            visited[i] = true;
+            
+            for (int j = 1; j <= 2; j++)
+            {
+                int curPrice = price + toppingCosts[i] * j;
+                search(toppingCosts, i, visited, curPrice);
+            }
+            
+            visited[i] = false;
+        }
+    }
 }

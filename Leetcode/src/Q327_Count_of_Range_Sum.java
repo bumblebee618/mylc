@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 /*******
  * 
 Given an integer array nums, return the number of range sums that lie in [lower, upper] inclusive.
@@ -19,8 +17,40 @@ Example:
  * */
 
 public class Q327_Count_of_Range_Sum {
-	// using segment tree
 	public int countRangeSum(int[] nums, int lower, int upper) 
+    {
+        if (nums == null || nums.length == 0 || lower > upper) 
+        {
+            return 0;
+        }
+        
+        TreeMap<Long, Integer> sums = new TreeMap<>();
+        sums.put(0L, 1);
+        long curSum = 0;
+        int result = 0;
+        
+        for (int num : nums)
+        {
+            curSum += num;
+            long lowerBound = (long) curSum - upper;
+            long upperBound = (long) curSum - lower;
+            
+            Map<Long, Integer> submap = sums.subMap(lowerBound, true, upperBound, true);
+            
+            for (Map.Entry<Long, Integer> entry : submap.entrySet())
+            {
+                result += entry.getValue();
+            }
+
+            sums.put(curSum, sums.getOrDefault(curSum, 0) + 1);
+        }
+        
+        return result;
+    }
+	
+	
+	// using segment tree
+	public int countRangeSum2(int[] nums, int lower, int upper) 
 	{
         if (nums == null || nums.length == 0 || lower > upper) 
         {
@@ -137,7 +167,7 @@ public class Q327_Count_of_Range_Sum {
 	
 	/*******************************************************/
 	// by other using divide and conquer， O(nlogn)
-	public int countRangeSum1(int[] nums, int lower, int upper) {
+	public int countRangeSum3(int[] nums, int lower, int upper) {
 	    int n = nums.length;
 	    long[] sums = new long[n + 1];
 	    for (int i = 0; i < n; ++i)
@@ -170,7 +200,7 @@ public class Q327_Count_of_Range_Sum {
 	
 	/*******************************************************/
 	// by Jackie using DP, O(n^2) but Time Limit Exceeded
-	public int countRangeSum2(int[] nums, int lower, int upper) {
+	public int countRangeSum4(int[] nums, int lower, int upper) {
         if(nums == null || nums.length == 0 || lower > upper){
             return 0;    
         } 
@@ -192,8 +222,17 @@ public class Q327_Count_of_Range_Sum {
 	
 	public static void main(String[] args){
 		Q327_Count_of_Range_Sum t = new Q327_Count_of_Range_Sum();
-		int[] nums = {-2, 5, -1, 5, -7, 9, 10, 11, -8};
-		System.out.println(t.countRangeSum(nums, 1, 4));
-		System.out.println(t.countRangeSum2(nums, 1, 4));
+		int[] nums1 = {-2, 5, -1, 5, -7, 9, 10, 11, -8};
+		int[] nums2 = {0, 0}; 
+		int[] nums3 = {2147483647,-2147483648,-1,0};
+		
+		System.out.println(t.countRangeSum(nums1, 1, 4));
+		System.out.println(t.countRangeSum2(nums1, 1, 4));
+		
+		System.out.println(t.countRangeSum(nums2, 0, 0));
+		System.out.println(t.countRangeSum2(nums2, 0, 0));
+		
+		System.out.println(t.countRangeSum(nums3, -1, 0));
+		System.out.println(t.countRangeSum2(nums3, -1, 0));
 	}
 }

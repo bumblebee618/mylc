@@ -42,6 +42,7 @@ public class Q715_Range_Module
             return;
         }
         
+        // 很巧的query！
         Iterator<Interval> iter = ranges.tailSet(new Interval(0, left)).iterator();
         
         while (iter.hasNext())
@@ -64,6 +65,8 @@ public class Q715_Range_Module
     public boolean queryRange(int left, int right) 
     {
         Interval interval = ranges.higher(new Interval(0, left));
+        
+        // current treeset里的interval不会重叠！
         return (interval != null && interval.left <= left && interval.right >= right);
     }
     

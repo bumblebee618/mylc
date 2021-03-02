@@ -42,7 +42,7 @@ public class Q1074_Number_of_Submatrices_That_Sum_to_Target
 		}
 		
 		int row = matrix.length, col = matrix[0].length;
-		int[][] prefixSum = new int[row][col];
+		int[][] matrixSum = new int[row][col];
         int result = 0;
 		
 		for (int i = 0; i < row; i++)
@@ -52,11 +52,11 @@ public class Q1074_Number_of_Submatrices_That_Sum_to_Target
 			for (int j = 0; j < col; j++)
 			{
 				rowSum += matrix[i][j];
-				prefixSum[i][j] += rowSum;
+				matrixSum[i][j] += rowSum;
 				
 				if (i > 0)
 				{
-					prefixSum[i][j] += prefixSum[i-1][j];
+					matrixSum[i][j] += matrixSum[i-1][j];
 				}
 			}
 		}
@@ -70,8 +70,8 @@ public class Q1074_Number_of_Submatrices_That_Sum_to_Target
 				
 				for (int j = 0; j < col; j++)
 				{
-					int part1 = (startRow > 0) ? prefixSum[startRow-1][j] : 0;
-					int sum = prefixSum[endRow][j] - part1;
+					int part1 = (startRow > 0) ? matrixSum[startRow-1][j] : 0;
+					int sum = matrixSum[endRow][j] - part1;
 					result += map.getOrDefault(sum-target, 0);
 					map.put(sum, map.getOrDefault(sum, 0) + 1);
 				}

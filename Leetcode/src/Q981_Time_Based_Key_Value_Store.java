@@ -49,32 +49,36 @@ TimeMap.set and TimeMap.get functions will be called a total of 120000 times (co
  */
 
 
-public class Q981_Time_Based_Key_Value_Store {
+public class Q981_Time_Based_Key_Value_Store 
+{
 	private Map<String, TreeMap<Integer, String>> map;
-    
+
     /** Initialize your data structure here. */
-    public Q981_Time_Based_Key_Value_Store() {
+    public Q981_Time_Based_Key_Value_Store() 
+    {
         map = new HashMap<>();
     }
     
-    public void set(String key, String value, int timestamp) {
-        if (!map.containsKey(key))
+    public void set(String key, String value, int timestamp) 
+    {
+        if (key == null || key.length() == 0)
         {
-            map.put(key, new TreeMap<>());
+            return;
         }
         
-        map.get(key).put(timestamp, value);
+        map.computeIfAbsent(key, x -> new TreeMap<Integer, String>()).put(timestamp, value);
     }
     
-    public String get(String key, int timestamp) {
+    public String get(String key, int timestamp) 
+    {
         if (!map.containsKey(key))
         {
             return "";
         }
         
         TreeMap<Integer, String> treeMap = map.get(key);
-        Integer time = treeMap.floorKey(timestamp);
-        return time != null ? treeMap.get(time) : "";
+        Map.Entry<Integer, String> entry = treeMap.floorEntry(timestamp);
+        return entry == null ? "" : entry.getValue(); 
     }
 
 	

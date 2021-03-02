@@ -16,7 +16,62 @@ The rectangle inside the matrix must have an area > 0.
 What if the number of rows is much larger than the number of columns?
  */
 
-public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
+public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K 
+{
+	// time is O(n^3*logn)
+	public int maxSumSubmatrix(int[][] matrix, int k) 
+	{
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
+        {
+			return 0;
+		}
+
+		int row = matrix.length, col = matrix[0].length;
+		int result = Integer.MIN_VALUE;
+        
+        int[][] matrixSum = new int[row][col];
+        
+        for (int i = 0; i < row; i++)
+        {
+            int rowSum = 0;
+            
+            for (int j = 0; j < col; j++)
+            {
+                rowSum += matrix[i][j];
+                matrixSum[i][j] += rowSum;
+                matrixSum[i][j] += (i > 0) ? matrixSum[i-1][j] : 0;
+            }
+        }
+
+		for (int rowStart = 0; rowStart < row; rowStart++) 
+        {
+			for (int rowEnd = rowStart; rowEnd < row; rowEnd++) 
+            {
+				TreeSet<Integer> set = new TreeSet<Integer>();
+				set.add(0);   // in case k == curSum;
+
+				for (int i = 0; i < col; i++) 
+                {
+					int part1 = (rowStart > 0) ? matrixSum[rowStart-1][i] : 0;
+					int curSum = matrixSum[rowEnd][i] - part1;
+                    
+					// use TreeMap to binary search previous sum to get possible result
+					Integer subResult = set.ceiling(curSum - k);
+
+					if (subResult != null) 
+                    {
+						result = Math.max(result, curSum - subResult);
+					}
+
+					set.add(curSum);
+				}
+			}
+		}
+
+		return result;
+    }
+	
+	
 	/***
 	 * first consider the situation matrix is 1D we can save every sum of
 	 * 0~i(0<=i<len) and binary search previous sum to find possible result for
@@ -27,36 +82,48 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 	 * 
 	 ***/
 	// solution 1, use treeSet, time complexity is O(n^3 * logn)
-	public int maxSumSubmatrix(int[][] matrix, int k) {
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+	public int maxSumSubmatrix2(int[][] matrix, int k) 
+	{
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
+		{
 			return 0;
 		}
 
 		int row = matrix.length, col = matrix[0].length;
+		
 		// indicating sum up in every row or every column
-		int ans = Integer.MIN_VALUE;
+		int result = Integer.MIN_VALUE;
 
 		// start from row between i and j, row from 0 to col
-		for (int rowStart = 0; rowStart < row; rowStart++) {
+		for (int rowStart = 0; rowStart < row; rowStart++) 
+		{
             // compress sum of each row into an array
 			int[] rowSum = new int[col];  
 			
 			// sum row: [i, j] col:[0, col - 1]
-			for (int rowEnd = rowStart; rowEnd < row; rowEnd++) {
+			for (int rowEnd = rowStart; rowEnd < row; rowEnd++) 
+			{
 				int totalSum = 0;
-				TreeSet<Integer> set = new TreeSet<Integer>();
+				TreeSet<Integer> set = new TreeSet<>();
 				set.add(0);   // in case k == curSum;
 
 				// traverse every row and sum up
-				for (int i = 0; i < col; i++) {
+				for (int i = 0; i < col; i++) 
+				{
 					rowSum[i] += matrix[rowEnd][i];
 					totalSum += rowSum[i];
 					
-					// use TreeMap to binary search previous sum to get possible result
+					// use TreeSet to binary search previous sum to get possible result
 					Integer subResult = set.ceiling(totalSum - k);
 
-					if (subResult != null) {
-						ans = Math.max(ans, totalSum - subResult);
+					if (subResult != null) 
+					{
+						if (result < totalSum - subResult)
+						{
+							System.out.println(String.format("2: start=%d, end=%d, col=%d, curSum=%d, subResult=%d", rowStart, rowEnd, i, totalSum, subResult));
+						}
+						
+						result = Math.max(result, totalSum - subResult);
 					}
 
 					set.add(totalSum);
@@ -64,12 +131,12 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 			}
 		}
 
-		return ans;
+		return result;
 	}
 	
 	
 	// solution 2: time complexity is O(n^4)
-	public int maxSumSubmatrix2(int[][] matrix, int k) {
+	public int maxSumSubmatrix3(int[][] matrix, int k) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return 0;
         }
@@ -124,46 +191,30 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 	
 	
 	
-	// solution 2:
-	public int maxSumSubmatrix3(int[][] matrix, int target) {
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-			return 0;
-		}
-
-		int row = matrix.length, col = matrix[0].length;
-		int m = Math.min(row, col);
-		int n = Math.max(row, col);
-
-		// indicating sum up in every row or every column
-		boolean colIsBig = col > row;
-		int ans = Integer.MIN_VALUE;
-
-		for (int i = 0; i < m; i++) {
-			int[] sum = new int[n];
-
-			// sum from row j to row i
-			for (int j = i; j >= 0; j--) {
-				int curSum = 0;
-				TreeSet<Integer> set = new TreeSet<Integer>();
-				set.add(0);
-
-				// traverse every column/row and sum up
-				for (int k = 0; k < n; k++) {
-					sum[k] = sum[k] + (colIsBig ? matrix[j][k] : matrix[k][j]);
-					curSum = curSum + sum[k];
-					
-					// use TreeMap to binary search previous sum to get possible result
-					Integer subResult = set.ceiling(curSum - target);
-
-					if (null != subResult) {
-						ans = Math.max(ans, curSum - subResult);
-					}
-
-					set.add(curSum);
-				}
+	
+	
+	
+	
+	/*************************************** main ***************************************/
+	
+	public static void main(String[] args)
+	{
+		Q363_Max_Sum_of_Rectangle_No_Larger_Than_K test = new Q363_Max_Sum_of_Rectangle_No_Larger_Than_K();
+		int[][] matrix = {{5,-4,-3,4},{-3,-4,4,5},{5,1,5,-4}};
+		int k = 10;
+		
+		for (int[] array : matrix)
+		{
+			for (int num : array)
+			{
+				System.out.print(num + ", ");
 			}
+			
+			System.out.println();
 		}
-
-		return ans;
+		
+		System.out.println(test.maxSumSubmatrix(matrix, k));
+		
+		System.out.println(test.maxSumSubmatrix2(matrix, k));
 	}
 }

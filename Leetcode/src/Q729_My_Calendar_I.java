@@ -59,8 +59,57 @@ public class Q729_My_Calendar_I
         
         return false;
     }
+    
+    
+    /***
+    // solution 2: TreeMap + scan line
+    private TreeMap<Integer, Integer> calendars;
+
+    public MyCalendar() 
+    {
+        calendars = new TreeMap<Integer, Integer>();
+    }
+    
+    public boolean book(int start, int end) 
+    {
+        if (end < start)
+        {
+            return false;
+        }
+        
+        calendars.put(start, calendars.getOrDefault(start, 0)+1);
+        calendars.put(end, calendars.getOrDefault(end, 0)-1);
+        int eventCount = 0;
+        
+        for (Map.Entry<Integer, Integer> entry : calendars.entrySet())
+        {
+            eventCount += entry.getValue();
+            
+            if (eventCount == 2)
+            {
+                calendars.put(start, calendars.getOrDefault(start, 0)-1);
+                
+                if (calendars.get(start) == 0)
+                {
+                    calendars.remove(start);
+                }
+                
+                calendars.put(end, calendars.getOrDefault(end, 0)+1);
+                
+                if (calendars.get(end) == 0)
+                {
+                    calendars.remove(end);
+                }
+                
+                return false;
+            }
+        }
+        
+        return true;
+    }
 	
-    /*** solution 2: insert time is O(n)
+	
+    // solution 3: insert time is O(n)
 	private List<int[]> events;
 	
     public Q729_My_Calendar_I() 

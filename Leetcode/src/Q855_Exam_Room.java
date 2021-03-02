@@ -32,50 +32,56 @@ Note:
 ExamRoom.seat() and ExamRoom.leave() will be called at most 10^4 times across all test cases.
 Calls to ExamRoom.leave(p) are guaranteed to have a student currently sitting in seat number p.
  */
-public class Q855_Exam_Room {
+public class Q855_Exam_Room 
+{
 	private int N;
-    private TreeSet<Integer> students;
+    private TreeSet<Integer> seats;
 
-    public Q855_Exam_Room(int N) {
+    public Q855_Exam_Room(int N) 
+    {
         this.N = N;
-        students = new TreeSet<>();
+        seats = new TreeSet<>();
     }
     
-    public int seat() {
-        int student = 0;
+    public int seat() 
+    {
+        int seatId = 0;
         
-        if (students.size() > 0)
+        if (seats.size() > 0)
         {
-            int dist = students.first();
-            Integer prev = null;
+            int dist = seats.first();
+            Integer prevSeat = null;
             
-            for (Integer s : students)
+            // find the seatId which has the longest distance from closest person
+            for (Integer curSeat : seats)
             {
-                if (prev != null)
+                if (prevSeat != null)
                 {
-                    int d = (s - prev) / 2;
+                    int curDist = (curSeat - prevSeat) / 2;
                     
-                    if (d > dist)
+                    if (curDist > dist)
                     {
-                        dist = d;
-                        student = prev + d;
+                        dist = curDist;
+                        seatId = prevSeat + curDist;
                     }
                 }
                 
-                prev = s;
+                prevSeat = curSeat;
             }
             
-            if (N - 1 - students.last() > dist)
+            // handle the last one
+            if ((N - 1) - seats.last() > dist)
             {
-                student = N - 1;
+                seatId = N - 1;
             }
         }
         
-        students.add(student);
-        return student;
+        seats.add(seatId);
+        return seatId;
     }
     
-    public void leave(int p) {
-        students.remove(p);
+    public void leave(int p) 
+    {
+        seats.remove(p);
     }
 }

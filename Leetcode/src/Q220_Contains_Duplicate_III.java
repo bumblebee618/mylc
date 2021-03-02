@@ -51,7 +51,8 @@ public class Q220_Contains_Duplicate_III {
 
         for (int i = 0; i < len; i++) 
         {
-            for (int j = i + 1; j < len && Math.abs((long)pair[j].val - (long)pair[i].val) <= (long)t; j++)    // 注意，这里必需是Math.abs() 否则会错误 !!! 
+        	// 注意，这里必需是Math.abs() 且(long) 必须放在Math.abs里面防止溢出，否则会错误 !!! 
+            for (int j = i + 1; j < len && Math.abs((long)pair[j].val - (long)pair[i].val) <= (long)t; j++)    
             {
             	int indexDiff = Math.abs(pair[i].index - pair[j].index);                                       // 注意test case: [-1,2147483647], 1, 2147483647 !!!, 否则会等于 －2147483647
                 

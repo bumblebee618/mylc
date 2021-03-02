@@ -46,7 +46,7 @@ public class Q076_Minimum_Window_Substring {
                 front++;
             }
             
-            if (isValid(sHash, tHash) && minLen > front - back) 
+            if (minLen > front - back && isValid(sHash, tHash)) 
             {
                 minLen = front - back;
                 startPos = back;

@@ -45,7 +45,7 @@ public class Q041_First_Missing_Positive {
     }
 	
 	
-	// solution 2: using sort, time is O(n), space is O(1)
+	// solution 2: using indexing sort, time is O(n), space is O(1)
 	public int firstMissingPositive2(int[] nums) 
 	{
         if (nums == null || nums.length == 0) 
@@ -55,6 +55,7 @@ public class Q041_First_Missing_Positive {
         
         int len = nums.length;
         
+        // nums[i] should keeps i+1
         for (int i = 0; i < len; i++) 
         {
             while (nums[i] > 0 && nums[i] <= len && nums[i] != i + 1 && nums[nums[i] - 1] != nums[i]) 

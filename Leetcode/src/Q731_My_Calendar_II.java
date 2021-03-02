@@ -39,6 +39,7 @@ In calls to MyCalendar.book(start, end), start and end are integers in the range
 
 public class Q731_My_Calendar_II 
 {
+	// TreeMap + scan line
 	private TreeMap<Integer, Integer> calendar;
     
     public Q731_My_Calendar_II() 
@@ -63,6 +64,7 @@ public class Q731_My_Calendar_II
             
             if (eventCount >= 3)
             {
+            	// If it doesn't meet the condition, revert the change
                 calendar.put(start, calendar.getOrDefault(start, 0) - 1);
                 
                 if (calendar.get(start) == 0)
