@@ -1,0 +1,31 @@
+import java.util.*;
+import java.util.Map.Entry;
+
+public class Q000_A_Contest 
+{
+	public int minElements(int[] nums, int limit, int goal) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        long sum = Arrays.stream(nums).sum();
+        long diff = Math.abs(sum - goal);
+        int step = diff / limit;
+        return step;
+    }
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	int[] nums1 = {1,-1,1};
+    	int limit1 = 3;
+    	int goal1 = -4;
+    	
+    	System.out.println(test.minElements(nums1, limit1, goal1));
+    }
+    
+}

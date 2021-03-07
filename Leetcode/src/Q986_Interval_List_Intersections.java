@@ -42,17 +42,16 @@ public class Q986_Interval_List_Intersections
         int len1 = Intervals1.length;
         int len2 = Intervals2.length;
         int index1 = 0, index2 = 0;
-        int start1 = 0, end1 = 0;
-        int start2 = 0, end2 = 0;
         List<int[]> list = new LinkedList<>();
         
         while (index1 < len1 && index2 < len2)
         {
-            start1 = Intervals1[index1][0];
-            end1 = Intervals1[index1][1];
-            start2 = Intervals2[index2][0];
-            end2 = Intervals2[index2][1];
+            int start1 = Intervals1[index1][0];
+            int end1 = Intervals1[index1][1];
+            int start2 = Intervals2[index2][0];
+            int end2 = Intervals2[index2][1];
             
+            // 注意这里比较的是end，而不是start, test case: {8, 15}  {{8,10}, {12, 20}}
             if (end1 <= end2)
             {
                 if(end1 >= start2)

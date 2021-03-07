@@ -56,7 +56,7 @@ public class Q408_Valid_Word_Abbreviation {
                     index2++;
                 }
                 
-                index1 += skipCount;   // 注意这里是 +sum !!!
+                index1 += skipCount;   // 注意这里是 +skipCount !!!
             } 
             else 
             {

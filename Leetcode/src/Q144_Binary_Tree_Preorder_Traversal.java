@@ -1,43 +1,55 @@
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
 
 public class Q144_Binary_Tree_Preorder_Traversal {
-	//stack
-	public ArrayList<Integer> preorderTraversal(TreeNode root) {
-        ArrayList res = new ArrayList<Integer>();
-        Stack<TreeNode> s = new Stack<TreeNode>();
+	//solution 1: use stack
+	public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        List<Integer> result = new LinkedList<>();
         
-        while(root != null || !s.isEmpty()){
-            while(root != null){
-                res.add(root.val);
-                s.push(root);
+        if (root == null)
+        {
+            return result;
+        }
+        
+        Stack<TreeNode> stack = new Stack<>();
+        
+        while (root != null || !stack.isEmpty())
+        {
+            while (root != null)
+            {
+                result.add(root.val);
+                stack.push(root);
                 root = root.left;
             }
-            root = s.pop();
+            
+            root = stack.pop();
             root = root.right;
         }
-        return res;
+        
+        return result;
     }
 	
-	//recursive
-	public ArrayList<Integer> preorderTraversal_recursive(TreeNode root) {
-		ArrayList<Integer> res = new ArrayList<Integer>();
-		ArrayList<Integer> temp = new ArrayList<Integer>();   //必须要使用一个temp来接受传递出来的值
-        
-        if(root != null){
-            res.add(root.val);
-            temp = preorderTraversal_recursive(root.left);
-            for(int i = 0; i < temp.size(); i++)
-                res.add(temp.get(i));
-            temp.clear();
-            temp = preorderTraversal_recursive(root.right);
-            for(int i = 0; i < temp.size(); i++)
-                res.add(temp.get(i));
-            temp.clear();
+	
+	//solution 2: recursive
+	List<Integer> result = new LinkedList<>();
+    
+    public List<Integer> preorderTraversal2(TreeNode root) 
+    {
+        perorder(root);
+        return result;
+    }
+    
+    private void perorder(TreeNode root)
+    {
+        if (root == null)
+        {
+            return;
         }
-        return res;
+        
+        result.add(root.val);
+        perorder(root.left);
+        perorder(root.right);
     }
 }
 

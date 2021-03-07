@@ -1,0 +1,305 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{
+	public int nearestValidPoint(int x, int y, int[][] points) 
+	{
+		if (points == null || points.length == 0 || points[0].length == 0)
+		{
+			return 0;
+		}
+        
+        int minDist = Integer.MAX_VALUE;
+        int index = -1;
+        
+        for (int i = 0; i < points.length; i++)
+        {
+            if (points[i][0] == x || points[i][1] == y)
+            {
+                int dist = Math.abs(x - points[i][0]) + Math.abs(y - points[i][1]);
+                
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    index = i;
+                }
+            }
+        }
+        
+        return index;
+    }
+    
+	public boolean checkPowersOfThree2(int n) 
+    {
+        if (n < 1)
+        {
+            return false;
+        }
+        
+        boolean[] dp = new boolean[n+1];
+        dp[0] = true;
+        int y = 1;
+        
+        while (y <= n)
+        {
+            for (int i = n; i >= y; i--)
+            {
+                dp[i] |= dp[i-y];
+            }
+            
+            if (dp[n])
+            {
+            	break;
+            }
+            
+            y *= 3;
+        }
+        
+        return dp[n];
+    }
+	
+	private Map<String, Boolean> memo = new HashMap<>();
+    private Map<Integer, Integer> powerMap = new HashMap<>();
+    private int target = 0;
+    
+    public boolean checkPowersOfThree(int n) 
+    {
+        if (n < 1)
+        {
+            return false;
+        }
+        
+        target = n;
+        
+        int maxPower = getMaxPower(n);
+        char[] status = new char[maxPower+1];
+        Arrays.fill(status, '0');
+        
+        return search(status, 0, 0);
+    }
+    
+    private boolean search(char[] status, int startIndex, long curSum)
+    {
+        if (curSum == (long) target)
+        {
+            return true;
+        }
+        
+        String key = new String(status);
+        
+        if (memo.containsKey(key))
+        {
+            return memo.get(key);
+        }
+        
+        for (int i = startIndex; i < status.length; i++)
+        {
+        	if (curSum+powerMap.get(i) > target)
+        	{
+        		break;
+        	}
+        	
+            if (status[i] == '0')
+            {
+                status[i] = '1';
+                
+                if (curSum+powerMap.get(i) > target)
+                {
+                	break;
+                }
+                
+                if (search(status, i+1, curSum+powerMap.get(i)))
+                {
+                    memo.put(key, true);
+                    break;
+                }
+                
+                status[i] = '0';
+            }
+        }
+        
+        if (!memo.containsKey(key))
+        {
+            memo.put(key, false);
+        }
+        
+        return memo.get(key);
+    }
+    
+    private int getMaxPower(int n)
+    {
+        int count = 0;
+        long y = 1;
+        powerMap.put(0, (int) y);
+        
+        while (y <= (long) n)
+        {
+            y *= 3;
+            count++;
+            powerMap.put(count, (int) y);
+        }
+        
+        return count-1;
+    }
+    
+    
+    
+    public int beautySum(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return 0;
+        }
+        
+        int size = s.length();
+        int result = 0;
+        
+        for (int start = 0; start <= size-3; start++)
+        {
+            int[] hash = new int[26];
+            
+            for (int end = start; end < size; end++)
+            {
+                hash[s.charAt(end)-'a']++;
+                
+                if (end-start >= 2)
+                {
+                    result += findDiff(hash);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    private int findDiff(int[] hash)
+    {
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        
+        for (int num : hash)
+        {
+            max = Math.max(max, num);
+            min = (num == 0) ? min : Math.min(min, num);
+        }
+        
+      //  System.out.println(max + "," + min);
+        
+        return max-min;
+    }
+    
+    
+    
+    
+    public int[] countPairs(int n, int[][] edges, int[] queries) 
+    {
+        if (n < 2 
+            || edges == null || edges.length == 0 || edges[0].length != 2
+            || queries == null || queries.length == 0)
+        {
+            return new int[0];
+        }
+        
+        int[] incidents = new int[n+1];
+        int[][] commons = new int[n+1][n+1];
+        int[] countStatus = new int[edges.length+1];
+        
+        for (int[] edge : edges)
+        {
+            incidents[edge[0]]++;
+            incidents[edge[1]]++;
+            commons[edge[0]][edge[1]]++;
+        }
+        
+        init(incidents, commons, countStatus);
+        
+        int[] sum = new int[edges.length+1];
+        sum[0] = countStatus[0];
+        
+        for (int i = 1; i < sum.length; i++)
+        {
+        	sum[i] = sum[i-1] + countStatus[i];
+        	
+        	System.out.println(i + ": " + sum[i]);
+        }
+        
+        int size = queries.length;
+        int[] result = new int[size];
+        
+        for (int i = 0; i < queries.length; i++)
+        {
+        	int index = (queries[i] > sum.length) ? sum.length-1 : queries[i]-1;
+            result[i] = sum[index];
+        }
+        
+        return result;
+    }
+    
+    private int init(int[] incidents, int[][] commons, int[] countStatus)
+    {
+        int result = 0;
+        
+        for (int start = 1; start < incidents.length; start++)
+        {
+        	for (int end = start+1; end < incidents.length; end++)
+        	{
+        		int count = incidents[start] + incidents[end] - commons[start][end] - commons[end][start];
+        		countStatus[count]++;
+                // System.out.println(String.format("start=%d, end=%d, size1=%d, size2=%d, total=%d", start, end, incidents[start], incidents[end], count));
+        	}
+        }
+        
+        return result;
+    }
+	
+    
+    
+    
+    
+    
+    
+    private static void printArray(int[] array)
+    {
+    	for (int num : array)
+    	{
+    		System.out.print(num + ", ");
+    	}
+    	
+    	System.out.println();
+    }
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	int[][] points = {{1,2},{3,1},{2,4},{2,3},{4,4}};
+    	int x = 3, y = 4;
+    	
+    	// System.out.println(test.nearestValidPoint(x, y, points));
+    	/***
+    	int n1 = 12;
+    	int n2 = 91;
+    	int n3 = 21;
+    	
+    	// System.out.println(test.checkPowersOfThree(n1));
+    	// System.out.println(test.checkPowersOfThree(n2));
+    	// System.out.println(test.checkPowersOfThree(n3));
+    	// System.out.println(test.checkPowersOfThree(8360385));
+    	
+    	
+    	String s1 = "aabcb";
+    	String s2 = "aabcbaa";
+    	// System.out.println(test.beautySum(s1));
+    	// System.out.println(test.beautySum(s2));
+    	***/
+    	
+    	int n1 = 4;
+    	int[][] edges1 = {{1,2},{2,4},{1,3},{2,3},{2,1}};
+    	int[] queries1 = {2,3};
+    	
+    	int[] result = test.countPairs(n1, edges1, queries1);
+    	printArray(result);
+    }
+    
+}

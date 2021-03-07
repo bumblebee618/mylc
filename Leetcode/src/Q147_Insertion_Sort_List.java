@@ -1,7 +1,9 @@
-public class Q147_Insertion_Sort_List {
-	// by ninechapter
-	public ListNode insertionSortList(ListNode head) {
-		if (head == null || head.next == null) {
+public class Q147_Insertion_Sort_List 
+{
+	public ListNode insertionSortList(ListNode head) 
+	{
+		if (head == null || head.next == null) 
+		{
 			return head;
 		}
 
@@ -9,10 +11,12 @@ public class Q147_Insertion_Sort_List {
 		ListNode traver = dummy;
 		ListNode pivot = head;
 
-		while (pivot != null) {
-			traver = dummy;
+		while (pivot != null) 
+		{
+			traver = dummy;   // 对于每个pivot, 都要从头开始查询 
 
-			while (traver.next != null && traver.next.val < pivot.val) {
+			while (traver.next != null && traver.next.val < pivot.val) 
+			{
 				traver = traver.next;
 			}
 

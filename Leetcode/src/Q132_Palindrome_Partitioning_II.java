@@ -18,8 +18,11 @@ public class Q132_Palindrome_Partitioning_II {
 	 * 		(2). 运用dp[i]记录前i字符的最少切割次数
 	 * 
 	 **************************************************************************************************************************************************/
-	public int minCut(String s) {
-        if(s == null || s.length() == 0){
+	// solution 1: using memo + dp, time is O(n^2)
+	public int minCut(String s) 
+	{
+        if (s == null || s.length() == 0)
+        {
 	    	return 0;
 	    }
 	    
@@ -27,17 +30,24 @@ public class Q132_Palindrome_Partitioning_II {
 	    boolean[][] memo = getMemo(s);
 	    int[] cut = new int[n];
 	    
-	    for(int i = 0; i < n; ++i){
+	    for(int i = 0; i < n; ++i)
+	    {
 	        cut[i] = i;
 	    }
 	    
-	    for(int i = 0; i < n; ++i){
-	        for(int j = 0; j <= i; ++j){  // 注意这里必需有等号 ！！！
-	            if(memo[j][i] == true){   // 注意此处j 和 i的顺序
-	                if(j == 0){
-	                    cut[i] = 0;  // 注意切割代表的意思，这里代表当前i个字符可以构成一个Palindrome时，此时的切割次数为0
-	                } else {
-	                    cut[i] = Math.min(cut[i], cut[j - 1] + 1);    
+	    for (int end = 0; end < n; end++)
+	    {
+	        for (int start = 0; start <= end; start++)
+	        {  
+	            if (memo[start][end]) 
+	            {   
+	                if (start == 0)
+	                {
+	                    cut[end] = 0;  // 注意切割代表的意思，这里代表当前i个字符可以构成一个Palindrome时，此时的切割次数为0
+	                } 
+	                else 
+	                {
+	                    cut[end] = Math.min(cut[end], cut[start - 1] + 1);    
 	                }
 	            }
 	        }
@@ -46,21 +56,27 @@ public class Q132_Palindrome_Partitioning_II {
 	    return cut[n - 1];
     }
     
-    public boolean[][] getMemo(String s){
+    private boolean[][] getMemo(String s)
+    {
         int n = s.length();
         boolean[][] memo = new boolean[n][n];
         
-        for(int i = 0; i < n; ++i){
+        for (int i = 0; i < n; ++i)
+        {
             memo[i][i] = true;
         }
         
-        for(int i = 0; i < n - 1; ++i){
+        for(int i = 0; i < n - 1; ++i)
+        {
             memo[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
         }
         
-        for(int length = 2; length < n; ++length){
-            for(int start = 0; start + length < n; ++start){
-                memo[start][start + length] = memo[start + 1][start + length - 1] && s.charAt(start) == s.charAt(start + length);
+        for (int length = 3; length <= n; ++length)
+        {
+            for (int start = 0; start + length <= n; ++start)
+            {
+            	int end = start + length - 1;
+                memo[start][end] = memo[start + 1][end-1] && s.charAt(start) == s.charAt(end);
             }
         }
         
@@ -69,56 +85,55 @@ public class Q132_Palindrome_Partitioning_II {
     
     
     
-    // by Jackie using DP, O(n^3), exceed time limit
-    public int minCut2(String s) {
-        if(s == null || s.length() == 0){
+    // solution 2: using 区间DP, O(n^3)
+    public int minCut2(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
             return 0;
         }
         
-        int n = s.length();
-        int[][] cut = new int[n][n];
+        int size = s.length();
+        int[][] minCut = new int[size][size];
         
-        for(int i = 0; i < n - 1; ++i){
-            cut[i][i + 1] = (s.charAt(i) == s.charAt(i + 1)) ? 0 : 1;
+        for (int i = 0; i < size-1; i++)
+        {
+            minCut[i][i+1] = s.charAt(i) == s.charAt(i+1) ? 0 : 1;
         }
         
-        for(int length = 2; length < n; ++length){
-            for(int start = 0; start + length < n; ++start){
-                String newStr = s.substring(start, start + length + 1);
+        for (int length = 3; length <= size; length++)
+        {
+            for (int start = 0; start+length <= size; start++)
+            {
+                int end = start+length-1;
+                minCut[start][end] = Integer.MAX_VALUE;
                 
-                if(isPalindrome(newStr) == true){
-                    cut[start][start + length] = 0;
-                } else {
-                    cut[start][start + length] = length;
-                    
-                    for(int k = start; k < start + length; ++k){
-                        cut[start][start + length] = Math.min(cut[start][start + length], cut[start][k] + cut[k + 1][start + length] + 1);
+                if (s.charAt(start) == s.charAt(end) && minCut[start+1][end-1] == 0)
+                {
+                    minCut[start][end] = 0;      
+                }
+                else
+                {
+                    for (int k = start; k < end; k++)
+                    {
+                        minCut[start][end] = Math.min(minCut[start][end], minCut[start][k] + minCut[k+1][end] + 1);
                     }
                 }
             }
         }
         
-        return cut[0][n - 1];
-    }
-    
-    public boolean isPalindrome(String word){
-        int n = word.length();
-        int left = 0, right = n - 1;
-        
-        while(left < right){
-            if(word.charAt(left) == word.charAt(right)){
-                left++;
-                right--;
-            } else{
-                break;
-            }
-        }
-        
-        return (left >= right);
+        return minCut[0][size-1];       
     }
     
     
-    public static void main(String[] args){
+    
+    
+    
+    
+    /****************************************** main ******************************************/
+    
+    public static void main(String[] args)
+    {
     	Q132_Palindrome_Partitioning_II t = new Q132_Palindrome_Partitioning_II();
     	String s = "ewewqewqeqwewqeqe";
     	System.out.println(t.minCut(s));

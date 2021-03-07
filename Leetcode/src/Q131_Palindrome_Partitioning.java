@@ -22,25 +22,25 @@ Return
 
 
 public class Q131_Palindrome_Partitioning {
-	/********************************************************/
-	// by Jackie using backtrack + memoSearch
-	public List<List<String>> partition(String s) 
+	// solution 1: 自顶向下，backtrack + memoSearch
+	private List<List<String>> result = new LinkedList<>();
+    private boolean[][] canSplit;
+    
+    public List<List<String>> partition(String s) 
 	{
-        List<List<String>> result = new LinkedList<List<String>>();
-        
         if (s == null || s.length() == 0)
         {
             return result;
         }
         
-        boolean[][] canSplit = getMemo(s);
+        initMemo(s);
         List<String> solution = new LinkedList<String>();
         
-        backtrack(result, solution, s, 0, canSplit);
+        backtrack(solution, s, 0);
         return result;
     }
     
-    private void backtrack(List<List<String>> result, List<String> solution, String s, int start, boolean[][] canSplit)
+    private void backtrack(List<String> solution, String s, int start)
     {
         if (start == s.length())
         {
@@ -48,24 +48,22 @@ public class Q131_Palindrome_Partitioning {
             return;
         }
         
-        int n = s.length();
-        
-        for (int i = start; i < n; i++)
+        for (int i = start; i < s.length(); i++)
         {
             if (canSplit[start][i] == true)
             {
                 String newStr = s.substring(start, i + 1);
                 solution.add(newStr);
-                backtrack(result, solution, s, i + 1, canSplit);
+                backtrack(solution, s, i + 1);
                 solution.remove(solution.size() - 1);
             }
         }
     }
     
-    private boolean[][] getMemo(String s)
+    private void initMemo(String s)
     {
         int n = s.length();
-        boolean[][] canSplit = new boolean[n][n];
+        canSplit = new boolean[n][n];
         
         for (int i = 0; i < n; i++)
         {
@@ -77,63 +75,90 @@ public class Q131_Palindrome_Partitioning {
             canSplit[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
         }
         
-        for (int length = 2; length < n; length++)
+        for (int length = 3; length <= n; length++)
         {
-            for (int start = 0; start + length < n; start++)
+            for (int start = 0; start + length <= n; start++)
             {
-                canSplit[start][start + length] = canSplit[start + 1][start + length - 1] && s.charAt(start) == s.charAt(start+ length);
+                int end = start + length - 1;
+                canSplit[start][end] = canSplit[start + 1][end - 1] && s.charAt(start) == s.charAt(end);
+            }
+        }
+    }
+	
+	
+    
+	// solution 2: 自底向上，memo search
+    private List<List<String>>[] memo;
+    
+    public List<List<String>> partition2(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return new LinkedList<List<String>>();
+        }
+        
+        memo = new List[s.length()];
+        return search(s, 0);
+    }
+    
+    private List<List<String>> search(String s, int start)
+    {
+        if (start == s.length())
+        {
+            List<String> list = new LinkedList<>();
+            List<List<String>> result = new LinkedList<>();
+            result.add(list);
+            return result;
+        }
+        else if (memo[start] != null)
+        {
+            return memo[start];
+        }
+        
+        memo[start] = new LinkedList<>();
+        
+        for (int end = start; end < s.length(); end++)
+        {
+            if (!isPalindrome(s, start, end))
+            {
+                continue;
+            }
+            
+            List<List<String>> prevResult = search(s, end+1);
+            
+            for (List<String> list : prevResult)
+            {
+                List<String> curList = new LinkedList<>(list);
+                curList.add(0, s.substring(start, end+1));
+                memo[start].add(curList);
             }
         }
         
-        return canSplit;
-    }
-	
-	
-    
-	/********************************************************/
-	// by Jackie using backtrack
-	private LinkedList<LinkedList<String>> res = new LinkedList<LinkedList<String>>();
-	private Queue<Double> maxHeap = new PriorityQueue<Double>();
-    
-    public LinkedList<LinkedList<String>> partition2(String s) {
-        if(s == null) return res;
-        LinkedList<String> path = new LinkedList<String>();
-        for(int i = 1, len = s.length(); i <= len; ++i)
-        	backtrack(s, 0, i, path);
-        return res;
+        return memo[start];
     }
     
-    public void backtrack(String s, int start, int end, LinkedList<String> path){
-    	if(isPalindrome(s.substring(start, end)) == false) return;
-        path.add(s.substring(start, end));
-        if(end == s.length())
-        	res.add(new LinkedList<String>(path));
-        else{
-            for(int i = end+1, len = s.length(); i <= len; ++i)
-            	backtrack(s, end, i, path);
-        }
-        path.remove(path.size()-1);
-    }
-    
-    public boolean isPalindrome(String s){
-        if(s.length() == 1) return true;
-        int front = 0;
-        int back = s.length()-1;
-        while(front <= back){
-            if(s.charAt(front++) != s.charAt(back--))
+    private boolean isPalindrome(String s, int start, int end)
+    {
+        while (start < end)
+        {
+            if (s.charAt(start) != s.charAt(end))
+            {
                 return false;
+            }
+            
+            start++;
+            end--;
         }
+        
         return true;
     }
+	
+	
+	
+    /***************************** main ***************************/
     
-    public boolean isPalindrome3(String s){     // by other, but a little slow
-        StringBuffer sb = new StringBuffer(s);
-        return sb.reverse().toString().equals(s);
-    }
-	
-	
-	
-	public static void main(String[] args){
+	public static void main(String[] args)
+	{
 		Q131_Palindrome_Partitioning t = new Q131_Palindrome_Partitioning();
 		String s = "aab";
 		List<List<String>> res = t.partition(s);

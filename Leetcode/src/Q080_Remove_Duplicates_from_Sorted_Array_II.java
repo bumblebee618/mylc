@@ -12,34 +12,38 @@ It doesn't matter what you leave beyond the new length.
  * */
 
 
-public class Q080_Remove_Duplicates_from_Sorted_Array_II {
-	public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length <= 0) {
+public class Q080_Remove_Duplicates_from_Sorted_Array_II
+{
+	// solution 1: two pointers
+	public int removeDuplicates(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
             return 0;
         }
         
-        int len = nums.length;
-        int copy = 0;
         int front = 0, back = 0;
         
-        while (front < len) {
+        while (front < nums.length)
+        {
+            int target = nums[front];
             int count = 0;
             
-            while (front < len && nums[front] == nums[back]) {
-                front++;
+            while (front < nums.length && nums[front] == target)
+            {
                 count++;
+                front++;
             }
             
-            count = (count >= 2) ? 2 : 1;
+            int moveStep = Math.min(2, count);
             
-            for (int i = 0; i < count; i++) {
-                nums[copy++] = nums[back];
+            for (int i = 0 ; i < moveStep; i++)
+            {
+                nums[back++] = target;
             }
-            
-            back = front;
         }
         
-        return copy;
+        return back;
     }
 	
 	

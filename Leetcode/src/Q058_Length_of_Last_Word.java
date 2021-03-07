@@ -1,21 +1,32 @@
 
-public class Q058_Length_of_Last_Word {
-	// by Jackie
-	public int lengthOfLastWord(String s) {
-		if(s == null || s.length() == 0){
+public class Q058_Length_of_Last_Word 
+{
+	public int lengthOfLastWord(String s) 
+    {
+        if (s == null)
+        {
             return 0;
         }
         
         s = s.trim();
-        int n = s.length();
-        for(int i = n - 1; i >= 0; i--){
-            if(s.charAt(i) == ' '){
-                return n - i - 1;
-            }
+        
+        if (s.length() == 0)
+        {
+            return 0;
         }
         
-        return n;
+        int start = s.length()-1;
+        
+        while (start >= 0 && s.charAt(start) != ' ')
+        {
+            start--;
+        }
+        
+        return s.length() - (start+1);
     }
+	
+	
+	
 	
 	
 	

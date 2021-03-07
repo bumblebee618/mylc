@@ -76,9 +76,8 @@ public class Q392_Is_Subsequence {
 	        int sLen = s.length();
 	        int tLen = t.length();
 	        boolean[][] dp = new boolean[sLen+1][tLen+1];
-	        dp[0][0] = true;
 	        
-	        for (int i = 1; i <= tLen; i++) 
+	        for (int i = 0; i <= tLen; i++) 
 	        {
 	            dp[0][i] = true;
 	        }
