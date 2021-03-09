@@ -29,8 +29,10 @@ keyboard contains each English lowercase letter exactly once in some order.
 1 <= word.length <= 10^4
 word[i] is an English lowercase letter.
  */
-public class Q1165_Single_Row_Keyboard {
-	public int calculateTime(String keyboard, String word) {
+public class Q1165_Single_Row_Keyboard 
+{
+	public int calculateTime(String keyboard, String word) 
+	{
         if (keyboard == null || keyboard.length() != 26 || word == null || word.length() == 0)
         {
             return 0;        
