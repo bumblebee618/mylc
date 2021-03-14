@@ -41,7 +41,7 @@ public class Q294_Flip_Game_II
     }
 
     
-	// solution 2: DP
+	// solution 2: memo search
 	public boolean canWin2(String s) 
 	{
 		if (s == null || s.length() == 0)
@@ -66,13 +66,11 @@ public class Q294_Flip_Game_II
 	        {
 	            String flipedString = s.substring(0,i) + "--" +  s.substring(i+2);
 	            
-	            if (canWinRec(flipedString, memoize))
+	            if (!canWinRec(flipedString, memoize))
 	            {
-	                continue;
+	            	memoize.put(s, true);
+		            return true;
 	            }
-	            
-	            memoize.put(s, true);
-	            return true;
 	        }
 	    }
 	    

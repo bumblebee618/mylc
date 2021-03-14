@@ -26,7 +26,49 @@ Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-
 
 public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV 
 {
+	// solution 1: using DP, time O(nk), space O(nk)
 	public int maxProfit(int k, int[] prices) 
+	{
+		if (prices == null || prices.length == 0)
+		{
+            return 0;
+        } 
+		else if (k >= prices.length / 2)
+		{
+            int profit = 0;
+            
+            for (int i = 0; i < prices.length - 1; i++)
+            {
+                if (prices[i] < prices[i+1])
+                {
+                    profit += prices[i+1] - prices[i];
+                }
+            }
+            
+            return profit;
+        }
+		
+        int len = prices.length;
+        int[][] profit = new int[k+1][len];
+        
+        for (int i = 1; i <= k; i++) 
+        {
+            int cost = -prices[0];
+            
+            for (int date = 1; date < len; date++) 
+            {
+            	profit[i][date] = Math.max(profit[i][date-1], prices[date] + cost);
+                cost = Math.max(cost, profit[i-1][date-1] - prices[date]);
+            }
+        }
+        
+        return profit[k][len-1];
+    }
+    
+
+	
+	// solution 2: using DP, time O(nk) with O(n) space
+	public int maxProfit2(int k, int[] prices) 
 	{
 		if (prices == null || prices.length == 0)
 		{
@@ -67,8 +109,8 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV
 	
 	
 	
-	// by ninechapter using DP, O(nk) with O(n^2) space
-	public int maxProfit2(int k, int[] prices) {
+	// solution 3: using DP, time O(nk) with O(n^2) space
+	public int maxProfit3(int k, int[] prices) {
 		if(prices == null || prices.length == 0){
             return 0;
         } else if(k >= prices.length / 2){
@@ -103,8 +145,8 @@ public class Q188_Best_Time_to_Buy_and_Sell_Stock_IV
 	
 	
 	/******************************************************/
-	// by other using DP, O(nk) with space O(n)
-	public int maxProfit3(int k, int[] prices) {
+	// solution 4: O(nk) with space O(n)
+	public int maxProfit4(int k, int[] prices) {
 		if (k >= prices.length / 2) {
 			int maxProfit = 0;
 			for (int i = 1; i < prices.length; i++) {

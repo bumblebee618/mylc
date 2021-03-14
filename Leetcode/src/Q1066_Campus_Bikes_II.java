@@ -42,11 +42,6 @@ All worker and bike locations are distinct.
  */
 public class Q1066_Campus_Bikes_II 
 {
-    private int getDistance(int[] p1, int[] p2) 
-    {
-        return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
-    }
-	
 	// solution 1: use Integer to record choosing status, limitation: Integer only have 32 bit
 	public int assignBikes(int[][] workers, int[][] bikes) 
 	{
@@ -64,35 +59,39 @@ public class Q1066_Campus_Bikes_II
 		}
 
 		int[] memo = new int[1 << bikes.length];
-		return backtrack(workers, bikes, 0, 0, memo);
+		return search(workers, bikes, 0, 0, memo);
 	}
 
-	private int backtrack(int[][] workers, int[][] bikes, int index, int usedStatus, int[] memo) 
+	private int search(int[][] workers, int[][] bikes, int index, int status, int[] memo) 
 	{
 		if (index == workers.length) 
 		{
 			return 0;
 		} 
-		else if (memo[usedStatus] > 0) 
+		else if (memo[status] > 0) 
 		{
-			return memo[usedStatus];
+			return memo[status];
 		}
 
 		int result = Integer.MAX_VALUE;
 
 		for (int i = 0; i < bikes.length; i++) 
 		{
-			if ((usedStatus & (1 << i)) != 0) 
+			if ((status & (1 << i)) == 0) 
 			{
-				continue;
+				result = Math.min(result, getDistance(workers[index], bikes[i]) + search(workers, bikes, index + 1, status | (1 << i), memo));
 			}
-
-			result = Math.min(result, getDistance(workers[index], bikes[i]) + backtrack(workers, bikes, index + 1, usedStatus | (1 << i), memo));
 		}
 
-		memo[usedStatus] = result;
-		return memo[usedStatus];
+		memo[status] = result;
+		return memo[status];
 	}
+	
+	private int getDistance(int[] p1, int[] p2) 
+    {
+        return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
+    }
+	
 	
 	
 	// solution 2: use string to record the choosing status

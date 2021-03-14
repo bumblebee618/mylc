@@ -31,22 +31,22 @@ public class Q115_Distinct_Subsequences
 	 **************************************************************************************************************************************************/
 	
 	public int numDistinct(String s, String t) 
-	{		
+    {
         if (s == null || s.length() == 0 || t == null || t.length() == 0)
         {
             return 0;
         }
         
-        int len1 = s.length();
-        int len2 = t.length();
+        int len1 = t.length();
+        int len2 = s.length();
         
-        // define dp[i][j] as how many ways dose s.substring(0, i) can transfer to t.substring(0, j)
-        int[][] dp = new int[len1 + 1][len2 + 1]; 
+        // define dp[i][j] as how many ways dose s.substring(0, j) can transfer to t.substring(0, i)
+        int[][] dp = new int[len1+1][len2+1]; 
         
         // initial: any substring of s can find one "null"
-        for (int i = 0; i <= len1; ++i)
+        for (int i = 0; i <= len2; ++i)
         {
-            dp[i][0] = 1;
+            dp[0][i] = 1;
         }
         
         for (int i = 1; i <= len1; ++i)
@@ -54,13 +54,13 @@ public class Q115_Distinct_Subsequences
             for (int j = 1; j <= len2; ++j)
             {
             	// 如果S和T的当前字符相等，那么有两种选法，即用和不用当前S的字符；否则S的当前字符不能用
-                if (s.charAt(i - 1) == t.charAt(j - 1))
+                if (t.charAt(i-1) == s.charAt(j-1))
                 {
-                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]; 
+                    dp[i][j] = dp[i-1][j-1] + dp[i][j-1]; 
                 } 
                 else 
                 {
-                    dp[i][j] = dp[i - 1][j];
+                    dp[i][j] = dp[i][j-1];
                 }
             }
         }

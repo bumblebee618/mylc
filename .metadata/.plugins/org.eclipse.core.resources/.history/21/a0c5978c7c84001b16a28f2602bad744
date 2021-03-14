@@ -1,0 +1,257 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{
+	public boolean areAlmostEqual(String s1, String s2) 
+    {
+        if (s1 == null || s2 == null)
+        {
+            return s1 == null && s2 == null;
+        }
+        else if (s1.length() != s2.length())
+        {
+            return false;
+        }
+        else if (s1.equals(s2))
+        {
+            return true;
+        }
+        
+        int index1 = -1, index2 = -1;
+        int size = s1.length();
+        
+        for (int i = 0; i < size; i++)
+        {
+            if (s1.charAt(i) != s2.charAt(i))
+            {
+                if (index1 == -1)
+                {
+                    index1 = i;
+                }
+                else if (index2 == -1)
+                {
+                    index2 = i;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        
+        System.out.println(index1 + "," + index2);
+        
+        return s1.charAt(index1) == s2.charAt(index2) && s1.charAt(index2) == s2.charAt(index1);
+    }
+	
+	
+	
+	public double maxAverageRatio(int[][] classes, int extraStudents) 
+    {
+        if (classes == null || classes.length == 0 || classes[0].length != 2 || extraStudents < 0)
+        {
+            return 0;
+        }
+        
+        Queue<int[]> heap = new PriorityQueue<>(new Comparator<int[]>(){
+            @Override
+            public int compare(int[] status1, int[] status2)
+            {
+                double newRatio1 = (double) (status1[0] + 1) / (status1[1] + 1);
+                double oldRatio1 = (double) (status1[0]) / status1[1];
+                double diff1 = newRatio1 - oldRatio1;
+                
+                double newRatio2 = (double) (status2[0] + 1) / (status2[1] + 1);
+                double oldRatio2 = (double) (status2[0]) / status2[1];
+                double diff2 = newRatio2 - oldRatio2;
+                
+                if (diff1 > diff2)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        });
+        
+        for (int[] c : classes)
+        {
+        	heap.offer(c);
+        }
+        
+        for (int i = 0; i < extraStudents; i++)
+        {
+        	int[] status = heap.poll();
+        	heap.offer(new int[] {status[0]+1, status[1]+1});
+        }
+        
+        double result = 0;
+        
+        while (!heap.isEmpty())
+        {
+        	int[] status = heap.poll();
+        	result += (double) status[0] / status[1];
+        }
+        
+        return result / classes.length;
+    }
+    
+    
+	
+	
+	public int maximumScore2(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k < 0 || k >= nums.length)
+        {
+            return 0;
+        }
+        
+        int maxScore = Integer.MIN_VALUE;
+        
+        for (int i = 0; i <= k; i++)
+        {
+        	int curMinNum = nums[i];
+        	
+        	for (int j = i; j < nums.length; j++)
+        	{
+        		curMinNum = Math.min(curMinNum, nums[j]);
+        		
+        		if (j < k)
+        		{
+        			continue;
+        		}
+        		
+        		maxScore = Math.max(maxScore, curMinNum * (j-i+1));
+        	}
+        }
+        
+        return maxScore;
+    }
+    
+	
+	
+	public int maximumScore3(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k < 0 || k >= nums.length)
+        {
+            return 0;
+        }
+        
+        int maxScore = Integer.MIN_VALUE;
+        Map<Integer, Integer> map = new HashMap<>();
+        Queue<Integer> heap = new PriorityQueue<>();
+
+        for (int num : nums)
+        {
+        	map.put(num, map.getOrDefault(num, 0)+1);
+        	heap.offer(num);
+        }
+        
+        int left = 0, right = nums.length-1;
+        
+        while (left <= k || right >= k)
+        {
+        	if (left > right)
+        	{
+        		break;
+        	}
+        	
+        	while (!heap.isEmpty() && map.get(heap.peek()) == 0)
+        	{
+        		heap.poll();
+        	}
+        	
+        	int curMin = heap.peek();
+        	
+        	if (maxScore < curMin * (right-left+1))
+        	{
+        		System.out.println(left + ", " + right + ", " + curMin + ", " + curMin * (right-left+1));
+        	}
+        	
+        	maxScore = Math.max(maxScore, curMin * (right-left+1));
+        	
+        	if (left <= k && right >= k)
+        	{
+        		if (nums[left] < nums[right])
+        		{
+        			map.put(nums[left], map.get(nums[left])-1);
+            		left++;
+        		}
+        		else
+        		{
+        			map.put(nums[right], map.get(nums[right])-1);
+            		right--;
+        		}
+        	}
+        	else if (left <= k)
+        	{
+        		map.put(nums[left], map.get(nums[left])-1);
+        		left++;
+        	}
+        	else 
+        	{
+        		map.put(nums[right], map.get(nums[right])-1);
+        		right--;
+			}
+        }
+        
+        return maxScore;
+    }
+	
+	
+	
+	
+	public int maximumScore(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k < 0 || k >= nums.length)
+        {
+            return 0;
+        }
+        
+        int maxScore = Integer.MIN_VALUE;
+        Queue<Integer> heap = new PriorityQueue<>((a, b) -> (nums[a] - nums[b]));
+        int left = 0, right = nums.length-1;
+        
+        for (int i = 0; i < nums.length; i++)
+        {
+        	heap.offer(i);
+        }
+        
+        while (left <= k && right >= k)
+        {
+        	int curMinIndex = heap.poll();
+        	maxScore = Math.max(maxScore, nums[curMinIndex] * (right-left+1));
+        	
+        	left = Math.max(left, curMinIndex);
+        	right = Math.min(right, curMinIndex);
+        }
+        
+        return maxScore;
+    }
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	/***
+    	int[] nums1 = {1,4,3,7,4,5};
+    	int k1 = 3;
+    	System.out.println(test.maximumScore(nums1, k1));
+    	
+    	int[] nums2 = {5,5,4,5,4,1,1,1};
+    	int k2 = 0;
+    	System.out.println(test.maximumScore(nums2, k2));
+    	
+    	***/
+    	
+    	
+    	int[] nums3 = {6569,9667,3148,7698,1622,   2194,  793,9041,1670,1872};
+    	int k3 = 5;
+    	System.out.println(test.maximumScore(nums3, k3));
+    }
+    
+}

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,43 +58,38 @@ public class Q691_Stickers_to_Spell_Word
          
         int len = target.length();
         int[] dp = new int[1 << len];
-        
-        for (int i = 1; i < (1 << len); i++) 
-        {
-        	dp[i] = -1;
-        }
+        Arrays.fill(dp, -1);
+        dp[0] = 0;
 
-        for (int state = 0; state < (1 << len); state++) 
+        for (int curState = 0; curState < dp.length; curState++) 
         {
-            if (dp[state] == -1) 
+            if (dp[curState] == -1) 
             {
             	continue;
             }
             
             for (String sticker: stickers) 
             {
-                int now = state;
+                int nextState = curState;
                 
                 for (char letter: sticker.toCharArray()) 
                 {
                     for (int i = 0; i < len; i++) 
                     {
-                        if (((now >> i) & 1) == 1) 
+                        if ( (nextState & (1 << i)) == 0 ) 
                         {
-                        	continue;
-                        }
-                        
-                        if (target.charAt(i) == letter) 
-                        {
-                            now |= 1 << i;
-                            break;
+                        	if (target.charAt(i) == letter) 
+                            {
+                                nextState |= 1 << i;
+                                break;
+                            }
                         }
                     }
                 }
                 
-                if (dp[now] == -1 || dp[now] > dp[state] + 1) 
+                if (dp[nextState] == -1 || dp[nextState] > dp[curState] + 1) 
                 {
-                    dp[now] = dp[state] + 1;
+                    dp[nextState] = dp[curState] + 1;
                 }
             }
         }

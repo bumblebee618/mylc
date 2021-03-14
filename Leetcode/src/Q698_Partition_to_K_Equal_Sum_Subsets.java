@@ -56,15 +56,13 @@ public class Q698_Partition_to_K_Equal_Sum_Subsets
 		
 		// 这步非常关键，将sum分成K段处理！then change the question to find the close target(sum/k)
 		// 因为sum % target = 0 所以需要做这个特殊处理, 因此(sum-1) % target + 1 = target
-		int curTaget = (todo - 1) % target + 1;
+		int nextTarget = (todo - 1) % target + 1;
 		
 		for (int i = 0; i < nums.length; i++)
 		{
-			if ( ((status >> i) & 1) == 0 && nums[i] <= curTaget )
+			if ( ((status >> i) & 1) == 0 && nums[i] <= nextTarget )
 			{
 				int nextStatus = status | (1 << i);
-				
-				System.out.println(String.format("todo=[%d], curTaget=[%d], nums[i]=[%d]", todo, curTaget, nums[i]));
 				
 				if (search(nums, nextStatus, todo - nums[i], target))
 				{

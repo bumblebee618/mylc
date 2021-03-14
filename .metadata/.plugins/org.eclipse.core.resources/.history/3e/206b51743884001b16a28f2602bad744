@@ -1,0 +1,141 @@
+import java.util.*;
+/**
+ * 
+In the "100 game," two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins.
+
+What if we change the game so that players cannot re-use integers?
+
+For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total >= 100.
+
+Given an integer maxChoosableInteger and another integer desiredTotal, determine if the first player to move can force a win, assuming both players play optimally.
+
+You can always assume that maxChoosableInteger will not be larger than 20 and desiredTotal will not be larger than 300.
+
+Example
+
+Input:
+maxChoosableInteger = 10
+desiredTotal = 11
+
+Output:
+false
+
+Explanation:
+No matter which integer the first player choose, the first player will lose.
+The first player can choose an integer from 1 up to 10.
+If the first player choose 1, the second player can only choose integers from 2 up to 10.
+The second player will win by choosing 10 and get a total = 11, which is >= desiredTotal.
+Same with other integers chosen by the first player, the second player will always win.
+ *
+ */
+public class Q464_Can_I_Win 
+{
+	// solution 1： 使用string来记录选择情况，适用于总选择数超过32的情况（32种以内可以考虑用Integer来记录）
+	public boolean canIWin(int maxChoosableInteger, int desiredTotal) 
+    {
+        if (maxChoosableInteger >= desiredTotal || desiredTotal <= 0) 
+        {
+            return true;
+        }
+        
+        int sum = (maxChoosableInteger + 1) * maxChoosableInteger / 2;
+        
+        if (sum < desiredTotal) 
+        {
+            return false;
+        }
+        
+        Map<String, Boolean> dp = new HashMap<>();
+        char[] used = new char[maxChoosableInteger + 1];
+        Arrays.fill(used, '0');
+        return search(dp, used, desiredTotal);  
+    }
+    
+    private boolean search(Map<String, Boolean> dp, char[] used, int desiredTotal)
+    {
+        if (desiredTotal <= 0) 
+        {
+            return false;
+        }
+        
+        String key = new String(used);
+        
+        if (dp.containsKey(key))
+        {
+            return dp.get(key);
+        }
+        
+        for (int i = 1; i < used.length; i++)
+        {
+            if (used[i] == '0')
+            {
+                used[i] = '1';
+                
+                if (!search(dp, used, desiredTotal - i))
+                {
+                    used[i] = '0';
+                    dp.put(key, true);
+                    return true;
+                }
+                
+                used[i] = '0';
+            }
+        }
+        
+        dp.put(key, false);
+        return false;
+    }
+	
+    
+	// Solution 2: 使用Integer来记录选择情况，适用于选择总数 <= 32种的情况
+    private int maxChoosableInteger = 0;
+    
+    public boolean canIWin2(int maxChoosableInteger, int desiredTotal) 
+    {
+        if (maxChoosableInteger >= desiredTotal || desiredTotal <= 0) 
+        {
+            return true;
+        }
+        
+        int sum = (maxChoosableInteger + 1) * maxChoosableInteger / 2;
+        
+        if (sum < desiredTotal) 
+        {
+            return false;
+        }
+        
+        Map<Integer, Boolean> map = new HashMap<>();
+        this.maxChoosableInteger = maxChoosableInteger;
+        int status = 0;
+        return search(map, 0, desiredTotal);  
+    }
+    
+    private boolean search(Map<Integer, Boolean> map, int status, int desiredTotal) 
+    {
+        if (desiredTotal <= 0) 
+        {
+            return false;
+        }       
+        else if (map.containsKey(status))
+        {
+            return map.get(status);
+        }
+        
+        for (int i = 1; i <= maxChoosableInteger; i++) 
+        {
+            if ( ((status >> i) & 1) == 0 ) 
+            {
+                int nextStatus = status | (1 << i);
+                
+                if (!search(map, nextStatus, desiredTotal - i)) 
+                {
+                    map.put(status, true);
+                    return true;
+                }
+            }
+        }
+            
+        map.put(status, false);
+        return false;
+    }
+}

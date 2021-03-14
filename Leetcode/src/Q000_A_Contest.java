@@ -3,10 +3,6 @@ import java.util.*;
 public class Q000_A_Contest 
 {
 	
-    
-    
-    
-	
 	
 	
     public static void main(String[] args)
@@ -14,6 +10,8 @@ public class Q000_A_Contest
     	Q000_A_Contest test = new Q000_A_Contest();
     	
     	/****************************************************/
+
+    	
+    	
     }
-    
 }

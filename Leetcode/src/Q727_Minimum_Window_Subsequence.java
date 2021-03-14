@@ -20,14 +20,82 @@ The length of T will be in the range [1, 100].
  *
  */
 public class Q727_Minimum_Window_Subsequence {
+	// use two pointers, time complexity is O(m*n), space O(1)
+	public String minWindow(String S, String T) 
+	{
+		if (S == null || S.length() == 0 || T == null || T.length() == 0 || T.length() > S.length()) 
+		{
+			return "";
+		} 
+		else if (T.length() == S.length()) 
+		{
+			return T.equals(S) ? T : "";
+		}
+
+		int sLen = S.length();
+		int tLen = T.length();
+		int minLen = Integer.MAX_VALUE;
+		int startIndex = -1;
+
+		for (int i = 0; i <= sLen - tLen; i++) 
+		{
+			if (S.charAt(i) != T.charAt(0)) 
+			{
+				continue;
+			}
+
+			int pos = findPos(S, i, T);
+
+			if (pos != -1 && minLen > pos - i + 1) 
+			{
+				minLen = pos - i + 1;
+				startIndex = i;
+			}
+		}
+
+		return minLen == Integer.MAX_VALUE ? "" : S.substring(startIndex, startIndex + minLen);
+	}
+
+	private int findPos(String S, int start, String T) 
+	{
+		int index1 = start, index2 = 0;
+		int sLen = S.length(), tLen = T.length();
+
+		while (index1 < sLen && index2 < tLen) 
+		{
+			while (index1 < sLen && S.charAt(index1) != T.charAt(index2)) 
+			{
+				index1++;
+			}
+
+			if (index1 == sLen) 
+			{
+				return -1;
+			}
+
+			index1++;
+			index2++;
+
+			if (index2 == tLen) 
+			{
+				return index1 - 1;
+			}
+		}
+
+		return -1;
+	}
+	
+	
+	
+	
 	// dp[i][j] 表示范围S中0～i个字符包含范围T中0～j个字符的子串的起始位置
     // -1 表示未匹配或无法匹配
     // dp[i][j] 中的j不能大于i，因为T的长度不能大于S的长度 -> 所以j大于i的 dp[i][j] = -1
     // 公式1： 当 S[i] == T[j] 的时候，dp[i][j] = dp[i - 1][j - 1] 
     // 公式2： 当 S[i] != T[j] 的时候，dp[i][j] = dp[i - 1][j] (S[i]肯定不可以用来做subsequence)
 	
-	// use dp, time complexity is O(m*n)
-	public String minWindow(String S, String T) 
+	// use dp, time complexity is O(m*n), space O(m*n)
+	public String minWindow2(String S, String T) 
 	{
         if (S == null || T == null || S.length() < T.length()) 
         {
@@ -36,22 +104,22 @@ public class Q727_Minimum_Window_Subsequence {
         
         int sLen = S.length(), tLen = T.length();
         
-        // dp[i][j] uses to keep the start index when S[0,i] contains T[0,j]
-        int[][] dp = new int[sLen][tLen];
+        // startPos[i][j] uses to keep the start index when S[0,i] contains T[0,j]
+        int[][] startPos = new int[sLen][tLen];
         int minLen = Integer.MAX_VALUE;
         int startIndex = -1;
         
         for (int i = 0; i < sLen; i++) 
         {
-            Arrays.fill(dp[i], -1);
+            Arrays.fill(startPos[i], -1);
             
             if (S.charAt(i) == T.charAt(0)) 
             {
-                dp[i][0] = i;
+                startPos[i][0] = i;
             } 
             else if (i > 0) 
             {
-                dp[i][0] = dp[i-1][0];
+                startPos[i][0] = startPos[i-1][0];
             }
         }
         
@@ -61,89 +129,22 @@ public class Q727_Minimum_Window_Subsequence {
             {
                 if (S.charAt(i) == T.charAt(j)) 
                 {
-                    dp[i][j] = dp[i-1][j-1];
+                    startPos[i][j] = startPos[i-1][j-1];
                 } 
                 else 
                 {
                     // example: aabcd vs abc
-                    dp[i][j] = dp[i-1][j];
+                    startPos[i][j] = startPos[i-1][j];
                 }
             }
             
-            if (dp[i][tLen-1] != -1 && minLen > i - dp[i][tLen-1] + 1) 
+            if (startPos[i][tLen-1] != -1 && minLen > i - startPos[i][tLen-1] + 1) 
             {
-                minLen = i - dp[i][tLen-1] + 1;
-                startIndex = dp[i][tLen-1];
+                minLen = i - startPos[i][tLen-1] + 1;
+                startIndex = startPos[i][tLen-1];
             }
         }
         
         return minLen == Integer.MAX_VALUE ? "" : S.substring(startIndex, startIndex + minLen);
-    }
-	
-	
-	
-	// use two pointers, time complexity is O(m*n)
-	public String minWindow2(String S, String T) 
-    {
-        if (S == null || S.length() == 0 || T == null || T.length() == 0 || T.length() > S.length())
-        {
-            return "";
-        }
-        else if (T.length() == S.length())
-        {
-            return T.equals(S) ? T : "";
-        }
-        
-        int sLen = S.length();
-        int tLen = T.length();
-        int minLen = Integer.MAX_VALUE;
-        int startIndex = -1;
-        
-        for (int i = 0; i <= sLen-tLen; i++)
-        {
-            if (S.charAt(i) != T.charAt(0))
-            {
-                continue;
-            }
-            
-            int pos = findPos(S, i, T);
-            
-            if (pos != -1 && minLen > pos-i+1)
-            {
-                minLen = pos-i+1;
-                startIndex = i;
-            }
-        }
-        
-        return minLen == Integer.MAX_VALUE ? "" : S.substring(startIndex, startIndex+minLen);
-    }
-    
-    private int findPos(String S, int start, String T)
-    {
-        int index1 = start, index2 = 0;
-        int sLen = S.length(), tLen = T.length();
-        
-        while (index1 < sLen && index2 < tLen)
-        {
-            while (index1 < sLen && S.charAt(index1) != T.charAt(index2))
-            {
-                index1++;
-            }
-            
-            if (index1 == sLen)
-            {
-                return -1;
-            }
-            
-            index1++;
-            index2++;
-            
-            if (index2 == tLen)
-            {
-                return index1-1;
-            }
-        }
-        
-        return -1;
     }
 }

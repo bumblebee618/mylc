@@ -88,6 +88,8 @@ public class Q464_Can_I_Win
 	
     
 	// Solution 2: 使用Integer来记录选择情况，适用于选择总数 <= 32种的情况
+    private int maxChoosableInteger = 0;
+    
     public boolean canIWin2(int maxChoosableInteger, int desiredTotal) 
     {
         if (maxChoosableInteger >= desiredTotal || desiredTotal <= 0) 
@@ -103,49 +105,38 @@ public class Q464_Can_I_Win
         }
         
         Map<Integer, Boolean> map = new HashMap<>();
-        boolean[] used = new boolean[maxChoosableInteger + 1];
-        return search(map, used, desiredTotal);   
+        this.maxChoosableInteger = maxChoosableInteger;
+        return search(map, 0, desiredTotal);  
     }
     
-    private boolean search(Map<Integer, Boolean> map, boolean[] used, int desiredTotal) 
+    private boolean search(Map<Integer, Boolean> map, int status, int desiredTotal) 
     {
         if (desiredTotal <= 0) 
         {
             return false;
+        }       
+        else if (map.containsKey(status))
+        {
+            return map.get(status);
         }
         
-        // get key
-        int key = 0;
-        
-        for (boolean status : used) 
+        for (int i = 1; i <= maxChoosableInteger; i++) 
         {
-            key <<= 1;
-            key |= (status ? 1 : 0);
-        }
-        
-        if (map.containsKey(key))
-        {
-            return map.get(key);
-        }
-        
-        for (int i = 1; i < used.length; i++) 
-        {
-            if (!used[i]) 
+        	// 不可以加 i <= desiredTotal 的条件，
+        	// 例如: [desiredTotal = 9, maxChoosableInteger = 10]
+            if ( (status & (1 << i)) == 0 ) 
             {
-                used[i] = true;
-                    
-                if (!search(map, used, desiredTotal - i)) 
+                int nextStatus = status | (1 << i);
+                
+                if (!search(map, nextStatus, desiredTotal - i)) 
                 {
-                    map.put(key, true);
-                    used[i] = false;
+                    map.put(status, true);
                     return true;
                 }
-                    
-                used[i] = false;
             }
         }
             
-        map.put(key, false);
+        map.put(status, false);
         return false;
     }
 }

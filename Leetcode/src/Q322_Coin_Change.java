@@ -46,23 +46,32 @@ public class Q322_Coin_Change
 	
 	
 	// follow up, find out one fewest solution of coin change
-	public List<Integer> coinChange_followUp(int[] coins, int amount) {
-		List<Integer> ans = new LinkedList<Integer>();
+	public List<Integer> coinChange_followUp(int[] coins, int amount) 
+	{
+		List<Integer> result = new LinkedList<Integer>();
 		
-		if(coins == null || coins.length == 0 || amount <= 0) {
-            return ans;
+		if (coins == null || coins.length == 0 || amount <= 0) 
+		{
+            return result;
         }
         
         Pair[] ways = new Pair[amount+1];
         ways[0] = new Pair(0, null, 0);
         
-        for(int i = 1; i <= amount; i++) {
-            for(int coin : coins) {
-                if(i >= coin && ways[i-coin] != null) {
-                	if(ways[i] == null) {
+        for (int i = 1; i <= amount; i++) 
+        {
+            for (int coin : coins) 
+            {
+                if (i >= coin && ways[i-coin] != null) 
+                {
+                	if (ways[i] == null) 
+                	{
                 		ways[i] = new Pair(ways[i-coin].coinNum + 1, ways[i-coin], coin);
-                	} else {
-                		if(ways[i].coinNum > ways[i-coin].coinNum + 1) {
+                	} 
+                	else 
+                	{
+                		if (ways[i].coinNum > ways[i-coin].coinNum + 1) 
+                		{
                 			ways[i].coinNum = ways[i-coin].coinNum + 1;
                 			ways[i].previous = ways[i - coin];
                 			ways[i].lastAddCoin = coin;
@@ -72,13 +81,16 @@ public class Q322_Coin_Change
             }
         }
         
-        Pair node = ways[amount];        
-        while(node != null && node.previous != null) {
-        	ans.add(node.lastAddCoin);
+        Pair node = ways[amount]; 
+        
+        // 不可以去掉 node.previous != null，否则会带入 "0"
+        while(node != null && node.previous != null) 
+        {
+        	result.add(node.lastAddCoin);
         	node = node.previous;
         }
         
-        return ans;
+        return result;
 	}
 	
 	class Pair {

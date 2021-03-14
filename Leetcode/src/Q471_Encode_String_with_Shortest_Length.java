@@ -90,6 +90,7 @@ public class Q471_Encode_String_with_Shortest_Length
 							&& substr.length() % repeatStr.length() == 0 
 							&& substr.replaceAll(repeatStr, "").length() == 0) 
 						{
+							// 注意这里用subStrSolution[start][start + k] 而不是repeatStr！
 							String ss = String.format("%d[%s]", substr.length() / repeatStr.length(), subStrSolution[start][start + k]);
 							
 							if (subStrSolution[start][end].length() > ss.length()) 

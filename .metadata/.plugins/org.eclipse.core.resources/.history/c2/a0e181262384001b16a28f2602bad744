@@ -1,0 +1,113 @@
+import java.util.Arrays;
+
+/***
+ * 
+ * @author jackie
+ * 
+ * Given an array of unique integers, arr, where each integer arr[i] is strictly greater than 1.
+
+We make a binary tree using these integers, and each number may be used for any number of times. Each non-leaf node's value should be equal to the product of the values of its children.
+
+Return the number of binary trees we can make. The answer may be too large so return the answer modulo 109 + 7.
+
+ 
+
+Example 1:
+
+Input: arr = [2,4]
+Output: 3
+Explanation: We can make these trees: [2], [4], [4, 2, 2]
+Example 2:
+
+Input: arr = [2,4,5,10]
+Output: 7
+Explanation: We can make these trees: [2], [4], [5], [10], [4, 2, 2], [10, 2, 5], [10, 5, 2].
+ 
+
+Constraints:
+
+1 <= arr.length <= 1000
+2 <= arr[i] <= 109
+ */
+public class Q823_Binary_Trees_With_Factors 
+{
+	private long[] memo;
+    private int[] nums;
+    private int mod = 1_000_000_007;
+    
+    public int numFactoredBinaryTrees(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        int size = nums.length;
+        memo = new long[size];
+        memo[0] = 1;
+        Arrays.sort(nums);
+        this.nums = nums;
+        long result = 0;
+        
+        for (int i = 0; i < size; i++)
+        {
+            result = (result + search(i)) % mod;
+        }
+        
+        
+        for (int i = 0; i < size; i++)
+        {
+        	System.out.println(String.format("[%d]: %d", nums[i], memo[i]));
+        }
+        
+        
+        return (int) result;
+    }
+    
+    private long search(int root)
+    {
+        if (memo[root] > 0)
+        {
+            return memo[root];
+        }
+        
+        memo[root] = 1;
+        int left = 0, right = root-1;
+        
+        while (left <= right)
+        {
+            if (nums[left] * nums[right] < nums[root])
+            {
+                left++;
+            }
+            else if (nums[left] * nums[right] > nums[root])
+            {
+                right--;
+            }
+            else
+            {
+            	long leftCount = search(left);
+                long rightCount = search(right);
+                long base = (left < right) ? 2 : 1;
+                long curCount = (leftCount * rightCount * base) % mod;                 
+                memo[root] = (memo[root] + curCount) % mod;
+                
+                left++;
+                right--;
+            }
+        }
+        
+        return memo[root];
+    }
+    
+    
+    
+    
+    public static void main(String[] args)
+    {
+    	Q823_Binary_Trees_With_Factors test = new Q823_Binary_Trees_With_Factors();
+    	int[] nums1 = {2,4};
+    	int[] nums2 = {2,4,5,10};
+    	System.out.println(test.numFactoredBinaryTrees(nums2));
+    }
+}

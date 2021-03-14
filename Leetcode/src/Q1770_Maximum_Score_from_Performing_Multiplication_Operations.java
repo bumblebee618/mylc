@@ -79,10 +79,11 @@ public class Q1770_Maximum_Score_from_Performing_Multiplication_Operations
         
         int pickLeft = search(leftIndex+1, i+1) + nums[leftIndex] * multipliers[i]; 
         
-        // (i+1) - leftIndex = rightCount = n - rightCount
+        // (i+1) - leftIndex = rightCount = n - rightIndex
         int rightIndex = n-(i+1)+leftIndex;
         
         int pickRight = search(leftIndex, i+1) + nums[rightIndex] * multipliers[i]; 
-        return memo[leftIndex][i] = Math.max(pickLeft, pickRight);
+        memo[leftIndex][i] = Math.max(pickLeft, pickRight);
+        return memo[leftIndex][i];
     }
 }
