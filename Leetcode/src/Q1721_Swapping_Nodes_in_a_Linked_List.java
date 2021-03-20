@@ -1,0 +1,109 @@
+/***
+ * 
+ * @author jackie
+ * 
+ * You are given the head of a linked list, and an integer k.
+
+Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], k = 2
+Output: [1,4,3,2,5]
+Example 2:
+
+Input: head = [7,9,6,6,7,8,3,0,9,5], k = 5
+Output: [7,9,6,6,8,7,3,0,9,5]
+Example 3:
+
+Input: head = [1], k = 1
+Output: [1]
+Example 4:
+
+Input: head = [1,2], k = 1
+Output: [2,1]
+Example 5:
+
+Input: head = [1,2,3], k = 2
+Output: [1,2,3]
+ 
+
+Constraints:
+
+The number of nodes in the list is n.
+1 <= k <= n <= 105
+0 <= Node.val <= 100
+ */
+public class Q1721_Swapping_Nodes_in_a_Linked_List 
+{
+	public ListNode swapNodes(ListNode head, int k) 
+    {
+        if (head == null || k <= 0)
+        {
+            return head;
+        }
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pointer = dummy;
+        int count = 0;
+        
+        ListNode node1 = dummy, node2 = dummy;
+        
+        // find node1
+        while (pointer.next != null)
+        {
+            pointer = pointer.next;
+            count++;
+            
+            if (count == k-1)
+            {
+                node1 = pointer;
+            }
+        }
+        
+        if (count < k)
+        {
+            return head;
+        }
+        
+        // find node2 
+        for (int i = 0; i < count-k; i++)
+        {
+            node2 = node2.next;
+        }
+        
+        // swap
+        if (node1 != node2)
+        {
+            ListNode tmp1 = node1.next, tmp2 = node2.next;
+            ListNode tmp1Next = tmp1.next, tmp2Next = tmp2.next;
+        
+            if (tmp1.next == tmp2)
+            {
+                node1.next = tmp2;
+                tmp2.next = tmp1;
+                tmp1.next = tmp2Next;
+            }
+            else if (tmp2.next == tmp1)
+            {
+                node2.next = tmp1;
+                tmp1.next = tmp2;
+                tmp2.next = tmp1Next;
+            }
+            else
+            {
+                node1.next = tmp2;
+                tmp2.next = tmp1Next;
+        
+                node2.next = tmp1;
+                tmp1.next = tmp2Next;
+            }
+        }
+        
+        return dummy.next;
+    }
+}

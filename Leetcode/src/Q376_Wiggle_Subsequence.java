@@ -26,50 +26,56 @@ Follow up:
 
 public class Q376_Wiggle_Subsequence {
 	// solution 1: using DP, time complexity O(n^2)
-	public int wiggleMaxLength(int[] nums) {
-		if (nums == null || nums.length == 0) {
-			return 0;
-		} else if (nums.length == 1) {
-			return 1;
-		}
+	public int wiggleMaxLength(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        else if (nums.length == 1)
+        {
+            return 1;
+        }
+        
+        int size = nums.length;
+        int[] increase = new int[size];
+        int[] decrease = new int[size];
+        int result = 0;
+        
+        for (int i = 0; i < size; i++)
+        {
+            increase[i] = decrease[i] = 1;
+            
+            for (int j = 0; j < i; j++)
+            {
+                if (nums[i] > nums[j])
+                {
+                    increase[i] = Math.max(increase[i], decrease[j]+1);
+                }
+                else if (nums[i] < nums[j])
+                {
+                    decrease[i] = Math.max(decrease[i], increase[j]+1);
+                }
+            }
+            
+            result = Math.max(result, Math.max(increase[i], decrease[i]));
+        }
+        
+        return result;
+    }
 
-		int len = nums.length;
-		int[] diff = new int[len];
-		int[] dp = new int[len];
-		int maxLen = 1;
-
-		for (int i = 1; i < len; i++) {
-			diff[i] = nums[i] - nums[i - 1];
-		}
-
-		for (int i = 0; i < len; i++) {
-			dp[i] = 1;
-
-			for (int j = 0; j < i; j++) {
-				if (j == 0 && nums[i] != nums[j]) {
-					dp[i] = 2;
-					continue;
-				}
-
-				if (diff[j] > 0 && nums[i] < nums[j] || diff[j] < 0
-						&& nums[i] > nums[j]) {
-					dp[i] = Math.max(dp[i], dp[j] + 1);
-				}
-			}
-
-			maxLen = Math.max(maxLen, dp[i]);
-		}
-
-		return maxLen;
-	}
 
 	
 	
 	// solution 2: using DP, time complexity O(n), space O(n)
-	public int wiggleMaxLength2(int[] nums) {
-		if (nums == null || nums.length == 0) {
+	public int wiggleMaxLength2(int[] nums) 
+	{
+		if (nums == null || nums.length == 0) 
+		{
 			return 0;
-		} else if (nums.length == 1) {
+		} 
+		else if (nums.length == 1) 
+		{
 			return 1;
 		}
 
@@ -77,12 +83,16 @@ public class Q376_Wiggle_Subsequence {
 		int up = 1;
 		int down = 1;
 
-		for (int i = 1; i < len; i++) {
-			int flag = nums[i] - nums[i - 1];
+		for (int i = 1; i < len; i++) 
+		{
+			int flag = nums[i] - nums[i-1];
 
-			if (flag > 0) {
+			if (flag > 0) 
+			{
 				up = down + 1;
-			} else if (flag < 0) {
+			} 
+			else if (flag < 0) 
+			{
 				down = up + 1;
 			}
 		}

@@ -26,10 +26,9 @@ The input is always valid. You may assume that evaluating the queries will resul
 
 public class Q399_Evaluate_Division 
 {
-	private Map<String, Set<String>> graph = new HashMap<>();
-	private Map<String, Double> resultMap = new HashMap<>();
-	
-	public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) 
+	private Map<String, Map<String, Double>> graph = new HashMap<>();
+    
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) 
 	{
         if (equations == null || equations.size() == 0 
         	|| values == null || values.length == 0
@@ -47,19 +46,16 @@ public class Q399_Evaluate_Division
         // build graph;
         for (int i = 0; i < values.length; i++)
         {
-            graph.computeIfAbsent(equations.get(i).get(0), x -> new HashSet<>()).add(equations.get(i).get(1));
-            graph.computeIfAbsent(equations.get(i).get(1), x -> new HashSet<>()).add(equations.get(i).get(0));
-            resultMap.put(equations.get(i).get(0) + "/" + equations.get(i).get(1), values[i]);
-            resultMap.put(equations.get(i).get(1) + "/" + equations.get(i).get(0), 1.0 / values[i]);
+            graph.computeIfAbsent(equations.get(i).get(0), x -> new HashMap<>()).put(equations.get(i).get(1), values[i]);
+            graph.computeIfAbsent(equations.get(i).get(1), x -> new HashMap<>()).put(equations.get(i).get(0), 1.0 / values[i]);
         }
         
-        // dfs
         for (int i = 0; i < queries.size(); i++)
         {
             result[i] = dfs(queries.get(i).get(0), queries.get(i).get(1), 1, new HashSet<>());
         }
         
-        return result;
+        return result;    
     }
     
     private double dfs(String startNode, String endNode, double sum, Set<String> visited)
@@ -68,30 +64,31 @@ public class Q399_Evaluate_Division
         {
             return -1.0;
         }
+        // 将 startNode.equals(endNode) 放第二个，防止题目给的test里 [x, x]的情况
         else if (startNode.equals(endNode))
         {
             return 1.0;
-        }
-        else if (resultMap.containsKey(startNode + "/" + endNode))
+        } 
+        else if (graph.get(startNode).containsKey(endNode))
         {
-            return sum * resultMap.get(startNode + "/" + endNode);
+            return sum * graph.get(startNode).get(endNode);
         }
         
         visited.add(startNode);
         double result = -1.0;
+        Map<String, Double> map = graph.get(startNode);
         
-        for (String nextNode : graph.get(startNode))
+        for (Map.Entry<String, Double> entry : map.entrySet())
         {
+        	String nextNode = entry.getKey();
+        	
             if (!visited.contains(nextNode))
             {
-                if (resultMap.containsKey(startNode + "/" + nextNode))
-                {
-                    result = dfs(nextNode, endNode, sum * resultMap.get(startNode + "/" + nextNode), visited);
+                result = dfs(nextNode, endNode, sum * entry.getValue(), visited);
                     
-                    if (result != -1.0)
-                    {
-                        return result;
-                    }
+                if (result != -1.0)
+                {
+                    return result;
                 }
             }
         }

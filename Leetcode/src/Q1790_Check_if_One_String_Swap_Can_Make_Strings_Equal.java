@@ -35,6 +35,52 @@ Constraints:
 s1.length == s2.length
 s1 and s2 consist of only lowercase English letters.
  */
-public class Q1790_Check_if_One_String_Swap_Can_Make_Strings_Equal {
-
+public class Q1790_Check_if_One_String_Swap_Can_Make_Strings_Equal 
+{
+	public boolean areAlmostEqual(String s1, String s2) 
+    {
+        if (s1 == null || s2 == null)
+        {
+            return s1 == null && s2 == null;
+        }
+        else if (s1.length() != s2.length())
+        {
+            return false;
+        }
+        else if (s1.equals(s2))
+        {
+            return true;
+        }
+        
+        int index1 = -1, index2 = -1;
+        int size = s1.length();
+        
+        for (int i = 0; i < size; i++)
+        {
+            if (s1.charAt(i) != s2.charAt(i))
+            {
+                if (index1 == -1)
+                {
+                    index1 = i;
+                }
+                else if (index2 == -1)
+                {
+                    index2 = i;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        
+        if (index2 == -1)
+        {
+            return false;
+        }
+        else
+        {
+            return s1.charAt(index1) == s2.charAt(index2) && s1.charAt(index2) == s2.charAt(index1);
+        }
+    }
 }

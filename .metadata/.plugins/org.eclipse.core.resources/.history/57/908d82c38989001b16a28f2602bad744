@@ -1,0 +1,48 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{
+	public int secondHighest(String s) 
+    {
+        if (s == null || s.length() <= 1)
+        {
+            return -1;
+        }
+        
+        int max1 = -1, max2 = -1;
+        
+        for (char c : s.toCharArray())
+        {
+            if (Character.isDigit(c))
+            {
+                int curNum = c - '0';
+                
+                if (max1 == -1 || curNum > max1)
+                {
+                    max2 = max1;
+                    max1 = curNum;
+                }
+                else if (max2 == -1 || curNum > max2)
+                {
+                    max2 = curNum;
+                }
+            }
+        }
+        
+        return max2;
+    }
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+
+    	String str1 = "dfa12321afd";
+    	String str2 = "abc1111";
+    	
+    	System.out.println(test.secondHighest(str1));
+    	System.out.println(test.secondHighest(str2));
+    }
+}

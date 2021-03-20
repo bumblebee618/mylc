@@ -18,8 +18,10 @@ public class Q187_Repeated_DNA_Sequences {
     // s is empty or s.length is smaller than 10
 	
 	// solution 1: using hashset and bit manipulation， time is O(n), space is O(n)
-    public List<String> findRepeatedDnaSequences(String s) {
-        if(s == null || s.length() == 0) {
+    public List<String> findRepeatedDnaSequences(String s) 
+    {
+        if (s == null || s.length() == 0) 
+        {
             return new ArrayList<>();
         }
         
@@ -32,29 +34,64 @@ public class Q187_Repeated_DNA_Sequences {
         Set<Integer> visited = new HashSet<>();
         Set<String> duplicated = new HashSet<>();
         
-        for(int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); i++)
+        {
             sequenceCode <<= 2;   // plus 4, because the base is 4
             sequenceCode |= hash[s.charAt(i) - 'A'];
             
-            if(i < 9){
+            if (i < 9)
+            {
                 continue;
             }
             
             sequenceCode &= mask;
             
-            if(!visited.add(sequenceCode)) {
+            if (!visited.add(sequenceCode)) 
+            {
                 duplicated.add(s.substring(i - 9, i + 1));
             }
         }
         
         return new ArrayList<String>(duplicated);
     }
+    
+    
+    
+    // solution 2: use hashmap
+    public List<String> findRepeatedDnaSequences2(String s) 
+    {
+        List<String> result = new LinkedList<>();
+            
+        if (s == null || s.length() < 10)
+        {
+            return result;
+        }
+        
+        Map<String, Integer> map = new HashMap<>();
+        
+        for (int start = 0; start+10 <= s.length(); start++)
+        {
+            String dna = s.substring(start, start+10);
+            int count = map.getOrDefault(dna, 0);
+            
+            switch (count)
+            {
+                case 0: map.put(dna, 1); break;
+                case 1: map.put(dna, 2); result.add(dna); break;
+                default: break;
+            }
+        }
+        
+        return result;
+    }
 	
 	
     
-	// solution 2: using two hashset
-	public List<String> findRepeatedDnaSequences2(String s) {
-        if(s == null || s.length() <= 10){
+	// solution 3: using two hashset
+	public List<String> findRepeatedDnaSequences3(String s) 
+	{
+        if (s == null || s.length() <= 10)
+        {
             return new ArrayList<String>();
         }
         
@@ -62,10 +99,12 @@ public class Q187_Repeated_DNA_Sequences {
         Set<String> visited = new HashSet<String>();
         Set<String> duplicated = new HashSet<String>();
         
-        for(int i = 0; i <= n - 10; ++i){
+        for (int i = 0; i <= n - 10; ++i)
+        {
             String subStr = s.substring(i, i + 10);
             
-            if(!visited.add(subStr)) {
+            if (!visited.add(subStr)) 
+            {
             	duplicated.add(subStr);
             }
         }

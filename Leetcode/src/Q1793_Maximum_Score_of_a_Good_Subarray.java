@@ -49,12 +49,12 @@ public class Q1793_Maximum_Score_of_a_Good_Subarray
         	 
         	 while (!stack.isEmpty() && curNum <= nums[stack.peek()]) 
              {
-                 int h = nums[stack.pop()];
-                 int w = (stack.isEmpty()) ? i : i - stack.peek() - 1;  
+                 int minNum = nums[stack.pop()];
+                 int width = (stack.isEmpty()) ? i : i - stack.peek() - 1;  
                  
-                 if (i > k && i - w  <= k) 
+                 if (i > k && i - width  <= k) 
                  {
-                	 maxScore = Math.max(maxScore, h * w);
+                	 maxScore = Math.max(maxScore, minNum * width);
                  }
              }
         	 
