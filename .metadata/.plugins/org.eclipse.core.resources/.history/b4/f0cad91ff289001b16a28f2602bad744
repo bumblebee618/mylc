@@ -1,0 +1,127 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{
+	public int getNumberOfBacklogOrders(int[][] orders) 
+    {
+        if (orders == null || orders.length == 0 || orders[0].length != 3)
+        {
+            return 0;
+        }
+        
+        int mod = 1_000_000_007;
+        TreeMap<Integer, Long> buys = new TreeMap<>();
+        TreeMap<Integer, Long> sells = new TreeMap<>();
+        
+        for (int[] order : orders)
+        {
+            // buy
+            if (order[2] == 0)
+            {
+                long buyAmount = order[1];
+                int buyPrice = order[0];
+                
+                while (buyAmount > 0)
+                {
+                    if (sells.size() == 0)
+                    {
+                        break;
+                    }
+                    
+                    Map.Entry<Integer, Long> entry = sells.floorEntry(buyPrice);
+                    
+                    if (entry == null)
+                    {
+                        break;
+                    }
+                    
+                    if (entry.getValue() > buyAmount)
+                    {
+                        sells.put(entry.getKey(), entry.getValue() - buyAmount);
+                        buyAmount = 0;
+                    }
+                    else
+                    {
+                        buyAmount -= entry.getValue();
+                    }
+                }
+                
+                if (buyAmount > 0)
+                {
+                    buyAmount = (buyAmount + buys.getOrDefault(buyPrice, 0L)) % mod;
+                    
+                    System.out.println("buy:" + buyPrice + ": " + buyAmount);
+                    
+                    buys.put(buyPrice, buyAmount);
+                }
+            }
+            // sell
+            else
+            {
+                long sellAmount = order[1];
+                int sellPrice = order[0];
+                
+                while (sellAmount > 0)
+                {
+                    if (buys.size() == 0)
+                    {
+                        break;
+                    }
+                    
+                    Map.Entry<Integer, Long> entry = buys.ceilingEntry(sellPrice);
+                    
+                    if (entry == null)
+                    {
+                        break;
+                    }
+                    
+                    if (entry.getValue() > sellAmount)
+                    {
+                        buys.put(entry.getKey(), entry.getValue() - sellAmount);
+                        sellAmount = 0;
+                    }
+                    else
+                    {
+                        sellAmount -= entry.getValue();
+                    }
+                }
+                
+                if (sellAmount > 0)
+                {
+                    sellAmount = (sellAmount + sells.getOrDefault(sellPrice, 0L)) % mod;
+                    
+                    System.out.println("sell:" + sellPrice + ": " + sellAmount);
+                    
+                    sells.put(sellPrice, sellAmount);
+                }
+            }
+        }
+        
+        long result = 0;
+        
+        for (Map.Entry<Integer, Long> entry : sells.entrySet())
+        {
+            result = (result + entry.getValue()) % mod;
+        }
+        
+        for (Map.Entry<Integer, Long> entry : buys.entrySet())
+        {
+            result = (result + entry.getValue()) % mod;
+        }
+        
+        return (int) result;
+    }
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+
+    	int[][] orders = {{10,5,0},{15,2,1},{25,1,1},{30,4,0}};
+    	
+    	System.out.println(test.getNumberOfBacklogOrders(orders));
+    	
+    }
+}

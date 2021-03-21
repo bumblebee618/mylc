@@ -1,185 +1,224 @@
 import java.util.*;
 
+
 public class Q000_A_Contest 
 {
-	public int secondHighest(String s) 
+	public int getNumberOfBacklogOrders2(int[][] orders) 
     {
-        if (s == null || s.length() <= 1)
-        {
-            return -1;
-        }
-        
-        int max1 = -1, max2 = -1;
-        
-        for (char c : s.toCharArray())
-        {
-            if (Character.isDigit(c))
-            {
-                int curNum = c - '0';
-                
-                if (max1 == -1 || curNum >= max1)
-                {
-                    if (curNum == max1)
-                    {
-                        continue;
-                    }
-                    
-                    max2 = max1;
-                    max1 = curNum;
-                }
-                else if (max2 == -1 || curNum > max2)
-                {
-                    max2 = curNum;
-                }
-            }
-        }
-        
-        return max2;
-    }
-	
-private int[] pool = new int[40001];
-    
-    public int getMaximumConsecutive(int[] coins) 
-    {
-        if (coins == null || coins.length == 0)
-        {
-            return -1;
-        }
-        
-        for (int coin : coins)
-        {
-            pool[coin]++;
-        }
-        
-        int maxLen = 1;
-        int target = 1;
-        
-        while (true)
-        {
-            int[] curPool = Arrays.copyOf(pool, 40001);
-            
-            if (search(curPool, target))
-            {
-                maxLen++;
-                target++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        
-        return maxLen;
-    }
-    
-    private boolean search(int[] curPool, int target)
-    {
-        if (target == 0)
-        {
-            return true;
-        }
-        
-        for (int i = 0; i < curPool.length; i++)
-        {
-            if (i > target)
-            {
-                break;
-            }
-            
-            if (curPool[i] > 0)
-            {
-                curPool[i]--;
-                
-                if (search(curPool, target-i))
-                {
-                    return true;
-                }
-                
-                curPool[i]++;
-            }
-        }
-        
-        return false;
-    }
-    
-    
-    
-    private Map<Integer, Integer> memo = new HashMap<>();
-    private int[] nums;
-    private int size = 0;
-    private int[][] gcd;
-    
-    public int maxScore(int[] nums) 
-    {
-        if (nums == null || nums.length == 0 || nums.length % 2 != 0)
+        if (orders == null || orders.length == 0 || orders[0].length != 3)
         {
             return 0;
         }
         
-        this.nums = nums;
-        size = nums.length;
-        Arrays.sort(this.nums);
-        initGcd();
+        int mod = 1_000_000_007;
+        TreeMap<Integer, Long> buys = new TreeMap<>();
+        TreeMap<Integer, Long> sells = new TreeMap<>();
         
-        int finalStatus = 0;
-        for (int i = 0; i < size; i++)
+        for (int[] order : orders)
         {
-            finalStatus |= (1 << i);
-        }
-        
-        memo.put(finalStatus, 0);
-        return backtrack(0, 1);
-    }
-    
-    private int backtrack(int status, int operIndex)
-    {
-        if (memo.containsKey(status))
-        {
-            return memo.get(status);
-        }
-        
-        int score = 0;
-        
-        for (int i = 0; i < size; i++)
-        {
-            if ( ((1 << i) & status) == 0 )
+            // buy
+            if (order[2] == 0)
             {
-                for (int j = i+1; j < size; j++)
+                long buyAmount = order[1];
+                int buyPrice = order[0];
+                
+                while (buyAmount > 0)
                 {
-                    if ( ((1 << j) & status) == 0 )
+                    if (sells.size() == 0)
                     {
-                        int nextStatus = status;
-                        nextStatus |= (1 << i);
-                        nextStatus |= (1 << j);
-                        
-                        int nextScore = backtrack(nextStatus, operIndex+1);
-                        score = Math.max(score, operIndex * gcd[i][j] + nextScore);
+                        break;
                     }
+                    
+                    Map.Entry<Integer, Long> entry = sells.floorEntry(buyPrice);
+                    
+                    if (entry == null)
+                    {
+                        break;
+                    }
+                    
+                    sells.remove(entry.getKey());
+                    
+                    if (entry.getValue() > buyAmount)
+                    {
+                        sells.put(entry.getKey(), entry.getValue() - buyAmount);
+                        buyAmount = 0;
+                    }
+                    else
+                    {
+                        buyAmount -= entry.getValue();
+                    }
+                }
+                
+                if (buyAmount > 0)
+                {
+                    buyAmount = (buyAmount + buys.getOrDefault(buyPrice, 0L)) % mod;
+                    buys.put(buyPrice, buyAmount);
+                    
+                    System.out.println("buy:" + buyPrice + ": " + buyAmount);
+                }
+            }
+            // sell
+            else
+            {
+                long sellAmount = order[1];
+                int sellPrice = order[0];
+                
+                while (sellAmount > 0)
+                {
+                    if (buys.size() == 0)
+                    {
+                        break;
+                    }
+                    
+                    Map.Entry<Integer, Long> entry = buys.ceilingEntry(sellPrice);
+                    
+                    if (entry == null)
+                    {
+                        break;
+                    }
+                    
+                    buys.remove(entry.getKey());
+                    
+                    if (entry.getValue() > sellAmount)
+                    {
+                        buys.put(entry.getKey(), entry.getValue() - sellAmount);
+                        sellAmount = 0;
+                    }
+                    else
+                    {
+                        sellAmount -= entry.getValue();
+                    }
+                }
+                
+                if (sellAmount > 0)
+                {
+                    sellAmount = (sellAmount + sells.getOrDefault(sellPrice, 0L)) % mod;
+                    sells.put(sellPrice, sellAmount);
+                    
+                    System.out.println("sell:" + sellPrice + ": " + sellAmount);
                 }
             }
         }
         
-        memo.put(status, score);
-        return score;
-    }
-    
-    private void initGcd()
-    {
-        gcd = new int[size][size];
+        long result = 0;
         
-        for (int i = 0; i < size; i++)
+        for (Map.Entry<Integer, Long> entry : sells.entrySet())
         {
-            for (int j = i+1; j < size; j++)
+            result = (result + entry.getValue()) % mod;
+            
+            System.out.println("*sell:" + entry.getKey() + ": " + entry.getValue());
+        }
+        
+        for (Map.Entry<Integer, Long> entry : buys.entrySet())
+        {
+            result = (result + entry.getValue()) % mod;
+            
+            System.out.println("*buy:" + entry.getKey() + ": " + entry.getValue());
+        }
+        
+        return (int) result;
+    }
+	
+	
+	
+	
+	public int getNumberOfBacklogOrders(int[][] orders) 
+    {
+        if (orders == null || orders.length == 0 || orders[0].length != 3)
+        {
+            return 0;
+        }
+        
+        int mod = 1_000_000_007;
+        Queue<Node> buys = new PriorityQueue<>((a, b) -> b.price - a.price);
+        Queue<Node> sells = new PriorityQueue<>((a, b) -> a.price - b.price);
+        
+        for (int[] order : orders)
+        {
+            // buy
+            if (order[2] == 0)
             {
-                gcd[i][j] = gcd(nums[i], nums[j]);
+            	int buyAmount = order[1];
+                int buyPrice = order[0];
+                
+            	while (buyAmount > 0 && !sells.isEmpty() && sells.peek().price <= buyPrice)
+            	{
+            		Node sell = sells.poll();
+            		
+            		if (sell.count > buyAmount)
+            		{
+            			sells.offer(new Node(sell.price, sell.count - buyAmount));
+            			buyAmount = 0;
+            		}
+            		else
+            		{
+            			buyAmount -= sell.count;
+            		}
+            	}
+            	
+            	if (buyAmount > 0)
+            	{
+            		buys.offer(new Node(buyPrice, buyAmount));
+            	}
+            }
+            // sell
+            else
+            {
+            	int sellAmount = order[1];
+                int sellPrice = order[0];
+                
+            	while (sellAmount > 0 && !sells.isEmpty() && sells.peek().price >= sellPrice)
+            	{
+            		Node buy = buys.poll();
+            		
+            		if (buy.count > sellAmount)
+            		{
+            			buys.offer(new Node(buy.price, buy.count - sellAmount));
+            			sellAmount = 0;
+            		}
+            		else
+            		{
+            			sellAmount -= buy.count;
+            		}
+            	}
+            	
+            	if (sellAmount > 0)
+            	{
+            		sells.offer(new Node(sellPrice, sellAmount));
+            	}
             }
         }
+        
+        long result = 0;
+        
+        while (!sells.isEmpty())
+        {
+        	Node node = sells.poll();
+        	result = (result + node.count) % mod; 
+        	System.out.println("*sell:" + node.price + ": " + node.count);
+        }
+        
+        while (!buys.isEmpty())
+        {
+        	Node node = buys.poll();
+        	result = (result + node.count) % mod; 
+        	System.out.println("*buy:" + node.price + ": " + node.count);
+        }
+        
+        return (int) result;
     }
-    
-    private int gcd(int a, int b) 
-    {
-        return (b == 0) ? a : gcd(b, a % b);
-    }
+	
+	class Node
+	{
+		public int price;
+		public int count;
+		
+		public Node(int p, int c)
+		{
+			price = p;
+			count = c;
+		}
+	}
 	
 	
     public static void main(String[] args)
@@ -188,12 +227,17 @@ private int[] pool = new int[40001];
     	
     	/****************************************************/
 
-    	int[] nums1 = {1,2};
-    	int[] nums2 = {3,4,6,8};
-    	int[] nums3 = {1,2,3,4,5,6};
+    	int[][] orders1 = {{10,5,0},{15,2,1},{25,1,1},{30,4,0}};
     	
-    	// System.out.println(test.maxScore(nums1));
-    	// System.out.println(test.maxScore(nums2));
-    	System.out.println(test.maxScore(nums3));
+    	int[][] orders2 = {
+    			{27,30,0},{10,10,1},{28,17,1},{19,28,0},{16,8,1},{14,22,0},{12,18,1},{3,15,0},{25,6,1}
+    			};
+    	
+    	// (19, 20), (14, 22), (3, 15)  
+    	// (28, 17), (25, 4)
+    	
+    	System.out.println(test.getNumberOfBacklogOrders(orders1));
+    	System.out.println(test.getNumberOfBacklogOrders(orders2));
+    	
     }
 }

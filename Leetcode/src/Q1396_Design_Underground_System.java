@@ -74,67 +74,8 @@ Answers within 10-5 of the actual value will be accepted as correct.
  */
 public class Q1396_Design_Underground_System 
 {
-	private Map<String, Map<String, List<Integer>>> distances;
-    private Map<Integer, Node> customers;
-    
-    public Q1396_Design_Underground_System() 
-    {
-        distances = new HashMap<>();
-        customers = new HashMap<>();
-    }
-    
-    public void checkIn(int id, String stationName, int t) 
-    {
-        if (customers.containsKey(id))
-        {
-            return;
-        }
-        
-        customers.put(id, new Node(stationName, t));
-    }
-    
-    public void checkOut(int id, String stationName, int t) 
-    {
-        if (!customers.containsKey(id))
-        {
-            return;
-        }
-        
-        Node start = customers.get(id);
-        customers.remove(id);
-        int usedTime = t - start.time;
-        
-        distances.computeIfAbsent(start.stationName, x -> new HashMap<>());
-        distances.get(start.stationName).computeIfAbsent(stationName, x -> new LinkedList<>()).add(usedTime);
-    }
-    
-    public double getAverageTime(String startStation, String endStation) 
-    {
-        if (!distances.containsKey(startStation) || !distances.get(startStation).containsKey(endStation))
-        {
-            return 0;
-        }
-        
-        List<Integer> distance = distances.get(startStation).get(endStation);
-        double result = 0;
-        
-        for (int dist : distances.get(startStation).get(endStation))
-        {
-            result += dist;
-        }
-        
-        return result / distance.size();
-    }
-    
-    class Node
-    {
-        public String stationName;
-        public int time;
-        
-        public Node(String name, int t)
-        {
-            stationName = name;
-            time = t;
-        }
-    }
+	
+
+	
+	
 }
