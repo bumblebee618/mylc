@@ -25,7 +25,9 @@ There are four ways to split nums into two subarrays.
 The best way is to split it into [7,2,5] and [10,8],
 where the largest sum among the two subarrays is only 18.
  */
-public class Q410_Split_Array_Largest_Sum {
+public class Q410_Split_Array_Largest_Sum 
+{
+	// solution 1:
 	public int splitArray(int[] nums, int m) 
 	{
         if (nums == null || nums.length == 0 || m <= 0 || m > nums.length)
@@ -41,21 +43,24 @@ public class Q410_Split_Array_Largest_Sum {
             right += num;
         }
         
-        while (left+1 < right)
+        int result = 0;
+        
+        while (left <= right)
         {
             int mid = left + (right-left)/2;
             
             if (!canSplit(nums, m, mid))
             {
-                left = mid;
+                left = mid+1;
             }
             else
             {
-                right = mid;
+                result = mid;
+                right = mid-1;
             }
         }
         
-        return canSplit(nums, m, left) ? left : right;
+        return result;
     }
     
     private boolean canSplit(int[] nums, int maxCount, int maxSum)
@@ -88,8 +93,9 @@ public class Q410_Split_Array_Largest_Sum {
     
     
     
-    // f[i][j]: the minimum largest subarray sum for splitting nums[0..i] into j parts.
-    public int splitArray2(int[] nums, int m) {
+    // solution 2: f[i][j]: the minimum largest subarray sum for splitting nums[0..i] into j parts.
+    public int splitArray2(int[] nums, int m) 
+    {
         if (nums == null || m <= 0 || nums.length < m)
         {
             return 0;

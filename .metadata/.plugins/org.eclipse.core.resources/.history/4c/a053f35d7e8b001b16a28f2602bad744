@@ -1,0 +1,136 @@
+import java.util.*;
+
+
+public class Q000_A_Contest 
+{
+	private Map<String, Integer> memo;
+	private Set<Integer>[] graph;
+	private int n;
+	private int[] dollars;
+	private Set<String> solutions;
+	
+	public void func(int n, int m, int[] dollars, int[][] roads)
+	{
+		if (n <= 0 || m <= 0 || dollars == null || dollars.length == 0 || roads == null || roads.length == 0)
+		{
+			return;
+		}
+		
+		char[] status = new char[n+1];
+		Arrays.fill(status, ' ');
+		graph = new Set[n+1];
+		memo = new HashMap<>();
+		this.n = n;
+		this.dollars = dollars;
+		solutions = new HashSet<>();
+		
+		for (int i = 1; i <= n; i++)
+		{
+			graph[i] = new HashSet<>();
+		}
+		
+		for (int[] road : roads)
+		{
+			graph[road[0]].add(road[1]);
+			graph[road[1]].add(road[0]);
+		}
+		
+		
+		
+		for ()
+		{
+			
+		}
+	}
+	
+	private int search(int start, char[] status, int houseLeft)
+	{
+		if (houseLeft == n)
+		{
+			solutions.add(new String(status));
+			return 0;
+		}
+		
+		String key = new String(status);
+		
+		if (memo.containsKey(key))
+		{
+			return memo.get(key);
+		}
+		
+		int updateHouse = 1;
+		
+		status[start] = '1';
+		
+		for (int neighbor : graph[start])
+		{
+			status[start] = '0';
+		}
+		
+		int money = 0;
+		
+		for (int i = 1; i <= n; i++)
+		{
+			if (status[i] == ' ')
+			{
+				money = Math.max(money, search(i, status));
+			}
+		}
+		
+		money += dollars[start];
+		memo.put(new String(status), money);
+		return money;
+	}
+	
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] array1 = {1,2,3,4};
+    	int[] array2 = {4,3,2,1};
+    	int[] array3 = {3,4,1,2};
+    	int[] array4 = {4,1,2,3};
+    	int[] array5 = {1,4,3,2};
+    	int[] array6 = {1,4,2,3};
+    	int[] array7 = {3,4,2,1};
+    	
+    	
+    	System.out.println(test.arrayShift(array1));
+    	System.out.println(test.arrayShift(array2));
+    	System.out.println(test.arrayShift(array3));
+    	System.out.println(test.arrayShift(array4));
+    	System.out.println(test.arrayShift(array5));
+    	System.out.println(test.arrayShift(array6));
+    	System.out.println(test.arrayShift(array7));
+    	
+    	
+    	
+    	
+
+    	List<String> words1 = new LinkedList<String>();
+    	words1.add("cat");
+    	words1.add("dog");
+    	words1.add("ferret");
+    	words1.add("scorption");
+    	
+    	List<String> words2 = new LinkedList<String>();
+    	words2.add("I");
+    	words2.add("have");
+    	words2.add("a");
+    	words2.add("nice");
+    	words2.add("surprise");
+    	
+    	List<String> result = test.concatEdgeLetters(words2);
+    	
+    	for (String word : result)
+    	{
+    		System.out.println(word);
+    	}
+    	
+    }
+}

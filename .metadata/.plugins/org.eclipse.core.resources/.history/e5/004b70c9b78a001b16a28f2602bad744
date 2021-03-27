@@ -1,0 +1,128 @@
+import java.util.*;
+
+
+public class Q000_A_Contest 
+{
+	public List<String> concatEdgeLetters(List<String> words)
+	{
+		List<String> result = new LinkedList<String>();
+		
+		if (words == null || words.size() <= 1)
+		{
+			return result;
+		}
+		
+		int size = words.size();
+		
+		for (int i = 0; i < size; i++)
+		{
+			String word1 = words.get(i);
+			String word2 = words.get((i+1) % size);
+			
+			if (word1.length() == 0 || word2.length() == 0)
+			{
+				continue;
+			}
+			
+			StringBuilder builder = new StringBuilder()
+					.append(word1.charAt(0))
+					.append(word2.charAt(word2.length()-1));
+			
+			result.add(builder.toString());
+		}
+		
+		return result;
+	}
+	
+	
+	public boolean arrayShift(int[] array)
+	{
+		if (array == null || array.length <= 1)
+		{
+			return true;
+		}
+		
+		int size = array.length;
+		Boolean isIncrease = null;
+		
+		for (int i = 0; i < size-1; i++)
+		{
+			if ( (array[i] + 1 == array[i+1]) || (array[i] == size && array[i+1] == 1) )
+			{
+				if (isIncrease == null || isIncrease)
+				{
+					isIncrease = true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else if ( (array[i] - 1 == array[i+1]) || (array[i] == 1 && array[i+1] == size) )
+			{
+				if (isIncrease == null || !isIncrease)
+				{
+					isIncrease = false;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else 
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] array1 = {1,2,3,4};
+    	int[] array2 = {4,3,2,1};
+    	int[] array3 = {3,4,1,2};
+    	int[] array4 = {4,1,2,3};
+    	int[] array5 = {1,4,3,2};
+    	int[] array6 = {1,4,2,3};
+    	
+    	
+    	System.out.println(test.arrayShift(array1));
+    	System.out.println(test.arrayShift(array2));
+    	System.out.println(test.arrayShift(array3));
+    	System.out.println(test.arrayShift(array4));
+    	System.out.println(test.arrayShift(array5));
+    	System.out.println(test.arrayShift(array6));
+    	
+    	
+    	
+    	
+
+    	List<String> words1 = new LinkedList<String>();
+    	words1.add("cat");
+    	words1.add("dog");
+    	words1.add("ferret");
+    	words1.add("scorption");
+    	
+    	List<String> words2 = new LinkedList<String>();
+    	words2.add("I");
+    	words2.add("have");
+    	words2.add("a");
+    	words2.add("nice");
+    	words2.add("surprise");
+    	
+    	List<String> result = test.concatEdgeLetters(words2);
+    	
+    	for (String word : result)
+    	{
+    		System.out.println(word);
+    	}
+    	
+    }
+}

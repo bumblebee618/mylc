@@ -1,0 +1,283 @@
+import java.util.*;
+
+
+public class Q000_A_Contest 
+{
+	/***
+	private static int maxMoney = 0;
+	private static Map<Long, Integer> memo = new HashMap<>();
+	
+	static int[] demandingMoney2(int[] moneys, int[][] roads) 
+	{
+		if (moneys == null || moneys.length == 0)
+		{
+			return new int[] {0, 0};
+		}
+		
+		int n = moneys.length;
+		Set<Integer>[] graph = new Set[n+1];
+		Map<Integer, Integer> solutions = new HashMap<>();
+	
+		for (int i = 1; i <= n; i++)
+		{
+			graph[i] = new HashSet<>();
+		}
+		
+		for (int[] road : roads)
+		{
+			int max = road[0] > road[1] ? road[0] : road[1];
+			int min = road[0] > road[1] ? road[1] : road[0];
+			graph[min].add(max);
+			
+			graph[min].add(min);
+			graph[max].add(max);
+		}
+		
+		for (int start = 1; start <= n; start++)
+		{
+			Set<Integer> visited = new HashSet<>();
+			search(start, graph, visited, moneys, solutions, 0);
+		}
+		
+		return new int[] { maxMoney, solutions.get(maxMoney) };
+	}
+	
+	private static void search(
+			int start,
+			Set<Integer>[] graph, 
+			Set<Integer> visited, 
+			int[] moneys,
+			Map<Integer, Integer> solutions,
+			int totalMoney)
+	{
+		totalMoney += moneys[start-1];
+		
+		Set<Integer> removed = new HashSet<>();
+		
+		for (int neighbor : graph[start])
+		{
+			if (!visited.contains(neighbor))
+			{
+				visited.add(neighbor);
+				removed.add(neighbor);
+			}
+		}
+		
+		for (int next = start+1; next <= moneys.length; next++)
+		{
+			if (visited.contains(next))
+			{
+				continue;
+			}
+			
+			search(next, graph, visited, moneys, solutions, totalMoney);
+		}
+		
+		visited.removeAll(removed);
+		maxMoney = Math.max(maxMoney, totalMoney);
+		solutions.put(totalMoney, solutions.getOrDefault(totalMoney, 0) + 1);
+	}
+	
+	
+	***/
+	
+	
+	private static Map<Integer, Integer>[] memo;
+	private static Integer[] maxMoney;
+	private static Set<Integer>[] graph;
+	private static int[] moneys;
+	
+	static int[] demandingMoney(int[] inputMoneys, int[][] roads) 
+	{
+		if (moneys == null || moneys.length == 0)
+		{
+			return new int[] {0, 0};
+		}
+		
+		moneys = inputMoneys;
+		int n = inputMoneys.length;
+		graph = new Set[n+1];
+		memo = new Map[n+1];
+		maxMoney = new Integer[n+1];
+	
+		for (int i = 1; i <= n; i++)
+		{
+			memo[i] = new HashMap<>();
+			graph[i] = new HashSet<>();
+		}
+		
+		for (int[] road : roads)
+		{
+			int max = road[0] > road[1] ? road[0] : road[1];
+			int min = road[0] > road[1] ? road[1] : road[0];
+			graph[min].add(max);
+			
+			graph[min].add(min);
+			graph[max].add(max);
+		}
+		
+		System.out.println("***************");
+		
+		for (int start = 1; start <= n; start++)
+		{
+			Set<Integer> visited = new HashSet<>();
+			search(start, visited);
+		}
+		
+		return new int[] { maxMoney[1], memo[1].get(maxMoney[1]) };
+	}
+	
+	private static int search(int start, Set<Integer> visited)
+	{
+		if (maxMoney[start] != null)
+		{
+			return maxMoney[start];
+		}
+		
+		System.out.println("***************");
+		
+		Set<Integer> removed = new HashSet<>();
+		
+		for (int neighbor : graph[start])
+		{
+			if (!visited.contains(neighbor))
+			{
+				visited.add(neighbor);
+				removed.add(neighbor);
+			}
+		}
+		
+		maxMoney[start] = 0;
+		
+		for (int next = start+1; next <= moneys.length; next++)
+		{
+			if (visited.contains(next))
+			{
+				continue;
+			}
+			
+			int tmpMoney = search(next, visited);
+			int count = memo[next].get(tmpMoney);
+			memo[start].put(tmpMoney+moneys[start-1], memo[start].getOrDefault(tmpMoney+moneys[start-1], 0)+count);
+			maxMoney[start] = Math.max(maxMoney[start], tmpMoney+moneys[start-1]);
+			
+			System.out.println(maxMoney[start]);
+		}
+	
+		visited.removeAll(removed);
+		return maxMoney[start];
+	}
+	
+	
+	
+	
+	
+	public static void print(List<Integer> list)
+	{
+		for (int num : list)
+		{
+			System.out.print(num + ", ");
+		}
+		
+		System.out.println();
+	}
+
+	
+	public static void print(int[] result)
+	{
+		for (int num : result)
+		{
+			System.out.print(num + ", ");
+		}
+		
+		System.out.println();
+	}
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] dollars1 = {100, 0, 100, 100, 100, 0, 100};
+    	int[][] roads1 = { {3,5}, {2,4}, {5,6}, {4,6}, {1,4} };
+    	
+    	
+    	int[] dollars2 = {75,75,50,75,100};
+    	int[][] roads2 = { {3,5}, {2,5}, {2,3}, {4,5}, {1,3}, {2,4} };
+
+    	
+    	int[] dollars3 = {6,8,2};
+    	int[][] roads3 = { {1,2}, {3,2} };
+    	
+    	
+    	int[] dollars4 = {
+    			100, 100, 0, 0, 0, 0, 50, 100, 100, 100,
+    			50, 50, 100, 100, 100, 100, 50, 100, 50, 0,
+    			50, 0, 50, 50, 100, 100, 100, 50, 100
+    			};
+    	
+    	int[][] roads4 = { 
+    			{12,14}, {3,21}, {12,26}, {17,22}, {16,29}, 
+    			{10,28}, {9, 15}, {27, 29}, {3, 17}, {3,14}, 
+    			{11,12}, {17,19}, {4,5}, {3,26}
+    			};
+    	
+    	
+    	
+    	int[] dollars5 = {0, 100};
+    	int[][] roads5 = {};
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	int[] result1 = demandingMoney(dollars1, roads1);
+    	print(result1);
+    	
+    	
+    	/***
+    	int[] result2 = demandingMoney(dollars2, roads2);
+    	print(result2);
+    	***/
+    	/***
+    	int[] result3 = demandingMoney(dollars3, roads3);
+    	print(result3);
+    	***/
+
+    	/***
+    	int[] result4 = demandingMoney(dollars4, roads4);
+    	print(result4);
+    	***/
+    	
+    	/***
+    	int[] result5 = demandingMoney(dollars5, roads5);
+    	print(result5);
+    	***/
+    	
+    	//print(result2);
+    	//print(result3);
+    	
+    	/***
+    	5 6
+75 75 50 75 100
+3 5
+2 5
+2 3
+4 5
+1 3
+2 4
+    	***/
+    	
+    }
+}

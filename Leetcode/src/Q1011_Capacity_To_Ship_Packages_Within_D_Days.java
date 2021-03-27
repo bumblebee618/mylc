@@ -67,22 +67,24 @@ public class Q1011_Capacity_To_Ship_Packages_Within_D_Days
         }
         
         int left = maxWeight, right = totalWeight;
+        int result = 0;
         
-        while (left+1 < right)
+        while (left <= right)
         {
-            int mid = left+(right-left)/2;
+            int mid = left + (right-left)/2;
             
             if (!canShipWithTargetDays(weights, D, mid))
             {
-                left = mid;
+                left = mid+1;
             }
             else
             {
-                right = mid;
+                result = mid;
+                right = mid-1;
             }
         }
         
-        return canShipWithTargetDays(weights, D, left)? left : right;
+        return result;
     }
     
     private boolean canShipWithTargetDays(int[] weights, int maxDay, int maxCapacity)

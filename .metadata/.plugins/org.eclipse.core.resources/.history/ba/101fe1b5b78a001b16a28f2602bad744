@@ -1,0 +1,65 @@
+import java.util.*;
+
+
+public class Q000_A_Contest 
+{
+	public List<String> func(List<String> words)
+	{
+		List<String> result = new LinkedList<String>();
+		
+		if (words == null || words.size() <= 1)
+		{
+			return result;
+		}
+		
+		int size = words.size();
+		
+		for (int i = 0; i < size; i++)
+		{
+			String word1 = words.get(i);
+			String word2 = words.get((i+1) % size);
+			
+			if (word1.length() == 0 || word2.length() == 0)
+			{
+				continue;
+			}
+			
+			StringBuilder builder = new StringBuilder()
+					.append(word1.charAt(0))
+					.append(word2.charAt(word2.length()-1));
+			
+			result.add(builder.toString());
+		}
+		
+		return result;
+	}
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+
+    	List<String> words1 = new LinkedList<String>();
+    	words1.add("cat");
+    	words1.add("dog");
+    	words1.add("ferret");
+    	words1.add("scorption");
+    	
+    	List<String> words2 = new LinkedList<String>();
+    	words2.add("I");
+    	words2.add("have");
+    	words2.add("a");
+    	words2.add("nice");
+    	words2.add("surprise");
+    	
+    	List<String> result = test.func(words2);
+    	
+    	for (String word : result)
+    	{
+    		System.out.println(word);
+    	}
+    	
+    }
+}

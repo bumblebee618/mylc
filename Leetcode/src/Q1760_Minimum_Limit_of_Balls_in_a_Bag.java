@@ -46,7 +46,64 @@ Constraints:
 
 public class Q1760_Minimum_Limit_of_Balls_in_a_Bag 
 {
+	// solution 1:
 	public int minimumSize(int[] nums, int maxOperations) 
+    {
+        if (nums == null || nums.length == 0 || maxOperations <= 0)
+        {
+            return 0;
+        }
+        
+        int penalty = Integer.MIN_VALUE;
+        
+        for (int num : nums)
+        {
+            penalty = Math.max(penalty, num);
+        }
+        
+        int left = 1, right = penalty;
+        int result = -1;
+        
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            
+            if (!isValid(nums, mid, maxOperations))
+            {
+                left = mid+1;
+            }
+            else
+            {
+                result = mid;
+                right = mid-1;
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean isValid(int[] nums, int capacity, int maxOperations)
+    {
+        int operations = 0;
+        
+        for (int num : nums)
+        {
+            operations += (num - 1) / capacity;
+            
+            if (operations > maxOperations)
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+	
+	
+    
+    
+    // solution 2:
+	public int minimumSize2(int[] nums, int maxOperations) 
     {
         if (nums == null || nums.length == 0 || maxOperations <= 0)
         {
@@ -66,7 +123,7 @@ public class Q1760_Minimum_Limit_of_Balls_in_a_Bag
         {
             int mid = left + (right - left) / 2;
             
-            if (!isValid(nums, mid, maxOperations))
+            if (!isValid2(nums, mid, maxOperations))
             {
                 left = mid;
             }
@@ -90,7 +147,7 @@ public class Q1760_Minimum_Limit_of_Balls_in_a_Bag
         }
     }
     
-    private boolean isValid(int[] nums, int capacity, int maxOperations)
+    private boolean isValid2(int[] nums, int capacity, int maxOperations)
     {
         int operations = 0;
         
@@ -106,7 +163,7 @@ public class Q1760_Minimum_Limit_of_Balls_in_a_Bag
         
         return true;
     }
-	
+    
     
     
     

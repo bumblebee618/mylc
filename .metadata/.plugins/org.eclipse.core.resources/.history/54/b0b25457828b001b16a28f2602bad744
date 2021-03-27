@@ -1,0 +1,103 @@
+import java.util.*;
+
+import Q124_Binary_Tree_Maximum_Path_Sum.resultTuple;
+
+
+public class Q000_A_Contest 
+{
+	private Map<String, Integer> memo;
+	private Set<Integer>[] graph;
+	private int n;
+	private int[] dollars;
+	private Set<String> solutions;
+	
+	public void func(int n, int m, int[] dollars, int[][] roads)
+	{
+		if (n <= 0 || m <= 0 || dollars == null || dollars.length == 0 || roads == null || roads.length == 0)
+		{
+			return;
+		}
+		
+		graph = new Set[n+1];
+		memo = new HashMap<>();
+		this.n = n;
+		this.dollars = dollars;
+		solutions = new HashSet<>();
+		
+		for (int i = 1; i <= n; i++)
+		{
+			graph[i] = new HashSet<>();
+		}
+		
+		for (int[] road : roads)
+		{
+			graph[road[0]].add(road[1]);
+			graph[road[1]].add(road[0]);
+		}
+		
+		char[] status = new char[n+1];
+		Arrays.fill(status, ' ');
+		int maxMoney = search(status);
+		
+		System.out.println("max money = " + maxMoney + ", solution number = " + solutions.size());
+	}
+	
+	private int search(char[] status)
+	{
+		String key = new String(status);
+		
+		if (memo.containsKey(key))
+		{
+			return memo.get(key);
+		}
+		
+		int money = 0;
+		boolean hasNext = false;
+		
+		for (int i = 1; i <= n; i++)
+		{
+			if (status[i] == ' ')
+			{
+				char[] status1 = Arrays.copyOf(status, n+1);
+				status1[i] = '1';
+				
+				for (int neighbor : graph[i])
+				{
+					status1[neighbor] = '0';
+				}
+				
+				money = Math.max(money, search(status1) + dollars[i]);
+				hasNext = true;
+			}
+		}
+		
+		memo.put(new String(status), money);
+		
+		if (!hasNext)
+		{
+			solutions.add(new String(status));
+			System.out.println(new String(status) + ", " + money);
+		}
+		
+		return money;
+	}
+	
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int n = 7, m = 5;
+    	int[] dollars = {100, 0, 100, 100, 100, 100, 0, 100};
+    	int[][] roads = { {3,5}, {2,4}, {5,6}, {4,6}, {1,4} };
+    	
+    	test.func(n, m, dollars, roads);
+    	
+    	
+    	
+    }
+}

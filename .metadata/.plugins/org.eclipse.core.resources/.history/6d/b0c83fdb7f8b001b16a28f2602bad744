@@ -1,0 +1,108 @@
+import java.util.*;
+
+
+public class Q000_A_Contest 
+{
+	private Map<String, Integer> memo;
+	private Set<Integer>[] graph;
+	private int n;
+	private int[] dollars;
+	private Set<String> solutions;
+	
+	public void func(int n, int m, int[] dollars, int[][] roads)
+	{
+		if (n <= 0 || m <= 0 || dollars == null || dollars.length == 0 || roads == null || roads.length == 0)
+		{
+			return;
+		}
+		
+		graph = new Set[n+1];
+		memo = new HashMap<>();
+		this.n = n;
+		this.dollars = dollars;
+		solutions = new HashSet<>();
+		
+		for (int i = 1; i <= n; i++)
+		{
+			graph[i] = new HashSet<>();
+		}
+		
+		for (int[] road : roads)
+		{
+			graph[road[0]].add(road[1]);
+			graph[road[1]].add(road[0]);
+		}
+		
+		int maxMoney = 0;
+		
+		for (int house = 1; house <= n; house++)
+		{
+			char[] status = new char[n+1];
+			Arrays.fill(status, ' ');
+			System.out.println("start: " + house);
+			maxMoney = Math.max(maxMoney, search(house, status));
+		}
+		
+		System.out.println("max money = " + maxMoney + ", solution number = " + solutions.size());
+	}
+	
+	private int search(int start, char[] status)
+	{
+		String key = new String(status);
+		
+		if (memo.containsKey(key))
+		{
+			return memo.get(key);
+		}
+		
+		status[start] = '1';
+		
+		for (int neighbor : graph[start])
+		{
+			status[neighbor] = '0';
+		}
+		
+		int money = 0;
+		boolean completed = true;
+		
+		for (int i = 1; i <= n; i++)
+		{
+			if (status[i] == ' ')
+			{
+				// char[] nextStatus = new char[n+1];
+				// Arrays.copyOf(status, n+1);
+				money = Math.max(money, search(i, status));
+				completed = false;
+			}
+		}
+		
+		if (completed)
+		{
+			solutions.add(new String(status));
+			System.out.println(new String(status));
+		}
+		
+		money += dollars[start];
+		memo.put(new String(status), money);
+		return money;
+	}
+	
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int n = 7, m = 5;
+    	int[] dollars = {100, 0, 100, 100, 100, 100, 0, 100};
+    	int[][] roads = { {3,5}, {2,4}, {5,6}, {4,6}, {1,4} };
+    	
+    	test.func(n, m, dollars, roads);
+    	
+    	
+    	
+    }
+}

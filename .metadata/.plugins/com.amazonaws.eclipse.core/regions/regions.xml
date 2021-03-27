@@ -132,6 +132,36 @@
         </services>
     </region>
     <region>
+        <displayname>Asia Pacific (Osaka)</displayname>
+        <systemname>ap-northeast-3</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.ap-northeast-3.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.ap-northeast-3.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.ap-northeast-3.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.ap-northeast-3.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.ap-northeast-3.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.ap-northeast-3.amazonaws.com</service>
+            <service name="EC2">https://ec2.ap-northeast-3.amazonaws.com</service>
+            <service name="ECR" authregion="ap-northeast-3">https://api.ecr.ap-northeast-3.amazonaws.com</service>
+            <service name="ECS">https://ecs.ap-northeast-3.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.ap-northeast-3.amazonaws.com</service>
+            <service name="ElasticBeanstalk">https://elasticbeanstalk.ap-northeast-3.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.ap-northeast-3.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.ap-northeast-3.amazonaws.com</service>
+            <service name="Lambda">https://lambda.ap-northeast-3.amazonaws.com</service>
+            <service name="Logs">https://logs.ap-northeast-3.amazonaws.com</service>
+            <service name="RDS">https://rds.ap-northeast-3.amazonaws.com</service>
+            <service name="S3">https://s3.ap-northeast-3.amazonaws.com</service>
+            <service name="SNS">https://sns.ap-northeast-3.amazonaws.com</service>
+            <service name="SQS">https://sqs.ap-northeast-3.amazonaws.com</service>
+            <service name="XRay">https://xray.ap-northeast-3.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
         <displayname>Asia Pacific (Mumbai)</displayname>
         <systemname>ap-south-1</systemname>
         <flag-icon>flags/ap-south-1.png</flag-icon>

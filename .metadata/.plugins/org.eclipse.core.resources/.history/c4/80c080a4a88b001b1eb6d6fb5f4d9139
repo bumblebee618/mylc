@@ -1,0 +1,179 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{
+	static int[] demandingMoney(int[] moneys, int[][] roads) 
+	{
+		if (moneys == null || moneys.length == 0 || roads == null || roads.length == 0)
+		{
+			return new int[] {0, 0};
+		}
+		
+		Map<Long, Integer> memo = new HashMap<>();
+		int n = moneys.length;
+		Set<Integer>[] graph = new Set[n+1];
+		Set<Integer> currentLevel = new HashSet<>();
+		Map<Integer, Integer> solutions = new HashMap<>();
+	
+		for (int i = 1; i <= n; i++)
+		{
+			currentLevel.add(i);
+			graph[i] = new HashSet<>();
+		}
+		
+		for (int[] road : roads)
+		{
+			graph[road[0]].add(road[1]);
+			graph[road[1]].add(road[0]);
+		}
+		
+		int maxMoney = 0;
+		
+		for (int i = 1; i <= n; i++)
+		{
+			maxMoney = Math.max(maxMoney, search(i, graph, 0L, currentLevel, moneys, memo));
+			solutions.put(maxMoney, solutions.getOrDefault(maxMoney, 0) + 1);
+		}
+		
+		return new int[] { maxMoney, solutions.get(maxMoney) };
+	}
+	
+	private static int search(
+			int start,
+			Set<Integer>[] graph, 
+			Long status,
+			Set<Integer> currentLevel, 
+			int[] moneys,
+			Map<Long, Integer> memo)
+	{
+		if (currentLevel.size() == 0)
+		{
+			return 0;
+		}
+		else if (memo.containsKey(status))
+		{
+			return memo.get(status);
+		}
+		
+		int money = 0;
+		
+		Set<Integer> nextLevel = new HashSet<>(currentLevel);
+		nextLevel.remove(start);
+		
+		for (int neighbor : graph[start])
+		{
+			if (nextLevel.contains(neighbor))
+			{
+				nextLevel.remove(neighbor);
+			}
+		}
+		
+		for (int i = start+1; i <= moneys.length; i++)
+		{
+			if (nextLevel.contains(i))
+			{
+				if (moneys[start] == 0)
+				{
+					money = Math.max(money, search(i, graph, status, nextLevel, moneys, memo));
+				}
+				
+				money = Math.max(money, search(i, graph, status | (1 << start), nextLevel, moneys, memo));
+			}
+		}
+		
+		money += moneys[start-1];
+		memo.put(status, money);
+		return money;
+	}
+	
+	
+	
+
+	
+	public static void print(int[] result)
+	{
+		for (int num : result)
+		{
+			System.out.print(num + ", ");
+		}
+		
+		System.out.println();
+	}
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] dollars1 = {100, 0, 100, 100, 100, 0, 100};
+    	int[][] roads1 = { {3,5}, {2,4}, {5,6}, {4,6}, {1,4} };
+    	
+    	
+    	int[] dollars2 = {75,75,50,75,100};
+    	int[][] roads2 = { {3,5}, {2,5}, {2,3}, {4,5}, {1,3}, {2,4} };
+
+    	
+    	int[] dollars3 = {6,8,2};
+    	int[][] roads3 = { {1,2}, {3,2} };
+    	
+    	
+    	int[] dollars4 = {
+    			100, 100, 0, 0, 0, 0, 50, 100, 100, 100,
+    			50, 50, 100, 100, 100, 100, 50, 100, 50, 0,
+    			50, 0, 50, 50, 100, 100, 100, 50, 100
+    			};
+    	
+    	int[][] roads4 = { 
+    			{12,14}, {3,21}, {12,26}, {17,22}, {16,29}, 
+    			{10,28}, {9, 15}, {27, 29}, {3, 17}, {3,14}, 
+    			{11,12}, {17,19}, {4,5}, {3,26}
+    			};
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	int[] result1 = demandingMoney(dollars1, roads1);
+    	print(result1);
+    	
+    	int[] result2 = demandingMoney(dollars2, roads2);
+    	print(result2);
+    	
+    	int[] result3 = demandingMoney(dollars3, roads3);
+    	print(result3);
+    	
+    	int[] result4 = demandingMoney(dollars4, roads4);
+    	print(result4);
+    	
+    	
+    	//print(result2);
+    	//print(result3);
+    	
+    	/***
+    	5 6
+75 75 50 75 100
+3 5
+2 5
+2 3
+4 5
+1 3
+2 4
+    	***/
+    	
+    }
+}
