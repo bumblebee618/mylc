@@ -16,9 +16,51 @@ Note:
 The input string length won't exceed 1000.
  *
  */
+
 public class Q647_Palindromic_Substrings 
 {
+	// solution 1: use two pointers, time O(n^2), space O(1)
 	public int countSubstrings(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return 0;
+        }
+        
+        int result = 0, size = s.length();
+        
+        for (int i = 0; i < size; i++)
+        {
+            result += search(s, i, i);
+            result += search(s, i, i+1);
+        }
+        
+        return result;
+    }
+    
+    private int search(String s, int left, int right)
+    {
+        int count = 0;
+        
+        while (left >= 0 && right < s.length())
+        {
+            if (s.charAt(left) != s.charAt(right))
+            {
+                break;
+            }
+            
+            left--;
+            right++;
+            count++;
+        }
+        
+        return count;
+    }
+	
+    
+    
+    // solution 2: use 区间DP, time O(n^2), space O(n^2)
+	public int countSubstrings2(String s) 
     {
         if (s == null || s.length() == 0)
         {
@@ -34,22 +76,15 @@ public class Q647_Palindromic_Substrings
             dp[i][i] = true;
         }
         
-        for (int i = 0; i < size-1; i++)
-        {
-            dp[i][i+1] = s.charAt(i) == s.charAt(i+1);
-            result += dp[i][i+1] ? 1 : 0;
-        }
-        
-        for (int length = 3; length <= size; length++)
+        for (int length = 2; length <= size; length++)
         {
             for (int start = 0; start+length <= size; start++)
             {
                 int end = start + length - 1;
                 
-                if (dp[start+1][end-1] && s.charAt(start) == s.charAt(end))
-                {
-                    dp[start][end] = true;
-                }
+                dp[start][end] = (length == 2) 
+                        ? s.charAt(start) == s.charAt(end)
+                        : s.charAt(start) == s.charAt(end) && dp[start+1][end-1];
                 
                 result += dp[start][end] ? 1 : 0;
             }

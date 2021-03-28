@@ -1,0 +1,113 @@
+import java.util.*;
+
+/***
+ * 
+ * @author jackie
+ * You are given a positive integer primeFactors. You are asked to construct a positive integer n that satisfies the following conditions:
+
+The number of prime factors of n (not necessarily distinct) is at most primeFactors.
+The number of nice divisors of n is maximized. Note that a divisor of n is nice if it is divisible by every prime factor of n. For example, if n = 12, then its prime factors are [2,2,3], then 6 and 12 are nice divisors, while 3 and 4 are not.
+Return the number of nice divisors of n. Since that number can be too large, return it modulo 109 + 7.
+
+Note that a prime number is a natural number greater than 1 that is not a product of two smaller natural numbers. The prime factors of a number n is a list of prime numbers such that their product equals n.
+
+ 
+
+Example 1:
+
+Input: primeFactors = 5
+Output: 6
+Explanation: 200 is a valid value of n.
+It has 5 prime factors: [2,2,2,5,5], and it has 6 nice divisors: [10,20,40,50,100,200].
+There is not other value of n that has at most 5 prime factors and more nice divisors.
+Example 2:
+
+Input: primeFactors = 8
+Output: 18
+ 
+
+Constraints:
+
+1 <= primeFactors <= 109
+ *
+ */
+
+public class Q1808_Maximize_Number_of_Nice_Divisors 
+{
+	// solution 1: math, O(logn)
+	private int mod = 1_000_000_007;
+	
+    public int maxNiceDivisors(int primeFactors) 
+    {
+        return (int) (breakInteger(primeFactors) % mod);
+    }
+ 
+    private long breakInteger(int N) 
+    {
+        if (N <= 3) 
+        {
+        	return N;
+        }
+ 
+        long maxProduct = N;
+ 
+        switch (N % 3) 
+        {
+            case 0: maxProduct = power(3, (long)(N / 3)); break;
+            case 1: maxProduct = 4 * power(3, (long)((N / 3) - 1)); break;
+            case 2: maxProduct = 2 * power(3, (long)(N / 3)); break;
+        }
+        
+        return maxProduct;
+    }
+    
+    private long power(long x, long a)
+    {
+        if (a == 1) 
+        {
+        	return x;
+        }
+        else if (a == 0)
+        {
+        	return 1;
+        }
+        
+        long k1 = power(x, a / 2);
+        return (a % 2 == 0) ? (k1 * k1) % mod : (k1 * k1 * x) % mod;
+    }
+    
+    
+    
+    
+    // solution 2: O(n^2)
+    public int maxNiceDivisors2(int primeFactors) 
+    {
+        if (primeFactors <= 0)
+        {
+            return 0;
+        }
+        else if (primeFactors <= 3)
+        {
+            return primeFactors;
+        }
+        
+        int mod = 1_000_000_007;
+        Map<Integer, Long> dp = new HashMap<>();
+        dp.put(1, 1L);
+        dp.put(2, 2L);
+        dp.put(3, 3L);
+        
+        for (int i = 4; i <= primeFactors; i++)
+        {
+            for (int j = 1; j <= i/2; j++)
+            {
+                long newValue = dp.get(j) * dp.get(i-j);
+                long curValue = dp.getOrDefault(i, 0L);
+                dp.put(i, Math.max(newValue, curValue));
+            }
+        }
+        
+        long result = dp.get(primeFactors);
+        return (int) (result % mod);
+    }
+}

@@ -8,35 +8,44 @@ Output: "s'teL ekat edoCteeL tsetnoc"
 Note: In the string, each word is separated by single space and there will not be any extra space in the string.
  *
  */
-public class Q557_Reverse_Words_in_a_String_III {
-	public String reverseWords(String s) {
-        if (s == null || s.length() == 0) {
-            return "";
-        }    
-        
-        StringBuilder sb = new StringBuilder();
-        int front = 0, back = 0, len = s.length();
-        
-        while (front < len) {
-            while (front < len && s.charAt(front) != ' ') {
-                front++;
-            }
-            
-            for (int i = front-1; i >= back; i--) {
-                sb.append(s.charAt(i));
-            }
-            
-            if (front < len) {
-                sb.append(" ");
-            }
-            
-            while (front < len && s.charAt(front) == ' ') {
-                front++;
-            }
-            
-            back = front;
+public class Q557_Reverse_Words_in_a_String_III 
+{
+	public String reverseWords(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return s;   
         }
         
-        return sb.toString();
+        char[] letters = s.toCharArray();
+        int size = s.length();
+        int front = 0, back = 0;
+        
+        while (front < size)
+        {
+            back = front;
+            
+            while (front < size && letters[front] != ' ')
+            {
+                front++;
+            }
+            
+            reverse(letters, front-1, back);
+            front++;
+        }
+        
+        return new String(letters);
+    }
+    
+    private void reverse(char[] letters, int right, int left)
+    {
+        while (left < right)
+        {
+            char tmp = letters[left];
+            letters[left] = letters[right];
+            letters[right] = tmp;
+            left++;
+            right--;
+        }
     }
 }

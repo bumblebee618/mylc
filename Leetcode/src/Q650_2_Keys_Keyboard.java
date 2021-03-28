@@ -18,19 +18,26 @@ Note:
 The n will be in the range [1, 1000].
  *
  */
-public class Q650_2_Keys_Keyboard {
-	public int minSteps(int n) {
-        if (n <= 0) {
+public class Q650_2_Keys_Keyboard 
+{
+	public int minSteps(int n) 
+	{
+        if (n <= 1) 
+        {
             return 0;
         }
         
         int[] dp = new int[n+1];
         
-        for (int i = 2; i <= n; i++) {
+        for (int i = 2; i <= n; i++) 
+        {
             dp[i] = i;
             
-            for (int j = i/2; j > 1; j--) {
-                if (i % j == 0) {
+            // 从大到小check，一旦找到就可以直接退出
+            for (int j = i/2; j > 1; j--) 
+            {
+                if (i % j == 0) 
+                {
                     dp[i] = dp[j] + i/j;
                     break;
                 }

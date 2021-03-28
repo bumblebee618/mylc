@@ -9,37 +9,35 @@ The string consists of lower English letters only.
 Length of the given string and k will in the range [1, 10000]
  *
  */
-public class Q541_Reverse_String_II {
-	public String reverseStr(String s, int k) {
-        if (s == null || s.length() == 0 || k <= 0) {
+public class Q541_Reverse_String_II 
+{
+	public String reverseStr(String s, int k) 
+    {
+        if (s == null || s.length() == 0 || k <= 0)
+        {
             return s;
         }
         
         char[] letters = s.toCharArray();
-        int len = s.length();
-        int front = (k-1 >= len) ? len-1 : k-1;
-        int back = 0;
+        int size = s.length();
         
-        while (front < len) {
-            reverse(letters, front, back);
-            front += 2*k;
-            back += 2*k;
-            
-            if (front >= len && back < len) {
-                front = len-1;
-            }
+        for (int i = 0; i < size; i += 2*k)
+        {
+            reverse(letters, i, Math.min(i+k-1, size-1));
         }
         
         return new String(letters);
     }
     
-    private void reverse(char[] letters, int front, int back) {
-        while (front >= back) {
-            char temp = letters[front];
-            letters[front] = letters[back];
-            letters[back] = temp;
-            front--;
-            back++;
+    private void reverse(char[] letters, int left, int right)
+    {
+        while (left < right)
+        {
+            char tmp = letters[left];
+            letters[left] = letters[right];
+            letters[right] = tmp;
+            left++;
+            right--;
         }
     }
 }

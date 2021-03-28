@@ -11,20 +11,26 @@ Note: You may assume that n is not less than 2 and not larger than 58.
  * */
 
 public class Q343_Integer_Break {
+	
+	// solution 1: O(n^2)
 	// 2和3必须单独处理, 因为只有2，3时，其分割后相乘值会小于它本身，而当2，3用作其他数的拆分因子时，又要用作因子2，3相乘
 	// 如： memo[2] = 2, memo[3] = 3, 实际2, 3拆分后最大乘积为 1, 2 !!!
-	public int integerBreak(int n) {
-        if(n == 2 || n == 3) {  
+	public int integerBreak(int n) 
+	{
+        if (n == 2 || n == 3) 
+        {  
             return n - 1;       
         }
         
-        int[] memo = new int[n + 1];
+        int[] memo = new int[n+1];
 		memo[2] = 2;
 		memo[3] = 3;
 		
-		for(int i = 4; i <= n; i++){
-			for(int j = 1; j <= i/2; j++){
-				memo[i] = Math.max(memo[i], memo[j] * memo[i - j]);
+		for (int i = 4; i <= n; i++)
+		{
+			for (int j = 1; j <= i/2; j++)
+			{
+				memo[i] = Math.max(memo[i], memo[j] * memo[i-j]);
 			}			
 		}
 		
@@ -33,28 +39,24 @@ public class Q343_Integer_Break {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**************************************/
-	//by other use dp
-	public int integerBreak2(int n) {
-        if (n == 2 || n == 3){
+	// solution 2: 
+	public int integerBreak2(int n) 
+	{
+        if (n == 2 || n == 3)
+        {
         	return n - 1;
         }
 
-        int[] prod = new int[n+1];
-        prod[2] = 2;
-        prod[3] = 3;
-        for (int i = 4; i <= n; ++i) {
-            prod[i] = Math.max(prod[i/2] * prod[i - i/2], Math.max(prod[i-2] * prod[2], prod[i-3] * prod[3]));
+        int[] dp = new int[n+1];
+        dp[2] = 2;
+        dp[3] = 3;
+        
+        for (int i = 4; i <= n; ++i) 
+        {
+            dp[i] = Math.max(dp[i/2] * dp[i-i/2], Math.max(dp[i-2] * dp[2], dp[i-3] * dp[3]));
         }
-        return prod[n];
+        
+        return dp[n];
     }    
     
 	

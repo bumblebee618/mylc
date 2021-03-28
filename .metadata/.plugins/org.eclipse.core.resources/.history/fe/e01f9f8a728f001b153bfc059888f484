@@ -1,0 +1,88 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public int reinitializePermutation(int n) 
+    {
+        if (n <= 0)
+        {
+            return 0;
+        }
+        
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int i = 0; i < n; i++)
+        {
+            int next = (i % 2 == 0) ? i/2 : n/2 + (i-1)/2;
+            
+            if (next != i)
+            {
+                queue.offer(next);
+                System.out.print(next + ", ");
+            }
+        }
+        
+        System.out.println();
+        
+        int step = 1;
+        
+        while (!queue.isEmpty())
+        {
+        	Queue<Integer> nextQueue = new LinkedList<>();
+            int size = queue.size();
+            int prev = -1;
+            boolean increased = true;
+            
+            for (int i = 0; i < size; i++)
+            {
+                int current = queue.poll();
+                int next = (current % 2 == 0) ? current/2 : n/2 + (current-1)/2;
+                nextQueue.offer(next);
+                
+                if (next < prev)
+                {
+                    increased = false;
+                }
+                
+                prev = next;
+            }
+            
+            if (increased)
+            {
+                break;
+            }
+            
+            step++;
+        }
+        
+        return step;
+    }
+    
+    
+    
+    
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int n1 = 2;
+    	System.out.println(test.reinitializePermutation(n1));
+    	
+    	int n2 = 4;
+    	System.out.println(test.reinitializePermutation(n2));
+    	
+    	int n3 = 6;
+    	System.out.println(test.reinitializePermutation(n3));
+    	
+    	
+    	
+    	
+    }
+}

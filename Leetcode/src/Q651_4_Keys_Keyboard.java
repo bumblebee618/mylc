@@ -29,21 +29,28 @@ Note:
 Answers will be in the range of 32-bit signed integer.
  *
  */
-public class Q651_4_Keys_Keyboard {
-	public int maxA(int N) {
-        if (N <= 0) {
+public class Q651_4_Keys_Keyboard 
+{
+	public int maxA(int N) 
+	{
+        if (N <= 0) 
+        {
             return 0;
-        } else if (N <= 2) {
+        } 
+        else if (N <= 2) 
+        {
             return N;
         }
         
         int[] dp = new int[N+1];
         dp[1] = 1;
         
-        for (int i = 2; i <= N; i++) {
+        for (int i = 2; i <= N; i++) 
+        {
             dp[i] = i;
             
-            for (int j = 2; j < i-1; j++) {
+            for (int j = 2; j < i-1; j++) 
+            {
                 dp[i] = Math.max(dp[i], dp[j] * (i-j-1));
             }
         }

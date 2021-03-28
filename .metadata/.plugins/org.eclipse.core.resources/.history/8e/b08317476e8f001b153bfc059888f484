@@ -1,0 +1,64 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public int numDifferentIntegers(String word) 
+    {
+        if (word == null || word.length() == 0)
+        {
+            return 0;   
+        }
+        
+        Set<String> set = new HashSet<>();
+        int size = word.length();
+        int front = 0, back = 0;
+        
+        while (front < size)
+        {
+            while (front < size && !Character.isDigit(word.charAt(front)))
+            {
+                front++;
+            }
+            
+            back = front;
+            
+            while (front < size && Character.isDigit(word.charAt(front)))
+            {
+                front++;
+            }
+            
+            if (back < size)
+            {
+                String str = word.substring(back, front);
+                set.add(str);
+            }
+        }
+        
+        return set.size();
+    }
+    
+    
+    
+    
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	String word1 = "a123bc34d8ef34";
+    	System.out.println(test.numDifferentIntegers(word1));
+    	
+    	String word2 = "leet1234code234";
+    	System.out.println(test.numDifferentIntegers(word2));
+    	
+    	String word2 = "a1b01c001";
+    	System.out.println(test.numDifferentIntegers(word2));
+    	
+    }
+}

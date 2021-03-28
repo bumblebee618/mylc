@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;prod&apos; in &apos;Q343_Integer_Break.integerBreak2(...)&apos; to &apos;dp&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q343_Integer_Break.integerBreak2(int).prod&apos;&#x0A;- Renamed element: &apos;prod&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;prod&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q343_Integer_Break.java[Q343_Integer_Break~integerBreak2~I@prod!1082!1107!1088!1091!\[I!0!false" name="dp" references="true" stamp="1616907957459" version="1.0"/>
+</session>
