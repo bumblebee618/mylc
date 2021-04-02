@@ -59,49 +59,6 @@ public class Q474_Ones_and_Zeroes {
 	
 	
 	
-	// solution 2: using backtrack, but TLE
-	private int maxLen = 0;
-
-	public int findMaxForm2(String[] strs, int m, int n) {
-		if (strs == null || strs.length == 0) {
-			return 0;
-		}
-
-		int len = strs.length;
-		int[][] needs = new int[len][2];
-
-		// build matrix
-		for (int i = 0; i < len; i++) {
-			for (char c : strs[i].toCharArray()) {
-				if (c == '0') {
-					needs[i][0]++;
-				} else if (c == '1') {
-					needs[i][1]++;
-				}
-			}
-		}
-
-		backtrack(needs, len, 0, 0, m, n);
-		return maxLen;
-	}
-
-	public void backtrack(int[][] needs, int len, int start, int finishCount, int zeroLeft, int oneLeft) {
-		if (start == len) {
-			maxLen = Math.max(maxLen, finishCount);
-			return;
-		}
-
-		for (int i = start; i < len; i++) {
-			if (zeroLeft >= needs[i][0] && oneLeft >= needs[i][1]) {
-				backtrack(needs, len, i + 1, finishCount + 1, zeroLeft - needs[i][0], oneLeft - needs[i][1]);
-			}
-		}
-	}
-
-		
-	
-	
-	
 	
 	
 	
@@ -109,7 +66,8 @@ public class Q474_Ones_and_Zeroes {
 	
 	/***************************** main function ********************************/
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Q474_Ones_and_Zeroes t = new Q474_Ones_and_Zeroes();
 		// String[] strs = {"10", "0001", "111001", "1", "0"};
 		// int m = 4, n = 3;
