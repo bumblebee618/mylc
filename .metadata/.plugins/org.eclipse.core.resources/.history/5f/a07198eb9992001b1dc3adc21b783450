@@ -1,0 +1,126 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class Q936_Stamping_The_Sequence 
+{
+	private String stamp;
+	private char[] letters;
+	
+	public int[] movesToStamp(String stamp, String target) 
+    {
+        if (stamp == null || stamp.length() == 0 
+        	|| target == null || target.length() == 0 
+        	|| stamp.length() > target.length())
+        {
+            return new int[0];
+        }
+        else if (stamp.length() == target.length())
+        {
+        	return stamp.equals(target) ? new int[] {0} : new int[0];
+        }
+        
+        int size = target.length();
+        int count = 0;
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
+        
+        this.stamp = stamp;
+        letters = target.toCharArray();
+        
+        while (count < size)
+        {
+        	boolean found = false;
+        	
+        	for (int start = 0; start <= target.length()-stamp.length() && count < size; start++)
+        	{
+        		if (!visited.contains(start) && canRollBack(start))
+        		{
+        			count += update(start);
+        			visited.add(start);
+        			list.add(0, start);
+        			found = true;
+        		}
+        	}
+        	
+        	if (!found)
+        	{
+        		return new int[0];
+        	}
+        }
+        
+        return list.stream().mapToInt(i -> i).toArray();
+    }
+	
+	private boolean canRollBack(int start)
+	{
+		for (int i = 0; i < stamp.length(); i++)
+		{
+			if (letters[start+i] != '?' && letters[start+i] != stamp.charAt(i))
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private int update(int start)
+	{
+		int count = 0;
+		
+		for (int i = 0; i < stamp.length(); i++)
+		{
+			if (letters[start+i] != '?')
+			{
+				letters[start+i] = '?';
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/************************************ main ***********************************/
+	
+	public static void main(String[] args)
+	{
+		Q936_Stamping_The_Sequence test = new Q936_Stamping_The_Sequence();
+		
+		/***
+		String stamp1 = "abc";
+		String target1 = "ababc";
+		print(test.movesToStamp(stamp1, target1));
+		***/
+		
+		String stamp2 = "abca";
+		String target2 = "aabcaca";
+		System.out.println("1");
+		print(test.movesToStamp(stamp2, target2));
+		print(test.movesToStamp2(stamp2, target2));
+		System.out.println("2");
+		
+		/***
+		String stamp3 = "aba";
+		String target3 = "abaabac";
+		print(test.movesToStamp(stamp3, target3));
+		***/
+		
+		/***
+		String stamp4 = "aba";
+		String target4 = "ababa";
+		print(test.movesToStamp(stamp4, target4));
+		***/
+	}
+}

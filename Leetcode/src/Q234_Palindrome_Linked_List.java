@@ -10,9 +10,69 @@ Follow up:
  * **/
 
 
-public class Q234_Palindrome_Linked_List {
-	// solution 1: using hashmap, time O(n), space O(n)
-	public boolean isPalindrome(ListNode head) {
+public class Q234_Palindrome_Linked_List 
+{
+	// solution 1: time O(n), space O(1)
+	public boolean isPalindrome(ListNode head) 
+    {
+        if (head == null || head.next == null)
+        {
+            return true;   
+        }
+        
+        ListNode faster = head, slower = head, prev = head;
+        
+        while (faster != null && faster.next != null)
+        {
+            faster = faster.next.next;
+            prev = slower;
+            slower = slower.next;
+        }
+        
+        prev.next = null;
+        slower = reverseList(slower);
+        
+        while (head != null && slower != null)
+        {
+            if (head.val != slower.val)
+            {
+                return false;
+            }
+            
+            head = head.next;
+            slower = slower.next;
+        }
+        
+        return true;
+    }
+    
+    private ListNode reverseList(ListNode head)
+    {
+        if (head == null || head.next == null)
+        {
+            return head;
+        }
+        
+        ListNode current = head, curNext = head.next, curNextNext = head.next.next;
+        
+        while (curNextNext != null)
+        {
+            curNext.next = current;
+            current = curNext;
+            curNext = curNextNext;
+            curNextNext = curNextNext.next;
+        }
+        
+        curNext.next = current;
+        head.next = null;
+        return curNext;
+    }
+	
+    
+    
+	// solution 2: using hashmap, time O(n), space O(n)
+	public boolean isPalindrome2(ListNode head) 
+	{
         if(head == null || head.next == null) {
             return true;
         }
@@ -42,61 +102,11 @@ public class Q234_Palindrome_Linked_List {
     }
 	
 	
-	// follow up: reverse part of the list, time O(n), space O(1)
-	public boolean isPalindrome2(ListNode head) {
-        if(head == null || head.next == null) {
-            return true;
-        }
-        
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode faster = dummy, slower = dummy;
-        
-        while(faster != null && faster.next != null) {
-            faster = faster.next.next;
-            slower = slower.next;
-        }
-        
-        ListNode nextHead = reverseList(slower.next);
-        slower.next = null;
-        
-        while(head != null && nextHead != null) {
-            if(head.val != nextHead.val) {
-                return false;
-            }
-            
-            head = head.next;
-            nextHead = nextHead.next;
-        }
-        
-        return true;
-    }
-    
-    public ListNode reverseList(ListNode node) {
-        if(node == null || node.next == null) {
-            return node;
-        }
-        
-        ListNode current = node;
-        ListNode curNext = node.next;
-        ListNode curNextNext = node.next.next;
-        
-        while(curNextNext != null) {
-            curNext.next = current;
-            current = curNext;
-            curNext = curNextNext;
-            curNextNext = curNextNext.next;
-        }
-        
-        curNext.next = current;
-        node.next = null;
-        return curNext;
-    }
 	
 	
     
     
-    /*** main function ***/
+    /********************************* main function *******************************/
 	public static void main(String[] args){
 		Q234_Palindrome_Linked_List p = new Q234_Palindrome_Linked_List();
 		ListNode head = new ListNode(1);

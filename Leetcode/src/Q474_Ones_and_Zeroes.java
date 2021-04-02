@@ -24,10 +24,45 @@
  */
 
 public class Q474_Ones_and_Zeroes {
-	// solution 1: using backtrack, but TLE
+	// solution 1: using DP, similar to backpack, time is O(len * m * n), space is O(m * n)
+	public int findMaxForm(String[] strs, int m, int n) 
+	{
+		if (strs == null || strs.length == 0) 
+		{
+			return 0;
+		}
+
+		int[][] dp = new int[m + 1][n + 1];
+
+		for (String str : strs) 
+		{
+			int[] needs = new int[2];
+
+			for (char c : str.toCharArray()) 
+			{
+				needs[c - '0']++;
+			}
+
+			// combination + 只能使用一次, 因此必须从m,n开始
+			for (int i = m; i >= needs[0]; i--) 
+			{
+				for (int j = n; j >= needs[1]; j--) 
+				{
+					dp[i][j] = Math.max(dp[i][j], dp[i - needs[0]][j - needs[1]] + 1);
+				}
+			}
+		}
+
+		return dp[m][n];
+	}
+
+	
+	
+	
+	// solution 2: using backtrack, but TLE
 	private int maxLen = 0;
 
-	public int findMaxForm(String[] strs, int m, int n) {
+	public int findMaxForm2(String[] strs, int m, int n) {
 		if (strs == null || strs.length == 0) {
 			return 0;
 		}
@@ -63,39 +98,7 @@ public class Q474_Ones_and_Zeroes {
 		}
 	}
 
-	
-	
-	// solution 2: using DP, similar to backpack, time is O(len * m * n), space is O(m * n)
-	public int findMaxForm2(String[] strs, int m, int n) {
-		if (strs == null || strs.length == 0) {
-			return 0;
-		}
-
-		int[][] dp = new int[m + 1][n + 1];
-
-		for (String str : strs) {
-			int[] needs = new int[2];
-
-			for (char c : str.toCharArray()) {
-				needs[c - '0']++;
-			}
-
-			// for(int i = needs[0]; i <= m; i++) {
-			// for(int j = needs[1]; j <= n; j++) {
-			for (int i = m; i >= needs[0]; i--) { // 一个个往里填充str, 因此必须从m,n开始
-				for (int j = n; j >= needs[1]; j--) {
-					dp[i][j] = Math.max(dp[i][j], dp[i - needs[0]][j - needs[1]] + 1);
-				}
-			}
-		}
-
-		return dp[m][n];
-	}
-
-	
-	
-	
-	
+		
 	
 	
 	

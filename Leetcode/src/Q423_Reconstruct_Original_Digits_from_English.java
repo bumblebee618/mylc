@@ -1,10 +1,15 @@
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /***
@@ -40,6 +45,7 @@ public class Q423_Reconstruct_Original_Digits_from_English
 			return "";
 		}
 		
+		// preprocess
 		int[] digits = new int[26];
 		
 		for (char c : s.toCharArray()) 
@@ -67,8 +73,9 @@ public class Q423_Reconstruct_Original_Digits_from_English
 			}
 		}
 		
+		// get output
 		Set<Integer> visited = new HashSet<>();
-		int[] result = new int[10];
+		int[] outputNumber = new int[10];
 		
 		while (!heap.isEmpty())
 		{
@@ -79,7 +86,7 @@ public class Q423_Reconstruct_Original_Digits_from_English
 				if (!visited.contains(node) && containNum(digits, nums[node]))
 				{
 					visited.add(node);
-					result[node] = update(digits, nums[node]);
+					outputNumber[node] = update(digits, nums[node]);
 				}
 			}
 		}
@@ -88,7 +95,7 @@ public class Q423_Reconstruct_Original_Digits_from_English
 		
 		for (int i = 0; i <= 9; i++)
 		{
-			for (int count = 1; count <= result[i]; count++)
+			for (int count = 1; count <= outputNumber[i]; count++)
 			{
 				builder.append(i);
 			}

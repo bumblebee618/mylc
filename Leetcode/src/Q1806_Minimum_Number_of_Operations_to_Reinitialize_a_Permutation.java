@@ -44,7 +44,33 @@ n​​​​​​ is even.
  */
 public class Q1806_Minimum_Number_of_Operations_to_Reinitialize_a_Permutation 
 {
+	// solution 1:
 	public int reinitializePermutation(int n) 
+    {
+        if (n <= 0)
+        {
+            return 0;
+        }
+        
+        int i = 1, step = 0;
+        
+        while (true)
+        {
+            i = (i % 2 == 0) ? i/2 : n/2 + (i-1)/2;
+            step++;
+            
+            if (i == 1)
+            {
+                break;
+            }
+        }
+        
+        return step;
+    }
+	
+	
+	// solution 2:
+	public int reinitializePermutation2(int n) 
     {
         if (n <= 0)
         {

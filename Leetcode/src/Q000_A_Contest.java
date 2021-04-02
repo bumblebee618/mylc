@@ -55,7 +55,22 @@ public class Q000_A_Contest
         return start < s.length() ? start : -1;
     }
     
-    
+    // int[][] rect: 存放矩阵的左上和右下两个点
+    public boolean isOverlapped(int[][] rect1, int[][] rect2)
+    {
+    	// rect1 在 rect2上方, rect1 在 rect2下方, rect1 在 rect2左方 或者 rect1 在 rect2右方
+    	if (rect1[1][1] > rect2[0][1] 
+    		|| rect2[1][1] > rect1[0][1]
+    		|| rect1[1][0] < rect2[0][0] 
+    		|| rect2[1][0] < rect1[0][0])
+    	{
+    		return false;
+    	}
+    	else 
+    	{
+    		return true;
+		}
+    }
     
 	
 	

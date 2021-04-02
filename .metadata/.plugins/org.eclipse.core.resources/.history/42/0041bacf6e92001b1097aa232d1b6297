@@ -1,0 +1,179 @@
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Q936_Stamping_The_Sequence 
+{
+	private String stamp;
+	private String target;
+	private char[] letters;
+	
+	public int[] movesToStamp(String stamp, String target) 
+    {
+        if (stamp == null || stamp.length() == 0 
+        	|| target == null || target.length() == 0 
+        	|| stamp.length() > target.length())
+        {
+            return new int[0];
+        }
+        else if (stamp.length() == target.length())
+        {
+        	return stamp.equals(target) ? new int[] {0} : new int[0];
+        }
+        
+        this.stamp = stamp;
+        this.target = target;
+        letters = target.toCharArray();
+        
+        int[] head = new int[target.length()], tail = new int[target.length()];
+        Queue<Integer> headHeap = new PriorityQueue<>((a, b) -> head[b] - head[a]);
+        Queue<Integer> tailHeap = new PriorityQueue<>((a, b) -> tail[b] - tail[a]);
+        
+        for (int i = 0; i <= target.length() - stamp.length(); i++)
+        {
+            head[i] = findStartLen(i);
+            
+            if (head[i] > 0)
+            {
+            	System.out.println("add to head: [" + i + "], " + head[i]);
+            	headHeap.offer(i);
+            }
+        }
+        
+        for (int i = target.length()-1; i >= stamp.length()-1; i--)
+        {
+            tail[i] = findEndLen(i);
+            
+            if (tail[i] > 0)
+            {
+            	System.out.println("add to tail: [" + i + "], " + tail[i]);
+            	tailHeap.offer(i);
+            }
+        }
+        
+        if ((headHeap.isEmpty() || head[headHeap.peek()] != stamp.length()) 
+        	&& (tailHeap.isEmpty() || tail[tailHeap.peek()] != stamp.length()))
+        {
+        	return new int[0];
+        }
+        
+        List<Integer> list = new LinkedList<>();
+        
+        while (!headHeap.isEmpty() || !tailHeap.isEmpty())
+        {
+        	refreshHeap(headHeap);
+        	refreshHeap(tailHeap);
+        	
+        	if (!headHeap.isEmpty() && !tailHeap.isEmpty())
+        	{
+        		int headIndex = headHeap.peek();
+        		int tailIndex = tailHeap.peek();
+        		
+        		if (head[headIndex] >= tail[tailIndex])
+        		{
+        			list.add(headIndex);
+        			headHeap.poll();
+        			Arrays.fill(letters, headIndex, head[headIndex], ' ');
+        		}
+        		else 
+        		{
+        			list.add(tailIndex);
+        			tailHeap.poll();
+        			Arrays.fill(letters, tailIndex-tail[tailIndex], tail[tailIndex], ' ');
+				}
+        	}
+        	else if (!headHeap.isEmpty())
+        	{
+        		int headIndex = headHeap.peek();
+        		list.add(headIndex);
+    			headHeap.poll();
+    			Arrays.fill(letters, headIndex, head[headIndex], ' ');
+        	}
+        	else if (!tailHeap.isEmpty())
+        	{
+        		int tailIndex = tailHeap.peek();
+        		list.add(tailIndex);
+    			tailHeap.poll();
+    			Arrays.fill(letters, tailIndex-tail[tailIndex], tail[tailIndex], ' ');
+        	}
+        }
+        
+        return new String(letters).trim().length() == 0 
+        		? list.stream().mapToInt(i -> i).toArray()
+        		: new int[0];
+    }
+	
+	private int findStartLen(int start)
+    {
+        int count = 0;
+        
+        for (int i = 0; i < stamp.length() && start+i < target.length(); i++)
+        {
+            if (stamp.charAt(i) != target.charAt(start+i))
+            {
+                break;
+            }
+            
+            count++;
+        }
+        
+        return count;
+    }
+	
+	private int findEndLen(int start)
+    {
+        int count = 0, start1 = stamp.length()-1;
+        
+        for (int i = 0; i < stamp.length() && start1-i >= 0 && start-i >= 0; i++)
+        {
+            if (stamp.charAt(start1-i) != target.charAt(start-i))
+            {
+                break;
+            }
+            
+            count++;
+        }
+
+        return count;
+    }
+	
+	private void refreshHeap(Queue<Integer> heap)
+	{
+		while (!heap.isEmpty() && letters[heap.peek()] == ' ')
+		{
+			heap.poll();
+		}
+	}
+	
+	
+	
+	
+	public static void print(int[] result)
+	{
+		if (result.length == 0)
+		{
+			System.out.println("empty result");
+		}
+		
+		for (int index : result)
+		{
+			System.out.print(index + ", ");
+		}
+		
+		System.out.println();
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Q936_Stamping_The_Sequence test = new Q936_Stamping_The_Sequence();
+		
+		String stamp1 = "abc";
+		String target1 = "ababc";
+		print(test.movesToStamp(stamp1, target1));
+		
+		
+	}
+}

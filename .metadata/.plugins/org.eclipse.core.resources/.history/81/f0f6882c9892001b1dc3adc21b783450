@@ -1,0 +1,205 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class Q936_Stamping_The_Sequence 
+{
+	private String stamp;
+	private char[] letters;
+	
+	public int[] movesToStamp(String stamp, String target) 
+    {
+        if (stamp == null || stamp.length() == 0 
+        	|| target == null || target.length() == 0 
+        	|| stamp.length() > target.length())
+        {
+            return new int[0];
+        }
+        else if (stamp.length() == target.length())
+        {
+        	return stamp.equals(target) ? new int[] {0} : new int[0];
+        }
+        
+        int size = target.length();
+        int count = 0;
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
+        
+        this.stamp = stamp;
+        letters = target.toCharArray();
+        
+        while (count < size)
+        {
+        	boolean found = false;
+        	
+        	for (int start = 0; start <= target.length()-stamp.length() && count < size; start++)
+        	{
+        		if (!visited.contains(start) && isAvailable(start))
+        		{
+        			count += update(start);
+        			visited.add(start);
+        			list.add(0, start);
+        			found = true;
+        			
+        			System.out.println(start);
+        			print();
+        		}
+        	}
+        	
+        	if (!found)
+        	{
+        		return new int[0];
+        	}
+        }
+        
+        return list.stream().mapToInt(i -> i).toArray();
+    }
+	
+	private boolean isAvailable(int start)
+	{
+		for (int i = 0; i < stamp.length(); i++)
+		{
+			if (letters[start+i] != '?' && letters[start+i] != stamp.charAt(i))
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private int update(int start)
+	{
+		int count = 0;
+		
+		for (int i = 0; i < stamp.length(); i++)
+		{
+			if (letters[start+i] != '?')
+			{
+				letters[start+i] = '?';
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
+	
+	
+	
+	
+	
+	
+	public int[] movesToStamp2(String stamp, String target) {
+        char[] S = stamp.toCharArray();
+        char[] T = target.toCharArray();
+        List<Integer> res = new ArrayList<>();
+        boolean[] visited = new boolean[T.length];
+        int stars = 0;
+        
+        while (stars < T.length) {
+            boolean doneReplace = false;
+            for (int i = 0; i <= T.length - S.length; i++) {
+                if (!visited[i] && canReplace(T, i, S)) {
+                    stars = doReplace(T, i, S.length, stars);
+                    doneReplace = true;
+                    visited[i] = true;
+                    res.add(i);
+                    if (stars == T.length) {
+                        break;
+                    }
+                }
+            }
+            
+            if (!doneReplace) {
+                return new int[0];
+            }
+        }
+        
+        int[] resArray = new int[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            resArray[i] = res.get(res.size() - i - 1);
+        }
+        return resArray;
+    }
+    
+    private boolean canReplace(char[] T, int p, char[] S) {
+        for (int i = 0; i < S.length; i++) {
+            if (T[i + p] != '*' && T[i + p] != S[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private int doReplace(char[] T, int p, int len, int count) {
+        for (int i = 0; i < len; i++) {
+            if (T[i + p] != '*') {
+                T[i + p] = '*';
+                count++;
+            }
+        }
+        return count;
+    } 
+	
+	
+	
+	
+	
+	
+	
+	
+	private void print()
+	{
+		for (char c : letters)
+		{
+			System.out.print(c + ", ");
+		}
+		
+		System.out.println();
+	}
+	
+	public static void print(int[] result)
+	{
+		if (result.length == 0)
+		{
+			System.out.println("empty result");
+		}
+		
+		for (int index : result)
+		{
+			System.out.print(index + ", ");
+		}
+		
+		System.out.println();
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Q936_Stamping_The_Sequence test = new Q936_Stamping_The_Sequence();
+		
+		/***
+		String stamp1 = "abc";
+		String target1 = "ababc";
+		print(test.movesToStamp(stamp1, target1));
+		***/
+		
+		String stamp2 = "abca";
+		String target2 = "aabcaca";
+		print(test.movesToStamp2(stamp2, target2));
+		
+		/***
+		String stamp3 = "aba";
+		String target3 = "abaabac";
+		print(test.movesToStamp(stamp3, target3));
+		***/
+		
+		/***
+		String stamp4 = "aba";
+		String target4 = "ababa";
+		print(test.movesToStamp(stamp4, target4));
+		***/
+	}
+}
