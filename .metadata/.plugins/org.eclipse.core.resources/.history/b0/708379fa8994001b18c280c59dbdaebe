@@ -1,0 +1,79 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	
+    
+	
+	
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	/***
+    	String s1 = "(name)is(age)yearsold";
+    	List<List<String>> knowledge1 = new LinkedList<>();
+    	
+    	List<String> list11 = new LinkedList<>();
+    	list11.add("name");
+    	list11.add("bob");
+    	knowledge1.add(list11);
+    	
+    	List<String> list12 = new LinkedList<>();
+    	list12.add("age");
+    	list12.add("two");
+    	knowledge1.add(list12);
+    	
+    	System.out.println(test.evaluate(s1, knowledge1));
+    	***/
+    	
+    	
+    	/***
+    	String s2 = "hi(name)";
+    	List<List<String>> knowledge2 = new LinkedList<>();
+    	
+    	List<String> list21 = new LinkedList<>();
+    	list21.add("a");
+    	list21.add("b");
+    	knowledge2.add(list21);
+    
+    	System.out.println(test.evaluate(s2, knowledge2));
+    	***/
+    	
+    	/***
+    	String s3 = "(a)(a)(a)aaa";
+    	List<List<String>> knowledge3 = new LinkedList<>();
+    	
+    	List<String> list31 = new LinkedList<>();
+    	list31.add("a");
+    	list31.add("yes");
+    	knowledge3.add(list31);
+    
+    	System.out.println(test.evaluate(s3, knowledge3));
+    	***/
+    	
+    	
+    	String s3 = "(a)(b)";
+    	List<List<String>> knowledge3 = new LinkedList<>();
+    	
+    	List<String> list31 = new LinkedList<>();
+    	list31.add("a");
+    	list31.add("b");
+    	knowledge3.add(list31);
+    	
+    	List<String> list32 = new LinkedList<>();
+    	list32.add("b");
+    	list32.add("a");
+    	knowledge3.add(list32);
+    
+    	System.out.println(test.evaluate(s3, knowledge3));
+    	
+    }
+}

@@ -60,61 +60,57 @@ public class Q032_Longest_Valid_Parentheses {
 	
 	
 	// solution 2: using 区间DP, time O(n^3), space O(n^2)
-		public int longestValidParentheses2(String s) 
-		{
-			if (s == null || s.length() == 0)
-			{
-	            return 0;
-	        }
-			
-	        char[] letters = s.toCharArray();
-	        int len = letters.length;
-	        int maxLen = 0;	        
-	        boolean[][] valid = new boolean[len][len];
-	        
-	        for (int i = 0; i < len-1; ++i)
-	        {
-	        	if (letters[i] == '(' && letters[i+1] == ')')
-	        	{
-	        		valid[i][i+1] = valid[i+1][i] = true;
-	        		maxLen = 2;
-	        	}
-	        }
-	        
-	        for (int length = 2; length < len; ++length)
-	        {
-	        	for (int start = 0; start+length < len; ++start)
-	        	{
-	        		int end = start + length;
-	        		
-	        		valid[start][end] = valid[start+1][end-1] && letters[start] == '(' && letters[end] == ')';
-	                
-	                if (valid[start][end] == true)
-	                {
-	                    maxLen = Math.max(maxLen, length + 1);
-	                    continue;
-	                } 
-	                
-	                for (int k = start+1; k < end; k++)
-	                {
-	                    if (valid[start][k] == true && valid[k+1][end] == true)
-	                    {
-	                        valid[start][end] = true;
-	                        maxLen = Math.max(maxLen, length+1);
-	                        break;
-	                    }
-	                }
-	        	}
-	        }
-	        
-	        return maxLen;	        
-		}
+	public int longestValidParentheses2(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return 0;
+        }
+        
+        int size = s.length();
+        boolean[][] dp = new boolean[size][size];
+        int result = 0;
+        
+        for (int length = 2; length <= size; length++)
+        {
+            for (int start = 0; start + length <= size; start++)
+            {
+                int end = start + length - 1;
+                dp[start][end] = s.charAt(start) == '(' && s.charAt(end) == ')';   
+                
+                if (length > 2)
+                {
+                    dp[start][end] &= dp[start+1][end-1];   
+                }
+                
+                if (dp[start][end])
+                {
+                    result = Math.max(result, length);
+                    continue;
+                }
+                
+                for (int k = start+1; k < end; k++)
+                {
+                    if (dp[start][k] && dp[k+1][end])
+                    {
+                        dp[start][end] = true;
+                        result = Math.max(result, length);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
 	
 		
 		
 		// solution 3: using DP, time O(n), space O(n)
-		public int longestValidParentheses3(String s) {
-	        if(s == null || s.length() == 0) {
+		public int longestValidParentheses3(String s) 
+		{
+	        if (s == null || s.length() == 0) 
+	        {
 	            return 0;
 	        }
 	        
@@ -123,14 +119,18 @@ public class Q032_Longest_Valid_Parentheses {
 	        int open = 0;
 	        int maxLen = 0;
 	        
-	        for (int i = 0; i < letters.length; i++) {
-	    	    if (letters[i] == '(') {
+	        for (int i = 0; i < letters.length; i++) 
+	        {
+	    	    if (letters[i] == '(') 
+	    	    {
 	    	        open++;
-	    	        
-	    	    } else if (letters[i] == ')' && open > 0) {
+	    	    } 
+	    	    else if (letters[i] == ')' && open > 0) 
+	    	    {
 	    		    dp[i] = 2 + dp[i-1];
 	    		
-	                if(i - 2 - dp[i-1] >= 0) {
+	                if (i - 2 - dp[i-1] >= 0) 
+	                {
 	                    dp[i] += dp[i - 2 - dp[i-1]];
 	                }
 	    		  

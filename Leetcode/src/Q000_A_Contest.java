@@ -4,74 +4,159 @@ import java.util.*;
 
 public class Q000_A_Contest 
 {
-	public String evaluate(String s, List<List<String>> knowledge) 
-    {
-        if (s == null || s.length() == 0 || knowledge == null || knowledge.size() == 0)
-        {
-            return s;
-        }
-        
-        Map<String, String> map = new HashMap<>();
-        
-        for (List<String> pair : knowledge)
-        {
-            map.put(pair.get(0), pair.get(1));
-        }
-        
-        StringBuilder builder = new StringBuilder();
-        int front = 0, back = 0, size = s.length();
-        
-        while (front < size)
-        {
-            back = front;
-            
-            while (front < size && s.charAt(front) != '(')
-            {
-                front++;
-            }
-            
-            builder.append(s.substring(back, front));
-            
-            if (front < size)
-            {
-                int end = findEnd(s, front);
-                String key = s.substring(front+1, end);
-                String value = map.getOrDefault(key, "?");
-                builder.append(value);
-                front = end+1;
-            }
-        }
-        
-        return builder.toString();
-    }
-    
-    private int findEnd(String s, int start)
-    {
-        while (start < s.length() && s.charAt(start) != ')')
-        {
-            start++;
-        }
-        
-        return start < s.length() ? start : -1;
-    }
-    
-    // int[][] rect: 存放矩阵的左上和右下两个点
-    public boolean isOverlapped(int[][] rect1, int[][] rect2)
-    {
-    	// rect1 在 rect2上方, rect1 在 rect2下方, rect1 在 rect2左方 或者 rect1 在 rect2右方
-    	if (rect1[1][1] > rect2[0][1] 
-    		|| rect2[1][1] > rect1[0][1]
-    		|| rect1[1][0] < rect2[0][0] 
-    		|| rect2[1][0] < rect1[0][0])
-    	{
-    		return false;
-    	}
-    	else 
-    	{
-    		return true;
+	/***
+	private Map<String, Integer> memo;
+	
+	public int maxHappyGroups(int batchSize, int[] groups) 
+	{
+		if (batchSize <= 0 || groups == null || groups.length == 0)
+		{
+			return 0;
 		}
+		
+		memo = new HashMap<>();
+        int[] countMap = new int[batchSize];
+        int result = 0, groupSize = 0;
+        
+        for (int i = 0; i < groups.length; i++)
+        {
+            int newGroup = groups[i] % batchSize;
+            countMap[groups[i] % batchSize]++;
+            groupSize += newGroup > 0 ? 1 : 0;
+        }
+        
+        result += countMap[0];
+        result += search(0, countMap, groupSize);
+        return result;
+    }
+        
+        
+    private int search(int sumLeft, int[] countMap, int groupLeft)
+    {
+        if (groupLeft == 0) 
+        {
+        	return 0;
+        }
+        
+        String key = Arrays.toString(countMap);
+        
+        if (memo.containsKey(key)) 
+        {
+        	return memo.get(key);
+        }
+        
+        int result = 0;
+        
+        if (sumLeft == 0)
+        {
+            result++;
+            sumLeft = countMap.length;
+        }
+        
+        int count = 0;
+        
+        for (int num = 1; num < countMap.length; num++)
+        {
+            if (countMap[num] == 0) 
+            {
+            	continue;
+            }
+            
+            countMap[num]--;
+            int curGroupLeft = groupLeft - 1;
+            int nextSumLeft = sumLeft - num;
+
+            if (nextSumLeft < 0) 
+            {
+            	nextSumLeft += countMap.length;
+            }
+            
+            count = Math.max(count, search(nextSumLeft, countMap, curGroupLeft));
+            countMap[num]++;
+        }
+        
+        result += count;
+        memo.put(key, result);
+        return result;
     }
     
+    
+    ***/
+	
+	
+	private Map<String, Integer> memo;
+	
+	public int maxHappyGroups(int batchSize, int[] groups) 
+	{	
+		if (batchSize <= 0 || groups == null || groups.length == 0)
+		{
+			return 0;
+		}
+		
+		memo = new HashMap<>();
+		
+        int countMap[] = new int[batchSize+1];
+        int result = 0;
+        
+        for (int group : groups) 
+        {
+            countMap[group % batchSize]++;
+        }
+        
+        result += countMap[0];
+        countMap[0] = 0;
+        
+        for (int num = 1; num < batchSize / 2; num++) 
+        {
+            int min = Math.min(countMap[num], countMap[batchSize-num]);
+            countMap[num] -= min;
+            countMap[batchSize - num] -= min;
+            result += min;
+        }
+        
+        result += search(countMap, 0);
+        return result;
+    }
+    
+    private int search(int countMap[], int sumLeft) 
+    {
+        int n = countMap.length-1;
+        String key = Arrays.toString(countMap);
+        
+        if (memo.containsKey(key)) 
+        {
+        	return memo.get(key);
+        }
+        
+        int result = 0;
+        
+        // greedy and short cut when we can finish the current round
+        if (sumLeft > 0 && countMap[n-sumLeft] > 0) 
+        {
+            countMap[n-sumLeft]--;
+            result = search(countMap, 0);
+            countMap[n-sumLeft]++;
+        } 
+        else 
+        {
+            for (int i = 1; i < countMap.length; i++) 
+            {
+                if (countMap[i] > 0) 
+                {
+                    countMap[i]--;
+                    result = Math.max(result, search(countMap, (sumLeft+i) % n) + (sumLeft == 0 ? 1 : 0));
+                    countMap[i]++;
+                }
+            }
+        }
+        
+        memo.put(key, result);
+        return result;
+    }
+	
+	
+	
+	
 	
 	
 	
@@ -81,63 +166,36 @@ public class Q000_A_Contest
     	
     	/****************************************************/
     	
-    	/***
-    	String s1 = "(name)is(age)yearsold";
-    	List<List<String>> knowledge1 = new LinkedList<>();
+    	int[] groups1 = {1,2,3,4,5,6};
+    	int batchSize1 = 3;
     	
-    	List<String> list11 = new LinkedList<>();
-    	list11.add("name");
-    	list11.add("bob");
-    	knowledge1.add(list11);
+    	int[] groups2 = {1,3,2,5,2,2,1,6};
+    	int batchSize2 = 4;
     	
-    	List<String> list12 = new LinkedList<>();
-    	list12.add("age");
-    	list12.add("two");
-    	knowledge1.add(list12);
+    	int[] groups3 = {369821235,311690424,74641571,179819879,171396603,274036220};
+    	int batchSize3 = 3;
     	
-    	System.out.println(test.evaluate(s1, knowledge1));
-    	***/
+    	int[] groups4 = {844438225,657615828,355556135,491931377,644089602,30037905,863899906,246536524,682224520};
+    	int batchSize4 = 3;
     	
+    	int[] groups5 = {369205928,981877451,947462486,899465743,737778942,573732515,520226542,824581298,571789442,251943251,70139785,778962318,43379662,90924712,142825931,182207697,178834435,978165687};
+    	int batchSize5 = 6;
     	
-    	/***
-    	String s2 = "hi(name)";
-    	List<List<String>> knowledge2 = new LinkedList<>();
-    	
-    	List<String> list21 = new LinkedList<>();
-    	list21.add("a");
-    	list21.add("b");
-    	knowledge2.add(list21);
-    
-    	System.out.println(test.evaluate(s2, knowledge2));
-    	***/
+    	int[] groups6 = {287773481,815094798,356732984,644469322,543193620,903158817,274116865,395252956,363839119,365378492,122313059,312690039,252532812};
+    	int batchSize6 = 7;
     	
     	/***
-    	String s3 = "(a)(a)(a)aaa";
-    	List<List<String>> knowledge3 = new LinkedList<>();
+    	System.out.println("*" + test.maxHappyGroups(batchSize1, groups1));
     	
-    	List<String> list31 = new LinkedList<>();
-    	list31.add("a");
-    	list31.add("yes");
-    	knowledge3.add(list31);
-    
-    	System.out.println(test.evaluate(s3, knowledge3));
+    	System.out.println("*" + test.maxHappyGroups(batchSize2, groups2));
+    	
+    	System.out.println("*" + test.maxHappyGroups(batchSize3, groups3));
+    	
+    	System.out.println("*" + test.maxHappyGroups(batchSize4, groups4));
+    	
+    	System.out.println("*" + test.maxHappyGroups(batchSize5, groups5));
     	***/
     	
-    	
-    	String s3 = "(a)(b)";
-    	List<List<String>> knowledge3 = new LinkedList<>();
-    	
-    	List<String> list31 = new LinkedList<>();
-    	list31.add("a");
-    	list31.add("b");
-    	knowledge3.add(list31);
-    	
-    	List<String> list32 = new LinkedList<>();
-    	list32.add("b");
-    	list32.add("a");
-    	knowledge3.add(list32);
-    
-    	System.out.println(test.evaluate(s3, knowledge3));
-    	
+    	System.out.println("*" + test.maxHappyGroups(batchSize6, groups6));
     }
 }

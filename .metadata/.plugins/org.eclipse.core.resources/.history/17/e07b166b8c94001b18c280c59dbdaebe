@@ -1,0 +1,42 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public boolean squareIsWhite(String coordinates) 
+    {
+        if (coordinates == null || coordinates.length() != 2)
+        {
+            return false;
+        }
+        
+        int col = coordinates.charAt(0) - 'a';
+        int row = coordinates.charAt(1) - '0';
+        boolean result = (row % 2 == 1) ? false : true;
+        result = (col % 2 == 1) ? !result : result;
+        return result;
+    }
+    
+	
+	
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	
+    	String str1 = "a1";
+    	System.out.println(test.squareIsWhite(str1));
+    	
+    	String str2 = "h3";
+    	System.out.println(test.squareIsWhite(str2));
+    	
+    	String str3 = "c7";
+    	System.out.println(test.squareIsWhite(str3));
+    }
+}
