@@ -32,7 +32,7 @@
 		<item value="62" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="RefactoringWizard.preview">
-		<item value="470" key="width"/>
+		<item value="540" key="width"/>
 		<item value="326" key="height"/>
 	</section>
 	<section name="SourceActionDialog.methods">
