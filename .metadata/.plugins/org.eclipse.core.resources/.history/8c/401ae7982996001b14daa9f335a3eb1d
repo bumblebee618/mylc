@@ -1,0 +1,72 @@
+/***
+ * 
+ * @author jackie
+ * 
+ * We have some permutation A of [0, 1, ..., N - 1], where N is the length of A.
+
+The number of (global) inversions is the number of i < j with 0 <= i < j < N and A[i] > A[j].
+
+The number of local inversions is the number of i with 0 <= i < N and A[i] > A[i+1].
+
+Return true if and only if the number of global inversions is equal to the number of local inversions.
+
+Example 1:
+
+Input: A = [1,0,2]
+Output: true
+Explanation: There is 1 global inversion, and 1 local inversion.
+Example 2:
+
+Input: A = [1,2,0]
+Output: false
+Explanation: There are 2 global inversions, and 1 local inversion.
+Note:
+
+A will be a permutation of [0, 1, ..., A.length - 1].
+A will have length in range [1, 5000].
+The time limit for this problem has been reduced.
+ */
+public class Q775_Global_and_Local_Inversions 
+{
+	public boolean isIdealPermutation(int[] nums) 
+    {
+        if (nums == null || nums.length <= 1)
+        {
+            return true;
+        }
+        
+        int size = 0;
+        int max1 = Integer.MIN_VALUE, max2 = Integer.MIN_VALUE;
+        
+        for (int i = 0; i < size; i++)
+        {
+            if (nums[i] < max2)
+            {
+                return false;
+            }
+            
+            if (max1 == Integer.MIN_VALUE || nums[i] > max1)
+            {
+                max2 = max1;
+                max1 = nums[i];
+            }
+            else if (max2 == Integer.MIN_VALUE || nums[i] > max2)
+            {
+                max2 = nums[i];
+            }
+        }
+        
+        return true;
+    }
+	
+	
+	
+	
+	
+	public static void main(String[] args)
+	{
+		Q775_Global_and_Local_Inversions test = new Q775_Global_and_Local_Inversions();
+		int[] nums = {1,2,0};
+		System.out.println(test.isIdealPermutation(nums));
+	}
+}
