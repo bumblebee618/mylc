@@ -1,0 +1,98 @@
+import java.util.*;
+
+import org.omg.CORBA.SystemException;
+
+
+
+
+public class Q000_A_Contest 
+{
+	public int arraySign(int[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return 0;
+        }
+        
+        int result = 1;
+        
+        for (int num : nums)
+        {
+            if (num < 0)
+            {
+                result *= -1;
+            }
+            else if (num == 0)
+            {
+                return 0;
+            }
+        }
+        
+        return result;
+    }
+	
+	
+	public int findTheWinner(int n, int k) 
+    {
+        if (n <= 0 || k <= 0 || k > n)
+        {
+            return -1;
+        }
+        
+        int index = 0, count = 0;
+        boolean[] removed = new boolean[n];
+        
+        while (count < n-1)
+        {
+        	int step = 1;
+            
+            while (step < k)
+            {
+                while (removed[index])
+                {
+                    index = (index+1) % n;
+                }
+                
+                step++;
+                index = (index+1) % n;
+   
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String s1 = "cba";
+    	String s2 = "aabaa";
+    	String s3 = "cdbea";
+    	String s4 = "leetcodeleetcodeleetcode";
+    	
+    	/***
+    	System.out.println(test.makeStringSorted(s1));
+    	System.out.println(test.makeStringSorted(s2));
+    	***/
+    	
+    	System.out.println(test.makeStringSorted(s1));
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    	
+    }
+}

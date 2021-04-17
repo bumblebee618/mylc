@@ -42,26 +42,21 @@ public class Q1074_Number_of_Submatrices_That_Sum_to_Target
 		}
 		
 		int row = matrix.length, col = matrix[0].length;
-		int[][] matrixSum = new int[row][col];
+		int[][] prefixSum = new int[row][col];
         int result = 0;
-		
-		for (int i = 0; i < row; i++)
+        
+        for (int i = 0; i < row; i++)
 		{
-			int rowSum = 0;
-			
 			for (int j = 0; j < col; j++)
 			{
-				rowSum += matrix[i][j];
-				matrixSum[i][j] += rowSum;
-				
-				if (i > 0)
-				{
-					matrixSum[i][j] += matrixSum[i-1][j];
-				}
+				int part1 = (i-1 >= 0) ? prefixSum[i-1][j] : 0;
+                int part2 = (j-1 >= 0) ? prefixSum[i][j-1] : 0;
+                int part3 = (i-1 >= 0 && j-1 >= 0) ? prefixSum[i-1][j-1] : 0;
+                prefixSum[i][j] = part1+part2-part3+matrix[i][j];
 			}
 		}
-		
-		for (int startRow = 0; startRow < row; startRow++)
+        
+        for (int startRow = 0; startRow < row; startRow++)
 		{
 			for (int endRow = startRow; endRow < row; endRow++)
 			{
@@ -70,8 +65,8 @@ public class Q1074_Number_of_Submatrices_That_Sum_to_Target
 				
 				for (int j = 0; j < col; j++)
 				{
-					int part1 = (startRow > 0) ? matrixSum[startRow-1][j] : 0;
-					int sum = matrixSum[endRow][j] - part1;
+					int part1 = (startRow-1 >= 0) ? prefixSum[startRow-1][j] : 0;
+					int sum = prefixSum[endRow][j] - part1;
 					result += map.getOrDefault(sum-target, 0);
 					map.put(sum, map.getOrDefault(sum, 0) + 1);
 				}

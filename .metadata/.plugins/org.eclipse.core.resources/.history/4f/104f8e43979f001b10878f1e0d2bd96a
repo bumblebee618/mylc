@@ -1,0 +1,50 @@
+import java.util.*;
+
+import org.omg.CORBA.SystemException;
+
+
+
+
+public class Q000_A_Contest 
+{
+
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String s1 = "cba";
+    	String s2 = "aabaa";
+    	String s3 = "cdbea";
+    	String s4 = "leetcodeleetcodeleetcode";
+    	
+    	/***
+    	System.out.println(test.makeStringSorted(s1));
+    	System.out.println(test.makeStringSorted(s2));
+    	***/
+    	
+    	System.out.println(test.makeStringSorted(s1));
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    	
+    }
+}
