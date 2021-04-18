@@ -1,0 +1,112 @@
+import java.util.*;
+
+import org.omg.CORBA.SystemException;
+
+
+
+
+public class Q000_A_Contest 
+{
+	public boolean checkIfPangram(String sentence) 
+    {
+        if (sentence == null || sentence.length() < 26)
+        {
+            return false;
+        }
+        
+        Set<Character> set = new HashSet<>();
+        
+        for (char c : sentence.toCharArray())
+        {
+            set.add(c);
+            
+            if (set.size() == 26)
+            {
+                break;
+            }
+        }
+        
+        return set.size() == 26;
+    }
+	
+	
+	
+	public int maxIceCream(int[] costs, int coins) 
+    {
+		if (costs == null || costs.length == 0 || coins <= 0)
+		{
+			return 0;
+		}
+		
+		Arrays.sort(costs);
+		int result = 0;
+		
+		for (int i = 0; i < costs.length && coins > 0; i++)
+		{
+			if (coins >= costs[i])
+			{
+				result++;
+			}
+			
+			coins -= costs[i];
+		}
+		
+		return result;
+    }
+	
+	
+	
+	
+	
+	public int maxIceCream2(int[] costs, int coins) 
+    {
+		if (costs == null || costs.length == 0 || coins <= 0)
+		{
+			return 0;
+		}
+		
+		Map<Integer, Integer> dp = new HashMap<>();
+		dp.put(0, 0);
+		int maxCost = -1;
+		
+		for (int cost : costs)
+		{
+			for (int i = coins; i >= cost; i--)
+			{
+				int curCount = dp.getOrDefault(i, Integer.MIN_VALUE);
+				
+				if (dp.getOrDefault(i-cost, Integer.MIN_VALUE) != Integer.MIN_VALUE)
+				{
+					curCount = Math.max(curCount, dp.get(i-cost)+1);
+					dp.put(i, curCount);
+					maxCost = Math.max(maxCost, i);
+				}
+			}
+		}
+		
+		return maxCost == -1 ? 0 : dp.get(maxCost);
+    }
+	
+	
+	
+	public int[] getOrder(int[][] tasks) {
+        
+    }
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	,1,2,5};
+    	int coins3 = 20;
+    	
+    	System.out.println(test.maxIceCream(costs1, coins1));
+    	System.out.println(test.maxIceCream(costs2, coins2));
+    	System.out.println(test.maxIceCream(costs3, coins3));
+    	
+    	
+    }
+}

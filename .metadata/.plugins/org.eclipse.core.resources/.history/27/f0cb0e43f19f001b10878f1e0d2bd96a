@@ -1,0 +1,46 @@
+import java.util.*;
+
+import org.omg.CORBA.SystemException;
+
+
+
+
+public class Q000_A_Contest 
+{
+	public boolean checkIfPangram(String sentence) 
+    {
+        if (sentence == null || sentence.length() < 26)
+        {
+            return false;
+        }
+        
+        Set<Character> set = new HashSet<>();
+        
+        for (char c : sentence.toCharArray())
+        {
+            set.add(c);
+            
+            if (set.size() == 26)
+            {
+                break;
+            }
+        }
+        
+        return set.size() == 26;
+    }
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String sentence1 = "thequickbrownfoxjumpsoverthelazydog";
+    	
+    	System.out.println(test.checkIfPangram(sentence1));
+    	
+    	
+    	
+    }
+}

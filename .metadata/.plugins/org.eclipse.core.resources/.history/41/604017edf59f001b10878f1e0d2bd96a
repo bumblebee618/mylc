@@ -1,0 +1,170 @@
+import java.util.*;
+
+import org.omg.CORBA.SystemException;
+
+
+
+
+public class Q000_A_Contest 
+{
+	public boolean checkIfPangram(String sentence) 
+    {
+        if (sentence == null || sentence.length() < 26)
+        {
+            return false;
+        }
+        
+        Set<Character> set = new HashSet<>();
+        
+        for (char c : sentence.toCharArray())
+        {
+            set.add(c);
+            
+            if (set.size() == 26)
+            {
+                break;
+            }
+        }
+        
+        return set.size() == 26;
+    }
+	
+	
+	
+	public int maxIceCream(int[] costs, int coins) 
+    {
+		if (costs == null || costs.length == 0 || coins <= 0)
+		{
+			return 0;
+		}
+		
+		Arrays.sort(costs);
+		int result = 0;
+		
+		for (int i = 0; i < costs.length && coins > 0; i++)
+		{
+			if (coins >= costs[i])
+			{
+				result++;
+			}
+			
+			coins -= costs[i];
+		}
+		
+		return result;
+    }
+	
+	
+	
+	
+	
+	public int maxIceCream2(int[] costs, int coins) 
+    {
+		if (costs == null || costs.length == 0 || coins <= 0)
+		{
+			return 0;
+		}
+		
+		Map<Integer, Integer> dp = new HashMap<>();
+		dp.put(0, 0);
+		int maxCost = -1;
+		
+		for (int cost : costs)
+		{
+			for (int i = coins; i >= cost; i--)
+			{
+				int curCount = dp.getOrDefault(i, Integer.MIN_VALUE);
+				
+				if (dp.getOrDefault(i-cost, Integer.MIN_VALUE) != Integer.MIN_VALUE)
+				{
+					curCount = Math.max(curCount, dp.get(i-cost)+1);
+					dp.put(i, curCount);
+					maxCost = Math.max(maxCost, i);
+				}
+			}
+		}
+		
+		return maxCost == -1 ? 0 : dp.get(maxCost);
+    }
+	
+	
+	
+	public int[] getOrder(int[][] tasks) 
+	{
+		if (tasks == null || tasks.length == 0 || tasks[0].length != 2)
+		{
+			return new int[0];
+		}
+		
+		Arrays.sort(tasks, (a, b) -> a[0] - b[0]);
+		
+		Queue<Node> heap = new PriorityQueue<Node>((a, b) 
+				-> a.processTime != b.processTime 
+				? a.processTime - b.processTime 
+				: a.index - b.index);
+		
+		int index = 0, size = tasks.length;
+		int[] result = new int[size];
+		
+		heap.offer(new Node(0, tasks[0][1]));
+		int curTime = tasks[0][0];
+		int next = 1;
+		
+		while (!heap.isEmpty())
+		{
+			Node node = heap.poll();
+			result[index++] = node.index;
+			curTime += node.processTime;
+			
+			while (next < size && tasks[next][0] <= curTime)
+			{
+				heap.offer(new Node(next, tasks[next][1]));
+				next++;
+			}
+		}
+		
+		return result;
+    }
+	
+	public class Node
+	{
+		public int index;
+		public int processTime;
+		
+		public Node(int i, int p)
+		{
+			index = i;
+			processTime = p;
+		}
+	}
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int[][] tasks1 = {{1,2},{2,4},{3,2},{4,1}};
+    	int[][] tasks2 = {{7,10},{7,12},{7,5},{7,4},{7,2}};
+    	
+    	
+    	int[] result1 = test.getOrder(tasks1);
+    	
+    	for (int index : result1)
+    	{
+    		System.out.print(index + ", ");
+    	}
+    	
+    	System.out.println();
+    	
+    	int[] result2 = test.getOrder(tasks2);
+    	
+    	for (int index : result2)
+    	{
+    		System.out.print(index + ", ");
+    	}
+    	
+    	System.out.println();
+    }
+}
