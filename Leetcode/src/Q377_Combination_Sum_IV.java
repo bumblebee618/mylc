@@ -61,6 +61,9 @@ public class Q377_Combination_Sum_IV {
 	
 	
 	// follow up, What if negative numbers are allowed in the given array?
+	// solution 1: LC 494
+	// solution 2: backtracking
+	
 	private int count = 0;
 	
 	public int combinationSum4_follow_up(int[] nums, int target){
