@@ -58,7 +58,7 @@ public class Q120_Triangle {
 	// solution 2: follow up, improve the space, time O(n^2), space O(n)
 	public int minimumTotal2(List<List<Integer>> triangle) 
     {
-        if (triangle == null || triangle.size() == 0)
+		if (triangle == null || triangle.size() == 0)
         {
             return 0;
         }
@@ -70,14 +70,9 @@ public class Q120_Triangle {
         {
             for (int col = 0; col <= row; col++)
             {
-                if (row == size-1)
-                {
-                    dp[row % 2][col] = triangle.get(row).get(col);
-                }
-                else
-                {
-                    dp[row % 2][col] = Math.min(dp[(row+1) % 2][col], dp[(row+1) % 2][col+1]) + triangle.get(row).get(col);
-                }
+                dp[row % 2][col] = (row == size-1) 
+                    ? triangle.get(row).get(col) 
+                    : Math.min(dp[(row+1) % 2][col], dp[(row+1) % 2][col+1]) + triangle.get(row).get(col);
             }
         }
         

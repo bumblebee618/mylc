@@ -79,6 +79,5 @@ public class Q474_Ones_and_Zeroes {
 		int m = 90, n = 66;
 
 		System.out.println(t.findMaxForm(strs, m, n));
-		System.out.println(t.findMaxForm2(strs, m, n));
 	}
 }

@@ -84,6 +84,8 @@ public class Q1192_Critical_Connections_in_a_Network
             { 
                 endDeep = dfs(next, curNode, deep+1);
                 
+                System.out.println(curNode + ": " + next + ", " + endDeep);
+                
                 // 如果深度大于当前深度，说明当前点不在闭环上
                 // 当前点与下一节点i之间的连线为答案之一
                 if (endDeep > deep)
@@ -106,4 +108,47 @@ public class Q1192_Critical_Connections_in_a_Network
     
         return result;
     }
+    
+    
+    
+    /*************************** main ***************************/
+    
+    public static void main(String[] args)
+    {
+    	Q1192_Critical_Connections_in_a_Network test = new Q1192_Critical_Connections_in_a_Network();
+    	List<List<Integer>> connections = new LinkedList<>();
+    	
+    	List<Integer> connection1 = new LinkedList<>();
+    	connection1.add(0);
+    	connection1.add(1);
+    	connections.add(connection1);
+    	
+    	List<Integer> connection2 = new LinkedList<>();
+    	connection2.add(0);
+    	connection2.add(2);
+    	connections.add(connection2);
+    	
+    	List<Integer> connection3 = new LinkedList<>();
+    	connection3.add(1);
+    	connection3.add(3);
+    	connections.add(connection3);
+    	
+    	List<Integer> connection4 = new LinkedList<>();
+    	connection4.add(2);
+    	connection4.add(4);
+    	connections.add(connection4);
+    	
+    	List<Integer> connection5 = new LinkedList<>();
+    	connection5.add(3);
+    	connection5.add(5);
+    	connections.add(connection5);
+    	
+    	List<Integer> connection6 = new LinkedList<>();
+    	connection6.add(4);
+    	connection6.add(5);
+    	connections.add(connection6);
+    	
+    	test.criticalConnections(6, connections);
+    }
+    
 }
