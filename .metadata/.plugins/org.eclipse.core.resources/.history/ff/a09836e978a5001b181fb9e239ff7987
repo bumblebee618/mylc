@@ -1,0 +1,129 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public int sumBase(int n, int k) 
+    {
+        int result = 0;
+        
+        while (n > 0)
+        {
+            result += n % k;
+            n /= k;
+        }
+        
+        return result;
+    }
+	
+	
+	public int maxFrequency(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k <= 0)
+        {
+            return 0;
+        }
+        else if (nums.length == 1)
+        {
+            return 1;
+        }
+        
+        int result = 1, diff = 0, size = nums.length;
+        Arrays.sort(nums);
+        
+        for (int front = 1, back = 0; front < size; front++)
+        {
+            diff += (nums[front]-nums[front-1]) * (front-back);
+            
+            while (diff > k)
+            {
+                diff -= (nums[front] - nums[back]);
+                back++;
+            }
+            
+            result = Math.max(result, front-back+1);
+        }
+        
+        return result;
+    }
+	
+	
+	public int longestBeautifulSubstring(String word) 
+    {
+        if (word == null || word.length() == 0)
+        {
+            return 0;
+        }
+        
+        int size = word.length(), result = 0;
+        int front = 0, back = 0;
+        
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('a', 1);
+        map.put('e', 2);
+        map.put('i', 3);
+        map.put('o', 4);
+        map.put('u', 5);
+        
+        while (front < size)
+        {
+            back = front;
+            Set<Character> set = new HashSet<>();
+            
+            while (front < size 
+            		&& (front == back || map.get(word.charAt(front-1)) <= map.get(word.charAt(front))))
+            {
+                set.add(word.charAt(front++));
+            }
+            
+            if (set.size() == 5)
+            {
+                result = Math.max(result, front-back);
+            }
+        }
+        
+        return result;
+    }
+	
+	
+	public int maxBuilding(int n, int[][] restrictions) 
+    {
+        if (n <= 0)
+        {
+            return 0;
+        }
+        else if (restrictions == null || restrictions.length == 0)
+        {
+            return n-1;
+        }
+        
+        int result = 1;
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+ 
+        
+        
+        for (int[] restriction : restrictions)
+        {
+        	treeMap.put(restriction[0], restriction[1]);
+        }
+        
+        
+    }
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String word1 = "aeiaaioaaaaeiiiiouuuooaauuaeiu";
+    	String word2 = "aeeeiiiioooauuuaeiou";
+    	String word3 = "aaaaa";
+    	
+    	System.out.println(test.longestBeautifulSubstring(word1));
+    	System.out.println(test.longestBeautifulSubstring(word2));
+    	System.out.println(test.longestBeautifulSubstring(word3));
+    }
+}

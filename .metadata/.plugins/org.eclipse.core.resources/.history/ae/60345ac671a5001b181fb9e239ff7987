@@ -1,0 +1,62 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public int sumBase(int n, int k) 
+    {
+        int result = 0;
+        
+        while (n > 0)
+        {
+            result += n % k;
+            n /= k;
+        }
+        
+        return result;
+    }
+	
+	
+	public int maxFrequency(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k <= 0)
+        {
+            return 0;
+        }
+        
+        int result = 0, diff = 0, size = nums.length;
+        Arrays.sort(nums);
+        
+        for (int front = 1, back = 0; front < size; front++)
+        {
+            diff += (nums[front]-nums[front-1]) * (front-back);
+            
+            while (diff > k)
+            {
+                diff -= (nums[front] - nums[back]);
+                back++;
+            }
+            
+            result = Math.max(result, front-back+1);
+        }
+        
+        return result;
+    }
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int[] nums1 = {1,2,4};
+    	int k1 = 5;
+    	
+    	int[] nums2 = {1,4,8,13};
+    	int k2 = 5;
+    	
+    	System.out.println(test.maxFrequency(nums1, k1));
+    }
+}

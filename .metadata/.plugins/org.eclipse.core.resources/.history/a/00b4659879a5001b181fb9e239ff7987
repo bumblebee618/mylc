@@ -1,0 +1,163 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public int sumBase(int n, int k) 
+    {
+        int result = 0;
+        
+        while (n > 0)
+        {
+            result += n % k;
+            n /= k;
+        }
+        
+        return result;
+    }
+	
+	
+	public int maxFrequency(int[] nums, int k) 
+    {
+        if (nums == null || nums.length == 0 || k <= 0)
+        {
+            return 0;
+        }
+        else if (nums.length == 1)
+        {
+            return 1;
+        }
+        
+        int result = 1, diff = 0, size = nums.length;
+        Arrays.sort(nums);
+        
+        for (int front = 1, back = 0; front < size; front++)
+        {
+            diff += (nums[front]-nums[front-1]) * (front-back);
+            
+            while (diff > k)
+            {
+                diff -= (nums[front] - nums[back]);
+                back++;
+            }
+            
+            result = Math.max(result, front-back+1);
+        }
+        
+        return result;
+    }
+	
+	
+	public int longestBeautifulSubstring(String word) 
+    {
+        if (word == null || word.length() == 0)
+        {
+            return 0;
+        }
+        
+        int size = word.length(), result = 0;
+        int front = 0, back = 0;
+        
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('a', 1);
+        map.put('e', 2);
+        map.put('i', 3);
+        map.put('o', 4);
+        map.put('u', 5);
+        
+        while (front < size)
+        {
+            back = front;
+            Set<Character> set = new HashSet<>();
+            
+            while (front < size 
+            		&& (front == back || map.get(word.charAt(front-1)) <= map.get(word.charAt(front))))
+            {
+                set.add(word.charAt(front++));
+            }
+            
+            if (set.size() == 5)
+            {
+                result = Math.max(result, front-back);
+            }
+        }
+        
+        return result;
+    }
+	
+	
+	public int maxBuilding(int n, int[][] restrictions) 
+    {
+        if (n <= 0)
+        {
+            return 0;
+        }
+        else if (restrictions == null || restrictions.length == 0)
+        {
+            return n-1;
+        }
+        
+        int result = 1;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(1, 1);
+        
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+        
+        for (int[] restriction : restrictions)
+        {
+        	treeMap.put(restriction[0], restriction[1]);
+        }
+        
+        Integer curIndex = 1;
+        
+        while (curIndex != null)
+        {
+        	Integer nextIndex = treeMap.ceilingKey(curIndex+1);
+        	
+        	if (nextIndex != null)
+        	{
+        		System.out.println("nextIndex = " + nextIndex);
+        		
+        		if (map.containsKey(nextIndex-1))
+        		{
+        			int prevHeight = map.get(nextIndex-1);
+        			int nextHeight = Math.min(prevHeight+1, treeMap.get(nextIndex));
+        			map.put(nextIndex, nextHeight);
+        			result = Math.max(result, Math.max(prevHeight, nextHeight));
+        			
+        			System.out.println("1: prevHeight = " + prevHeight);
+        		}
+        		else
+        		{
+        			int prevHeight = map.get(curIndex) + (nextIndex - curIndex);
+        			int nextHeight = Math.min(prevHeight+1, treeMap.get(nextIndex));
+        			map.put(nextIndex, nextHeight);
+        			result = Math.max(result, Math.max(prevHeight, nextHeight));
+        			
+        			System.out.println("2: prevHeight = " + prevHeight);
+        		}
+        	}
+        	
+        	curIndex = nextIndex;
+        }
+        
+        return result;
+    }
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int n1 = 5;
+    	int[][] restrictions1 = {{2,1},{4,1}};
+    	
+    	int n2 = 5;
+    	int[][] restrictions2 = {{2,1},{4,1}};
+    	
+    	System.out.println(test.maxBuilding(n1, restrictions1));
+    }
+}

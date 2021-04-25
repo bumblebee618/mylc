@@ -1,0 +1,34 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{
+	public int sumBase(int n, int k) 
+    {
+        int result = 0;
+        
+        while (n > 0)
+        {
+            result += n % k;
+            n /= k;
+        }
+        
+        return result;
+    }
+	
+	
+	
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	System.out.println(test.sumBase(34, 6));
+    	System.out.println(test.sumBase(10, 10));
+    	
+    }
+}

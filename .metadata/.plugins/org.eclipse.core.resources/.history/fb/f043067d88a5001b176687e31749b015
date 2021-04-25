@@ -1,0 +1,27 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{	
+    
+	
+	
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int n1 = 5;
+    	int[][] restrictions1 = {{2,1},{4,1}};
+    	
+    	int n2 = 10;
+    	int[][] restrictions2 = {{5,3},{2,5},{7,4},{10,3}};
+    	
+    	System.out.println(test.maxBuilding(n1, restrictions1));
+    	System.out.println(test.maxBuilding(n2, restrictions2));
+    }
+}
