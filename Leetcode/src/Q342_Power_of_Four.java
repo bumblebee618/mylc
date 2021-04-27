@@ -1,13 +1,35 @@
 
-public class Q342_Power_of_Four {
-	public boolean isPowerOfFour(int num) {
-        if(num <= 0){
+public class Q342_Power_of_Four 
+{
+	// solution 1:
+	public boolean isPowerOfFour(int n) 
+    {
+        while (n > 1)
+        {
+            if (n % 4 != 0)
+            {
+                return false;
+            }
+            
+            n /= 4;
+        }
+        
+        return n == 1;    
+    }
+	
+	
+	// solution 2:
+	public boolean isPowerOfFour2(int num) 
+	{
+        if (num <= 0)
+        {
             return false;
         }
         
         int diff = 0;
         
-        while(num > 1 && diff == 0){
+        while (num > 1 && diff == 0)
+        {
             diff = num % 4;
             num /= 4;
         }
