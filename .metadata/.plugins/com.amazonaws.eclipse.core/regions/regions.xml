@@ -142,6 +142,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.ap-northeast-3.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.ap-northeast-3.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.ap-northeast-3.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.ap-northeast-3.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.ap-northeast-3.amazonaws.com</service>
             <service name="EC2">https://ec2.ap-northeast-3.amazonaws.com</service>
@@ -447,6 +448,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.eu-south-1.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.eu-south-1.amazonaws.com</service>
+            <service name="CodeArtifact">https://codeartifact.eu-south-1.amazonaws.com</service>
             <service name="CodeCommit">https://codecommit.eu-south-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.eu-south-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.eu-south-1.amazonaws.com</service>
@@ -514,6 +516,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.eu-west-2.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.eu-west-2.amazonaws.com</service>
+            <service name="CodeArtifact">https://codeartifact.eu-west-2.amazonaws.com</service>
             <service name="CodeCommit">https://codecommit.eu-west-2.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.eu-west-2.amazonaws.com</service>
             <service name="CodeStar">https://codestar.eu-west-2.amazonaws.com</service>
@@ -548,6 +551,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.eu-west-3.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.eu-west-3.amazonaws.com</service>
+            <service name="CodeArtifact">https://codeartifact.eu-west-3.amazonaws.com</service>
             <service name="CodeCommit">https://codecommit.eu-west-3.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.eu-west-3.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.eu-west-3.amazonaws.com</service>
