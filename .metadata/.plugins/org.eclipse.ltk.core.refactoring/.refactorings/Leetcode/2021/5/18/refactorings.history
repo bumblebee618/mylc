@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;ts&apos; in &apos;Q000_A_Contest.closestRoom(...)&apos; to &apos;treeSet&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q000_A_Contest.closestRoom(int[][], int[][]).ts&apos;&#x0A;- Renamed element: &apos;ts&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;ts&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Q000_A_Contest.java[Q000_A_Contest~closestRoom~\[\[I~\[\[I@ts!3495!3532!3512!3513!QTreeSet\&lt;QInteger;&gt;;!0!false" name="treeSet" references="true" stamp="1619885744726" version="1.0"/>
+</session>

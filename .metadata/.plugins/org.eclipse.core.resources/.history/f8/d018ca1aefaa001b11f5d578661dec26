@@ -1,0 +1,59 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{	
+	public int getMinDistance(int[] nums, int target, int start) 
+    {
+        if (nums == null || nums.length == 0 || start < 0 || start >= nums.length)
+        {
+            return -1;
+        }
+        
+        int left = start, right = start;
+        int size = nums.length;
+        int step = 0;
+        
+        while (left >= 0 || right < size)
+        {
+            if (left >= 0 && nums[left] == target)
+            {
+                return step;
+            }
+            else if (right < size && nums[right] == target)
+            {
+                return step;
+            }
+            
+            if (left >= 0)
+            {
+                left--;
+            }
+            
+            if (right < size)
+            {
+                right++;
+            }
+            
+            step++;
+        }
+        
+        return -1;
+    }
+  
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int[] nums = {1,2,3,4,5};
+    	int target = 5;
+    	int start = 3;
+    	
+    	System.out.println(test.getMinDistance(nums, target, start));
+    }
+}

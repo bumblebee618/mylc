@@ -1,0 +1,272 @@
+import java.security.DigestOutputStream;
+import java.util.*;
+
+import javax.security.auth.x500.X500Principal;
+
+
+
+public class Q000_A_Contest 
+{	
+	public int getMinDistance(int[] nums, int target, int start) 
+    {
+        if (nums == null || nums.length == 0 || start < 0 || start >= nums.length)
+        {
+            return -1;
+        }
+        
+        int left = start, right = start;
+        int size = nums.length;
+        int step = 0;
+        
+        while (left >= 0 || right < size)
+        {
+            if (left >= 0 && nums[left] == target)
+            {
+                return step;
+            }
+            else if (right < size && nums[right] == target)
+            {
+                return step;
+            }
+            
+            if (left >= 0)
+            {
+                left--;
+            }
+            
+            if (right < size)
+            {
+                right++;
+            }
+            
+            step++;
+        }
+        
+        return -1;
+    }
+	
+	// private Integer[][] memo;
+	
+	public boolean splitString(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+        	return true;
+        }
+        
+        int size = s.length();
+        long[][] memo = new long[size][size];
+        
+        for (int i = 0; i < size; i++)
+        {
+        	for (int j = i; j < size; j++)
+        	{
+        		String str = s.substring(i, j+1);
+        		
+        		try 
+        		{
+        			long num = Long.parseLong(str);
+        			memo[i][j] = num;
+        		}
+        		catch (Exception e)
+        		{
+        			
+        		}
+        	}
+        }
+        
+        return backtrack(memo, -1, 0, 0);
+    }
+	
+	private boolean backtrack(long[][] memo, long prevNum, int start, int len)
+	{
+		if (start == memo.length)
+		{
+			return len > 1;
+		}
+		
+		for (int end = start; end < memo.length; end++)
+		{
+			if (prevNum == -1 || memo[start][end] == prevNum - 1)
+			{
+				if (backtrack(memo, memo[start][end], end+1, len+1))
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	public int getMinSwaps(String num, int k)
+	{
+		char[] originDigits = num.toCharArray();
+		char[] digits = num.toCharArray();
+		
+		for (int i = 0; i < k; i++)
+		{
+			nextPermutation(digits);
+		}
+		
+		int start = 0, size = digits.length;
+		int step = 0;
+		
+		while (start < size)
+		{
+			if (digits[start] != originDigits[start])
+			{
+				// System.out.println(start);
+				// System.out.println(findTarget(digits, originDigits[start], start));
+				
+				step += findTarget(digits, originDigits[start], start);
+			}
+			
+			start++;
+		}
+		
+		return step;
+	}
+	
+	private int findTarget(char[] digits, char target, int start)
+	{
+		int end = start;
+		
+		while (end < digits.length && digits[end] != target)
+		{
+			end++;
+		}
+		
+		for (int i = end; i-1 >= start; i--)
+		{
+			char tmp = digits[i];
+			digits[i] = digits[i-1];
+			digits[i-1] = tmp;
+		}
+		
+		return end-start;
+	}
+	
+	private void nextPermutation(char[] nums) 
+    {
+        if (nums == null || nums.length == 0)
+        {
+            return;
+        }
+        
+        int size = nums.length;
+        int index1 = size - 2;
+        
+        while (index1 >= 0 && nums[index1] >= nums[index1+1])
+        {
+            index1--;
+        }
+        
+        if (index1 >= 0)
+        {
+            int index2 = size-1;
+            
+            while (nums[index2] <= nums[index1])
+            {
+                index2--;
+            }
+            
+            char tmp = nums[index1];
+            nums[index1] = nums[index2];
+            nums[index2] = tmp;
+        }
+        
+        reverse(nums, index1+1, size-1);
+    }
+    
+    private void reverse(char[] nums, int left, int right)
+    {
+        while (left < right)
+        {
+            char tmp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = tmp;
+            left++;
+            right--;
+        }
+    }
+	
+    
+    
+    public int[] minInterval(int[][] intervals, int[] queries) 
+    {
+        if (intervals == null || intervals.length == 0 || intervals[0].length != 2 || queries == null || queries.length == 0)
+        {
+            return new int[0];
+        }
+        
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> treeMap = new TreeMap<>();
+        
+        for (int[] interval : intervals)
+        {
+        	if (!treeMap.containsKey(interval[0]))
+        	{
+        		treeMap.put(interval[0], new TreeMap<>());
+        	}
+        	
+        	treeMap.get(interval[0]).computeIfAbsent(interval[1], x -> new PriorityQueue<>()).add(interval[1]-interval[0]+1);
+        }
+        
+        int[] result = new int[queries.length];
+        
+        for (int i = 0; i < queries.length; i++)
+        {
+        	SortedMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map1 = treeMap.headMap(queries[i]+1);
+        	
+        	if (map1.size() == 0)
+        	{
+        		result[i] = -1;
+        		continue;
+        	}
+        	
+        	int candidiate = Integer.MAX_VALUE;
+        	
+        	for (Map.Entry<Integer, TreeMap<Integer, PriorityQueue<Integer>>> entry1 : map1.entrySet())
+    		{
+        		SortedMap<Integer, PriorityQueue<Integer>> map2 = entry1.getValue().tailMap(queries[i]);
+    			
+        		for (Map.Entry<Integer, PriorityQueue<Integer>> entry2 : map2.entrySet())
+        		{
+        			candidiate = Math.min(candidiate, entry2.getValue().peek());
+        		}
+    		}
+        	
+        	result[i] = candidiate == Integer.MAX_VALUE ? -1 : candidiate;
+        }
+        
+        return result;
+    }
+    
+	
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int[][] intervals1 = {{1,4},{2,4},{3,6},{4,4}};
+    	int[] queries1 = {2,3,4,5};
+    	
+    	
+    	int[] result1 = test.minInterval(intervals1, queries1);
+    	for (int num : result1)
+    	{
+    		System.out.print(num + ", ");
+    	}
+    	System.out.println();
+    	
+    	
+    }
+}

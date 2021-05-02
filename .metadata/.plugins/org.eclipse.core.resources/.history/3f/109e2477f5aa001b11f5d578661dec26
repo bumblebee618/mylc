@@ -1,0 +1,126 @@
+import java.util.*;
+
+
+
+public class Q000_A_Contest 
+{	
+	public int getMinDistance(int[] nums, int target, int start) 
+    {
+        if (nums == null || nums.length == 0 || start < 0 || start >= nums.length)
+        {
+            return -1;
+        }
+        
+        int left = start, right = start;
+        int size = nums.length;
+        int step = 0;
+        
+        while (left >= 0 || right < size)
+        {
+            if (left >= 0 && nums[left] == target)
+            {
+                return step;
+            }
+            else if (right < size && nums[right] == target)
+            {
+                return step;
+            }
+            
+            if (left >= 0)
+            {
+                left--;
+            }
+            
+            if (right < size)
+            {
+                right++;
+            }
+            
+            step++;
+        }
+        
+        return -1;
+    }
+	
+	// private Integer[][] memo;
+	
+	public boolean splitString(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+        	return true;
+        }
+        
+        int size = s.length();
+        long[][] memo = new long[size][size];
+        
+        for (int i = 0; i < size; i++)
+        {
+        	for (int j = i; j < size; j++)
+        	{
+        		String str = s.substring(i, j+1);
+        		
+        		try 
+        		{
+        			long num = Long.parseLong(str);
+        			memo[i][j] = num;
+        		}
+        		catch (Exception e)
+        		{
+        			
+        		}
+        	}
+        }
+        
+        return backtrack(memo, -1, 0, 0);
+    }
+	
+	private boolean backtrack(long[][] memo, long prevNum, int start, int len)
+	{
+		if (start == memo.length)
+		{
+			return len > 1;
+		}
+		
+		for (int end = start; end < memo.length; end++)
+		{
+			if (prevNum == -1 || memo[start][end] == prevNum - 1)
+			{
+				if (backtrack(memo, memo[start][end], end+1, len+1))
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	
+	
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String s1 = "1234";
+    	String s2 = "050043";
+    	String s3 = "9080701";
+    	String s4 = "10009998";
+    	String s5 = "22759227582275722756";
+    	
+    	System.out.println(test.splitString(s1));
+    	System.out.println(test.splitString(s2));
+    	System.out.println(test.splitString(s3));
+    	System.out.println(test.splitString(s4));
+    	
+    	
+    	
+    	System.out.println(test.splitString(s5));
+    	
+    }
+}
