@@ -105,8 +105,7 @@ public class Q665_Non_decreasing_Array
 
 	Two situtations to modify the array element, current one or previous one. perv is used to keep record  minValue of last array element
 	***/
-	public boolean checkPossibility3(int[] nums) 
-	{
+	public boolean checkPossibility3(int[] nums) {
 	        if (nums == null || nums.length == 1)
 	        {
 	            return true;

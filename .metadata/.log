@@ -1692,3 +1692,50 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY org.eclipse.jface.text 2 0 2021-05-02 17:10:39.483
 !MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+!SESSION 2021-05-04 10:26:26.568 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_131
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/jackie/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/jackie/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-04 10:26:39.198
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.amazonaws.eclipse.core 1 0 2021-05-04 10:26:50.066
+!MESSAGE Starting the AWS toolkit core plugin...
+
+!ENTRY com.amazonaws.eclipse.core 1 0 2021-05-04 10:26:52.267
+!MESSAGE Monitoring content of /Users/jackie/.aws/credentials
+
+!ENTRY com.amazonaws.eclipse.core 1 0 2021-05-04 10:26:52.621
+!MESSAGE AWS toolkit core plugin initialized after 2555 milliseconds.
+
+!ENTRY com.amazonaws.eclipse.core 1 0 2021-05-04 10:26:52.648
+!MESSAGE Found valid identity id cache us-east-1:a5a662c5-e257-4f0f-b477-8b44c41914fb
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2021-05-04 10:27:06.684
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 2.0.4.v20170307-1435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:93)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:124)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY org.eclipse.jface.text 2 0 2021-05-04 10:33:57.540
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2021-05-04 10:33:57.542
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
