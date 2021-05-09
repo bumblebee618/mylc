@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.io.ObjectOutputStream.PutField"/>
-<fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
 <fullyQualifiedTypeName name="Tuple"/>
 <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
 <fullyQualifiedTypeName name="Data_Structure_HashMapImpl"/>
@@ -13,7 +11,6 @@
 <fullyQualifiedTypeName name="Q1329_Sort_the_Matrix_Diagonally"/>
 <fullyQualifiedTypeName name="javax.print.attribute.standard.PrinterMoreInfoManufacturer"/>
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
-<fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentHashMap"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ForkJoinPool"/>
 <fullyQualifiedTypeName name="java.util.stream.Stream"/>
@@ -36,28 +33,31 @@
 <fullyQualifiedTypeName name="java.lang.UnsatisfiedLinkError"/>
 <fullyQualifiedTypeName name="org.omg.CORBA.SystemException"/>
 <fullyQualifiedTypeName name="java.util.IdentityHashMap"/>
-<fullyQualifiedTypeName name="Q000_A_Contest.Node"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="javax.sql.ConnectionPoolDataSource"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="javax.print.attribute.standard.NumberUpSupported"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="Q745_Prefix_and_Suffix_Search.Trie"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.security.DigestOutputStream"/>
 <fullyQualifiedTypeName name="javax.security.auth.x500.X500Principal"/>
-<fullyQualifiedTypeName name="java.util.Map.Entry"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.TreeMap"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
-<fullyQualifiedTypeName name="Q124_Binary_Tree_Maximum_Path_Sum.resultTuple"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="Q000_A_Contest.Node"/>
+<fullyQualifiedTypeName name="Q124_Binary_Tree_Maximum_Path_Sum.resultTuple"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.Deque"/>
+<fullyQualifiedTypeName name="java.util.concurrent.LinkedBlockingDeque"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
 </qualifiedTypeNameHistroy>
