@@ -26,7 +26,6 @@
 <fullyQualifiedTypeName name="java.sql.Array"/>
 <fullyQualifiedTypeName name="javax.activation.UnsupportedDataTypeException"/>
 <fullyQualifiedTypeName name="javax.naming.directory.SearchControls"/>
-<fullyQualifiedTypeName name="java.lang.Long"/>
 <fullyQualifiedTypeName name="Point"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
@@ -34,7 +33,6 @@
 <fullyQualifiedTypeName name="org.omg.CORBA.SystemException"/>
 <fullyQualifiedTypeName name="java.util.IdentityHashMap"/>
 <fullyQualifiedTypeName name="javax.sql.ConnectionPoolDataSource"/>
-<fullyQualifiedTypeName name="javax.print.attribute.standard.NumberUpSupported"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="Q745_Prefix_and_Suffix_Search.Trie"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -49,15 +47,17 @@
 <fullyQualifiedTypeName name="java.util.Deque"/>
 <fullyQualifiedTypeName name="java.util.concurrent.LinkedBlockingDeque"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.util.Map.Entry"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="javax.print.attribute.standard.NumberUpSupported"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>
