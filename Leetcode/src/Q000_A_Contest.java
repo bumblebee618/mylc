@@ -1,4 +1,7 @@
+import java.lang.annotation.Target;
 import java.util.*;
+
+import javax.print.attribute.standard.NumberUpSupported;
 
 
 
@@ -6,9 +9,9 @@ import java.util.*;
 
 public class Q000_A_Contest 
 {	
-	 
-  
-    
+
+
+	
     
     public static void main(String[] args)
     {
@@ -16,6 +19,7 @@ public class Q000_A_Contest
     	
     	/****************************************************/
  
+    	
     	
     }
 }

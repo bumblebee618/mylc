@@ -1,0 +1,105 @@
+import java.lang.annotation.Target;
+import java.util.*;
+
+import javax.print.attribute.standard.NumberUpSupported;
+
+
+
+
+
+public class Q000_A_Contest 
+{	
+	private Map<Long, Integer> map;
+	private long[] nums2;
+	private Map<Integer, Integer> nums1;
+    private int size2 = 0;
+    
+    public Q000_A_Contest(int[] array1, int[] array2) 
+    {
+    	map = new HashMap<>();
+    	size2 = array2.length;
+    	nums1 = new HashMap<>();
+    	nums2 = new long[size2];
+    	
+    	for (int i = 0; i < array1.length; i++)
+    	{
+    		nums1.put(array1[i], nums1.getOrDefault(array1[i], 0)+1);
+    	}
+    	
+    	for (int i = 0; i < size2; i++)
+    	{
+    		nums2[i] = (long) array2[i];
+    	}
+    	
+    	for (int i = 0; i < size2; i++)
+    	{
+    		for (Map.Entry<Integer, Integer> entry : nums1.entrySet())
+    		{
+    			long sum = (long) entry.getKey() + nums2[i];
+    			map.put(sum, map.getOrDefault(sum, 0) + entry.getValue());
+    		}
+    	}
+    }
+    
+    public void add(int index, int val) 
+    {
+    	if (val == 0)
+    	{
+    		return;
+    	}
+    	
+    	for (Map.Entry<Integer, Integer> entry : nums1.entrySet())
+    	{
+    		int num = entry.getKey();
+    		int count = entry.getValue();
+    		long prevVal = num + nums2[index];
+    		long newVal = num + nums2[index] + (long) val;
+    		map.put(prevVal, map.get(prevVal)-count);
+    		map.put(newVal, map.getOrDefault(newVal, 0)+count);
+    	}
+    	
+    	nums2[index] += (long) val;
+    }
+    
+    public int count(int tot) 
+    {
+    	return map.getOrDefault((long) tot, 0);
+    }
+	
+	
+    
+    public static void main(String[] args)
+    {
+    	int[] nums1 = {9,70,14,9,76};
+    	int[] nums2 = {26,26,58,23,74,68,68,78,58,26};
+    	
+    	Q000_A_Contest findSumPairs = new Q000_A_Contest(nums1, nums2);
+    	
+    	/****************************************************/
+ 
+    	findSumPairs.add(6, 10);
+    	findSumPairs.add(5, 6);
+    	// System.out.println(findSumPairs.count(32));
+    	
+    	System.out.println(findSumPairs.count(88));
+    	// System.out.println(findSumPairs.count(154));
+    	
+    	findSumPairs.add(3, 55);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(9,32);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(9,16);
+    	System.out.println("1 "+ findSumPairs.count(88));
+    	findSumPairs.add(1,48);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(1,4);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(0, 52);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(8,20);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(9,4);
+    	System.out.println(findSumPairs.count(88));
+    	
+    }
+}

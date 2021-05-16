@@ -1,0 +1,32 @@
+import java.lang.annotation.Target;
+import java.util.*;
+
+import javax.print.attribute.standard.NumberUpSupported;
+
+
+
+
+
+public class Q000_A_Contest 
+{	
+
+
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	,4);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(0, 52);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(8,20);
+    	System.out.println(findSumPairs.count(88));
+    	findSumPairs.add(9,4);
+    	System.out.println(findSumPairs.count(88));
+    	
+    }
+}

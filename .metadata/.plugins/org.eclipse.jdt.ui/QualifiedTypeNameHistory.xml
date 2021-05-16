@@ -42,7 +42,6 @@
 <fullyQualifiedTypeName name="java.security.DigestOutputStream"/>
 <fullyQualifiedTypeName name="javax.security.auth.x500.X500Principal"/>
 <fullyQualifiedTypeName name="java.util.TreeMap"/>
-<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="Q000_A_Contest.Node"/>
 <fullyQualifiedTypeName name="Q124_Binary_Tree_Maximum_Path_Sum.resultTuple"/>
@@ -58,6 +57,7 @@
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 </qualifiedTypeNameHistroy>

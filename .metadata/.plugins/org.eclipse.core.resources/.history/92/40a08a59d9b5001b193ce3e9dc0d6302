@@ -1,0 +1,84 @@
+import java.util.Arrays;
+
+/***
+ * 
+ * @author jackie
+ * 
+ * Given an integer array nums, return the sum of floor(nums[i] / nums[j]) for all pairs of indices 0 <= i, j < nums.length in the array. Since the answer may be too large, return it modulo 109 + 7.
+
+The floor() function returns the integer part of the division.
+
+ 
+
+Example 1:
+
+Input: nums = [2,5,9]
+Output: 10
+Explanation:
+floor(2 / 5) = floor(2 / 9) = floor(5 / 9) = 0
+floor(2 / 2) = floor(5 / 5) = floor(9 / 9) = 1
+floor(5 / 2) = 2
+floor(9 / 2) = 4
+floor(9 / 5) = 1
+We calculate the floor of the division for every pair of indices in the array then sum them up.
+Example 2:
+
+Input: nums = [7,7,7,7,7,7,7]
+Output: 49
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+1 <= nums[i] <= 105
+ */
+
+public class Q1862_Sum_of_Floored_Pairs 
+{
+	public int sumOfFlooredPairs(int[] nums) 
+	{
+        if (nums == null || nums.length == 0)
+		{
+			return 0;
+		}
+        
+        Arrays.sort(nums);
+        int size=nums.length;
+		int max = nums[size-1];
+    	int count[]=new int[max+1];
+    	int mod = 1_000_000_007;
+    	long sum = 0, tot = 0;
+    	
+    	for(int i = 0; i < size; i++)
+    	{
+    		count[nums[i]]++;
+    	}
+    	
+    	for(int i = 1; i <= max; i++)
+    	{
+    		count[i] += count[i-1];
+    	}
+    		
+    	for (int i = 0; i < size; i++)
+    	{
+            if (i > 0 && nums[i]-nums[i-1] == 0)
+            {
+                continue;
+            }
+            
+            int tmp = nums[i];
+            
+    		for (int j = 2; j <= max/tmp+1; j++)
+    		{
+    			int lower = tmp*(j-1)-1;
+    			int upper = tmp*(j)-1;
+    			sum += (count[Math.min(max, upper)] - count[lower])*(j-1);
+    		}
+    		
+    		tot += sum*(count[tmp] - count[tmp-1]);
+            sum = 0;
+    	}
+    	
+        return (int)(tot % mod);
+    }
+}

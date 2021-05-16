@@ -1,0 +1,45 @@
+import java.lang.annotation.Target;
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	
+	
+	
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int[] nums1 = {1, 3};
+    	int[] nums2 = {5, 1, 6};
+    	int[] nums3 = {3,4,5,6,7,8};
+    	
+    	// System.out.println(test.subsetXORSum(nums1));
+    	// System.out.println(test.subsetXORSum(nums2));
+    	// System.out.println(test.subsetXORSum(nums3));
+    	
+    	String s1 = "111000";
+    	String s2 = "101";
+    	String s3 = "010";
+    	String s4 = "0101";
+    	String s5 = "1";
+    	String s6 = "1110";
+    	String s7 = "10100"; // 0
+    	
+    	System.out.println(test.minSwaps(s1));
+    	
+    	System.out.println(test.minSwaps(s2));
+    	System.out.println(test.minSwaps(s3));
+    	System.out.println(test.minSwaps(s4));
+    	System.out.println(test.minSwaps(s5));
+    	System.out.println(test.minSwaps(s6));
+    	System.out.println(test.minSwaps(s7));
+    }
+}

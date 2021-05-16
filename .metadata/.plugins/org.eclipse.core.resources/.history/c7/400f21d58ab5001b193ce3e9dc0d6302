@@ -1,0 +1,39 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	
+	public String sortSentence(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return s;
+        }
+        
+        String[] strs = s.split(" ");
+        Arrays.sort(strs, (a, b) -> a.charAt(a.length()-1) - b.charAt(b.length()-1));
+        StringBuilder builder = new StringBuilder();
+        
+        for (String str : strs)
+        {
+        	builder.append(str.substring(0, str.length()-1)).append(" ");
+        }
+        
+        return builder.substring(0, builder.length()-1);
+    }
+  
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String s1 = "is2 sentence4 This1 a3";
+    	System.out.println(test.sortSentence(s1));
+    }
+}

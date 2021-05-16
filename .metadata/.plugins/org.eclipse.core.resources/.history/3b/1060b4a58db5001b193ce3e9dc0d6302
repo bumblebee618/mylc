@@ -1,0 +1,81 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	
+	public String sortSentence(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return s;
+        }
+        
+        String[] strs = s.split(" ");
+        Arrays.sort(strs, (a, b) -> a.charAt(a.length()-1) - b.charAt(b.length()-1));
+        StringBuilder builder = new StringBuilder();
+        
+        for (String str : strs)
+        {
+        	builder.append(str.substring(0, str.length()-1)).append(" ");
+        }
+        
+        return builder.substring(0, builder.length()-1);
+    }
+	
+	
+	public int[] memLeak(int memory1, int memory2) 
+    {
+		if (memory1 < 0 || memory2 < 0)
+		{
+			return new int[] {0, 0, 0};
+		}
+		
+		int diff = Math.max(memory1, memory2) - Math.min(memory1, memory2);
+		int seconds = binarySearch(diff, diff);
+		
+		System.out.println(seconds);
+		
+		return new int[] {seconds, 0, 0};
+    }
+	
+	private int binarySearch(int n, int targetSum)
+	{
+		int left = 1, right = n;
+		
+		while (left + 1 < right)
+		{
+			int mid = left + (right - left) / 2;
+			int sum = (1 + mid) * mid / 2;
+			
+			if (sum < targetSum)
+			{
+				left = mid;
+			}
+			else
+			{
+				right = mid;
+			}
+			
+			System.out.println(left + ", " + right);
+		}
+		
+		int sum = (1 + left) * left / 2;
+		return sum >= targetSum ? left : right;
+	}
+  
+    
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	int memory1 = 8, memory2 = 11;
+    	test.memLeak(memory1, memory2);
+    	
+    }
+}
