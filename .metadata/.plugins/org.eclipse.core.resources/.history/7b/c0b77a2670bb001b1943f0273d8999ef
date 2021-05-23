@@ -1,0 +1,62 @@
+import java.lang.annotation.Target;
+import java.util.*;
+
+import javax.print.attribute.standard.NumberUpSupported;
+
+
+
+
+
+public class Q000_A_Contest 
+{	
+	public boolean checkZeroOnes(String s) 
+    {
+        if (s == null || s.length() == 0)
+        {
+            return false;
+        }
+        
+        int maxOne = 0, minOne = 0;
+        int faster = 0, slower = 0;
+        int size = s.length();
+        
+        while (faster < size)
+        {
+            slower = faster;
+            
+            while (faster < size && s.charAt(faster) == s.charAt(slower))
+            {
+                faster++;
+            }
+            
+            System.out.println(slower + ", " + faster);
+            
+            if (s.charAt(slower) == '0')
+            {
+                maxOne = Math.max(maxOne, faster-slower);
+            }
+            else
+            {
+                minOne = Math.max(minOne, faster-slower);
+            }
+        }
+        
+        return maxOne > minOne; 
+    }
+
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String s1 = "1101";
+    	String s2 = "111000";
+    	
+    	System.out.println(test.checkZeroOnes(s1));
+    	System.out.println(test.checkZeroOnes(s2));
+    	
+    }
+}

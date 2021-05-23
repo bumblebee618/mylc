@@ -1,0 +1,118 @@
+import java.lang.annotation.Target;
+import java.util.*;
+
+import javax.print.attribute.standard.NumberUpSupported;
+
+import org.omg.CORBA.Current;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  	// System.out.println(left + ", " + right + ", " + mid + ", " + candidate);
+        	
+        	if (candidate > hour)
+        	{
+        		left = mid;
+        	}
+        	else
+        	{
+        		right = mid;
+        	}
+        }
+        
+        return search(dist, left) <= hour ? left : right;
+    }
+	
+	private double search(int[] dist, int speed)
+	{
+		double time = 0;
+		
+		for (int i = 0; i < dist.length-1; i++)
+		{
+			// System.out.println("*: " + dist[i] + ", " + Math.ceil(dist[i] / (double) speed));
+			time += Math.ceil(dist[i] / (double) speed);
+		}
+		
+		time += dist[dist.length-1] / (double) speed;
+		return time;
+	}
+
+	
+	
+	
+	public boolean canReach(String s, int minJump, int maxJump) 
+	{
+		if (s == null || s.length() <= 1 || s.charAt(s.length()-1) == '1')
+		{
+			return false;
+		}
+		
+		int size = s.length(), curIndex = 0;
+	    List<Integer> zeros = new ArrayList<>();
+		
+		for (int i = 0; i < s.length(); i++)
+		{
+			if (s.charAt(i) == '0')
+			{
+				zeros.add(i);
+			}
+		}
+		
+		int left = 0, right = 0;
+		
+		while (curIndex < size)
+		{
+			while (left < zeros.size() && zeros.get(left) < curIndex + minJump)
+			{
+				left++;
+			}
+		    
+			if (left >= zeros.size())
+			{
+				return false;
+			}
+			
+			while (right < zeros.size() && zeros.get(right) <= curIndex + maxJump)
+			{
+				right++;
+			}
+			
+			right--;
+			
+		    System.out.println("1: " + curIndex + ", " + left + ", " + right);
+			
+			if (right == zeros.size()-1)
+			{
+				return true;
+			}
+			else if (left > right)
+			{
+				return false;
+			}
+			
+			System.out.println("2: " + curIndex + ", " + zeros.get(left) + ", " + zeros.get(right));
+			
+			
+			curIndex = zeros.get(left);
+		}
+		
+		return true;
+    }
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	String s1 = "00111010";
+    	int minJump1 = 3, maxJump1 = 5;
+    	
+    	System.out.println(test.canReach(s1, minJump1, maxJump1));
+    	
+    	
+    }
+}
