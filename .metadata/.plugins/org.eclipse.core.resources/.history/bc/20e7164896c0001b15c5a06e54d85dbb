@@ -1,0 +1,211 @@
+import java.lang.annotation.Target;
+import java.util.*;
+
+import javax.print.attribute.standard.NumberUpSupported;
+
+import org.omg.CORBA.Current;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public int countGoodSubstrings(String s) 
+    {
+		if (s == null || s.length() < 3)
+		{
+			return 0;
+		}
+		
+		int result = 0;
+		int[] letters = new int[26];
+		int count = 0;
+		
+		for (int i = 0; i < s.length(); i++)
+		{
+			if (letters[s.charAt(i) - 'a']++ == 1)
+			{
+				count++;
+			}
+			
+			if (i >= 3)
+			{
+				if (letters[s.charAt(i-3) - 'a']-- == 2)
+				{
+					count--;
+				}
+			}
+			
+			if (i >= 2)
+			{
+				result += (count == 0) ? 1 : 0;
+			}
+		}
+		
+		return result;
+    }
+	
+	public int minPairSum(int[] nums) 
+	{
+		if (nums == null || nums.length < 2 || nums.length % 2 != 0)
+		{
+			return 0;
+		}
+		
+		Arrays.sort(nums);
+		int result = Integer.MIN_VALUE;
+		int left = 0, right = nums.length-1;
+		
+		while (left < right)
+		{
+			result = Math.max(result, nums[left] + nums[right]);
+			left++;
+			right--;
+		}
+		
+		return result;
+    }
+	
+	public int[] getBiggestThree(int[][] grid) 
+	{
+		if (grid == null || grid.length == 0 || grid[0].length == 0)
+		{
+			return new int[] {0};
+		}
+		
+		int row = grid.length, col = grid[0].length;
+		int minSide = Math.min(row, col);
+		int bounce = (minSide + 1) / 2;
+		Integer[][][] left = new Integer[row][col][bounce];
+		Integer[][][] right = new Integer[row][col][bounce];
+		Queue<Integer> heap = new PriorityQueue<>();
+		
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				if (!heap.contains(grid[i][j]))
+				{
+					heap.offer(grid[i][j]);
+					
+					if (heap.size() > 3)
+					{
+						heap.poll();
+					}
+				}
+				
+				// left
+				int leftSum = 0;
+				
+				for (int k = 0; k < bounce && i + k < row && j - k >= 0; k++)
+				{
+					leftSum += grid[i+k][j-k];
+					left[i][j][k] = leftSum;
+					
+					// System.out.println("left: " + i + ", " + j + ", " + k + " - " + left[i][j][k]);
+				}
+				
+				// right
+				int rightSum = 0;
+				
+				for (int k = 0; k < bounce && i + k < row && j + k < col; k++)
+				{
+					rightSum += grid[i+k][j+k];
+					right[i][j][k] = rightSum;
+					
+					// System.out.println("right: " + i + ", " + j + ", " + k);
+				}
+			}
+		}
+		
+		
+		
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				for (int k = 1; k < bounce; k++)
+				{
+					if (i + 2 * k >= row 
+						|| j - k < 0
+						|| j + k >= col)
+					{
+						break;
+					}
+					
+					int sum = left[i][j][k] 
+							+ right[i][j][k]
+							+ right[i+k][j-k][k] 
+							+ left[i+k][j+k][k]
+							- grid[i][j]
+							- grid[i+k][j-k]
+							- grid[i+k][j+k]
+							- grid[i+2*k][j];
+					
+					// System.out.println("left2: " + (i+k) + ", " + (j+k) + ", " + k + ", sum = " + sum);
+					// System.out.println("left3: " + left[i][j][k] + ", " + right[i][j][k] + ", " + right[i+k][j-k][k] + ", " + left[i+k][j+k][k]);
+					
+					if (!heap.contains(sum))
+					{
+						heap.offer(sum);
+						
+						if (heap.size() > 3)
+						{
+							heap.poll();
+						}
+					}
+				}
+			}
+		}
+		
+		int size = heap.size();
+		int[] result = new int[size];
+		
+		for (int i = 0; i < size; i++)
+		{
+			result[size-i-1] = heap.poll();
+		}
+		
+		return result;
+    }
+	
+	
+	
+	
+	
+    
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	/**
+    	int[][] grid1 = {{1,2,3},{4,5,6},{7,8,9}};
+    	int[] result1 = test.getBiggestThree(grid1);
+    	for (int result : result1)
+    	{
+    		System.out.print(result + ", ");
+    	}
+    	System.out.println();
+    	**/
+    	
+    	int[][] grid3 = {{3,4,5,1,3},{3,3,4,2,3},{20,30,200,40,10}, {1,5,5,4,1}, {4,3,2,2,5}};
+    	int[] result3 = test.getBiggestThree(grid3);
+    	for (int result : result3)
+    	{
+    		System.out.print(result + ", ");
+    	}
+    	System.out.println();
+    	
+    	
+    	int[][] grid2 = {{7,7,7}};
+    	int[] result2 = test.getBiggestThree(grid2);
+    	for (int result : result2)
+    	{
+    		System.out.print(result + ", ");
+    	}
+    	System.out.println();
+    }
+}
