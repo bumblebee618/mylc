@@ -1,0 +1,141 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	private HashMap<Integer, Integer> memo = new HashMap<>();
+	
+	public int minimumXORSum(int[] nums1, int[] nums2) 
+	{
+		if (nums1 == null || nums1.length == 0 || nums2 == null || nums1.length != nums2.length)
+		{
+			return 0;
+		}
+		
+        return search(nums1, nums2, 0, nums1.length, 0);
+    }
+	
+	private int search(int[] nums1, int[] nums2, int i, int n, int status) 
+	{
+        if (i == n) 
+        {
+        	return 0;
+        }
+        else if (memo.containsKey(status)) 
+        {
+        	return memo.get(status);
+        }
+        
+        int min = Integer.MAX_VALUE;
+        
+        for (int j = 0; j < n; j++) 
+        {
+            if ((status & (1 << j)) == 0) 
+            {
+                min = Math.min(min, (nums1[i] ^ nums2[j]) + search(nums1, nums2, i + 1, n, status | (1 << j)));
+            }
+        }
+        
+        memo.put(status, min);
+        return min;
+    } 
+			
+	
+	
+	
+	public boolean isSumEqual(String firstWord, String secondWord, String targetWord) 
+	{
+		char[] letters1 = firstWord.toCharArray();
+		char[] letters2 = secondWord.toCharArray();
+		char[] letters3 = targetWord.toCharArray();
+		
+		for (int i = 0; i < letters1.length; i++)
+		{
+			letters1[i] = (char) (letters1[i] - 'a' + '0');
+		}
+		
+		int num1 = Integer.parseInt(new String(letters1));
+		
+		for (int i = 0; i < letters2.length; i++)
+		{
+			letters2[i] = (char) (letters2[i] - 'a' + '0');
+		}
+		
+		int num2 = Integer.parseInt(new String(letters2));
+		
+		for (int i = 0; i < letters3.length; i++)
+		{
+			letters3[i] = (char) (letters3[i] - 'a' + '0');
+		}
+		
+		int num3 = Integer.parseInt(new String(letters3));
+		return num1 + num2 == num3;
+    }
+	
+	
+	public String maxValue(String n, int x) 
+	{
+		int insertPos = -1;
+		
+		if (n.charAt(0) != '-')
+		{
+			for (int i = 0; i < n.length(); i++)
+			{
+				if (n.charAt(i) - '0' < x)
+				{
+					insertPos = i;
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < n.length(); i++)
+			{
+				if (n.charAt(i) - '0' > x)
+				{
+					insertPos = i;
+					break;
+				}
+			}
+		}
+		
+		if (insertPos != -1)
+		{
+			return n.substring(0, insertPos) + x + n.substring(insertPos);
+		}
+		else
+		{
+			return n + x;
+		}
+    }
+	
+									
+									
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	String n1 = "73";
+    	int x1 = 6;
+    	System.out.println(test.maxValue(n1, x1));
+    	
+    	String n2 = "99";
+    	int x2 = 9;
+    	System.out.println(test.maxValue(n2, x2));
+    	
+    	String n3 = "-13";
+    	int x3 = 2;
+    	System.out.println(test.maxValue(n3, x3));
+    	
+    	String n4 = "-55";
+    	int x4 = 2;
+    	System.out.println(test.maxValue(n4, x4));
+    }
+}

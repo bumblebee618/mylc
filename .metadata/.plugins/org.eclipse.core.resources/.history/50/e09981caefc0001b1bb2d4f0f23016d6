@@ -1,0 +1,93 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	private HashMap<Integer, Integer> memo = new HashMap<>();
+	
+	public int minimumXORSum(int[] nums1, int[] nums2) 
+	{
+		if (nums1 == null || nums1.length == 0 || nums2 == null || nums1.length != nums2.length)
+		{
+			return 0;
+		}
+		
+        return search(nums1, nums2, 0, nums1.length, 0);
+    }
+	
+	private int search(int[] nums1, int[] nums2, int i, int n, int status) 
+	{
+        if (i == n) 
+        {
+        	return 0;
+        }
+        else if (memo.containsKey(status)) 
+        {
+        	return memo.get(status);
+        }
+        
+        int min = Integer.MAX_VALUE;
+        
+        for (int j = 0; j < n; j++) 
+        {
+            if ((status & (1 << j)) == 0) 
+            {
+                min = Math.min(min, (nums1[i] ^ nums2[j]) + search(nums1, nums2, i + 1, n, status | (1 << j)));
+            }
+        }
+        
+        memo.put(status, min);
+        return min;
+    } 
+			
+	
+	
+	
+	public boolean isSumEqual(String firstWord, String secondWord, String targetWord) 
+	{
+		char[] letters1 = firstWord.toCharArray();
+		char[] letters2 = secondWord.toCharArray();
+		char[] letters3 = targetWord.toCharArray();
+		
+		for (int i = 0; i < letters1.length; i++)
+		{
+			letters1[i] = (char) (letters1[i] - 'a' + '0');
+		}
+		
+		int num1 = Integer.parseInt(new String(letters1));
+		
+		for (int i = 0; i < letters2.length; i++)
+		{
+			letters2[i] = (char) (letters2[i] - 'a' + '0');
+		}
+		
+		int num2 = Integer.parseInt(new String(letters2));
+		
+		for (int i = 0; i < letters3.length; i++)
+		{
+			letters3[i] = (char) (letters3[i] - 'a' + '0');
+		}
+		
+		int num3 = Integer.parseInt(new String(letters3));
+		return num1 + num2 == num3;
+    }
+	
+									
+									
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	// String firstWord = "acb", secondWord = "cba", targetWord = "cdb";
+    	String firstWord = "aaa", secondWord = "a", targetWord = "aab";
+    	
+    	System.out.println(test.isSumEqual(firstWord, secondWord, targetWord));
+    	
+    }
+}

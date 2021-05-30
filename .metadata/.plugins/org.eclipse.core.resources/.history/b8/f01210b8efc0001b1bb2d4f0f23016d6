@@ -1,0 +1,58 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	private HashMap<Integer, Integer> memo = new HashMap<>();
+	
+	public int minimumXORSum(int[] nums1, int[] nums2) 
+	{
+		if (nums1 == null || nums1.length == 0 || nums2 == null || nums1.length != nums2.length)
+		{
+			return 0;
+		}
+		
+        return search(nums1, nums2, 0, nums1.length, 0);
+    }
+	
+	private int search(int[] nums1, int[] nums2, int i, int n, int status) 
+	{
+        if (i == n) 
+        {
+        	return 0;
+        }
+        else if (memo.containsKey(status)) 
+        {
+        	return memo.get(status);
+        }
+        
+        int min = Integer.MAX_VALUE;
+        
+        for (int j = 0; j < n; j++) 
+        {
+            if ((status & (1 << j)) == 0) 
+            {
+                min = Math.min(min, (nums1[i] ^ nums2[j]) + search(nums1, nums2, i + 1, n, status | (1 << j)));
+            }
+        }
+        
+        memo.put(status, min);
+        return min;
+    } 
+			
+									
+									
+									
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+ 
+    	
+    }
+}
