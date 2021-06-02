@@ -23,7 +23,57 @@ public class Q097_Interleaving_String {
 	 * 
 	 ******************************************************************************************************************/
 	
+	// solution 1: dp, time O(n*m), space O(n)
 	public boolean isInterleave(String s1, String s2, String s3) 
+    {
+        if (s1 == null || s1.length() == 0)
+        {
+            return s2.equals(s3);
+        }
+        else if (s2 == null || s2.length() == 0)
+        {
+            return s1.equals(s3);
+        }
+        else if (s3 == null || s3.length() == 0)
+        {
+            return false;
+        }
+        else if (s1.length() + s2.length() != s3.length())
+        {
+            return false;
+        }
+        
+        boolean dp[] = new boolean[s2.length() + 1];
+        
+        for (int i = 0; i <= s1.length(); i++) 
+        {
+            for (int j = 0; j <= s2.length(); j++) 
+            {
+                if (i == 0 && j == 0) 
+                {
+                    dp[j] = true;
+                } 
+                else if (i == 0) 
+                {
+                    dp[j] = dp[j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1);
+                } 
+                else if (j == 0) 
+                {
+                    dp[j] = dp[j] && s1.charAt(i - 1) == s3.charAt(i + j - 1);
+                } 
+                else 
+                {
+                    dp[j] = (dp[j] && s1.charAt(i - 1) == s3.charAt(i + j - 1)) || (dp[j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1));
+                }
+            }
+        }
+        
+        return dp[s2.length()];
+    }
+	
+	
+	// solution 2: dp, time O(n*m), space O(n*m)
+	public boolean isInterleave2(String s1, String s2, String s3) 
 	{
 		if (s3 == null || s3.length() == 0) 
 		{
@@ -92,13 +142,13 @@ public class Q097_Interleaving_String {
 	
 	
 	
-	// solution 2: 自底向上recursion + memo
+	// solution 3: 自底向上recursion + memo
 	private String s1;
     private String s2;
     private String s3;
     private Boolean[][] memo;
     
-    public boolean isInterleave2(String s1, String s2, String s3) 
+    public boolean isInterleave3(String s1, String s2, String s3) 
     {
         if (s3 == null || s3.length() == 0) 
 		{
