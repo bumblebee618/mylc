@@ -1,0 +1,67 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public boolean findRotation(int[][] mat, int[][] target) 
+    {
+        if (mat == null || mat.length == 0 || mat[0].length == 0)
+        {
+            return false;
+        }
+        else if (target == null || target.length == 0 || target[0].length == 0)
+        {
+            return false;
+        }
+        else if (mat.length != target.length)
+        {
+            return false;
+        }
+        
+        int n = mat.length;
+        int up = 0, down = n - 1;
+		
+		while (up < down) 
+        {
+			for (int col = 0; col < n; col++) 
+            {
+				int temp = mat[up][col];
+				mat[up][col] = mat[down][col];
+				mat[down][col] = temp;
+			}
+			
+			up++;
+			down--;
+		}
+        
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (mat[i][j] != target[i][j])
+                {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }							
+									
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[][] mat = {{0,1},{1,0}}, target = {{1,0},{0,1}};
+    	
+    	System.out.println(test.findRotation(mat, target));
+    	
+    	
+    }
+}

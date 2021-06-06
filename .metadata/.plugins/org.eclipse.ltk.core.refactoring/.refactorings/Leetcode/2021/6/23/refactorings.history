@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;effificency&apos; in &apos;Q1383_Maximum_Performance_of_a_Team.Pair&apos; to &apos;efficiency&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q1383_Maximum_Performance_of_a_Team.Pair.effificency&apos;&#x0A;- Renamed element: &apos;Q1383_Maximum_Performance_of_a_Team.Pair.efficiency&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;effificency&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;{Q1383_Maximum_Performance_of_a_Team.java[Q1383_Maximum_Performance_of_a_Team[Pair^effificency" name="efficiency" references="true" setter="false" stamp="1622913838619" textual="true" version="1.0"/>
+</session>
