@@ -19,20 +19,25 @@ Every cost[i] will be an integer in the range [0, 999].
  *
  */
 
-public class Q746_Min_Cost_Climbing_Stairs {
-	public int minCostClimbingStairs(int[] cost) {
-		if (cost == null || cost.length == 0 || cost.length == 1) {
-			return 0;
-		}
-
-		int len = cost.length;
-		int[] currentCost = new int[len];
-		currentCost[0] = currentCost[1] = 0;
-
-		for (int i = 2; i < len; i++) {
-			currentCost[i] = Math.min(currentCost[i - 2] + cost[i - 2], currentCost[i - 1] + cost[i - 1]);
-		}
-
-		return Math.min(currentCost[len - 2] + cost[len - 2], currentCost[len - 1] + cost[len - 1]);
+public class Q746_Min_Cost_Climbing_Stairs 
+{
+	public int minCostClimbingStairs(int[] cost) 
+	{
+		if (cost == null || cost.length <= 1)
+        {
+            return 0;
+        }
+        
+        int size = cost.length;
+        int[] dp = new int[size+1];
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        
+        for (int i = 2; i <= size; i++)
+        {
+            dp[i] = (i == size) ? Math.min(dp[i-1], dp[i-2]) : Math.min(dp[i-1], dp[i-2]) + cost[i];
+        }
+        
+        return dp[size];
 	}
 }
