@@ -1,0 +1,141 @@
+import java.util.*;
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	 
+	
+	
+	
+	public int maximumRemovals(String s, String p, int[] removable) 
+    {
+		int left = 0, right = removable.length-1;
+		
+		while (left+1 < right)
+		{
+			int mid = left + (right - left) / 2;
+			
+			if (isValid(s, p, removable, mid))
+			{
+				left = mid;
+			}
+			else
+			{
+				right = mid;
+			}
+		}
+		
+		if (isValid(s, p, removable, right))
+		{
+			return right+1;
+		}
+		else if (isValid(s, p, removable, left))
+		{
+			return left+1;
+		}
+		else 
+		{
+			return 0;
+		}
+    }
+	
+	private boolean isValid(String s, String p, int[] removable, int end)
+	{
+		Set<Integer> removed = new HashSet<>();
+		
+		for (int i = 0; i <= end; i++)
+		{
+			removed.add(removable[i]);
+		}
+		
+		int index1 = 0, index2 = 0;
+		int size1 = s.length(), size2 = p.length();
+		
+		while (index1 < size1 && index2 < size2)
+		{
+			if (removed.contains(index1) || s.charAt(index1) != p.charAt(index2))
+			{
+				index1++;
+				continue;
+			}
+			
+			index1++;
+			index2++;
+		}
+		
+		return index2 == size2;
+	}
+	
+	
+	
+	
+	public boolean mergeTriplets(int[][] triplets, int[] target) 
+	{
+		List<Integer>[] lists = new List[3];
+		
+		for (int i = 0; i < target.length; i++)
+		{
+			lists[i] = new ArrayList<>();
+		}
+		
+		for (int i = 0; i < triplets.length; i++)
+		{
+			if (target[0] == triplets[i][0] 
+				&& triplets[i][1] <= target[1] 
+				&& triplets[i][2] <= target[2])
+			{
+				lists[0].add(i);
+			}
+			
+			if (target[1] == triplets[i][1]
+				&& triplets[i][0] <= target[0] 
+				&& triplets[i][2] <= target[2])
+			{
+				lists[1].add(i);
+			}
+			
+			if (target[2] == triplets[i][2]
+				&& triplets[i][0] <= target[0] 
+				&& triplets[i][1] <= target[1])
+			{
+				lists[2].add(i);
+			}
+		}
+		
+		for (int i = 0; i < target.length; i++)
+		{
+			if (lists[i].size() == 0)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+    }
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	String s1 = "abcacb", p1 = "ab";
+    	int[] removable1 = {3,1,0};
+    	
+    	String s2 = "abcbddddd", p2 = "abcd";
+    	int[] removable2 = {3,2,1,4,5,6};
+    	
+    	String s3 = "abcab", p3 = "abc";
+    	int[] removable3 = {0,1,2,3,4};
+    	
+    	System.out.println(test.maximumRemovals(s1, p1, removable1));
+    	System.out.println(test.maximumRemovals(s2, p2, removable2));
+    	System.out.println(test.maximumRemovals(s3, p3, removable3));
+    }
+}

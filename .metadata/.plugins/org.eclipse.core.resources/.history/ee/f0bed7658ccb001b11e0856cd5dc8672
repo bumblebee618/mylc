@@ -1,0 +1,72 @@
+import java.util.*;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public boolean isCovered(int[][] ranges, int left, int right) 
+	{
+		if (ranges == null || ranges.length == 0 || ranges[0].length != 2 || left > right)
+		{
+			return false;
+		}
+		
+		Arrays.sort(ranges, (a, b) -> (a[0] != b[0]) ? a[0]-b[0] : a[1]-b[1]);
+		int index = 0, size = ranges.length;
+		
+		while (index < size)
+		{
+			if (ranges[index][1] >= left)
+			{
+				break;
+			}
+			
+			index++;
+		}
+		
+		if (index >= size || ranges[index][0] > left)
+		{
+			return false;
+		}
+		
+		while (index < size)
+		{
+			if (ranges[index][1] >= right)
+			{
+				return true;
+			}
+			
+			if (index > 0 && ranges[index-1][1] + 1 < ranges[index][0])
+			{
+				return false;
+			}
+			
+			index++;
+		}
+		
+		return false;
+    }
+	
+	
+	
+									
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	int[][] ranges1 = {{1,2},{3,4},{5,6}};
+    	int left1 = 2, right1 = 5;
+    	
+    	int[][] ranges2 = {{1,10},{10,20}};
+    	int left2 = 21, right2 = 21;
+    	
+    	
+    	System.out.println(test.isCovered(ranges1, left1, right1));
+    	System.out.println(test.isCovered(ranges2, left2, right2));
+    	System.out.println();
+    }
+}

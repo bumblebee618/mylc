@@ -1,0 +1,342 @@
+import java.util.*;
+
+import javax.swing.text.html.HTML.Tag;
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public boolean isCovered(int[][] ranges, int left, int right) 
+	{
+		if (ranges == null || ranges.length == 0 || ranges[0].length != 2 || left > right)
+		{
+			return false;
+		}
+		
+		Arrays.sort(ranges, (a, b) -> (a[0] != b[0]) ? a[0]-b[0] : a[1]-b[1]);
+		int start = ranges[0][0], end = ranges[0][1], size = ranges.length;
+		List<int[]> list = new ArrayList<>();
+		
+		for (int i = 1; i < size; i++)
+		{
+			if (end+1 >= ranges[i][0])
+			{
+				end = Math.max(end, ranges[i][1]);
+				continue;
+			}
+			
+			if (start <= left && end >= right)
+			{
+				return true;
+			}
+			
+			list.add(new int[] {start, end});
+			start = ranges[i][0];
+			end = ranges[i][1];
+		}
+		
+		if (start <= left && end >= right)
+		{
+			return true;
+		}
+		
+		return false;
+    }
+	
+	
+	
+	public int chalkReplacer(int[] chalk, int k) 
+	{
+        if (chalk == null || chalk.length == 0 || k < 0)
+        {
+        	return -1;
+        }
+        
+        long sum = 0;
+        
+        for (int num : chalk)
+        {
+        	sum += (long) num;
+        }
+        
+        sum = (long) k % sum; 
+        
+        for (int i = 0; i < chalk.length; i++)
+        {
+        	if (sum < (long) chalk[i])
+        	{
+        		return i;
+        	}
+        	
+        	sum -= (long) chalk[i];
+        }
+        
+        return -1;
+    }
+	
+	private int[][] rowSum;
+	private int[][] colSum;
+	private int[][] diagSum;
+	private int[][] antiDiagSum;
+	private int row, col;
+	
+	public int largestMagicSquare(int[][] grid) 
+	{
+		if (grid == null || grid.length == 0 || grid[0].length == 0)
+		{
+			return 0;
+		}
+		
+		row = grid.length; 
+		col = grid[0].length;
+		int result = 1, side = Math.min(row, col);
+		
+		rowSum = new int[row][col];
+		colSum = new int[row][col];
+		diagSum = new int[row][col];
+		antiDiagSum = new int[row][col];
+		
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				rowSum[i][j] = j > 0 ? rowSum[i][j-1] + grid[i][j] : grid[i][j];
+				colSum[i][j] = i > 0 ? colSum[i-1][j] + grid[i][j] : grid[i][j];
+				diagSum[i][j] = (i > 0 && j > 0) ? diagSum[i-1][j-1] + grid[i][j] : grid[i][j];
+				antiDiagSum[i][j] = (i > 0 && j+1 < col) ? antiDiagSum[i-1][j+1] + grid[i][j] : grid[i][j];
+			}
+		}
+		
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				for (int k = 1; k < side; k++)
+				{
+					if (i+k >= row || j+k >= col)
+					{
+						break;
+					}
+					
+					int diagResult = getDiagSum(i, i+k, j, j+k);
+					
+					if (diagResult != getAntiDiagSum(i, i+k, j+k, j))
+					{
+						continue;
+					}
+					
+					boolean found = true;
+					
+					for (int x = 0; x < k; x++)
+					{
+						if (diagResult != getRowSum(i+x, j, j+k))
+						{
+							found = false;
+							break;
+						}
+						
+						if (diagResult != getColSum(j+x, i, i+k))
+						{
+							found = false;
+							break;
+						}
+					}
+					
+					if (found)
+					{
+						result = Math.max(result, k+1);
+					}
+				}
+			}
+		}
+		
+		return result;
+    }
+	
+	private int getRowSum(int row, int start, int end)
+	{
+		return start > 0 ? rowSum[row][end] - rowSum[row][start-1] : rowSum[row][end];
+	}
+	
+	private int getColSum(int col, int start, int end)
+	{
+		return start > 0 ? colSum[end][col] - colSum[start-1][col] : colSum[end][col];
+	}
+	
+	private int getDiagSum(int startRow, int endRow, int startCol, int endCol)
+	{
+		return startRow > 0 && startCol > 0 ? diagSum[endRow][endCol] - diagSum[startRow-1][startCol-1] : diagSum[endRow][endCol];
+	}
+	
+	private int getAntiDiagSum(int startRow, int endRow, int startCol, int endCol)
+	{
+		return startRow > 0 && startCol+1 < col ? antiDiagSum[endRow][endCol] - antiDiagSum[startRow-1][startCol+1] : antiDiagSum[endRow][endCol];
+	}
+	
+	
+	public boolean makeEqual(String[] words) 
+    {
+        if (words == null || words.length == 0)
+        {
+            return false;
+        }
+        
+        int[] hash = new int[256];
+        int size = words.length;
+        
+        for (String word : words)
+        {
+            for (char c : word.toCharArray())
+            {
+                hash[c]++;
+            }
+        }
+        
+        for (int i = 0; i < hash.length; i++)
+        {
+            if (hash[i] > 0 && hash[i] % size != 0)
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+	
+	
+	
+	public int maximumRemovals(String s, String p, int[] removable) 
+    {
+		Map<Character, TreeSet<Integer>> map = new HashMap<>();
+		Set<Character> set = new HashSet<>();
+		
+		for (int i = 0; i < s.length(); i++)
+		{
+			map.computeIfAbsent(s.charAt(i), x -> new TreeSet<>()).add(i);
+		}
+		
+		char[] letters = p.toCharArray();
+		
+		for (char c : letters)
+		{
+			set.add(c);
+		}
+		
+		int result = 0;
+		int sLen = s.length(), pLen = p.length();
+		
+		for (int index : removable)
+		{
+			if (sLen < pLen)
+			{
+				break;
+			}
+			
+			if (!set.contains(s.charAt(index)))
+			{
+				sLen--;
+				result++;
+				continue;
+			}
+			
+			map.get(s.charAt(index)).remove(index);
+			
+			if (!isValid(letters, map))
+			{
+				break;
+			}
+			
+			sLen--;
+			result++;
+		}
+		
+		return result;
+    }
+	
+	private boolean isValid(char[] letters, Map<Character, TreeSet<Integer>> map)
+	{
+		int start = 0;
+		
+		for (char c : letters)
+		{
+			Integer next = map.get(c).ceiling(start);
+			
+			if (next == null)
+			{
+				return false;
+			}
+			
+			start = next+1;
+		}
+		
+		return true;
+	}
+	
+	
+	
+	
+	public boolean mergeTriplets(int[][] triplets, int[] target) 
+	{
+		List<Integer>[] lists = new List[3];
+		
+		for (int i = 0; i < target.length; i++)
+		{
+			lists[i] = new ArrayList<>();
+		}
+		
+		for (int i = 0; i < triplets.length; i++)
+		{
+			if (target[0] == triplets[i][0] 
+				&& triplets[i][1] <= target[1] 
+				&& triplets[i][2] <= target[2])
+			{
+				lists[0].add(i);
+				System.out.println("1: " + lists[0].size());
+			}
+			
+			if (target[1] == triplets[i][1]
+				&& triplets[i][0] <= target[0] 
+				&& triplets[i][2] <= target[2])
+			{
+				lists[0].add(i);
+				System.out.println("2: " + lists[1].size());
+			}
+			
+			if (target[2] == triplets[i][2]
+				&& triplets[i][0] <= target[0] 
+				&& triplets[i][1] <= target[1])
+			{
+				lists[0].add(i);
+				System.out.println("3: " + lists[2].size());
+			}
+		}
+		
+		for (int i = 0; i < target.length; i++)
+		{
+			if (lists[i].size() == 0)
+			{
+				System.out.println(lists[i].size());
+				return false;
+			}
+		}
+		
+		return true;
+    }
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	int[][] triplets = {{2,5,3},{1,8,4},{1,7,5}};
+    	int[] target = {2,7,5};
+    	
+    	
+    	
+    	System.out.println(test.mergeTriplets(triplets, target));
+    }
+}
