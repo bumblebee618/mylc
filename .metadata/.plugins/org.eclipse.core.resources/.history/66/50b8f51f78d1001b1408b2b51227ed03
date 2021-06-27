@@ -1,0 +1,168 @@
+import java.util.*;
+import java.util.function.UnaryOperator;
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public String largestOddNumber(String num) {
+        if (num == null || num.length() == 0)
+        {
+            return "";
+        }
+        
+        for (int i = num.length()-1; i >= 0; i--)
+        {
+            if ((num.charAt(i) - '0') % 2 != 0)
+            {
+                return num.substring(0, i+1);
+            }
+        }
+        
+        return "*";
+    }
+	
+	
+	public int numberOfRounds(String startTime, String finishTime) 
+    {
+        int startH = Integer.parseInt(startTime.split(":")[0]);    
+        int startM = Integer.parseInt(startTime.split(":")[1]);    
+        int endH = Integer.parseInt(finishTime.split(":")[0]);    
+        int endM = Integer.parseInt(finishTime.split(":")[1]);  
+        
+        if (endH < startH || (endH == startH && endM < startM))
+        {
+        	endH += 24;
+        }
+        
+        if (startM > 0 && startM < 15)
+        {
+        	startM = 15;
+        }
+        else if (startM > 15 && startM < 30)
+        {
+        	startM = 30;
+        }
+        else if (startM > 30 && startM < 45)
+        {
+        	startM = 45;
+        }
+        else if (startM > 45)
+        {
+        	startH +=1;
+        	startM = 0;
+        }
+        
+        if (endM > 0 && endM < 15)
+        {
+        	endM = 0;
+        }
+        else if (endM > 15 && endM < 30)
+        {
+        	endM = 15;
+        }
+        else if (endM > 30 && endM < 45)
+        {
+        	endM = 30;
+        }
+        else if (endM > 45)
+        {
+        	endM = 45;
+        }
+        
+        if (endH == startH && endM <= startM)
+        {
+        	return 0;
+        }
+        
+        if (endH < startH)
+        {
+        	endH += 24;
+        }
+        
+        if (endM < startM)
+    	{
+    		endM += 60;
+    		endH -=1;
+    	}
+        
+        // System.out.println(startH + ", " + startM);
+    	// System.out.println(endH + ", " + endM);
+    	
+    	int diffH = endH - startH;
+    	return diffH * 4 + (endM - startM) / 15;
+    }
+	
+	private int[] dx = {1, -1, 0, 0};
+	private int[] dy = {0, 0, 1, -1};
+	
+	public int countSubIslands(int[][] grid1, int[][] grid2) 
+    {
+        int row = grid2.length, col = grid2[0].length;
+        boolean[][] visited = new boolean[row][col];
+        int result = 0;
+        
+        for (int i = 0; i < row; i++)
+        {
+        	for (int j = 0; j < col; j++)
+        	{
+        		if (!visited[i][j] && grid2[i][j] == 1)
+        		{
+        			result += dfs(grid1, grid2, visited, i, j) ? 1 : 0;
+        			
+        			System.out.println(i + ", " + j + ",   " + result);
+        		}
+        	}
+        }
+        
+        return result;
+    }
+	
+	private boolean dfs(int[][] grid1, int[][] grid2, boolean[][] visited, int x, int y)
+	{
+		boolean result = true;
+		
+		if (grid1.length < x || grid1[0].length < y || grid1[x][y] != 1)
+		{
+			result = false;
+		}
+		
+		for (int i = 0; i < dx.length; i++)
+		{
+			int newX = x + dx[i];
+			int newY = y + dy[i];
+			
+			if (newX >= 0 && newX < grid2.length 
+				&& newY >= 0 && newY < grid2[0].length
+				&& grid2[newX][newY] == 1 && !visited[newX][newY])
+			{
+				visited[newX][newY] = true;
+				result &= dfs(grid1, grid2, visited, newX, newY);
+			}
+		}
+		
+		return result;
+	}
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	/*
+    	int[][] grid1 = {{1,1,1,0,0}, {0,1,1,1,1}, {0,0,0,0,0}, {1,0,0,0,0}, {1,1,0,1,1}};
+    	int[][] grid2 = {{1,1,1,0,0}, {0,0,1,1,1}, {0,1,0,0,0}, {1,0,1,1,0}, {0,1,0,1,0}};
+    	System.out.println(test.countSubIslands(grid1, grid2));
+    	*/
+    	
+    	int[][] grid1 = {{1,0,1,0,1},{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1},{1,0,1,0,1}};
+    	int[][] grid2 = {{0,0,0,0,0},{1,1,1,1,1},{0,1,0,1,0},{0,1,0,1,0},{1,0,0,0,1}};
+    	System.out.println(test.countSubIslands(grid1, grid2));
+    	
+    	
+    }
+}
