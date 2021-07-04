@@ -1,0 +1,220 @@
+import java.util.*;
+import java.util.function.UnaryOperator;
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public int eliminateMaximum(int[] dist, int[] speed) 
+    {
+		if (dist == null || dist.length == 0 || speed == null || dist.length != speed.length)
+		{
+			return 0;
+		}
+		
+		int count = 0;
+		int size = dist.length;
+		double[] mins = new double[size];
+		
+		for (int i = 0; i < size; i++)
+		{
+			mins[i] = (double) dist[i] / speed[i];
+		}
+		
+		Arrays.sort(mins);
+		int currentTime = 0;
+		
+		for (int i = 0; i < size; i++)
+		{
+			if ((double) currentTime >= mins[i])
+			{
+				break;
+			}
+			
+			count++;
+			currentTime++;
+		}
+		
+		return count;
+    }
+	
+	
+	public int countGoodNumbers(long n) 
+	{
+		if (n <= 0)
+		{
+			return 0;
+		}
+		else if (n == 1)
+		{
+			return 5;
+		}
+		
+		int mod = 1_000_000_007;
+		long oddCount = getValue(n / 2, 4L);
+		long evenCount = getValue(n / 2, 5L);
+		
+		if (n % 2 == 1)
+		{
+			evenCount = (evenCount * 5) % mod;
+		}
+
+		return (int) ((evenCount * oddCount) % mod);
+    }	
+	
+	private long getValue(long index, long base)
+	{
+		long result = 1;
+		int mod = 1_000_000_007;
+		
+		while (index > 1)
+		{
+			if (index % 2 == 1)
+			{
+				result = (result * base) % mod;
+			}
+			
+			base = (base * base) % mod;
+			index /= 2;
+		}
+		
+		return (result * base) % mod;
+	}
+	
+
+	
+	
+	
+	
+	public int longestCommonSubpath(int n, int[][] paths) 
+	{
+		if (paths == null || paths.length == 0 || paths[0].length == 0 || n <= 0)
+		{
+			return 0;
+		}
+		
+		int m = paths.length;
+		Map<Integer, List<Integer>>[] graphs = new Map[m];
+		int globalMax = paths[0].length;
+		
+		for (int i = 0; i < m; i++)
+		{
+			graphs[i] = new HashMap<>();
+			
+			for (int j = 0; j < paths[i].length; j++)
+			{
+				graphs[i].computeIfAbsent(paths[i][j], x -> new LinkedList<>()).add(j);
+			}
+		}
+		
+		List<Integer> preStarts = new LinkedList<>();
+		
+		for (int i = 0; i < paths[0].length; i++)
+		{
+			preStarts.add(i);
+		}
+		
+		for (int i = 1; i < m; i++)
+		{
+			if (preStarts.size() == 0)
+			{
+				return 0;
+			}
+			
+			List<Integer> curStarts = new LinkedList<>();
+			int localMax = 0;
+			
+			for (int preStart : preStarts)
+			{
+				if (!graphs[i].containsKey(paths[i-1][preStart]))
+				{
+					continue;
+				}
+				
+				for (int curStart : graphs[i].get(paths[i-1][preStart]))
+				{
+					int curIndex = curStart;
+					int preIndex = preStart;
+					
+					while (curIndex < paths[i].length 
+							&& preIndex < preStart + globalMax 
+							&& preIndex < paths[i-1].length)
+					{
+						if (paths[i-1][preIndex] != paths[i][curIndex])
+						{
+							break;
+						}
+						
+						preIndex++;
+						curIndex++;
+					}
+					
+					if (curIndex - curStart >= localMax)
+					{
+						if (curIndex - curStart > localMax)
+						{
+							curStarts = new LinkedList<>();
+							localMax = curIndex - curStart;
+						}
+						
+						curStarts.add(curStart);
+					}
+				}
+			}
+			
+			preStarts = curStarts;
+			globalMax = Math.min(globalMax, localMax);
+		}
+		
+		return globalMax;
+	}
+	
+	
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+
+    	/***
+    	System.out.println(test.countGoodNumbers(1));
+    	
+    	System.out.println(test.countGoodNumbers(4));
+    	
+    	System.out.println(test.countGoodNumbers(50));
+    	***/
+    	
+    	/**
+    	int n = 5;
+    	int[][] paths = {
+    			{0,1,2,3,4},
+    			{2,3,4},
+    			{4,0,1,2,3}
+    	};
+    	
+    	
+    	int n = 3;
+    	int[][] paths = {
+    			{0},
+    			{1},
+    			{2}
+    	};
+    	
+    	**/
+    	
+    	int n = 5;
+    	int[][] paths = {
+    			{1,2,3,4},
+    			{4,3,2,1},
+    			{4}
+    	};
+    	
+    	System.out.println(test.longestCommonSubpath(n, paths));
+    }
+}
