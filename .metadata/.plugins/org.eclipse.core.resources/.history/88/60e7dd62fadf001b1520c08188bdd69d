@@ -42,4 +42,32 @@ public class Q718_Maximum_Length_of_Repeated_Subarray
         
         return maxLen;
     }
+	
+	
+	public int findLength(int[] A, int[] B) {
+        if (A == null || A.length == 0 || B == null || B.length == 0) {
+            return 0;
+        }
+        
+        int len1 = A.length, len2 = B.length;
+        int maxLen = 0;
+      
+        int[][] dp = new int[len1][len2];
+        
+        for (int i = 0; i < len1; i++) {
+            for (int j = 0; j < len2; j++) {
+                if (i == 0 || j == 0) {
+                    dp[i][j] = (A[i] == B[j]) ? 1 : 0;
+                    maxLen = Math.max(dp[i][j], maxLen);
+                } else {
+                    if (A[i] == B[j]) {
+                        dp[i][j] = dp[i-1][j-1] + 1;
+                        maxLen = Math.max(dp[i][j], maxLen);
+                    }
+                }
+            }
+        }
+        
+        return maxLen;
+    }
 }

@@ -29,7 +29,6 @@
 <fullyQualifiedTypeName name="javax.sound.sampled.spi.FormatConversionProvider"/>
 <fullyQualifiedTypeName name="org.omg.CORBA.Current"/>
 <fullyQualifiedTypeName name="Q124_Binary_Tree_Maximum_Path_Sum.resultTuple"/>
-<fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.util.Deque"/>
 <fullyQualifiedTypeName name="javax.swing.plaf.basic.BasicComboPopup.InvocationKeyHandler"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
 </qualifiedTypeNameHistroy>
