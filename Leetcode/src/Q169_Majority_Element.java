@@ -23,7 +23,7 @@ public class Q169_Majority_Element {
         int recordNum = nums[0];
         int count = 0;
         
-        for (int i = 0; i < len; i++)
+        for (int i = 1; i < len; i++)
         {
             if (recordNum == nums[i])
             {

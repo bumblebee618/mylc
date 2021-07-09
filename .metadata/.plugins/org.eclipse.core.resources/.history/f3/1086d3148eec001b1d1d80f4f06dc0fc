@@ -1,0 +1,39 @@
+import java.math.BigDecimal;
+import java.util.*;
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public int smallestChair(int[][] times, int targetFriend) {
+        
+    }
+	
+	class Node {
+		public int index;
+		public int sTime;
+		public int eTime;
+	
+		public int Node(int i, int s, int e)
+		{
+			index = i;
+			sTime = s;
+			eTime = e;
+		}
+	}
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	
+    	
+    }
+}

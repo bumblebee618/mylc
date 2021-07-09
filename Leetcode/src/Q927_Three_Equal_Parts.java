@@ -1,0 +1,149 @@
+import java.util.Arrays;
+
+import org.omg.CORBA.SystemException;
+
+/***
+ * 
+ * @author jackie
+ * 
+ * You are given an array arr which consists of only zeros and ones, divide the array into three non-empty parts such that all of these parts represent the same binary value.
+
+If it is possible, return any [i, j] with i + 1 < j, such that:
+
+arr[0], arr[1], ..., arr[i] is the first part,
+arr[i + 1], arr[i + 2], ..., arr[j - 1] is the second part, and
+arr[j], arr[j + 1], ..., arr[arr.length - 1] is the third part.
+All three parts have equal binary values.
+If it is not possible, return [-1, -1].
+
+Note that the entire part is used when considering what binary value it represents. For example, [1,1,0] represents 6 in decimal, not 3. Also, leading zeros are allowed, so [0,1,1] and [1,1] represent the same value.
+
+ 
+
+Example 1:
+
+Input: arr = [1,0,1,0,1]
+Output: [0,3]
+Example 2:
+
+Input: arr = [1,1,0,1,1]
+Output: [-1,-1]
+Example 3:
+
+Input: arr = [1,1,0,0,1]
+Output: [0,2]
+ 
+
+Constraints:
+
+3 <= arr.length <= 3 * 104
+arr[i] is 0 or 1
+ */
+public class Q927_Three_Equal_Parts 
+{
+	private int[] result = new int[] {-1, -1};
+    private int pointer = 0, suffixZeros = 0;
+    private int[] firstOnes = new int[2], lastOnes = new int[2];
+    
+    public int[] threeEqualParts(int[] arr) 
+    {
+        int totalOnes = Arrays.stream(arr).sum();
+        
+        if (totalOnes == 0)
+        {
+            return new int[] {0, arr.length-1};
+        }
+        else if (totalOnes % 3 != 0)
+        {
+            return result;
+        }
+        
+        int targetOnes = totalOnes/3, curOnes = 0;
+        pointer = arr.length-1;
+        
+        // check subarray3
+        while (arr[pointer] == 0)
+        {
+            suffixZeros++;
+            pointer--;
+        }
+        
+        lastOnes[1] = pointer;
+        
+        if (suffixZeros > arr.length/3)
+        {
+            return new int[] {-1, -1};
+        }
+        
+        while (curOnes < targetOnes)
+        {
+            curOnes += arr[pointer--];
+        }
+        
+        firstOnes[1] = pointer+1;
+        
+        // check subarray2
+        if (!isValid(arr, 1))
+        {
+            return new int[] {-1, -1};
+        }
+        
+        firstOnes[0] = pointer+1;
+        
+        // check subarray1
+        if (!isValid(arr, 0))
+        {
+            return new int[] {-1, -1};
+        }
+        
+        result[0]--;
+        return result;
+    }
+    
+    private boolean isValid(int[] arr, int partIndex)
+    {
+        int curZeros = 0;
+        
+        while (pointer >= 0 && arr[pointer] == 0)
+        {
+            curZeros++;
+            pointer--;
+        }
+        
+        if (curZeros < suffixZeros)
+        {
+            return false;
+        }
+        
+        result[partIndex] = firstOnes[partIndex] - (curZeros-suffixZeros);
+        
+        for (int i = lastOnes[1]; i >= firstOnes[1]; i--, pointer--)
+        {
+            if (pointer < 0 || arr[pointer] != arr[i])
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    
+    
+    
+    
+    /*************************** main ***************************/
+    
+    public static void main(String[] args)
+    {
+    	Q927_Three_Equal_Parts test = new Q927_Three_Equal_Parts();
+    	int[] arr1 = {1,0,1,0,1};
+    	int[] arr2 = {1,1,0,1,1};
+    	int[] arr3 = {1,1,0,0,1};
+    	int[] arr4 = {0,1,0,1,1};
+    	
+    	int[] result = test.threeEqualParts(arr3);
+    	
+    	System.out.println(result[0] + ", " + result[1]);
+    }
+}
