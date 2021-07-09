@@ -24063,7 +24063,7 @@
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_N-TGUN_6Eeux3qcm05JgMQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="Q718_Maximum_Length_of_Repeated_Subarray.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Q718_Maximum_Length_of_Repeated_Subarray.java&quot; partName=&quot;Q718_Maximum_Length_of_Repeated_Subarray.java&quot; title=&quot;Q718_Maximum_Length_of_Repeated_Subarray.java&quot; tooltip=&quot;Leetcode/src/Q718_Maximum_Length_of_Repeated_Subarray.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/Leetcode/src/Q718_Maximum_Length_of_Repeated_Subarray.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;299&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Q718_Maximum_Length_of_Repeated_Subarray.java&quot; partName=&quot;Q718_Maximum_Length_of_Repeated_Subarray.java&quot; title=&quot;Q718_Maximum_Length_of_Repeated_Subarray.java&quot; tooltip=&quot;Leetcode/src/Q718_Maximum_Length_of_Repeated_Subarray.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/Leetcode/src/Q718_Maximum_Length_of_Repeated_Subarray.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;17&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1635&quot; selectionTopPixel=&quot;1338&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
           <tags>removeOnHide</tags>
@@ -29489,7 +29489,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_WYqQ08uZEeuPtapEBx2THw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_FBI-EN_6Eeux3qcm05JgMQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_WY-dvMuZEeuPtapEBx2THw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_AhVB4OBdEeuoeoMy8L6N3Q" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_WY-dvMuZEeuPtapEBx2THw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_WYqQ4MuZEeuPtapEBx2THw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -29522,7 +29522,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_WY9LcMuZEeuPtapEBx2THw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_FBMocN_6Eeux3qcm05JgMQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_WY-dXsuZEeuPtapEBx2THw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_AhZTUOBdEeuoeoMy8L6N3Q" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_WY-dXsuZEeuPtapEBx2THw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_WY9Le8uZEeuPtapEBx2THw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -30060,7 +30060,7 @@
       <tags>platform:cocoa</tags>
       <parameters xmi:id="_WY9MxsuZEeuPtapEBx2THw" elementId="org.eclipse.ui.views.showView.viewId" name="org.eclipse.ui.views.showView.viewId" value="org.eclipse.jdt.ui.TypeHierarchy"/>
     </bindings>
-    <bindings xmi:id="_D8Tc8d_6Eeux3qcm05JgMQ" keySequence="COMMAND+CTRL+F" command="_WY_AnMuZEeuPtapEBx2THw"/>
+    <bindings xmi:id="__drzkOBcEeuoeoMy8L6N3Q" keySequence="COMMAND+CTRL+F" command="_WY_AnMuZEeuPtapEBx2THw"/>
   </bindingTables>
   <bindingTables xmi:id="_WY9MyMuZEeuPtapEBx2THw" elementId="org.eclipse.ui.textEditorScope" bindingContext="_WY9NpMuZEeuPtapEBx2THw">
     <bindings xmi:id="_WY9MycuZEeuPtapEBx2THw" keySequence="COMMAND+SHIFT+ARROW_LEFT" command="_WY-b18uZEeuPtapEBx2THw">
@@ -30323,7 +30323,7 @@
     <bindings xmi:id="_WY9NasuZEeuPtapEBx2THw" keySequence="F1" command="_WY-agcuZEeuPtapEBx2THw"/>
   </bindingTables>
   <bindingTables xmi:id="_WY9Na8uZEeuPtapEBx2THw" contributorURI="platform:/fragment/org.eclipse.e4.ui.workbench.renderers.swt.cocoa" bindingContext="_WY9N1cuZEeuPtapEBx2THw">
-    <bindings xmi:id="_D8UrEN_6Eeux3qcm05JgMQ" keySequence="M1+W" command="_WY_AnsuZEeuPtapEBx2THw"/>
+    <bindings xmi:id="__dsaoOBcEeuoeoMy8L6N3Q" keySequence="M1+W" command="_WY_AnsuZEeuPtapEBx2THw"/>
   </bindingTables>
   <bindingTables xmi:id="_WY9NbcuZEeuPtapEBx2THw" bindingContext="_WY9N3suZEeuPtapEBx2THw"/>
   <bindingTables xmi:id="_WY9NbsuZEeuPtapEBx2THw" bindingContext="_WY9N38uZEeuPtapEBx2THw"/>
