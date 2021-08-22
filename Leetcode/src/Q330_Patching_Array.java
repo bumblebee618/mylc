@@ -61,18 +61,6 @@ public class Q330_Patching_Array {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*************************** main function *******************************/
 	// by ninechapter, easily unstand
 	public int minPatches2(int[] nums, int n) {
 		long sumRange = 0;
@@ -104,9 +92,13 @@ public class Q330_Patching_Array {
 	}
 	
 	
+	
+	
+	/*************************** main function *******************************/
+	
 	public static void main(String[] args){
 		Q330_Patching_Array t = new Q330_Patching_Array();
-		int[] nums = {2, 3};
+		int[] nums = {1, 3};
 		System.out.println(t.minPatches(nums, 6));
 	}
 }

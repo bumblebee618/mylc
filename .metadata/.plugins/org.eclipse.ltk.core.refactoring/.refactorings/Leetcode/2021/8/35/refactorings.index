@@ -1,2 +1,8 @@
 1629605116179	Rename method 'recFunc'
 1629605525451	Rename field 'memo'
+1629659712659	Rename local variable 'x'
+1629659762262	Rename local variable 'L'
+1629660185018	Rename local variable 'res'
+1629661509384	Rename local variable 'res'
+1629661521027	Rename local variable 'a'
+1629661528539	Rename local variable 'b'

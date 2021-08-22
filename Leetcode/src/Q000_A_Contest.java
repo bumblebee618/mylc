@@ -3,6 +3,12 @@ import java.util.*;
 public class Q000_A_Contest 
 {	  
 	
+	
+	
+	
+	
+	
+	
     
 	
 	
@@ -12,7 +18,9 @@ public class Q000_A_Contest
     	
     	/****************************************************/
     	
-
+    	
+    	
+    	
     	
     }
 }
