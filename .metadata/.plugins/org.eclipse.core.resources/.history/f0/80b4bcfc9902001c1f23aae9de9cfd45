@@ -1,0 +1,132 @@
+import java.math.BigDecimal;
+import java.util.*;
+
+import javax.management.relation.Role;
+import javax.xml.crypto.dsig.keyinfo.KeyInfo;
+
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public int minTimeToType(String word) {
+        char[] letters = word.toCharArray();
+        int result = 0;
+        char curPos = 'a';
+        
+        for (char letter : letters) {
+        	int clockwise = (int) (letter - curPos) >= 0 ? (int) (letter - curPos) : (int) (letter - curPos) + 26;
+        	int counterclockwise = (int) (curPos - letter) >= 0 ? (int) (curPos - letter) : (int) (curPos - letter) + 26;
+            int distance = Math.min(clockwise, counterclockwise); 
+            result += distance+1;
+            curPos = letter;
+        }
+        
+        return result;
+    }
+	
+
+    
+    public long maxMatrixSum(int[][] matrix) {
+        int n = matrix.length;
+        long sum = 0;
+        int minPositive = Integer.MAX_VALUE;
+        int maxNegative = Integer.MIN_VALUE;
+        int negativeCount = 0;
+        boolean hasZero = false;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+            	sum += matrix[i][j] > 0 ? matrix[i][j] : -matrix[i][j];
+            	
+                if (matrix[i][j] > 0) {
+                	minPositive = Math.min(minPositive, matrix[i][j]);
+                } else if (matrix[i][j] < 0) {
+                	maxNegative = Math.max(maxNegative, matrix[i][j]);
+                	negativeCount++;
+                } else {
+					hasZero = true;
+				}
+            }
+        }
+        
+        if (!hasZero && negativeCount % 2 > 0) {
+        	if (minPositive != Integer.MAX_VALUE) {
+        		sum -= 2 * Math.min(minPositive, -maxNegative);
+        	} else {
+        		sum += 2 * maxNegative;
+        	}
+        }
+        
+        return sum;
+    }
+    
+    private long minTime = Long.MAX_VALUE;
+    private long count = 0;
+    private Map<Integer, Integer>[] graph;
+    private Set<Integer> visited = new HashSet<>();
+    private int destination;
+    
+    public int countPaths(int n, int[][] roads) {
+        graph = new Map[n];
+        destination = n-1;
+        
+        for (int i = 0; i < n; i++) {
+        	graph[i] = new HashMap<>();
+        }
+        
+        for (int[] road : roads) {
+        	graph[road[0]].put(road[1], road[2]);
+        	graph[road[1]].put(road[0], road[2]);
+        }
+        
+        visited.add(0);
+        dfs(0, 0);
+        return (int) (count % 1_000_000_007);
+    }
+    
+    private void dfs(int node, long curTime) {
+    	System.out.println(node);
+    	
+    	if (curTime > minTime) {
+    		return;
+    	}  
+    	
+    	if (node == destination) {
+    		System.out.println("***" + minTime + ", " + curTime);
+    		
+    		if (minTime > curTime) {
+    			minTime = curTime;
+    			count = 1;
+    		} else if (minTime == curTime) {
+    			count++;
+    		}
+    		
+    		return;
+    	}
+    	
+    	for (int next : graph[node].keySet()) {
+    		if (!visited.contains(next) && next != destination) {
+    			visited.add(next);
+    			dfs(next, curTime+graph[node].get(next));
+    		}
+    	}
+    }
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[][] road1 = {{1,0,10}};
+    	int[][] road2 = {{0,6,7},{0,1,2},{1,2,3},{1,3,3},{6,3,3},{3,5,1},{6,5,1},{2,5,1},{0,4,5},{4,6,2}};
+  
+    	System.out.println(test.countPaths(7, road2));
+    }
+}

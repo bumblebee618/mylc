@@ -1,0 +1,99 @@
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.regex.Matcher;
+
+import javax.management.relation.Role;
+import javax.xml.crypto.dsig.keyinfo.KeyInfo;
+
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public String findDifferentBinaryString(String[] nums) {
+        Set<Integer> set = new HashSet<>();
+        
+        for (String num : nums) {
+        	int sum = 0;
+        	
+            for (int i = 0; i < num.length(); i++) {
+            	if (num.charAt(i) == '1') {
+            		sum += (1 << (num.length() - 1 - i));
+            	}
+            }
+            
+            set.add(sum);
+        }
+        
+        int n = nums.length;
+        int end = (1 << n) - 1; 
+        
+        int target = -1;
+        
+        for (int i = 0; i <= end; i++) {
+        	if (!set.contains(i)) {
+        		target = i;
+        		break;
+        	}
+        }
+        
+      // System.out.println("***" + target);
+
+        StringBuilder builder = new StringBuilder();
+        
+        while (target > 0) {
+        	builder.insert(0, target % 2);
+        	target >>= 1;
+        }
+        
+        while (builder.length() < n) {
+        	builder.insert(0, '0');
+        }
+        
+        return builder.toString();
+    }
+	
+    
+	public int minimizeTheDifference(int[][] mat, int target) {
+        int row = mat.length, col = mat[0].length;
+        int[][] values = new int[row][2];
+        
+        for (int[] array : mat) {
+        	Arrays.sort(array);
+        }
+        
+        
+    }
+	
+	private int search(int[][] mat, char[] status, int curRow) {
+		if (curRow >= mat.length) {
+			return 0;
+		}
+		
+		String statusStr = new String(status);
+		
+		if (memo.containsKey(statusStr)) {
+			return memo.get(statusStr);
+		}
+		
+		for (int i = 0; i < mat[0].length; i++) {
+			status[curRow] = (char) (mat[curRow][i] + '0');
+			
+		}
+	}
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+
+    	
+    }
+}

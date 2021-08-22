@@ -1,0 +1,72 @@
+import java.math.BigDecimal;
+import java.util.*;
+
+import javax.management.relation.Role;
+import javax.xml.crypto.dsig.keyinfo.KeyInfo;
+
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public int minTimeToType(String word) {
+        char[] letters = word.toCharArray();
+        int result = 0;
+        char curPos = 'a';
+        
+        for (char letter : letters) {
+        	int clockwise = (int) (letter - curPos) >= 0 ? (int) (letter - curPos) : (int) (letter - curPos) + 26;
+        	int counterclockwise = (int) (curPos - letter) >= 0 ? (int) (curPos - letter) : (int) (curPos - letter) + 26;
+            int distance = Math.min(clockwise, counterclockwise); 
+            result += distance+1;
+            curPos = letter;
+        }
+        
+        return result;
+    }
+	
+
+    
+    public long maxMatrixSum(int[][] matrix) {
+        int n = matrix.length;
+        long sum = 0;
+        List<int[]> list = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] > 0) {
+                	sum += matrix[i][j];
+                } else {
+                	list.add(new int[] {i, j});
+                }
+            }
+        }
+        
+        Collections.sort(list, (a, b) -> matrix[a[0]][a[1]] - matrix[b[0]][b[1]]);
+        
+        for (int i = 0; i < list.size(); i += 2) {
+        	sum -= matrix[list.get(i)[0]][list.get(i)[1]];
+        	sum -= matrix[list.get(i+1)[0]][list.get(i+1)[1]];
+        }
+        
+        return sum;
+    }
+    
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[][] matrix1 = {{1,-1},{-1,1}};
+    	int[][] matrix2 = {{1,2,3},{-1,-2,-3},{1,2,3}};
+  
+    	System.out.println(test.maxMatrixSum(matrix2));
+    }
+}

@@ -1,0 +1,45 @@
+import java.math.BigDecimal;
+import java.util.*;
+
+import javax.management.relation.Role;
+import javax.xml.crypto.dsig.keyinfo.KeyInfo;
+
+
+
+
+
+
+public class Q000_A_Contest 
+{	  
+	public int minTimeToType(String word) {
+        char[] letters = word.toCharArray();
+        int result = 0;
+        char curPos = 'a';
+        
+        for (char letter : letters) {
+        	int clockwise = (int) (letter - curPos) >= 0 ? (int) (letter - curPos) : (int) (letter - curPos) + 26;
+        	int counterclockwise = (int) (curPos - letter) >= 0 ? (int) (curPos - letter) : (int) (curPos - letter) + 26;
+            int distance = Math.min(clockwise, counterclockwise); 
+            
+            System.out.println(distance);
+            
+            result += distance+1;
+            curPos = letter;
+        }
+        
+        return result;
+    }
+	
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	String word = "abc";
+  
+    	System.out.println(test.minTimeToType(word));
+    }
+}
