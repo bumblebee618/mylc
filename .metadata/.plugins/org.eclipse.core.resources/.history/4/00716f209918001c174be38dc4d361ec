@@ -1,0 +1,72 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{	  
+	public int[] findOriginalArray(int[] changed) {
+		if (changed.length % 2 != 0) {
+			return new int[0];
+		}
+		
+		Arrays.sort(changed);
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] result = new int[changed.length / 2];
+        int index = 0;
+        int start = Integer.MIN_VALUE;
+        
+        for (int num : changed) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+            start = Math.min(start, num);
+        }
+        
+        for (int i = 0; i < changed.length; i++) {
+        	if (map.getOrDefault(changed[i], 0) == 0) {
+        		continue;
+        	}
+        	
+        	int target = changed[i] * 2;
+        	
+        	if (map.getOrDefault(target, 0) == 0) {
+        		return new int[0];
+        	}
+        	
+        	int count = map.get(changed[i]);
+        	
+        	for (int j = 0; j < count; j++) {
+        		result[index++] = changed[i];
+        	}
+        	
+        	map.put(target, map.get(target) - map.get(changed[i]));
+        	
+        	while (i+1 < changed.length && changed[i] == changed[i+1]) {
+        		i++;
+        	}
+        }
+        
+        return result;
+    }
+	
+	
+	
+	
+	
+	
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] changed1 = {1, 2, 3, 4, 4, 2, 6, 8};
+    	int[] changed2 = {2,1,2,4,2,4};
+    	int[] result = test.findOriginalArray(changed2);
+    	
+    	for (int num : result) {
+    		System.out.println(num);
+    	}
+    	
+    	
+    }
+}

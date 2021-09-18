@@ -5,10 +5,6 @@ public class Q000_A_Contest
 	
 	
 	
-	
-	
-	
-	
     
 	
 	
@@ -17,7 +13,6 @@ public class Q000_A_Contest
     	Q000_A_Contest test = new Q000_A_Contest();
     	
     	/****************************************************/
-    	
     	
     	
     	

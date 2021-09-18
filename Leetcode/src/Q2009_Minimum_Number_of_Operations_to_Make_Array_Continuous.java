@@ -1,0 +1,77 @@
+import java.util.*;
+
+/***
+ * 
+ * @author jackie
+ * 
+ * You are given an integer array nums. In one operation, you can replace any element in nums with any integer.
+
+nums is considered continuous if both of the following conditions are fulfilled:
+
+All elements in nums are unique.
+The difference between the maximum element and the minimum element in nums equals nums.length - 1.
+For example, nums = [4, 2, 5, 3] is continuous, but nums = [1, 2, 3, 5, 6] is not continuous.
+
+Return the minimum number of operations to make nums continuous.
+
+ 
+
+Example 1:
+
+Input: nums = [4,2,5,3]
+Output: 0
+Explanation: nums is already continuous.
+Example 2:
+
+Input: nums = [1,2,3,5,6]
+Output: 1
+Explanation: One possible solution is to change the last element to 4.
+The resulting array is [1,2,3,5,4], which is continuous.
+Example 3:
+
+Input: nums = [1,10,100,1000]
+Output: 3
+Explanation: One possible solution is to:
+- Change the second element to 2.
+- Change the third element to 3.
+- Change the fourth element to 4.
+The resulting array is [1,2,3,4], which is continuous.
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+1 <= nums[i] <= 109
+ *
+ */
+
+public class Q2009_Minimum_Number_of_Operations_to_Make_Array_Continuous {
+	public int minOperations(int[] nums) {
+		if (nums == null || nums.length == 0) {
+			return 0;
+		}
+		
+        List<Integer> list = new ArrayList<>();
+		Set<Integer> set = new HashSet<>();
+		
+		for (int num : nums) {
+			if (!set.contains(num)) {
+				set.add(num);
+				list.add(num);
+			}
+		}
+		
+		Collections.sort(list);
+		int result = nums.length;
+		
+		for (int start = 0, end = 0; start < list.size(); start++) {
+			while (end < list.size() && list.get(end) - list.get(start) <= nums.length-1) {
+				end++;
+			}
+			
+			result = Math.min(result, nums.length - (end - start));
+		}
+		
+		return result;
+    }
+}

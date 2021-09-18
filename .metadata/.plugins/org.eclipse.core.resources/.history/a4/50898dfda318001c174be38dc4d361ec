@@ -1,0 +1,100 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{	  
+	public int[] findOriginalArray(int[] changed) {
+		if (changed.length % 2 != 0) {
+			return new int[0];
+		}
+		
+		Arrays.sort(changed);
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] result = new int[changed.length / 2];
+        int index = 0;
+        
+        for (int num : changed) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        
+        for (int i = 0; i < changed.length; i++) {
+        	if (map.getOrDefault(changed[i], 0) == 0) {
+        		continue;
+        	}
+        	
+        	int target = changed[i] * 2;
+        	
+        	if (map.getOrDefault(target, 0) == 0) {
+        		return new int[0];
+        	}
+        	
+        	if (changed[i] == 0 && map.get(changed[i]) % 2 != 0) {
+        		return new int[0];
+        	}
+        	
+        	int count = changed[i] == 0 ? map.get(changed[i]) / 2 : map.get(changed[i]);
+        	
+        	for (int j = 0; j < count && index < result.length; j++) {
+        		result[index++] = changed[i];
+        	}
+        	
+        	map.put(target, map.get(target) - map.get(changed[i]));
+        	
+        	while (i+1 < changed.length && changed[i] == changed[i+1]) {
+        		i++;
+        	}
+        }
+        
+        return result;
+    }
+	
+	
+	public long maxTaxiEarnings(int n, int[][] rides) {
+        Arrays.sort(rides, (a, b) -> a[1] != b[1] ? a[1] - b[1] : a[0] - b[0]);
+        TreeMap<Integer, Long> treeMap = new TreeMap<>();
+        treeMap.put(0,  0L);
+        long globalMax = 0;
+        
+        for (int[] ride : rides) {
+        	Map.Entry<Integer, Long> entry = treeMap.floorEntry(ride[0]);
+        	long localMax = entry.getValue() + (long) (ride[1] - ride[0] + ride[2]);
+        	globalMax = Math.max(globalMax, localMax);
+        	treeMap.put(ride[1], globalMax);
+        }
+        
+        return globalMax;
+    }
+	
+	
+	public int minOperations(int[] nums) {
+		Arrays.sort(nums);
+		int result = Integer.MAX_VALUE;
+		
+		for (int start = 0, end = 0; start < nums.length; start++) {
+			while (end < nums.length && nums[end]-nums[start] <= nums.length-1) {
+				end++;
+			}
+			
+			while (start+1 < nums.length && nums[start+1] == nums[start]+1) {
+				start++;
+			}
+			
+			result = Math.min(result, nums.length - (nums[end] - nums[start]));
+		}
+		
+		return result;
+    }
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] nums = {1,2,3,5,6};
+    	System.out.println(test.minOperations(nums));
+    	
+    	
+    }
+}

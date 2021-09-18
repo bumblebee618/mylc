@@ -1,0 +1,109 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{	  
+	public int[] findOriginalArray(int[] changed) {
+		if (changed.length % 2 != 0) {
+			return new int[0];
+		}
+		
+		Arrays.sort(changed);
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] result = new int[changed.length / 2];
+        int index = 0;
+        
+        for (int num : changed) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        
+        for (int i = 0; i < changed.length; i++) {
+        	if (map.getOrDefault(changed[i], 0) == 0) {
+        		continue;
+        	}
+        	
+        	int target = changed[i] * 2;
+        	
+        	if (map.getOrDefault(target, 0) == 0) {
+        		return new int[0];
+        	}
+        	
+        	if (changed[i] == 0 && map.get(changed[i]) % 2 != 0) {
+        		return new int[0];
+        	}
+        	
+        	int count = changed[i] == 0 ? map.get(changed[i]) / 2 : map.get(changed[i]);
+        	
+        	for (int j = 0; j < count && index < result.length; j++) {
+        		result[index++] = changed[i];
+        	}
+        	
+        	map.put(target, map.get(target) - map.get(changed[i]));
+        	
+        	while (i+1 < changed.length && changed[i] == changed[i+1]) {
+        		i++;
+        	}
+        }
+        
+        return result;
+    }
+	
+	
+	public long maxTaxiEarnings(int n, int[][] rides) {
+        Arrays.sort(rides, (a, b) -> a[1] != b[1] ? a[1] - b[1] : a[0] - b[0]);
+        TreeMap<Integer, Long> treeMap = new TreeMap<>();
+        treeMap.put(0,  0L);
+        long globalMax = 0;
+        
+        for (int[] ride : rides) {
+        	Map.Entry<Integer, Long> entry = treeMap.floorEntry(ride[0]);
+        	long localMax = entry.getValue() + (long) (ride[1] - ride[0] + ride[2]);
+        	globalMax = Math.max(globalMax, localMax);
+        	treeMap.put(ride[1], globalMax);
+        }
+        
+        return globalMax;
+    }
+	
+	
+	public int minOperations(int[] nums) {
+		List<Integer> list = new ArrayList<>();
+		Set<Integer> set = new HashSet<>();
+		
+		for (int num : nums) {
+			if (!set.contains(num)) {
+				set.add(num);
+				list.add(num);
+			}
+		}
+		
+		Collections.sort(list);
+		int result = Integer.MAX_VALUE;
+		
+		for (int start = 0, end = 0; start < list.size(); start++) {
+			while (end < list.size() && nums[end]-nums[start] <= nums.length-1) {
+				end++;
+			}
+			
+			result = Math.min(result, nums.length - (end - start));
+		}
+		
+		return result;
+    }
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] nums1 = {1,2,3,5,6};
+    	int[] nums2 = {8,5,9,9,8,4};
+    	int[] nums3 = {41,33,29,33,35,26,47,24,18,28};
+    	
+    	System.out.println(test.minOperations(nums3));
+    	
+    	
+    }
+}

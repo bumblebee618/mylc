@@ -1,0 +1,62 @@
+import java.util.*;
+
+public class Q000_A_Contest 
+{	  
+	public int[] findOriginalArray(int[] changed) {
+		if (changed.length % 2 != 0) {
+			return new int[0];
+		}
+		
+		Arrays.sort(changed);
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] result = new int[changed.length / 2];
+        int index = 0;
+        int start = Integer.MIN_VALUE;
+        
+        for (int num : changed) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+            start = Math.min(start, num);
+        }
+        
+        for (int num : changed) {
+        	if (map.getOrDefault(num, 0) == 0) {
+        		continue;
+        	}
+        	
+        	result[index++] = num;
+        	int target = num * 2;
+        	
+        	if (map.getOrDefault(target, 0) == 0) {
+        		return new int[0];
+        	}
+        	
+        	map.put(target, map.get(target) - map.get(num));
+        }
+        
+        return result;
+    }
+	
+	
+	
+	
+	
+	
+    
+	
+	
+    public static void main(String[] args)
+    {
+    	Q000_A_Contest test = new Q000_A_Contest();
+    	
+    	/****************************************************/
+    	
+    	int[] changed = {1,2, 3,4,4, 2,6,8};
+    	int[] result = test.findOriginalArray(changed);
+    	
+    	for (int num : result) {
+    		System.out.println(num);
+    	}
+    	
+    	
+    }
+}
