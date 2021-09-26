@@ -38,21 +38,21 @@ The number of nodes in the list is in the range [0, 1000].
 
 public class Q725_Split_Linked_List_in_Parts {
 	public ListNode[] splitListToParts(ListNode head, int k) {
-        int count = 0;
+        int totalCount = 0;
         ListNode node = head;
         
         while (node != null) {
-            count++;
+            totalCount++;
             node = node.next;
         }
         
-        int base = count / k, cur = 0, index = 0;
+        int base = totalCount / k, curCount = 0, index = 0;
         node = head;
         ListNode[] result = new ListNode[k];
         
-        while (cur < count) {
-            int len = (count - cur) % k == 0 ? base : base+1;
-            cur += len;
+        while (curCount < totalCount) {
+            int len = (totalCount - curCount) % k == 0 ? base : base+1;
+            curCount += len;
             k--;
             ListNode tail = findNode(node, len);
             result[index++] = node;

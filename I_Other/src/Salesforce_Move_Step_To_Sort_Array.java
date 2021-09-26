@@ -2,21 +2,6 @@ import java.util.Stack;
 
 
 public class Salesforce_Move_Step_To_Sort_Array {
-	public int minMoveToSortArray2(int[] array) {
-		Stack<Integer> stack = new Stack<>();
-		
-		for (int num : array) {
-			while (!stack.isEmpty() && stack.peek() > num) {
-				stack.pop();
-			}
-			
-			stack.push(num);
-		}
-		
-		return array.length - stack.size();
-	}
-	
-	
 	public int minMoveToSortArray(int[] array) {
 		int stackTop = -1;
 		int movedMin = Integer.MAX_VALUE;
@@ -33,6 +18,24 @@ public class Salesforce_Move_Step_To_Sort_Array {
 		
 		return array.length - (stackTop + 1);
 	}
+	
+	
+	public int minMoveToSortArray2(int[] array) {
+		Stack<Integer> stack = new Stack<>();
+		int moveMin = Integer.MIN_VALUE, count = 0;
+		
+		for (int num : array) {
+			while (!stack.isEmpty() && stack.peek() > num) {
+				moveMin = Math.min(moveMin, stack.pop());
+			}
+			
+			stack.push(num);
+		}
+		
+		return array.length - stack.size();
+	}
+	
+	
 	
 	
 	public static void main(String[] args) {

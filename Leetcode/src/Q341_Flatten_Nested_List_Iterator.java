@@ -21,7 +21,47 @@ Example 2:
  * */
 
 public class Q341_Flatten_Nested_List_Iterator {
-private Stack<NestedInteger> stack = new Stack<NestedInteger>();
+	// solution 1: for light init with heavy read request
+	
+	private Stack<NestedInteger> stack;
+
+    public Q341_Flatten_Nested_List_Iterator(List<NestedInteger> nestedList) {
+        stack = new Stack<>();
+        
+        for (int i = nestedList.size()-1; i >= 0; i--) {
+            dfs(nestedList.get(i));
+        }
+    }
+    
+    private void dfs(NestedInteger node) {
+        if (node.isInteger()) {
+            stack.push(node);
+            return;
+        } 
+        
+        List<NestedInteger> nestedList = node.getList();
+        
+        for (int i = nestedList.size()-1; i >= 0; i--) {
+            dfs(nestedList.get(i));
+        }
+    }
+    
+    // @Override
+    public Integer next() {
+        return stack.pop().getInteger();
+    }
+    
+    // @Override
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    
+    
+    
+    // solution 2: for heavy init but not many read requests 
+	/***
+	 
+	private Stack<NestedInteger> stack = new Stack<NestedInteger>();
     
     public Q341_Flatten_Nested_List_Iterator(List<NestedInteger> nestedList) 
     {
@@ -64,6 +104,8 @@ private Stack<NestedInteger> stack = new Stack<NestedInteger>();
         return false;
     }
     
+    ***/
+    
     
     class NestedInteger{
     	int val;
@@ -90,7 +132,6 @@ private Stack<NestedInteger> stack = new Stack<NestedInteger>();
     		return list;
     	}
     }
-	
     
     
     

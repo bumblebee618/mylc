@@ -1,13 +1,92 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+/***
+ * Given a data stream input of non-negative integers a1, a2, ..., an, summarize the numbers seen so far as a list of disjoint intervals.
+
+Implement the SummaryRanges class:
+
+SummaryRanges() Initializes the object with an empty stream.
+void addNum(int val) Adds the integer val to the stream.
+int[][] getIntervals() Returns a summary of the integers in the stream currently as a list of disjoint intervals [starti, endi].
+ 
+
+Example 1:
+
+Input
+["SummaryRanges", "addNum", "getIntervals", "addNum", "getIntervals", "addNum", "getIntervals", "addNum", "getIntervals", "addNum", "getIntervals"]
+[[], [1], [], [3], [], [7], [], [2], [], [6], []]
+Output
+[null, null, [[1, 1]], null, [[1, 1], [3, 3]], null, [[1, 1], [3, 3], [7, 7]], null, [[1, 3], [7, 7]], null, [[1, 3], [6, 7]]]
+
+Explanation
+SummaryRanges summaryRanges = new SummaryRanges();
+summaryRanges.addNum(1);      // arr = [1]
+summaryRanges.getIntervals(); // return [[1, 1]]
+summaryRanges.addNum(3);      // arr = [1, 3]
+summaryRanges.getIntervals(); // return [[1, 1], [3, 3]]
+summaryRanges.addNum(7);      // arr = [1, 3, 7]
+summaryRanges.getIntervals(); // return [[1, 1], [3, 3], [7, 7]]
+summaryRanges.addNum(2);      // arr = [1, 2, 3, 7]
+summaryRanges.getIntervals(); // return [[1, 3], [7, 7]]
+summaryRanges.addNum(6);      // arr = [1, 2, 3, 6, 7]
+summaryRanges.getIntervals(); // return [[1, 3], [6, 7]]
+ 
+
+Constraints:
+
+0 <= val <= 104
+At most 3 * 104 calls will be made to addNum and getIntervals.
+ */
+
+
+import java.util.*;
+
 
 
 public class Q352_Data_Stream_as_Disjoint_Intervals {
+	private TreeMap<Integer, int[]> treeMap;
+
+    /** Initialize your data structure here. */
+    public Q352_Data_Stream_as_Disjoint_Intervals() {
+        treeMap = new TreeMap<>();
+    }
+    
+    public void addNum(int val) {
+        if (treeMap.containsKey(val)) {
+            return;
+        }
+        
+        Map.Entry<Integer, int[]> lower = treeMap.floorEntry(val);
+        Map.Entry<Integer, int[]> upper = treeMap.ceilingEntry(val);
+        
+        // merge
+        if (lower != null && upper != null && lower.getValue()[1]+1 == val && upper.getKey()-1 == val) {
+            lower.getValue()[1] = upper.getValue()[1];
+            treeMap.remove(upper.getKey());
+        } else if (lower != null && lower.getValue()[1]+1 >= val) {
+            lower.getValue()[1] = Math.max(val, lower.getValue()[1]);
+        } else if (upper != null && upper.getKey()-1 == val) {
+            treeMap.put(val, new int[] {val, upper.getValue()[1]});
+            treeMap.remove(upper.getKey());
+        } else {
+            treeMap.put(val, new int[] {val, val});
+        }
+    }
+    
+    public int[][] getIntervals() {
+        int[][] result = new int[treeMap.size()][2];
+        int index = 0;
+        
+        for (int[] value : treeMap.values()) {
+            result[index++] = value;
+        }
+        
+        return result;
+    }
+	
+	
+	/***
 	// by other using TreeMap
 	private TreeMap<Integer, Interval> tree;
 
-    /** Initialize your data structure here. */
     public Q352_Data_Stream_as_Disjoint_Intervals() {
         tree = new TreeMap<>();
     }
@@ -36,6 +115,61 @@ public class Q352_Data_Stream_as_Disjoint_Intervals {
     public List<Interval> getIntervals() {
         return new ArrayList<>(tree.values());
     }
+    
+    ***/
+    
+    
+    /*** Solution 2: Use two treeMap
+    
+    private TreeMap<Integer, Integer> lowerMap;
+    private TreeMap<Integer, Integer> upperMap;
+
+    public SummaryRanges() {
+        lowerMap = new TreeMap<>();
+        upperMap = new TreeMap<>();
+    }
+    
+    public void addNum(int val) {
+        int left = val, right = val;
+        
+        Map.Entry<Integer, Integer> lower = lowerMap.ceilingEntry(val);
+        
+        if (lower != null && lower.getValue() <= val && lower.getKey() >= val) {
+            return;
+        }
+    
+        if (lowerMap.containsKey(val - 1)) {
+            left = lowerMap.get(val - 1);
+            lowerMap.remove(val - 1);
+        }
+        
+        Map.Entry<Integer, Integer> upper = upperMap.ceilingEntry(val);
+        
+        if (upper != null && upper.getKey() <= val && upper.getValue() >= val) {
+            return;
+        }
+        
+        if (upperMap.containsKey(val + 1)) {
+            right = upperMap.get(val + 1);
+            upperMap.remove(val + 1);
+        }
+        
+        lowerMap.put(right, left);
+        upperMap.put(left, right);
+    }
+    
+    public int[][] getIntervals() {
+        int[][] result = new int[upperMap.size()][2];
+        int index = 0;
+        
+        for (Map.Entry<Integer, Integer> entry : upperMap.entrySet()) {
+            result[index++] = new int[] {entry.getKey(), entry.getValue()};
+        }
+        
+        return result;
+    }
+    
+    ***/
 	
 	
 //	// by Jackie using binary search

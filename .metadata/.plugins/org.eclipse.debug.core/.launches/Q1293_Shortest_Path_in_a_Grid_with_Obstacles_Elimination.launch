@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/Leetcode/src/Q1293_Shortest_Path_in_a_Grid_with_Obstacles_Elimination.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="Q1293_Shortest_Path_in_a_Grid_with_Obstacles_Elimination"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Leetcode"/>
+</launchConfiguration>

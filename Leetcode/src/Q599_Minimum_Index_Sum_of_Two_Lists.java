@@ -26,31 +26,29 @@ No duplicates in both lists.
  */
 public class Q599_Minimum_Index_Sum_of_Two_Lists {
 	public String[] findRestaurant(String[] list1, String[] list2) {
-        if (list1 == null || list1.length == 0 || list2 == null || list2.length == 0) {
+		if (list1 == null || list1.length == 0 || list2 == null || list2.length == 0) {
             return new String[0];
         }
         
-        Map<String, Integer> map1 = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         int minIndexSum = Integer.MAX_VALUE;
         
         for (int i = 0; i < list1.length; i++) {
-            map1.put(list1[i], i);
-        }
-        
-        for (int i = 0; i < list2.length; i++) {
-            if (map1.containsKey(list2[i])) {
-                int indexSum = map1.get(list2[i]) + i;
-                minIndexSum = Math.min(minIndexSum, indexSum);
-            }
+            map.put(list1[i], i);
         }
         
         List<String> list = new LinkedList<>();
         
         for (int i = 0; i < list2.length; i++) {
-            if (map1.containsKey(list2[i])) {
-                int indexSum = map1.get(list2[i]) + i;
+            if (map.containsKey(list2[i])) {
+                int indexSum = map.get(list2[i]) + i;
                 
-                if (minIndexSum == indexSum) {
+                if (minIndexSum >= indexSum) {
+                    if (minIndexSum > indexSum) {
+                        minIndexSum = indexSum;
+                        list.clear();
+                    }
+                    
                     list.add(list2[i]);
                 }
             }

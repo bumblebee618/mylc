@@ -67,39 +67,39 @@ public class Q425_Word_Squares {
 	private TrieNode root = new TrieNode();
 	
     public List<List<String>> wordSquares(String[] words) {
-        List<List<String>> ans = new ArrayList<>();
+        List<List<String>> result = new ArrayList<>();
         
         if(words == null || words.length == 0) {
-        	return ans;
+        	return result;
         }
         
         buildTrie(words);
-        backtrack(ans, words[0].length(), new ArrayList<>());
-        return ans;
+        backtrack(result, words[0].length(), new ArrayList<>());
+        return result;
     }
     
-    public void backtrack(List<List<String>> ans, int length, List<String> list) {
-        if(list.size() == length) {
-            ans.add(new ArrayList<>(list));
+    public void backtrack(List<List<String>> result, int targetLen, List<String> list) {
+        if(list.size() == targetLen) {
+            result.add(new ArrayList<>(list));
             return;
         }
         
         int curIndex = list.size();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder bulider = new StringBuilder();
         
         // Find next word. 
         // Using characters which index is curIndex in each string (vertical direction) to form a new string 
         // and then check whether there is a string which is equals to this new string.
         for(String s : list) {
-            sb.append(s.charAt(curIndex));
+            bulider.append(s.charAt(curIndex));
         }
         
-        String s = sb.toString();
+        String str = bulider.toString();
         TrieNode node = root;
         
-        for(int i = 0; i < s.length(); i++) {
-            if(node.children[s.charAt(i) - 'a'] != null) {
-                node = node.children[s.charAt(i) - 'a'];
+        for(int i = 0; i < str.length(); i++) {
+            if(node.children[str.charAt(i) - 'a'] != null) {
+                node = node.children[str.charAt(i) - 'a'];
             } else {
                 node = null;
                 break;
@@ -110,7 +110,7 @@ public class Q425_Word_Squares {
         if(node != null) {
             for(String next : node.words) {
                 list.add(next);
-                backtrack(ans, length, list);
+                backtrack(result, targetLen, list);
                 list.remove(list.size() - 1);
             }
         }
