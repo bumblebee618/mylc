@@ -28,8 +28,7 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K
 
 		int row = matrix.length, col = matrix[0].length;
 		int result = Integer.MIN_VALUE;
-        
-        int[][] matrixSum = new int[row][col];
+        int[][] prefixSum = new int[row][col];
         
         for (int i = 0; i < row; i++)
         {
@@ -38,8 +37,7 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K
             for (int j = 0; j < col; j++)
             {
                 rowSum += matrix[i][j];
-                matrixSum[i][j] += rowSum;
-                matrixSum[i][j] += (i > 0) ? matrixSum[i-1][j] : 0;
+                prefixSum[i][j] = (i > 0) ? prefixSum[i-1][j] + rowSum : rowSum;
             }
         }
 
@@ -52,8 +50,8 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K
 
 				for (int i = 0; i < col; i++) 
                 {
-					int part1 = (rowStart > 0) ? matrixSum[rowStart-1][i] : 0;
-					int curSum = matrixSum[rowEnd][i] - part1;
+					int part1 = (rowStart > 0) ? prefixSum[rowStart-1][i] : 0;
+					int curSum = prefixSum[rowEnd][i] - part1;
                     
 					// use TreeMap to binary search previous sum to get possible result
 					Integer subResult = set.ceiling(curSum - k);
