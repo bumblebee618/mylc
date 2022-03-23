@@ -14,6 +14,7 @@
             <service name="CodeCommit">https://codecommit.af-south-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.af-south-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.af-south-1.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.af-south-1.amazonaws.com</service>
             <service name="EC2">https://ec2.af-south-1.amazonaws.com</service>
             <service name="ECR" authregion="af-south-1">https://api.ecr.af-south-1.amazonaws.com</service>
             <service name="ECS">https://ecs.af-south-1.amazonaws.com</service>
@@ -45,6 +46,7 @@
             <service name="CodeCommit">https://codecommit.ap-east-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.ap-east-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.ap-east-1.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.ap-east-1.amazonaws.com</service>
             <service name="EC2">https://ec2.ap-east-1.amazonaws.com</service>
             <service name="ECR" authregion="ap-east-1">https://api.ecr.ap-east-1.amazonaws.com</service>
             <service name="ECS">https://ecs.ap-east-1.amazonaws.com</service>
@@ -146,6 +148,7 @@
             <service name="CodeCommit">https://codecommit.ap-northeast-3.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.ap-northeast-3.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.ap-northeast-3.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.ap-northeast-3.amazonaws.com</service>
             <service name="EC2">https://ec2.ap-northeast-3.amazonaws.com</service>
             <service name="ECR" authregion="ap-northeast-3">https://api.ecr.ap-northeast-3.amazonaws.com</service>
             <service name="ECS">https://ecs.ap-northeast-3.amazonaws.com</service>
@@ -267,6 +270,35 @@
             <service name="SQS">https://sqs.ap-southeast-2.amazonaws.com</service>
             <service name="SimpleDB">https://sdb.ap-southeast-2.amazonaws.com</service>
             <service name="XRay">https://xray.ap-southeast-2.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
+        <displayname>Asia Pacific (Jakarta)</displayname>
+        <systemname>ap-southeast-3</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.ap-southeast-3.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.ap-southeast-3.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.ap-southeast-3.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.ap-southeast-3.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.ap-southeast-3.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.ap-southeast-3.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.ap-southeast-3.amazonaws.com</service>
+            <service name="EC2">https://ec2.ap-southeast-3.amazonaws.com</service>
+            <service name="ECR" authregion="ap-southeast-3">https://api.ecr.ap-southeast-3.amazonaws.com</service>
+            <service name="ECS">https://ecs.ap-southeast-3.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.ap-southeast-3.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.ap-southeast-3.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.ap-southeast-3.amazonaws.com</service>
+            <service name="Lambda">https://lambda.ap-southeast-3.amazonaws.com</service>
+            <service name="Logs">https://logs.ap-southeast-3.amazonaws.com</service>
+            <service name="RDS">https://rds.ap-southeast-3.amazonaws.com</service>
+            <service name="S3">https://s3.ap-southeast-3.amazonaws.com</service>
+            <service name="SNS">https://sns.ap-southeast-3.amazonaws.com</service>
+            <service name="SQS">https://sqs.ap-southeast-3.amazonaws.com</service>
         </services>
     </region>
     <region>
@@ -453,6 +485,7 @@
             <service name="CodeCommit">https://codecommit.eu-south-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.eu-south-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.eu-south-1.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.eu-south-1.amazonaws.com</service>
             <service name="EC2">https://ec2.eu-south-1.amazonaws.com</service>
             <service name="ECR" authregion="eu-south-1">https://api.ecr.eu-south-1.amazonaws.com</service>
             <service name="ECS">https://ecs.eu-south-1.amazonaws.com</service>
@@ -722,7 +755,7 @@
             <service name="AutoScaling">https://autoscaling.us-gov-east-1.amazonaws.com</service>
             <service name="CloudFormation" authregion="us-gov-east-1">https://cloudformation.us-gov-east-1.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.us-gov-east-1.amazonaws.com</service>
-            <service name="CloudWatchEvents" authregion="us-gov-east-1">https://events.us-gov-east-1.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.us-gov-east-1.amazonaws.com</service>
             <service name="CodeCommit">https://codecommit.us-gov-east-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.us-gov-east-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.us-gov-east-1.amazonaws.com</service>
@@ -736,10 +769,10 @@
             <service name="KMS">https://kms.us-gov-east-1.amazonaws.com</service>
             <service name="Kinesis" authregion="us-gov-east-1">https://kinesis.us-gov-east-1.amazonaws.com</service>
             <service name="Lambda">https://lambda.us-gov-east-1.amazonaws.com</service>
-            <service name="Logs" authregion="us-gov-east-1">https://logs.us-gov-east-1.amazonaws.com</service>
+            <service name="Logs">https://logs.us-gov-east-1.amazonaws.com</service>
             <service name="RDS">https://rds.us-gov-east-1.amazonaws.com</service>
             <service name="S3">https://s3.us-gov-east-1.amazonaws.com</service>
-            <service name="SNS" authregion="us-gov-east-1">https://sns.us-gov-east-1.amazonaws.com</service>
+            <service name="SNS">https://sns.us-gov-east-1.amazonaws.com</service>
             <service name="SQS" authregion="us-gov-east-1">https://sqs.us-gov-east-1.amazonaws.com</service>
             <service name="XRay">https://xray.us-gov-east-1.amazonaws.com</service>
         </services>
@@ -754,7 +787,7 @@
             <service name="AutoScaling">https://autoscaling.us-gov-west-1.amazonaws.com</service>
             <service name="CloudFormation" authregion="us-gov-west-1">https://cloudformation.us-gov-west-1.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.us-gov-west-1.amazonaws.com</service>
-            <service name="CloudWatchEvents" authregion="us-gov-west-1">https://events.us-gov-west-1.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.us-gov-west-1.amazonaws.com</service>
             <service name="CodeCommit">https://codecommit.us-gov-west-1.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.us-gov-west-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.us-gov-west-1.amazonaws.com</service>
@@ -768,10 +801,10 @@
             <service name="KMS">https://kms.us-gov-west-1.amazonaws.com</service>
             <service name="Kinesis" authregion="us-gov-west-1">https://kinesis.us-gov-west-1.amazonaws.com</service>
             <service name="Lambda">https://lambda.us-gov-west-1.amazonaws.com</service>
-            <service name="Logs" authregion="us-gov-west-1">https://logs.us-gov-west-1.amazonaws.com</service>
+            <service name="Logs">https://logs.us-gov-west-1.amazonaws.com</service>
             <service name="RDS">https://rds.us-gov-west-1.amazonaws.com</service>
             <service name="S3">https://s3.us-gov-west-1.amazonaws.com</service>
-            <service name="SNS" authregion="us-gov-west-1">https://sns.us-gov-west-1.amazonaws.com</service>
+            <service name="SNS">https://sns.us-gov-west-1.amazonaws.com</service>
             <service name="SQS" authregion="us-gov-west-1">https://sqs.us-gov-west-1.amazonaws.com</service>
             <service name="XRay">https://xray.us-gov-west-1.amazonaws.com</service>
         </services>

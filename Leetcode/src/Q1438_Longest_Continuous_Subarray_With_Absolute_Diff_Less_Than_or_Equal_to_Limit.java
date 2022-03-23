@@ -1,5 +1,7 @@
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /***
  * 
@@ -102,5 +104,46 @@ public class Q1438_Longest_Continuous_Subarray_With_Absolute_Diff_Less_Than_or_E
         }
         
         return maxLen;
+    }
+	
+	
+	
+	// solution 2: Time O(nlogn)
+	public int longestSubarray2(int[] nums, int limit) {
+        if (nums == null || nums.length == 0 || limit < 0) {
+            return 0;
+        }    
+        
+        Queue<Integer> maxHeap = new PriorityQueue<>((a, b) -> nums[b] - nums[a]);
+        Queue<Integer> minHeap = new PriorityQueue<>((a, b) -> nums[a] - nums[b]);
+        int result = 0;
+        
+        for (int front = 0, back = 0; front < nums.length; front++) {            
+            while (!maxHeap.isEmpty()) {
+                if (maxHeap.peek() < back) {
+                    maxHeap.poll();
+                } else if (Math.abs(nums[front] - nums[maxHeap.peek()]) > limit) {
+                    back = Math.max(back, maxHeap.poll()+1);
+                } else {
+                    break;
+                }
+            }
+            
+            while (!minHeap.isEmpty()) {
+                if (minHeap.peek() < back) {
+                    minHeap.poll();
+                } else if (Math.abs(nums[front] - nums[minHeap.peek()]) > limit) {
+                    back = Math.max(back, minHeap.poll()+1);
+                } else {
+                    break;
+                }
+            }
+            
+            maxHeap.offer(front);
+            minHeap.offer(front);
+            result = Math.max(result, front-back+1);
+        }
+        
+        return result;
     }
 }

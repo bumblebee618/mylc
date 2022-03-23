@@ -31,7 +31,38 @@ NOTE: input types have been changed on April 15, 2019. Please reset to default c
  */
 public class Q986_Interval_List_Intersections 
 {
-	public int[][] intervalIntersection(int[][] Intervals1, int[][] Intervals2) 
+	public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+        if (firstList == null || firstList.length == 0 || secondList == null || secondList.length == 0) {
+            return new int[0][0];
+        }
+        
+        List<int[]> list = new LinkedList<>();
+        int index1 = 0, index2 = 0;
+        
+        while (index1 < firstList.length && index2 < secondList.length) {
+            if (firstList[index1][1] < secondList[index2][0]) {
+                index1++;
+            } else if (secondList[index2][1] < firstList[index1][0]) {
+                index2++;
+            } else {
+                int left = Math.max(firstList[index1][0], secondList[index2][0]);
+                int right = Math.min(firstList[index1][1], secondList[index2][1]);
+                list.add(new int[] {left, right});
+                
+                if (firstList[index1][1] < secondList[index2][1]) {
+                    index1++;
+                } else {
+                    index2++;
+                }
+            }
+        }
+        
+        return list.toArray(new int[list.size()][]);
+    }
+	
+	
+	
+	public int[][] intervalIntersection2(int[][] Intervals1, int[][] Intervals2) 
 	{
         if (Intervals1 == null || Intervals1.length == 0 || Intervals1[0].length == 0 
         	|| Intervals2 == null || Intervals2.length == 0 || Intervals2[0].length == 0)

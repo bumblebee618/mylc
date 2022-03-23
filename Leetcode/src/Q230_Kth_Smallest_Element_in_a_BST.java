@@ -49,7 +49,7 @@ public class Q230_Kth_Smallest_Element_in_a_BST
 	
 	
 	
-	// solution 2: Binary search, time is O(2n)
+	// solution 2: Binary search, time is O(logn)
 	public int kthSmallest2(TreeNode root, int k) 
     {
         if (root == null || k <= 0)
