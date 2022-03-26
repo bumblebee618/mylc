@@ -60,7 +60,7 @@ public class Q381_Insert_Delete_GetRandom_O_1_Duplicates_allowed
     {
         boolean result = false;
         
-        if (!map.containsKey(val))
+        if (!map.containsKey(val) || !map.get(val).iterator().hasNext())
         {
             result = true;
             map.put(val, new HashSet<Integer>());

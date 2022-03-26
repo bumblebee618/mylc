@@ -30,7 +30,7 @@ public class Q1281_Subtract_the_Product_and_Sum_of_Digits_of_an_Integer {
 	public int subtractProductAndSum(int n) {
         if (n == 0)
         {
-                
+        	return 0;
         }
         
         n = Math.abs(n);

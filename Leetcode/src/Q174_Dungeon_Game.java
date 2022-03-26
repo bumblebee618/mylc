@@ -37,9 +37,12 @@ n == dungeon[i].length
  */
 public class Q174_Dungeon_Game {
 	public int calculateMinimumHP(int[][] dungeon) {
-		int row = dungeon.length, col = dungeon[0].length;
+        if (dungeon == null || dungeon.length == 0 || dungeon[0].length == 0) {
+            return 0;
+        }
+        
+        int row = dungeon.length, col = dungeon[0].length;
         int[][] cost = new int[row][col];
-        cost[row-1][col-1] = Math.max(1-dungeon[row-1][col-1], 1);
 
         for (int i = row - 1; i >= 0; i--) {
             for (int j = col - 1; j >= 0; j--) {
@@ -50,8 +53,8 @@ public class Q174_Dungeon_Game {
                 } else if (j == col-1) {
                     cost[i][j] = Math.max(cost[i+1][j] - dungeon[i][j], 1);
                 } else {
-                    int fromDown = Math.max(cost[i+1][j] - dungeon[i][j], 1);
-                    int fromRight = Math.max(cost[i][j+1] - dungeon[i][j], 1);
+                    int fromDown = Math.max(cost[i + 1][j] - dungeon[i][j], 1);
+                    int fromRight = Math.max(cost[i][j + 1] - dungeon[i][j], 1);
                     cost[i][j] = Math.min(fromRight, fromDown);
                 }
             }

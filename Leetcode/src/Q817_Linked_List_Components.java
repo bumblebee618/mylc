@@ -32,41 +32,33 @@ G is a subset of all values in the linked list.
  *
  */
 public class Q817_Linked_List_Components {
-	public int numComponents(ListNode head, int[] G) {
-        if (head == null)
-        {
+	public int numComponents(ListNode head, int[] nums) {
+        if (head == null || nums == null || nums.length == 0) {
             return 0;
-        }
-        else if (G == null || G.length == 0)
-        {
-            return 1;
         }
         
         Set<Integer> set = new HashSet<>();
         
-        for (int num : G)
-        {
+        for (int num : nums) {
             set.add(num);
         }
         
-        int count = 0;
-        boolean connect = false;
+        int result = 0;
         
-        while (head != null)
-        {
-            if (set.contains(head.val) && !connect)
-            {
-                connect = true;
-                count++;
-            }
-            else if (!set.contains(head.val))
-            {
-                connect = false;
-            }
+        while (head != null) {
+            if (set.contains(head.val)) {
+                result++;
+                
+                while (head != null && set.contains(head.val)) {
+                    head = head.next;
+                }
+            } 
             
-            head = head.next;
+            if (head != null) {
+                head = head.next;
+            }
         }
         
-        return count;
+        return result;
     }
 }

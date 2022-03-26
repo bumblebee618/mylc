@@ -52,83 +52,51 @@ The tree will have between 1 and 1000 nodes.
 Each node's minValue will be between 0 and 1000.
  */
 public class Q987_Vertical_Order_Traversal_of_a_Binary_Tree {
-	public List<List<Integer>> verticalTraversal(TreeNode root) 
-	{
+	public List<List<Integer>> verticalTraversal(TreeNode root) {
         List<List<Integer>> result = new LinkedList<>();
         
-        if (root == null)
-        {
+        if (root == null) {
             return result;
         }
         
-        Map<Integer, List<Tuple>> map = new HashMap<>();
         Queue<Tuple> queue = new LinkedList<>();
         queue.offer(new Tuple(root, 0, 0));
-        int leftBound = 0;
-        int rightBound = 0;
+        Map<Integer, List<Tuple>> map = new HashMap<>();
+        int leftBound = Integer.MAX_VALUE, rightBound = Integer.MIN_VALUE;
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             Tuple t = queue.poll();
             map.computeIfAbsent(t.col, x -> new LinkedList<>()).add(t);
             leftBound = Math.min(leftBound, t.col);
             rightBound = Math.max(rightBound, t.col);
             
-            if (t.node.left != null)
-            {
+            if (t.node.left != null) {
                 queue.offer(new Tuple(t.node.left, t.row+1, t.col-1));
             }
             
-            if (t.node.right != null)
-            {
+            if (t.node.right != null) {
                 queue.offer(new Tuple(t.node.right, t.row+1, t.col+1));
             }
         }
         
-        for (int i = leftBound; i <= rightBound; i++)
-        {
-            if (map.containsKey(i))
-            {
-                List<Tuple> list = map.get(i);
-                Collections.sort(list, (t1, t2) -> (t1.row != t2.row ? t1.row - t2.row : t1.node.val - t2.node.val));
-                List<Integer> valList = list.stream().map(x -> x.node.val).collect(Collectors.toList());
-                result.add(valList);
-                
-                /***
-                Collections.sort(list, new Comparator<Tuple>(){
-                    @Override
-                    public int compare(Tuple t1, Tuple t2)
-                    {
-                        return (t1.x != t2.x) ? t1.x - t2.x : t1.node.val - t2.node.val; 
-                    }
-                });
-            
-                List<Integer> nums = new LinkedList<>();
-            
-                for (Tuple t : list)
-                {
-                    nums.add(t.node.val);
-                }
-            
-                result.add(nums);
-                ***/
-            }
+        for (int i = leftBound; i <= rightBound; i++) {
+            List<Tuple> tuples = map.get(i);
+            Collections.sort(tuples, (a, b) -> a.row != b.row ? a.row - b.row : a.node.val - b.node.val);
+            List<Integer> list = tuples.stream().map(t -> t.node.val).collect(Collectors.toList());
+            result.add(list);
         }
         
         return result;
     }
     
-    class Tuple
-    {
-        public int row;
-        public int col;
+    class Tuple {
         public TreeNode node;
+        public int row, col;
         
-        public Tuple(TreeNode node, int row, int col)
-        {
-            this.node = node;
-            this.row = row;
-            this.col = col;
+        public Tuple(TreeNode n, int r, int c) {
+            node = n;
+            row = r;
+            col = c;
         }
     }
 }

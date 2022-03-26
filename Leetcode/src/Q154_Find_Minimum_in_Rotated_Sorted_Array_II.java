@@ -7,41 +7,33 @@ public class Q154_Find_Minimum_in_Rotated_Sorted_Array_II {
 	 * 
 	 *********************************************************/
 	// using binary search
-	public int findMin(int[] nums) 
-	{
-		if (nums == null || nums.length == 0)
-		{
-            return -1;
+	public int findMin(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
         }
         
-        int left = 0, right = nums.length - 1;
-        int minValue = Integer.MAX_VALUE;
+        int left = 0, right = nums.length-1;
+        int min = Integer.MAX_VALUE;
         
-        while (left + 1 < right)
-        {
-            int mid = left + (right - left) / 2;
-            minValue = Math.min(minValue, nums[left]);
-            minValue = Math.min(minValue, nums[right]);
-            minValue = Math.min(minValue, nums[mid]);
+        while (left+1 < right) {
+            int mid = left + (right-left)/2;
+            min = Math.min(min, Math.min(nums[mid], Math.min(nums[left], nums[right])));
             
-            if (nums[mid] > nums[left] || nums[mid] > nums[right])         // 这里没等号 ！！！
-            {
+            if (nums[mid] > nums[left] || nums[mid] > nums[right]) {         // 这里没等号 ！！！
                 left = mid;
-            } 
-            else if (nums[mid] < nums[left] || nums[mid] < nums[right])    // 这里没等号 ！！！
-            {
+            } else if (nums[mid] < nums[left] || nums[mid] < nums[right]) {  // 这里没等号 ！！！
                 right = mid;
-            } 
-            else 
-            {
+            } else {
                 right--;
             }
         }
         
-        minValue = Math.min(minValue, nums[left]);
-        minValue = Math.min(minValue, nums[right]);
-        return minValue;  
+        return Math.min(min, Math.min(nums[left], nums[right]));
     }
+	
+	
+	
+	
 	
 	
 	

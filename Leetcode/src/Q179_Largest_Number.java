@@ -37,45 +37,34 @@ Constraints:
 
 public class Q179_Largest_Number 
 {   // 注意test case： 0，0，0，0
-	public String largestNumber(int[] nums) 
-	{
-		if (nums == null || nums.length == 0) 
-		{
-			return new String();
-		}
-
-		String[] strs = new String[nums.length];
-
-		for (int i = 0; i < nums.length; i++) 
-		{
-			strs[i] = Integer.toString(nums[i]);
-		}
-
-		Arrays.sort(strs, new Comparator<String>() 
-		{	@Override
-			public int compare(String s1, String s2) 
-			{
-				return (s2 + s1).compareTo(s1 + s2);
-			}
-		});
-
-		StringBuilder builder = new StringBuilder();
-
-		for (int i = 0; i < strs.length; i++) 
-		{
-			builder.append(strs[i]);
-		}
-
-		String result = builder.toString();
-		int index = 0;
-
-		// remove front 0, for example "000123" -> "123"
-		while (index < result.length() - 1 && result.charAt(index) == '0') 
-		{
-			index++;
-		}
-
-		return result.substring(index);
+	public String largestNumber(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return "";
+        }
+        
+        String[] strs = new String[nums.length];
+        
+        for (int i = 0; i < nums.length; i++) {
+            strs[i] = Integer.toString(nums[i]);
+        }
+        
+        Arrays.sort(strs, (a, b) -> b.concat(a).compareTo(a.concat(b)));
+        StringBuilder builder = new StringBuilder();
+        
+        for (String str : strs) {
+            builder.append(str);
+        }
+        
+        String result = builder.toString();        
+        int index = 0;
+        
+        // remove front 0, for example "000123" -> "123"
+        while (index < result.length() && result.charAt(index) == '0') {
+            index++;
+        }
+        
+        // test case [0, 0]
+        return index == result.length() ? "0" : result.substring(index);
     }
 	    
 	

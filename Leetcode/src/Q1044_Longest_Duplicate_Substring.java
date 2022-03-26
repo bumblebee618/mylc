@@ -25,25 +25,20 @@ Constraints:
 2 <= s.length <= 3 * 104
 s consists of lowercase English letters.
  */
-public class Q1044_Longest_Duplicate_Substring 
-{
+public class Q1044_Longest_Duplicate_Substring {
 	// solution 1: binary search + roll hash
 	private static final long mod = (1 << 31) - 1;
     private static final long base = 256;
         
-    public String longestDupSubstring(String S) 
-    {      
-    	if (S == null || S.length() <= 1)
-        {
+    public String longestDupSubstring(String S) {      
+    	if (S == null || S.length() <= 1) {
             return "";
         }
     	
         int left = 1, right = S.length();
-        int start = 0;
-        int maxLen = 0;
+        int start = 0, maxLen = 0;
         
-        while (left <= right) 
-        {
+        while (left <= right) {
             int mid = left + (right - left) / 2;
             boolean found = false;
             
@@ -52,27 +47,20 @@ public class Q1044_Longest_Duplicate_Substring
             map.computeIfAbsent(hash, x -> new ArrayList<>()).add(0);
             long RM = 1l;
             
-            for (int i = 1; i < mid; i++)
-            {
+            for (int i = 1; i < mid; i++) {
             	RM = (base * RM) % mod;
             }
             
             loop:
-            for (int i = 1; i + mid <= S.length(); i++) 
-            {
+            for (int i = 1; i + mid <= S.length(); i++) {
                 hash = (hash + mod - RM * S.charAt(i - 1) % mod) % mod;
                 hash = (hash * base + S.charAt(i + mid - 1)) % mod;
                 
-                if (!map.containsKey(hash)) 
-                {
+                if (!map.containsKey(hash)) {
                     map.put(hash, new ArrayList<>());
-                } 
-                else 
-                {
-                    for (int j : map.get(hash)) 
-                    {
-                    	if (S.substring(i, i+mid).equals(S.substring(j, j+mid)))
-                        {
+                } else {
+                    for (int j : map.get(hash)) {
+                    	if (S.substring(i, i+mid).equals(S.substring(j, j+mid))) {
                             found = true;
                             start = i;
                             maxLen = mid;
@@ -84,12 +72,9 @@ public class Q1044_Longest_Duplicate_Substring
                 map.get(hash).add(i);
             }
             
-            if (found) 
-            {
+            if (found) {
             	left = mid + 1;
-            }
-            else
-            {
+            } else {
             	right = mid - 1;
             }
         }
@@ -97,12 +82,10 @@ public class Q1044_Longest_Duplicate_Substring
         return S.substring(start, start + maxLen);
     }
     
-    private long hash(String S, int len) 
-    { 
+    private long hash(String S, int len) { 
         long h = 0;
         
-        for (int j = 0; j < len; j++) 
-        {
+        for (int j = 0; j < len; j++) {
         	h = (base * h + S.charAt(j)) % mod;
         }
         

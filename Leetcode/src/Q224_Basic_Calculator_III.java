@@ -7,120 +7,92 @@ import java.util.*;
 
 public class Q224_Basic_Calculator_III 
 {	
-	public int calculate(String s) 
-    {
-        if (s == null)
-        {
+	public int calculate(String s) {
+        if (s == null) {
             return 0;
         }
         
-        s = s.trim();
+        s = s.replaceAll(" ", "");
         
-        if (s.length() == 0)
-        {
+        if (s.length() == 0) {
             return 0;
         }
         
         Stack<Integer> stack = new Stack<>();
-        char prevOper = ' ';
-        int num = 0;
-        int result = 0;
+        int num = 0, result = 0;
+        char preOper = ' ';
         
-        for (int i = 0; i < s.length(); i++)
-        {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             
-            if (c == ' ')
-            {
-                continue;
-            }
-            
-            if (Character.isDigit(c))
-            {
-                num = num*10 + (c-'0');
-            }
-            
-            if (c == '(')
-            {
-                int end = findClosePosition(s, i);
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            } else if (c == '(') {
+                int endPos = findEndPos(s, i);
                 
-                if (end == -1)
-                {
-                    return 0;
+                if (endPos == -1) {
+                    return -1;
                 }
                 
-                num = calculate(s.substring(i+1, end));
-                i = end;
+                num = calculate(s.substring(i+1, endPos));
+                i = endPos;
             }
             
-            if (!Character.isDigit(c) || i == s.length()-1)
-            {
-                switch (prevOper)
-                {
+            if (!Character.isDigit(c) || i == s.length()-1) {
+                switch (preOper) {
                     case ' ': stack.push(num); break;
                     case '+': stack.push(num); break;
                     case '-': stack.push(-num); break;
-                    case '*':
-                        {
-                            if (stack.isEmpty())
-                            {
-                                return 0;
+                    case '*': {
+                                if (stack.isEmpty()) {
+                                    return -1;
+                                } else {
+                                    stack.push(stack.pop() * num);
+                                    break;
+                                }
                             }
-                            
-                            stack.push(stack.pop() * num);
-                            break;
-                        }
-                    case '/':
-                        {
-                            if (stack.isEmpty())
-                            {
-                                return 0;
+                    case '/': {
+                                if (stack.isEmpty()) {
+                                    return -1;
+                                } else {
+                                    stack.push(stack.pop() / num);
+                                    break;
+                                }
                             }
-                            
-                            stack.push(stack.pop() / num);
-                            break;
-                        }
                     default: break;
                 }
                 
-                prevOper = c;
                 num = 0;
+                preOper = c;
             }
         }
         
-        while (!stack.isEmpty())
-        {
+        while (!stack.isEmpty()) {
             result += stack.pop();
         }
         
         return result;
     }
     
-    private int findClosePosition(String s, int start)
-    {
+    private int findEndPos(String s, int start) {
         int count = 0;
         
-        for (int i = start; i < s.length(); i++)
-        {
-            char c = s.charAt(i);
+        while (start < s.length()) {
+            char c = s.charAt(start);
             
-            if (c == '(')
-            {
+            if (c == '(') {
                 count++;
-            }
-            else if (c == ')')
-            {
+            } else if (c == ')') {
                 count--;
             }
             
-            if (count < 0)
-            {
+            if (count == 0) {
+                return start;
+            } else if (count < 0) {
                 return -1;
             }
-            else if (count == 0)
-            {
-                return i;
-            }
+            
+            start++;
         }
         
         return -1;

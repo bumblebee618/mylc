@@ -1,6 +1,8 @@
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -29,7 +31,61 @@ The integer n is in the range [0, 100].
  *
  */
 public class Q621_Task_Scheduler {
+	// solution 1:
 	public int leastInterval(char[] tasks, int n) {
+        if (tasks == null || tasks.length == 0 || n < 0) {
+            return 0;
+        }
+        
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        Queue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b-a);  // return max first
+        
+        for (char task : tasks) {
+            frequencyMap.put(task, frequencyMap.getOrDefault(task, 0) + 1);
+        }
+        
+        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() > 0) {
+                maxHeap.offer(entry.getValue());
+            }
+        }
+        
+        int totalTime = 0;
+        
+        while (!maxHeap.isEmpty()) {
+            int localTime = 0;
+            List<Integer> list = new LinkedList<>();  // 这里必须用list
+            
+            while (localTime <= n) {
+                if (!maxHeap.isEmpty()) {
+                    int frequency = maxHeap.poll();
+                    
+                    if (frequency > 1) {
+                        list.add(frequency-1);
+                    }
+                }
+                
+                totalTime++;
+                localTime++;
+                
+                if (maxHeap.isEmpty() && list.size() == 0) {
+                    break;
+                }
+            }
+            
+            for (int frequency : list) {
+                maxHeap.offer(frequency);
+            }
+        }
+        
+        return totalTime;
+    }
+	
+	
+	
+	
+	// solution 2:
+	public int leastInterval2(char[] tasks, int n) {
         if (tasks == null || tasks.length == 0 || n < 0)
         {
             return 0;

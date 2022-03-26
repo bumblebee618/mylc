@@ -32,39 +32,32 @@ All the integers in the given input belong to the range: [-1e7, 1e7].
  */
 public class Q532_K_diff_Pairs_in_an_Array {
 	public int findPairs(int[] nums, int k) {
-        if (nums == null || nums.length < 2 || k < 0)
-        {
+        if (nums == null || nums.length <= 1) {
             return 0;
         }
         
+        int result = 0; 
         Map<Integer, Integer> map = new HashMap<>();
-        Set<Integer> visited = new HashSet<>();
-        int count = 0;
         
-        for (int num : nums)
-        {
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0)+1);
         }
         
-        for (int num : nums)
-        {
-            if (map.containsKey(num+k))
-            {
-            	if (!visited.contains(num))
-                {
-                    visited.add(num);
-                    
-                    if (k != 0 || map.get(num) > 1)
-                    {
-                    	count++;
-                    }
-                }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (map.containsKey(entry.getKey() + k)) {
+                result += (k != 0 || entry.getValue() > 1) ? 1 : 0;
             }
         }
         
-        return count;
+        
+        return result;
     }
 
+	
+	
+	
+	
+	/************************************ main ************************************/
 	
 	public static void main(String[] args)
 	{

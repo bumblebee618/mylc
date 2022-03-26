@@ -1,0 +1,60 @@
+import java.util.*;
+/******
+ * 
+Given a digit string, return all possible letter combinations that the number could represent.
+A mapping of digit to letters (just like on the telephone buttons) is given below.
+
+Example:
+	Input:Digit string "23"
+	Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+Note:
+	Although the above answer is in lexicographical order, your answer could be in any order you want.
+ * 
+ * */
+
+
+public class Q017_Letter_Combinations_of_a_Phone_Number {
+	private String[] array = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+	
+	public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+        
+        backtrack(result, "", digits, 0);
+        return result;
+    }
+    
+    private void backtrack(List<String> result, String solution, String digits, int startIndex) {
+        if (startIndex == digits.length()) {
+            result.add(solution);
+            return;
+        }
+        
+        
+        int digit = digits.charAt(startIndex) - '0';
+        
+        for (int i = 0; i < array[digit].length(); i++) {
+            char c = array[digit].charAt(i);           
+            backtrack(result, solution + c, digits, startIndex + 1);
+        }
+    }
+    
+    
+    
+    
+    
+    /********************** main function *************************/
+    
+    public static void main(String[] args){
+    	Q017_Letter_Combinations_of_a_Phone_Number t = new Q017_Letter_Combinations_of_a_Phone_Number();
+    	List<String> res = t.letterCombinations("23");
+    	for(int i = 0; i < res.size(); ++i) {
+    		System.out.print(res.get(i) + ", ");
+    	}
+    	System.out.println();
+    }
+}

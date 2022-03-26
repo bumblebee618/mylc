@@ -19,7 +19,43 @@ Note:
 
 public class Q205_Isomorphic_Strings {
 	// solution 1: time O(n), space O(1)
-	public boolean isIsomorphic(String s, String t) 
+	public boolean isIsomorphic(String s, String t) {
+        if (s == null || t == null) {
+            return s == null && t == null;
+        } else if (s.length() != t.length()) {
+            return false;
+        }
+        
+        int[] hash1 = new int[256];
+        int[] hash2 = new int[256];
+        
+        for (int i = 0; i < s.length(); i++) {
+            char c1 = s.charAt(i);
+            char c2 = t.charAt(i);
+            
+            if (hash1[c1] != 0) {
+                if (hash1[c1] != (int) c2) {
+                    return false;
+                } else if (hash2[c2] == 0 || hash2[c2] != (int) c1) {
+                    return false;
+                }
+            } else {
+                if (hash2[c2] != 0) {
+                    return false;
+                }
+                
+                hash1[c1] = c2;
+                hash2[c2] = c1;
+            }
+        }
+        
+        return true;
+    }
+	
+	
+	
+	// solution 2: time O(n), space O(1)
+	public boolean isIsomorphic2(String s, String t) 
     {
         if (s == null || t == null)
         {
@@ -65,8 +101,8 @@ public class Q205_Isomorphic_Strings {
 	
 
 	
-	// solution 2: using two maps
-	public boolean isIsomorphic2(String s, String t) 
+	// solution 3: using two maps
+	public boolean isIsomorphic3(String s, String t) 
 	{
         if (s == null || s.length() == 0)
         {
@@ -122,8 +158,8 @@ public class Q205_Isomorphic_Strings {
     }
 	
 	
-	// solution 3: 
-	public boolean isIsomorphic3(String s, String t) {
+	// solution 4: 
+	public boolean isIsomorphic4(String s, String t) {
         if (s == null || t == null) 
         {
             return s == null && t == null;
@@ -170,8 +206,8 @@ public class Q205_Isomorphic_Strings {
 	 * 用hash[256]代替map，适用于任何character的信息记录
 	 * 
 	 *********************************************************/
-	// solution 3: using hash[i], faster
-	public boolean isIsomorphic4(String s1, String s2) {
+	// solution 5: using hash[i], faster
+	public boolean isIsomorphic5(String s1, String s2) {
         int[] hash = new int[512];
         for (int i = 0; i < s1.length(); i++) {
             char c1 = s1.charAt(i), c2 = s2.charAt(i);

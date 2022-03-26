@@ -44,21 +44,18 @@ public class Q332_Reconstruct_Itinerary {
 	public List<String> findItinerary(List<List<String>> tickets) {
         List<String> result = new ArrayList<String>();
 
-        if (tickets == null || tickets.size() == 0)
-        {
+        if (tickets == null || tickets.size() == 0) {
             return result;
         }
 
         // 注意只有linkedlist有poll() API ！！！
         Map<String, LinkedList<String>> graph = new HashMap<>();
 
-        for (List<String> ticket : tickets)
-        {
+        for (List<String> ticket : tickets) {
             graph.computeIfAbsent(ticket.get(0), k -> new LinkedList<String>()).add(ticket.get(1));
         }
         
-        for (Map.Entry<String, LinkedList<String>> entry : graph.entrySet())
-        {
+        for (Map.Entry<String, LinkedList<String>> entry : graph.entrySet()) {
             Collections.sort(entry.getValue());
         }
         
@@ -68,10 +65,8 @@ public class Q332_Reconstruct_Itinerary {
         // 以下是深度优先搜索的写法，必须写成这样；注释部分写法不正确
         // stack不断push之后，stack的peek()是不断变化的
         // 如何在不知道图中总结点树的情况下，用map来dfs遍历一个图的方法：
-        while (!stack.empty()) 
-        {  
-            while (graph.containsKey(stack.peek()) && !graph.get(stack.peek()).isEmpty())
-            {
+        while (!stack.empty()) {  
+            while (graph.containsKey(stack.peek()) && !graph.get(stack.peek()).isEmpty()) {
                 stack.push(graph.get(stack.peek()).poll());
             }
             

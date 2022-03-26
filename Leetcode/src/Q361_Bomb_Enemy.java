@@ -17,58 +17,46 @@ return 3. (Placing a bomb at (1,1) kills 3 enemies)
  * */
 
 public class Q361_Bomb_Enemy {
-	public int maxKilledEnemies(char[][] grid) {
-        if(grid == null || grid.length == 0 || grid[0].length == 0) {
+	private int[] directions = {1, -1};
+    
+    public int maxKilledEnemies(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return 0;
         }
         
-        int row = grid.length, col = grid[0].length;
-        int rowCount = 0;
-        int[] colsCount = new int[col];
-        int maxCount = 0;
+        int result = 0, row = grid.length, col = grid[0].length;
         
-        for(int i = 0; i < row; i++) {
-            for(int j = 0; j < col; j++) {
-                if(grid[i][j] == 'W') {
-                    continue;
-                }
-                
-                if(j == 0 || grid[i][j - 1] == 'W') {
-                    rowCount = getEnemy(grid, i, j, true);
-                }
-                
-                if(i == 0 || grid[i - 1][j] == 'W') {
-                    colsCount[j] = getEnemy(grid, i, j, false);
-                }
-                
-                if(grid[i][j] == '0') {
-                    maxCount = Math.max(maxCount, rowCount + colsCount[j]);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == '0') {
+                    result = Math.max(result, search(grid, i, j));
                 }
             }
         }
         
-        return maxCount;
+        return result;
     }
     
-    public int getEnemy(char[][] grid, int x, int y, boolean byRow) {
-        int count = 0;
+    private int search(char[][] grid, int x, int y) {
+        int result = 0;
         
-        if(byRow) {
-            for(int i = y; i < grid[0].length && grid[x][i] != 'W'; i++) {
-                if(grid[x][i] == 'E') {
-                    count++;
-                }
+        for (int i = 0; i < directions.length; i++) {
+            int newX = x, newY = y;
+            
+            while (newX >= 0 && newX < grid.length && grid[newX][y] != 'W') {
+                result += grid[newX][y] == 'E' ? 1 : 0;
+                newX += directions[i];
             }
-        } else {
-            for(int i = x; i < grid.length && grid[i][y] != 'W'; i++) {
-                if(grid[i][y] == 'E') {
-                    count++;
-                }
+            
+            while (newY >= 0 && newY < grid[0].length && grid[x][newY] != 'W') {
+                result += grid[x][newY] == 'E' ? 1 : 0;
+                newY += directions[i];
             }
         }
-        
-        return count;
+
+        return result;
     }
+
 	
     
     

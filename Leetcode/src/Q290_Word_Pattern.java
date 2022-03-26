@@ -4,7 +4,6 @@ import java.util.Map;
 
 public class Q290_Word_Pattern {
 	/***************************************/
-	// by other using one hashmap
 	public boolean wordPattern(String pattern, String str) {
         if(pattern == null || str == null){
             if(pattern == null && str == null){
@@ -15,6 +14,7 @@ public class Q290_Word_Pattern {
         }
         
         String[] array = str.split("\\s{1,}");
+        // String[] array = str.split(" ");
         
         if(pattern.length() != array.length){
             return false;
@@ -29,7 +29,7 @@ public class Q290_Word_Pattern {
                 if(!map.get(letters[i]).equals(array[i])){
                     return false;
                 }
-            } else if(map.containsValue(array[i])){
+            } else if(map.containsValue(array[i])){  // O(n)
                 return false;
             } else {
                 map.put(letters[i], array[i]);
@@ -42,7 +42,7 @@ public class Q290_Word_Pattern {
 	
 	
 	/***************************************/
-	// by jackie using two hashmap
+	// two hashmap
 	public boolean wordPattern2(String pattern, String str) {
 		if(pattern == null || pattern.length() == 0){
 			return false;
@@ -71,8 +71,7 @@ public class Q290_Word_Pattern {
 	
 	
 	
-	/**********************************************************/
-	//by jackie
+	/*************************** main *******************************/
 	public boolean wordPattern3(String pattern, String str) {
         if(pattern == null || pattern.length() == 0) return false;
         if(str == null || str.length() == 0) return false;

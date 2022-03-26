@@ -35,40 +35,31 @@ public class Q480_Sliding_Window_Median {
 	// 类似题295
 	// test case: [1] [k = 1], [2147483647,2147483647] [k = 2],
 	// [-2147483648,-2147483648,2147483647,-2147483648,-2147483648,-2147483648,2147483647,2147483647,2147483647,2147483647,-2147483648,2147483647,-2147483648] [k = 3]
-	private Double median = null;
-    private Queue<Double> maxHeap;
-    private Queue<Double> minHeap;
-    private int k = 0;
+	private Queue<Double> maxHeap = new PriorityQueue<>((a, b) -> b > a ? 1 : -1);
+    private Queue<Double> minHeap = new PriorityQueue<>();
+    private Double median;
+    private int k;
     
-    public double[] medianSlidingWindow(int[] nums, int k) 
-    {
-        if (nums == null || nums.length == 0 || k <= 0)
-        {
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k <= 0) {
             return new double[0];
-        }
-        else if (k > nums.length)
-        {
+        } else if (k > nums.length) {
             k = nums.length;
         }
         
         int size = nums.length;
-        maxHeap = new PriorityQueue<>();
-        minHeap = new PriorityQueue<>();
         double[] result = new double[size-k+1];
         this.k = k;
         int index = 0;
         
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             addNum((double) nums[i]);
             
-            if (i >= k)
-            {
+            if (i >= k) {
                 removeNum((double) nums[i-k]);
             }
             
-            if (i >= k-1)
-            {
+            if (i >= k-1) {
                 result[index++] = getMedian();
             }
         }
@@ -76,69 +67,50 @@ public class Q480_Sliding_Window_Median {
         return result;
     }
     
-    private void addNum(double num)
-    {
-        if (median == null)
-        {
+    private void addNum(double num) {
+        if (median == null) {
             median = num;
             return;
         }
         
-        if (num < median)
-        {
-            maxHeap.offer(-num);
-        }
-        else
-        {
+        if (num < median) {
+            maxHeap.offer(num);
+        } else {
             minHeap.offer(num);
         }
         
-        balance();
+        balance();  // need balance
     }
     
-    private void removeNum(double num)
-    {
-        if (num < median)
-        {
-            maxHeap.remove(-num);
-        }
-        else if (num > median)
-        {
+    private void removeNum(double num) {
+        if (num < median) {
+            maxHeap.remove(num);
+        } else if (num > median) {
             minHeap.remove(num);
-        }
-        else
-        {
-            median = (maxHeap.size() > minHeap.size()) ? -maxHeap.poll() : minHeap.poll();
+        } else {
+            median = maxHeap.size() > minHeap.size() ? maxHeap.poll() : minHeap.poll();
         }
         
-        balance();
+        balance();  // need balance
     }
     
-    private void balance()
-    {
-        if (maxHeap.size() + 1 < minHeap.size())
-        {
-            maxHeap.offer(-median);
+    private void balance() {
+        if (maxHeap.size() + 1 < minHeap.size()) {
+            maxHeap.offer(median);
             median = minHeap.poll();
-        }
-        else if (maxHeap.size() > minHeap.size())
-        {
+        } else if (maxHeap.size() > minHeap.size()) {
             minHeap.offer(median);
-            median = -maxHeap.poll();
+            median = maxHeap.poll();
         }
     }
     
-    private double getMedian()
-    {
-        if (k % 2 == 1)
-        {
+    private double getMedian() {
+        if (k % 2 == 1) {
             return median;
-        }
-        else
-        {
-            double num = (maxHeap.size() > minHeap.size()) ? -maxHeap.peek() : minHeap.peek();
-            return (median + num) / 2.0;
-        }
+        } else {
+            double num = maxHeap.size() > minHeap.size() ? maxHeap.peek() : minHeap.peek();
+            return (num + median) / 2.0;
+        }  
     }
     
     

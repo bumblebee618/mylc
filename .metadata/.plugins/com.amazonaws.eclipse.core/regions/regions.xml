@@ -299,6 +299,7 @@
             <service name="S3">https://s3.ap-southeast-3.amazonaws.com</service>
             <service name="SNS">https://sns.ap-southeast-3.amazonaws.com</service>
             <service name="SQS">https://sqs.ap-southeast-3.amazonaws.com</service>
+            <service name="XRay">https://xray.ap-southeast-3.amazonaws.com</service>
         </services>
     </region>
     <region>

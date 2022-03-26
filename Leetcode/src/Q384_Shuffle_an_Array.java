@@ -26,7 +26,7 @@ public class Q384_Shuffle_an_Array {
         
         int[] ans = nums.clone();
         
-        for(int i = 1; i < nums.length; i++){
+        for(int i = 0; i < nums.length; i++){
 		    int j = rand.nextInt(i + 1);
 		    swap(ans, i, j);
 	    }

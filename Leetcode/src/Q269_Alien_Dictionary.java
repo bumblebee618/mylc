@@ -28,52 +28,39 @@ There may be multiple valid order of letters, return any one of them is fine.
  * */
 
 
-public class Q269_Alien_Dictionary 
-{
+public class Q269_Alien_Dictionary {
 	// using topology sort
-	public String alienOrder(String[] words) 
-	{
-        if (words == null || words.length == 0)
-        {
+	public String alienOrder(String[] words) {
+        if (words == null || words.length == 0) {
             return "";
         }
         
         Set<Character>[] graph = new Set[256];
         Map<Character, Integer> dependencyMap = new HashMap<>();
-        Queue<Character> queue = new LinkedList<>();
-        StringBuilder builder = new StringBuilder();
         
-        for (String word : words)
-        {
-            for (char c : word.toCharArray())
-            {
+        for (String word : words) {
+            for (char c : word.toCharArray()) {
                 dependencyMap.put(c, 0);
             }
         }
         
-        for (int i = 0; i < words.length-1; i++)
-        {
-            if (words[i].equals(words[i+1]))
-            {
+        for (int i = 0; i < words.length-1; i++) {
+            if (words[i].equals(words[i+1])) {
                 continue;
             }
 
             int len = Math.min(words[i].length(), words[i+1].length());
             
-            for (int j = 0; j < len; j++)
-            {
+            for (int j = 0; j < len; j++) {
                 char c1 = words[i].charAt(j);
                 char c2 = words[i+1].charAt(j);
                 
-                if (c1 != c2)
-                {
-                    if (graph[c1] == null)
-                    {
+                if (c1 != c2) {
+                    if (graph[c1] == null) {
                         graph[c1] = new HashSet<>();
                     }
                 
-                    if (!graph[c1].contains(c2))
-                    {
+                    if (!graph[c1].contains(c2)) {
                         graph[c1].add(c2);
                         dependencyMap.put(c2, dependencyMap.get(c2) + 1);
                     }
@@ -81,41 +68,35 @@ public class Q269_Alien_Dictionary
                     break;
                 }
                 
-                if (j == len-1 && words[i].length() > words[i+1].length())
-                {
+                if (j == len-1 && words[i].length() > words[i+1].length()) {
                     return "";
                 }
             }
         }
         
-        for (Map.Entry<Character, Integer> entry : dependencyMap.entrySet())
-        {
-            if (entry.getValue() == 0)
-            {
+        Queue<Character> queue = new LinkedList<>();
+        StringBuilder builder = new StringBuilder();
+        
+        for (Map.Entry<Character, Integer> entry : dependencyMap.entrySet()) {
+            if (entry.getValue() == 0) {
                 queue.offer(entry.getKey());
             }
         }
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             char node = queue.poll();
             builder.append(node);
             
-            if (graph[node] == null)
-            {
+            if (graph[node] == null) {
                 continue;
             }
             
-            for (char next : graph[node])
-            {
+            for (char next : graph[node]) {
                 int count = dependencyMap.get(next);
                 
-                if (count == 1)
-                {
+                if (count == 1) {
                     queue.offer(next);
-                }
-                else
-                {
+                } else {
                     dependencyMap.put(next, count-1);
                 }
             }

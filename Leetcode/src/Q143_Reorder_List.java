@@ -19,57 +19,57 @@ Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
 
 public class Q143_Reorder_List {
 	// Solution 1: using reverse list, time O(n), space (1)
-	public void reorderList(ListNode head) 
-    {
-        if (head == null || head.next == null)
-        {
+	public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
             return;
         }
         
-        ListNode faster = head, slower = head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode faster = dummy, slower = dummy;
         
-        while (faster != null && faster.next != null)
-        {
+        while (faster != null && faster.next != null) {
             faster = faster.next.next;
             slower = slower.next;
         }
         
-        ListNode secondHead = reverse(slower);
+        ListNode nextHead = reverse(slower.next);
+        slower.next = null;
+        ListNode pointer = dummy;
         
-        while (secondHead != null)
-        {      
-            ListNode insertNode = secondHead;
-            secondHead = secondHead.next;
+        while (head != null || nextHead != null) {
+            if (head != null) {
+                pointer.next = head;
+                pointer = pointer.next;
+                head = head.next;
+            }
             
-            insertNode.next = head.next;
-            head.next = insertNode;
-            head = head.next.next;
+            if (nextHead != null) {
+                pointer.next = nextHead;
+                pointer = pointer.next;
+                nextHead = nextHead.next;
+            }
         }
-        
-        head.next = null;
     }
     
-    private ListNode reverse(ListNode node)
-    {
-        if (node == null || node.next == null)
-        {
-            return node;
+    private ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
         }
         
-        ListNode currentNode = node;
-        ListNode nextNode = node.next;
-        ListNode nextNextNode = node.next.next;
+        ListNode curNode = head;
+        ListNode nextNode = head.next;
+        ListNode nextNextNode = head.next.next;
         
-        while (nextNextNode != null)
-        {
-            nextNode.next = currentNode;
-            currentNode = nextNode;
+        while (nextNextNode != null) {
+            nextNode.next = curNode;
+            curNode = nextNode;
             nextNode = nextNextNode;
             nextNextNode = nextNextNode.next;
         }
         
-        nextNode.next = currentNode;
-        node.next = null;
+        nextNode.next = curNode;
+        head.next = null;
         return nextNode;
     }
     

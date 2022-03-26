@@ -34,30 +34,18 @@ Note:
  */
 public class Q881_Boats_to_Save_People {
 	public int numRescueBoats(int[] people, int limit) {
-        if (people == null || people.length == 0 || limit <= 0)
-        {
+		if (people == null || people.length == 0 || limit <= 0) {
             return 0;
         }
         
         Arrays.sort(people);
-        int left = 0, right = people.length-1;
-        int boatNum = 0;
+        int boatNum = 0, left = 0, right = people.length-1;
         
-        while (left < right && people[right] == limit)
-        {
-            right--;
-            boatNum++;
-        }
-        
-        while (left <= right)
-        {
-            if (people[left]+people[right] <= limit)
-            {
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) {
                 left++;
                 right--;
-            }
-            else
-            {
+            } else {
                 right--;
             }
             

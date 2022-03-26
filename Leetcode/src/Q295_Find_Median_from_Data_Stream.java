@@ -35,69 +35,100 @@ public class Q295_Find_Median_from_Data_Stream {
 	 * 
 	 *******************************************************/
 	// 类似题480
-	private Queue<Integer> maxHeap;
-    private Queue<Integer> minHeap;
+	
+	// solution 1:
+	private Queue<Integer> maxHeap, minHeap;
     private int size = 0;
     private Integer median = null;
     
     /** initialize your data structure here. */
-    public Q295_Find_Median_from_Data_Stream() 
-    {
-        maxHeap = new PriorityQueue<>();
-        minHeap = new PriorityQueue<>();
+    public Q295_Find_Median_from_Data_Stream() {
+        maxHeap = new PriorityQueue<Integer>((a, b) -> b - a);
+        minHeap = new PriorityQueue<Integer>();
     }
     
-    public void addNum(int num) 
-    {
+    public void addNum(int num) {
         size++;
         
-        if (median == null)
-        {
+        if (median == null) {
             median = num;
             return;
         }
         
-        if (num < median)
-        {
-            maxHeap.offer(-num);
-        }
-        else
-        {
+        if (num < median) {
+            maxHeap.offer(num);
+        } else {
             minHeap.offer(num);
         }
         
         balance();
     }
     
-    public double findMedian() 
-    {
-        if (size % 2 != 0)
-        {
+    public double findMedian() {
+        if (size % 2 == 1) {
             return (double) median;
-        }
-        else
-        {
-            int num = (maxHeap.size() > minHeap.size()) ? -maxHeap.peek() : minHeap.peek();
+        } else {
+            int num = maxHeap.size() > minHeap.size() ? maxHeap.peek() : minHeap.peek();
             return (median + num) / 2.0;
         }
     }
     
-    private void balance()
-    {
-        if (maxHeap.size() + 1 < minHeap.size())
-        {
-            maxHeap.offer(-median);
+    private void balance() {
+        if (maxHeap.size() + 1 < minHeap.size()) {
+            maxHeap.offer(median);
             median = minHeap.poll();
-        }
-        else if (maxHeap.size() > minHeap.size())
-        {
+        } else if (maxHeap.size() > minHeap.size()) {
             minHeap.offer(median);
-            median = -maxHeap.poll();
+            median = maxHeap.poll();
         }
     }
     
     
     
+    
+    // solution 2
+    /***
+    private List<Integer> list;
+
+    public Q295_Find_Median_from_Data_Stream() {
+        list = new ArrayList<>();
+    }
+    
+    public void addNum(int num) {
+        if (list.size() == 0 || list.get(list.size()-1) <= num) {
+            list.add(num);
+            return;
+        } else if (list.get(0) >= num) {
+            list.add(0, num);
+            return;
+        }
+        
+        int left = 0, right = list.size()-1;
+        
+        while (left+1 < right) {
+            int mid = left + (right-left)/2;
+            
+            if (list.get(mid) < num) {
+                left = mid;
+            } else if (list.get(mid) > num) {
+                right = mid;
+            } else {
+                list.add(mid, num);
+                return;
+            }
+        }
+        
+        if (list.get(left) >= num) {
+            list.add(left, num);
+        } else {
+            list.add(right, num);
+        }
+    }
+    
+    public double findMedian() {
+        return (list.size() % 2 == 1) ? (double) list.get(list.size()/2) : (list.get(list.size()/2-1) + list.get(list.size()/2)) / 2.0;
+    }
+    ***/
     
     
     

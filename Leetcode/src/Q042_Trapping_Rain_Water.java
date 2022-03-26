@@ -15,8 +15,31 @@ public class Q042_Trapping_Rain_Water {
 	 * height[i]; (2). 用memory分别记录当前结点对应的左边和右边的最大高度 对比题目见11题
 	 * 
 	 **************************************************************************************/
-	// Solution 1: using DP, time complexity O(n), space 0(n)
-	public int trap(int[] height) 
+	public int trap(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        
+        int left = 0, right = height.length-1;
+        int result = 0;
+        
+        while (left < right) {
+            int min = Math.min(height[left], height[right]);
+            
+            while (left < right && height[left] <= min) {
+                result += min - height[left++];
+            }
+            
+            while (left < right && height[right] <= min) {
+                result += min - height[right--];
+            }
+        }
+        
+        return result;
+    }
+	
+	// Solution 2: using DP, time complexity O(n), space 0(n)
+	public int trap2(int[] height) 
 	{
 		if (height == null || height.length == 0) 
 		{
@@ -50,42 +73,5 @@ public class Q042_Trapping_Rain_Water {
 		}
 
 		return res;
-	}
-
-	
-	
-	
-	
-	
-	
-	// Solution 2: using two pointers, time is O(n), space is O(1)
-	public int trap2(int[] height) 
-	{
-		if (height == null || height.length < 2) 
-		{
-			return 0;
-		}
-
-		int left = 0, right = height.length - 1;
-		int waterCount = 0;
-
-		while (left < right) 
-		{
-			int smallestHeight = Math.min(height[left], height[right]);
-
-			while (left < right && height[left] <= smallestHeight) 
-			{
-				waterCount += smallestHeight - height[left];
-				left++;
-			}
-
-			while (left < right && height[right] <= smallestHeight) 
-			{
-				waterCount += smallestHeight - height[right];
-				right--;
-			}
-		}
-
-		return waterCount;
 	}
 }

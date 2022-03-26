@@ -9,83 +9,76 @@ import java.util.*;
  * set(key, minValue) - Set or insert the minValue if the key is not already present. When the cache reached its capacity, 
  * it should invalidate the least recently used item before inserting a new item.
  * 
- * */
+ * 
+ **/
 
 public class Q146_LRU_Cache {
+	private CacheNode head, tail;
     private int capacity;
-    private Map<Integer, CacheItem> map;
-    private CacheItem head;
-    private CacheItem tail;
-	
-    public Q146_LRU_Cache(int capacity) 
-    {
-        this.capacity = capacity;
-        map = new HashMap<Integer, CacheItem>();
-        head = new CacheItem(-1, -1);
-        tail = new CacheItem(-1, -1);
-        head.next = tail;
-        tail.prev = head;
-    }
-
-    // @return an integer
-    public int get(int key) 
-    {
-        if(!map.containsKey(key)) 
-        {
-            return -1;
-        }
-
-        // remove current
-        CacheItem current = map.get(key);
-        current.prev.next = current.next;
-        current.next.prev = current.prev;
-
-        // move current to tail
-        move_to_tail(current);
-        return current.value;
-    }
-
-    public void set(int key, int value) 
-    {
-        if (get(key) != -1)            // 这里必须用get(key)而不是map.containsKey(key)， 因为相当于访问过了，需要做move_to_tail操作
-        {
-        	map.get(key).value = value;
+    private Map<Integer, CacheNode> map;
+    
+    public Q146_LRU_Cache(int capacity) {
+        if (capacity <= 0) {
             return;
         }
-
-        if (map.size() == capacity) 
-        {
-        	CacheItem delete = head.next;
-            map.remove(delete.key);    // 必须先remove，否则head.next改变了 ！！！
-            head.next = head.next.next;
-            head.next.prev = head;
-        }
-
-        CacheItem insert = new CacheItem(key, value);
-        map.put(key, insert);
-        move_to_tail(insert);
-    }
-
-    private void move_to_tail(CacheItem node) 
-    {
-    	node.next = tail;
-        node.prev = tail.prev;
-        tail.prev.next = node;
-        tail.prev = node;
         
+        this.capacity = capacity;
+        head = new CacheNode(-1, -1);
+        tail = new CacheNode(-1, -1);
+        head.next = tail;
+        tail.prev = head;
+        map = new HashMap<>();
     }
     
-    private class CacheItem
-    {
-        int key;
-        int value;
-        CacheItem prev, next;
-
-        public CacheItem(int key, int value) 
-        {
-            this.key = key;
-            this.value = value;
-            this.prev = this.next = null;
+    public int get(int key) {
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+        
+        // remove current
+        CacheNode node = map.get(key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        
+        // move current to tail
+        moveToHead(node);
+        return node.value;
+    }
+    
+    public void put(int key, int value) {
+    	// 这里必须用get(key)而不是map.containsKey(key)， 因为相当于访问过，需要做move_to_tail操作
+        if (get(key) != -1) {
+            map.get(key).value = value;
+            return;
+        }
+        
+        if (map.size() == capacity) {
+            CacheNode delete = tail.prev;
+            map.remove(delete.key);  // 必须先remove，否则head.next改变了 ！！！
+            tail.prev = delete.prev;
+            delete.prev.next = tail;
+        }
+        
+        CacheNode insert = new CacheNode(key, value);
+        map.put(key, insert);
+        moveToHead(insert);
+    }
+    
+    private void moveToHead(CacheNode node) {
+        node.prev = head;
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+    }
+    
+    class CacheNode {
+        public CacheNode prev, next;
+        public int key, value;
+        
+        public CacheNode(int k, int v) {
+            key = k;
+            value = v;
+            prev = next = null;
         }
     }
     
@@ -94,8 +87,7 @@ public class Q146_LRU_Cache {
     
     
     
-    
-    
+    /********************************** main **********************************/
     
     // class Amazon_OA2_LRU_Cache_Count_Miss
     public int Solution(int[] array, int size) {
