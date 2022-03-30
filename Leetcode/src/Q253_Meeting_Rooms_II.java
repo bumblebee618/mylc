@@ -1,6 +1,8 @@
 import java.util.Comparator;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.TreeMap;
 /*******
  * 
 Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
@@ -13,76 +15,61 @@ For example,
  * */
 
 public class Q253_Meeting_Rooms_II {
-	public int minMeetingRooms(Interval[] intervals) 
-	{
-        if (intervals == null || intervals.length == 0)
-        {
+	// solution 1: O(nlogn)
+	public int minMeetingRooms(int[][] intervals) {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0) {
             return 0;
         }
         
-        int result = 0;
-        int count = 0;
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
         
-        Queue<Pair> heap = new PriorityQueue<Pair>(1, new Comparator<Pair>()
-        {
-            public int compare(Pair left, Pair right)
-            {
-                if (left.pos != right.pos)
-                {
-                    return left.pos - right.pos;
-                } 
-                else 
-                {
-                    if (left.isStart == true && right.isStart == false)
-                    {
-                        return 1;
-                    } 
-                    else if (left.isStart == false && right.isStart == true)
-                    {
-                        return -1;
-                    } 
-                    else 
-                    {
-                        return 0;
-                    }
-                }
+        for (int[] interval : intervals) {
+            treeMap.put(interval[0], treeMap.getOrDefault(interval[0], 0)+1);
+            treeMap.put(interval[1], treeMap.getOrDefault(interval[1], 0)-1);
+        }
+        
+        int curCount = 0, maxCount = 0;
+        
+        for (Map.Entry<Integer, Integer> entry : treeMap.entrySet()) {
+            curCount += entry.getValue();
+            maxCount = Math.max(maxCount, curCount);
+        }
+        
+        return maxCount;
+    }
+
+	
+	// solution 2: O(nlogn)
+	public int minMeetingRooms2(int[][] intervals) {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0) {
+            return 0;
+        }
+        
+        Queue<int[]> heap = new PriorityQueue<>((a, b) -> {
+            if (a[0] != b[0]) {
+                return a[0] - b[0];
+            } else if (a[1] == 1 && b[1] != 1){
+                return -1;   
+            } else if (a[1] != 1 && b[1] == 1) {
+                return 1;
+            } else {
+                return 0;
             }
         });
         
-        for (Interval interval : intervals)
-        {
-            heap.offer(new Pair(interval.start, true));
-            heap.offer(new Pair(interval.end, false));
+        for (int[] interval : intervals) {
+            heap.offer(new int[] {interval[0], 0});
+            heap.offer(new int[] {interval[1], 1});
         }
         
-        while (!heap.isEmpty())
-        {
-            Pair node = heap.poll();
-            
-            if (node.isStart == true)
-            {
-                count++;
-            } 
-            else 
-            {
-                count--;
-            }
-            
-            result = Math.max(result, count);
+        int curMax = 0, result = 0;
+        
+        while (!heap.isEmpty()) {
+            int[] node = heap.poll();
+            curMax += node[1] == 1 ? -1 : 1;
+            result = Math.max(result, curMax);
         }
         
         return result;
-    }
-    
-    class Pair 
-    {
-        int pos;
-        boolean isStart;
-        
-        public Pair(int pos, boolean isStart)
-        {
-            this.pos = pos;
-            this.isStart = isStart;
-        }
     }
 }

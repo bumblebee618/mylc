@@ -1,0 +1,53 @@
+import java.util.Arrays;
+import java.util.Stack;
+
+import javax.swing.plaf.metal.MetalBorders.OptionDialogBorder;
+
+public class Q_Verifying_an_Alien_String {
+	public boolean isAlienSorted(String testStr, String orderStr) {
+        if (testStr == null || testStr.length() == 0 || orderStr == null || orderStr.length() == 0) {
+        	return true;
+        }
+        
+        int[] order = new int[256];
+        Arrays.fill(order, -1);
+        
+        for (int i = 0; i < orderStr.length(); i++) {
+        	char c = orderStr.charAt(i);
+        	
+        	if (order[c] != -1) {
+        		return false;
+        	}
+        	
+        	order[c] = i;
+        }
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for (int i = 0; i < testStr.length(); i++) {
+        	char c = testStr.charAt(i);
+        	
+        	if (order[c] == -1) {
+        		continue;
+        	}
+        	
+        	if (!stack.isEmpty() && order[c] < order[stack.peek()]) {
+        		return false;
+        	}
+        	
+        	stack.push(c);
+        }
+        
+        return true;
+    }
+	
+	
+	
+	public static void main(String[] args) {
+		Q_Verifying_an_Alien_String test = new Q_Verifying_an_Alien_String();
+		String orderStr = "654321";
+		String testStr1 = "631";
+		
+		System.out.println(test.isAlienSorted(testStr1, orderStr));
+	}
+}

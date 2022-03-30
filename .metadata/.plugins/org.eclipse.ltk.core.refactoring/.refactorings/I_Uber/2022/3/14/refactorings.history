@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;Q_number_substraction.trimNum(...)&apos; to &apos;adjustNum&apos;&#x0A;- Original project: &apos;I_Uber&apos;&#x0A;- Original element: &apos;Q_number_substraction.trimNum(...)&apos;&#x0A;- Renamed element: &apos;Q_number_substraction.adjustNum(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;trimNum&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{Q_number_substraction.java[Q_number_substraction~trimNum~QString;" name="adjustNum" references="true" stamp="1648396693732" version="1.0"/>
+</session>

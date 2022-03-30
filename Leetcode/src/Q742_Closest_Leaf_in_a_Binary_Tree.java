@@ -52,50 +52,41 @@ There exists some node in the given binary tree for which node.val == k.
  * 
  */
 public class Q742_Closest_Leaf_in_a_Binary_Tree {
-	public int findClosestLeaf(TreeNode root, int k) 
-	{
-        if (root == null)
-        {
+	public int findClosestLeaf(TreeNode root, int k) {
+        if (root == null) {
             return -1;
         }
         
         // use dfs to build graph
         Map<TreeNode, List<TreeNode>> graph = new HashMap<>();
         dfs(graph, root, null);
-
+        
         Queue<TreeNode> queue = new LinkedList<>();
         Set<TreeNode> visited = new HashSet<>();
-
-        for (TreeNode node: graph.keySet()) 
-        {
-            if (node != null && node.val == k) 
-            {
-                queue.add(node);
-                visited.add(node);
+        
+        for (Map.Entry<TreeNode, List<TreeNode>> entry : graph.entrySet()) {
+            if (entry.getKey() != null && entry.getKey().val == k) {
+                queue.offer(entry.getKey());
+                visited.add(entry.getKey());
                 break;
             }
         }
-
-        // bfs
-        while (!queue.isEmpty()) 
-        {
+        
+        while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             
-            if (node != null) 
-            {
-                // if current node is leaf
-                if (graph.get(node).size() <= 1)
-                {
-                    return node.val;
-                }
-                
-                for (TreeNode neighbor: graph.get(node))
-                {
-                    if (!visited.contains(neighbor)) 
-                    {
-                        visited.add(neighbor);
-                        queue.add(neighbor);
-                    }
+            if (node == null) {
+                continue;
+            }
+            
+            if (node.left == null && node.right == null) {
+                return node.val;
+            }
+            
+            for (TreeNode next : graph.get(node)) {
+                if (!visited.contains(next)) {
+                    queue.offer(next);
+                    visited.add(next);
                 }
             }
         }
@@ -104,10 +95,9 @@ public class Q742_Closest_Leaf_in_a_Binary_Tree {
     }
     
     private void dfs(Map<TreeNode, List<TreeNode>> graph, TreeNode node, TreeNode parent) {
-        if (node != null) 
-        {
-            graph.computeIfAbsent(node, x -> new LinkedList<TreeNode>()).add(parent);
-            graph.computeIfAbsent(parent, x -> new LinkedList<TreeNode>()).add(node);
+        if (node != null) {
+            graph.computeIfAbsent(node, x -> new LinkedList<>()).add(parent);
+            graph.computeIfAbsent(parent, x -> new LinkedList<>()).add(node);
             dfs(graph, node.left, node);
             dfs(graph, node.right, node);
         }

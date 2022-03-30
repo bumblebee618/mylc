@@ -1,0 +1,75 @@
+
+public class Q_Calculator {
+	public int calculat(String input) {
+		if (input == null || input.length() == 0) {
+			return 0;
+		}
+		
+		input = input.trim().toLowerCase();
+		
+		// System.out.println(input);
+
+		if (input.startsWith("add") || input.startsWith("sub")) {
+			if (input.length() <= 4) {
+				return -1;
+			}
+			
+			int closePos = findEndPos(input, 3);
+			int flag = input.startsWith("add") ? 1 : -1;
+			
+			System.out.println(input + ", " + closePos);
+			
+			if (closePos == -1) {
+				return -1;
+			}
+			
+			String[] newInputs = input.substring(3, closePos).split(",");
+			int sum = calculat(newInputs[0]);
+			
+			for (int i = 1; i < newInputs.length; i++) {
+				sum = flag * calculat(newInputs[i]);
+			}
+			
+			return sum;
+		} else {
+			for (int i = 0; i < input.length(); i++) {
+				if (!Character.isDigit(input.charAt(i))) {
+					return -1;
+				}
+			}
+			
+			return Integer.parseInt(input);
+		}
+	}
+	
+	private int findEndPos(String input, int start) {
+		int count = 0;
+		
+		for (int i = start; i < input.length(); i++) {
+			char c = input.charAt(i);
+			
+			if (c == '(') {
+				count++;
+			} else if (c == ')') {
+				count--;
+			}
+			
+			if (count == 0) {
+				return i;
+			} else if (count < 0) {
+				return -1;
+			}
+		}
+		
+		return -1;
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		Q_Calculator test = new Q_Calculator();
+		String input1 = "Add(1, sub(3, 4))";
+		System.out.println(test.calculat(input1));
+	}
+}

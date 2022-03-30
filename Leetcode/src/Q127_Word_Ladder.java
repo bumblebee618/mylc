@@ -37,22 +37,17 @@ public class Q127_Word_Ladder {
     // beginWord == null || endWord == null
     // beginWord == endWord
     // wordList is empty
-	
-	public int ladderLength(String beginWord, String endWord, List<String> wordList) 
-    {
-        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0)
-        {
+	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0) {
             return 0;
-        }
-        else if (beginWord.equals(endWord))
-        {
+        } else if (beginWord.equals(endWord)) {
             return 0;
         }
         
-        Set<String> wordDict = getWordDict(wordList);
+        Set<String> wordDict = new HashSet<>();
+        wordList.forEach(word -> wordDict.add(word));
         
-        if (!wordDict.contains(endWord))
-        {
+        if (!wordDict.contains(endWord)) {
             return 0;
         }
         
@@ -60,77 +55,52 @@ public class Q127_Word_Ladder {
         queue.offer(beginWord);
         Set<String> visited = new HashSet<>();
         visited.add(beginWord);
-        int step = 1;
+        int step = 0;
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             int size = queue.size();
+            step++;
             
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 String curWord = queue.poll();
                 
-                if (curWord.equals(endWord))
-                {
+                if (curWord.equals(endWord)) {
                     return step;
                 }
                 
-                for (String nextWord : expends(curWord, wordDict))
-                {
-                    if (!visited.contains(nextWord))
-                    {
-                        queue.offer(nextWord);
-                        visited.add(nextWord);
-                    }
+                for (String nextWord : findNextWords(curWord, wordDict, visited)) {
+                    queue.offer(nextWord);
+                    visited.add(nextWord);
                 }
             }
-            
-            step++;
         }
         
         return 0;
     }
     
-    private List<String> expends(String word, Set<String> dict)
-    {
-        List<String> list = new LinkedList<>();
-        char[] letters = word.toCharArray();
+    private List<String> findNextWords(String curWord, Set<String> wordDict, Set<String> visited) {
+        List<String> result = new LinkedList<>();
+        char[] letters = curWord.toCharArray();
+        
+        for (int i = 0; i < letters.length; i++) {
+            char tmp = letters[i];
             
-        for (int i = 0; i < letters.length; i++)
-        {
-            char temp = letters[i];
-                
-            for (char c = 'a'; c <= 'z'; c++)
-            {
-                if (c == temp)
-                {
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (c == tmp) {
                     continue;
                 }
-                    
+                
                 letters[i] = c;
                 String newWord = new String(letters);
-                    
-                if (dict.contains(newWord))
-                {
-                    list.add(newWord);
+                
+                if (wordDict.contains(newWord) && !visited.contains(newWord)) {
+                    result.add(newWord);
                 }
             }
-                
-            letters[i] = temp;
-        }
             
-        return list;
-    }
-    
-    private Set<String> getWordDict(List<String> wordList)
-    {
-        Set<String> wordDict = new HashSet<>();
-        
-        for (String word : wordList)
-        {
-            wordDict.add(word);
+            letters[i] = tmp;
         }
         
-        return wordDict;
+        return result;
     }
 }

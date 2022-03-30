@@ -13,23 +13,21 @@ For example,
 public class Q252_Meeting_Rooms {
 	// solution 1:
 	public boolean canAttendMeetings(int[][] intervals) {
-        if (intervals == null || intervals.length == 0 || intervals[0].length != 2)
-        {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0) {
             return true;
         }
         
-        Arrays.sort(intervals, (a, b) -> (a[0] != b[0]) ? a[0] - b[0] : a[1] - b[1]);
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
         
-        for (int i = 0; i < intervals.length-1; i++)
-        {
-            if (intervals[i][1] > intervals[i+1][0])
-            {
+        for (int i = 0; i < intervals.length-1; i++) {
+            if (intervals[i][1] > intervals[i+1][0]) {
                 return false;
             }
         }
         
         return true;
     }
+
     
     
     // solution 2:

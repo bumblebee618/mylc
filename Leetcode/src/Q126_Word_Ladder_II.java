@@ -40,108 +40,88 @@ public class Q126_Word_Ladder_II {
 	
 	// solution 1: bfs + dfs
 	private List<List<String>> result = new LinkedList<>();
+    private Map<String, Set<String>> wordMap = new HashMap<>();
+    private Set<String> wordSet = new HashSet<>();
     
-    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) 
-    {
-        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0)
-        {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0) {
             return result;
-        }
-        else if (beginWord.equals(endWord))
-        {
+        } else if (beginWord.equals(endWord)) {
             return result;
         }
         
-        Set<String> wordSet = new HashSet<>();
-        for (String word : wordList)
-        {
-            wordSet.add(word);
-        }
+        wordList.forEach(word -> wordSet.add(word));
         
-        if (!wordSet.contains(endWord))
-        {
+        if (!wordSet.contains(endWord)) {
         	return result;
         }
         
-        Map<String, Set<String>> wordMap = new HashMap<>();
         Set<String> curLevel = new HashSet<>();
         curLevel.add(beginWord);
-        bfs(curLevel, wordSet, wordMap, endWord);
+        bfs(curLevel, endWord);
         
         List<String> path = new LinkedList<>();
         path.add(beginWord);
-        dfs(beginWord, endWord, wordMap, path);
+        dfs(beginWord, endWord, path);
         return result;
     }
     
-    private void bfs(Set<String> curLevel, Set<String> wordSet, Map<String, Set<String>> wordMap, String endWord)
-    {
+    // build wordMap
+    private void bfs(Set<String> curLevel, String endWord) {
         wordSet.removeAll(curLevel);
         Set<String> nextLevel = new HashSet<>();
         boolean found = false;
         
-        for (String word : curLevel)
-        {
+        for (String word : curLevel) {
             char[] letters = word.toCharArray();
             
-            for (int i = 0; i < letters.length; i++)
-            {
-                char temp = letters[i];
+            for (int i = 0; i < letters.length; i++) {
+                char tmp = letters[i];
                 
-                for (char c = 'a'; c <= 'z'; c++)
-                {
-                    if (c == temp)
-                    {
+                for (char c = 'a'; c <= 'z'; c++) {
+                    if (c == tmp) {
                         continue;
                     }
                     
                     letters[i] = c;
                     String newWord = new String(letters);
                     
-                    if (wordSet.contains(newWord))
-                    {
-                        if (endWord.equals(newWord))
-                        {
+                    if (wordSet.contains(newWord)) {
+                        if (newWord.equals(endWord)) {
                             found = true;
-                        }
-                        else
-                        {
+                        } else {
                             nextLevel.add(newWord);
                         }
                         
-                        wordMap.computeIfAbsent(word,x -> new HashSet<>()).add(newWord);
+                        wordMap.computeIfAbsent(word, x -> new HashSet<>()).add(newWord);
                     }
                 }
                 
-                letters[i] = temp;
+                letters[i] = tmp;
             }
         }
         
-        if (!found && nextLevel.size() > 0)
-        {
-            bfs(nextLevel, wordSet, wordMap, endWord);
+        if (!found && nextLevel.size() > 0) {
+            bfs(nextLevel, endWord);
         }
     }
     
-    private void dfs(String curWord, String endWord, Map<String, Set<String>> wordMap, List<String> path)
-    {
-        if (curWord.equals(endWord))
-        {
-            result.add(new LinkedList<String>(path));
+    // search path
+    private void dfs(String curWord, String endWord, List<String> path) {
+        if (curWord.equals(endWord)) {
+            result.add(new LinkedList<>(path));
             return;
-        }
-        else if (!wordMap.containsKey(curWord))
-        {
+        } else if (!wordMap.containsKey(curWord)) {
             return;
         }
         
-        for (String nextWord : wordMap.get(curWord))
-        {
+        for (String nextWord : wordMap.get(curWord)) {
             path.add(nextWord);
-            dfs(nextWord, endWord, wordMap, path);
+            dfs(nextWord, endWord, path);
             path.remove(path.size()-1);
         }
     }
+
 
     
     
