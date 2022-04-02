@@ -28,16 +28,13 @@ n-1 <= connections.length <= 10^5
 connections[i][0] != connections[i][1]
 There are no repeated connections.
  */
-public class Q1192_Critical_Connections_in_a_Network 
-{
+public class Q1192_Critical_Connections_in_a_Network {
 	private List<List<Integer>> answers = new ArrayList<>(); // 返回结果
     private int[] deepArray;      // 节点深度数组
     private Set<Integer>[] graph; // 结构图
     
-    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) 
-    {
-    	if (n <= 0 || connections == null || connections.size() == 0)
-    	{
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+    	if (n <= 0 || connections == null || connections.size() == 0) {
     		return answers;
     	}
     	
@@ -45,13 +42,11 @@ public class Q1192_Critical_Connections_in_a_Network
         Arrays.fill(deepArray, -1); // 所有节点初始深度为-1
         graph = new Set[n];         // 初始化结构图map[i]代表节点i可以连通哪些节点
             
-        for (int i=0;i<n;i++)
-        {
+        for (int i=0;i<n;i++) {
             graph[i] = new HashSet<>();
         }
         
-        for (List<Integer> connection : connections)
-        {
+        for (List<Integer> connection : connections) {
             graph[connection.get(0)].add(connection.get(1));
             graph[connection.get(1)].add(connection.get(0));
         }
@@ -64,40 +59,31 @@ public class Q1192_Critical_Connections_in_a_Network
     // previous为前节点
     // deep为当前深度
     // 返回值为当前节点所有dfs路径终点的最小深度
-    private int dfs(int curNode, int prevNode, int deep)
-    {
+    private int dfs(int curNode, int prevNode, int deep) {
         deepArray[curNode] = deep;       // 将当前深度存入深度数组
         int result = Integer.MAX_VALUE;  // 返回值
     
-        for (int next : graph[curNode])
-        { 
+        for (int next : graph[curNode]) { 
             // 不能走回头路
-            if (next == prevNode)
-            { 
+            if (next == prevNode) { 
                 continue;
             }
         
             int endDeep = 0; // dfs终点深度
         
             // 深度为-1的点没走过，可以dfs
-            if (deepArray[next] == -1)
-            { 
+            if (deepArray[next] == -1) { 
                 endDeep = dfs(next, curNode, deep+1);
-                
-                System.out.println(curNode + ": " + next + ", " + endDeep);
                 
                 // 如果深度大于当前深度，说明当前点不在闭环上
                 // 当前点与下一节点i之间的连线为答案之一
-                if (endDeep > deep)
-                {
+                if (endDeep > deep) {
                     List<Integer> list = new ArrayList<>();
                     list.add(curNode);
                     list.add(next);
                     answers.add(list);
                 }
-            }
-            else
-            {
+            } else {
                 // i节点深度不为-1，说明已经走过，i节点为dfs终点
                 endDeep = deepArray[next];
             }
@@ -111,10 +97,13 @@ public class Q1192_Critical_Connections_in_a_Network
     
     
     
+    
+    
+    
+    
     /*************************** main ***************************/
     
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
     	Q1192_Critical_Connections_in_a_Network test = new Q1192_Critical_Connections_in_a_Network();
     	List<List<Integer>> connections = new LinkedList<>();
     	

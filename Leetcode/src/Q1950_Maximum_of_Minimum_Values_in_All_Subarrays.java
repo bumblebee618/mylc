@@ -69,6 +69,8 @@ public class Q1950_Maximum_of_Minimum_Values_in_All_Subarrays {
             stack.push(i);
         }
         
+        // need this logic, since max in small range should >= one in big range
+        // test case: [5,1,1,5]
         for (int i = result.length-1; i > 0; i--) {
             result[i-1] = Math.max(result[i-1], result[i]);
         }

@@ -3,21 +3,17 @@ public class Q148_Sort_List {
 	/***************************
 	 *       mergeSort         *
 	 ***************************/
-	public ListNode sortList(ListNode head) 
-	{
-        if (head == null || head.next == null) 
-        {
+	public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
             return head;
         }
         
         // 这里使用dummy的原因是防止只有2个节点head->node->null的情况
-        ListNode dummy = new ListNode(0);  
+        ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode faster = dummy;
-        ListNode slower = dummy;
+        ListNode faster = dummy, slower = dummy;
         
-        while (faster != null && faster.next != null) 
-        {
+        while (faster != null && faster.next != null) {
             faster = faster.next.next;
             slower = slower.next;
         }
@@ -26,55 +22,31 @@ public class Q148_Sort_List {
         slower.next = null;
         ListNode left = sortList(head);
         ListNode right = sortList(nextHead);
-        return mergeList(left, right);
-    }
-    
-    private ListNode mergeList(ListNode left, ListNode right) 
-    {
-        if (left == null) 
-        {
-            return right;
-        } 
-        else if (right == null) 
-        {
-            return left;
-        }
+        ListNode pointer = dummy;
         
-        ListNode dummy = new ListNode(0);
-        ListNode traver = dummy;
-        
-        while (left != null || right != null) 
-        {
-            if (left != null && right != null) 
-            {
-                if (left.val < right.val) 
-                {
-                    traver.next = left;
+        while (left != null || right != null) {
+            if (left != null && right != null) {
+                if (left.val < right.val) {
+                    pointer.next = left;
                     left = left.next;
-                } 
-                else 
-                {
-                    traver.next = right;
+                } else {
+                    pointer.next = right;
                     right = right.next;
                 }
-            } 
-            else if (left != null) 
-            {
-                traver.next = left;
+            } else if (left != null) {
+                pointer.next = left;
                 left = left.next;
-            } 
-            else 
-            {
-                traver.next = right;
+            } else {
+                pointer.next = right;
                 right = right.next;
             }
-            
-            traver = traver.next;
+                
+            pointer = pointer.next;
         }
-        
-        traver.next = null;
+                
         return dummy.next;
     }
+
 	
 	
 	

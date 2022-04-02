@@ -52,48 +52,39 @@ Can you do it in time complexity O(k log mn), where k is the length of the posit
 
 public class Q305_Number_of_Islands_II {
 	// using Union Find time complexity is O(n*m + k), space O(n*m)
-	private int[] dx = {1, -1, 0, 0};
-    private int[] dy = {0, 0, 1, -1};
-    
-    public List<Integer> numIslands2(int m, int n, int[][] positions) 
-    {
+	public List<Integer> numIslands2(int m, int n, int[][] positions) {
         List<Integer> result = new LinkedList<>();
         
-        if (m <= 0 || n <= 0 || positions == null || positions.length == 0 || positions[0].length != 2) 
-        {
+        if (m <= 0 || n <= 0 || positions == null || positions.length == 0 || positions[0].length != 2) {
             return result;
         }
         
+        boolean[][] isLand = new boolean[m][n];
         UnionFind uf = new UnionFind(m, n);
         int count = 0;
-        int[][] island = new int[m][n];
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
         
-        for (int[] position : positions)
-        {
-            int x = position[0];
-            int y = position[1];
+        for (int[] position : positions) {
+            int x = position[0], y = position[1];
             
-            if (island[x][y] == 0)
-            {
+            if (!isLand[x][y]) {
+                isLand[x][y] = true;
                 count++;
-                island[x][y] = 1;
-                int currentId = getId(x, y, n);
-            
-                for (int i = 0; i < dx.length; i++)
-                {
+                int id1 = x * n + y;
+                int parent1 = uf.find(id1);
+                
+                for (int i = 0; i < dx.length; i++) {
                     int newX = x + dx[i];
                     int newY = y + dy[i];
-                
-                    if (newX >= 0 && newX < m && newY >= 0 && newY < n && island[newX][newY] == 1)
-                    {
-                        int newId = getId(newX, newY, n);
-                        int parent = uf.find(currentId);
-                        int newParent = uf.find(newId);
                     
-                        if (parent != newParent)
-                        {
-                            uf.union(currentId, newId);
-                            count--;
+                    if (newX >= 0 && newX < m && newY >= 0 && newY < n && isLand[newX][newY]) {
+                        int id2 = newX * n + newY;
+                        int parent2 = uf.find(id2);
+                        
+                        if (parent1 != parent2) {
+                            uf.union(parent1, parent2);
+                            count--;    // union时update count, 排除重复计算的情况
                         }
                     }
                 }
@@ -105,57 +96,43 @@ public class Q305_Number_of_Islands_II {
         return result;
     }
     
-    private int getId(int x, int y, int col)
-    {
-        return x * col + y;
-    }
-    
-    class UnionFind
-    {
+    class UnionFind {
         private Map<Integer, Integer> father;
         
-        public UnionFind(int row, int col)
-        {
+        public UnionFind(int row, int col) {
             father = new HashMap<>();
             
-            for (int i = 0; i < row * col; i++)
-            {
+            for (int i = 0; i < row * col; i++) {
                 father.put(i, i);
             }
         }
         
-        public int find(int id)
-        {
-        	if (!father.containsKey(id))
-        	{
-        		return -1;
-        	}
-        	
-            int parent = father.get(id);
+        public int find(int id) {
+            if (!father.containsKey(id)) {
+                return -1;
+            }
             
-            while (parent != father.get(parent))
-            {
+            int parent = id;
+            
+            while (parent != father.get(parent)) {
                 parent = father.get(parent);
             }
             
-            while (id != father.get(id))
-            {
-                int temp = father.get(id);
+            while (id != father.get(id)) {
+                int tmp = father.get(id);
                 father.put(id, parent);
-                id = temp;
+                id = tmp;
             }
             
             return parent;
         }
         
-        public void union(int id1, int id2)
-        {
+        public void union(int id1, int id2) {
             int parent1 = find(id1);
             int parent2 = find(id2);
             
-            if (parent1 != parent2)
-            {
-                father.put(parent1, parent2);
+            if (parent1 != parent2) {
+                father.put(id2, parent1);  // update id2
             }
         }
     }

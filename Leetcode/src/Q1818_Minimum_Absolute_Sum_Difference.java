@@ -50,46 +50,36 @@ n == nums2.length
 
 public class Q1818_Minimum_Absolute_Sum_Difference 
 {
-	public int minAbsoluteSumDiff(int[] nums1, int[] nums2) 
-    {
-        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length != nums1.length)
-        {
+	public int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length != nums1.length) {
             return 0;
         }
         
-        long sum = 0;
-        int size = nums1.length;
-        long maxChange = 0;
-        TreeSet<Integer> treeSet = new TreeSet<>();
+        TreeSet<Integer> treeSet = new TreeSet<Integer>();
+        long sum = 0, maxChange = 0;
         int mod = 1_000_000_007;
         
-        for (int i = 0; i < size; i++)
-        {
-        	treeSet.add(nums1[i]);
+        for (int i = 0; i < nums1.length; i++) {
+            treeSet.add(nums1[i]);
             sum += Math.abs(nums1[i] - nums2[i]);
         }
         
-        for (int i = 0; i < size; i++)
-        {
-        	if (nums1[1] == nums2[i])
-        	{
-        		continue;
-        	}
-            
-            Integer h = treeSet.ceiling(nums2[i]);
-            Integer l = treeSet.floor(nums2[i]);
-            
-            long curDiff = Math.abs(nums1[i] - nums2[i]);
-            long newDiff = curDiff;
-            
-            if (h != null)
-            {
-            	newDiff = Math.min(newDiff, Math.abs(h - nums2[i]));
+        for (int i = 0; i < nums1.length; i++) {
+            if (nums1[i] == nums2[i]) {
+                continue;
             }
             
-            if (l != null)
-            {
-            	newDiff = Math.min(newDiff, Math.abs(l - nums2[i]));
+            Integer high = treeSet.floor(nums2[i]);
+            Integer low = treeSet.ceiling(nums2[i]);
+            
+            long curDiff = Math.abs(nums1[i] - nums2[i]), newDiff = curDiff;
+            
+            if (high != null) {
+                newDiff = Math.min(newDiff, Math.abs(high - nums2[i]));
+            }
+            
+            if (low != null) {
+                newDiff = Math.min(newDiff, Math.abs(low - nums2[i]));
             }
             
             maxChange = Math.max(maxChange, curDiff - newDiff);

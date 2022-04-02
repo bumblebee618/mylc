@@ -35,71 +35,62 @@ edges[i][0] != edges[i][1]
 0 <= edges[i][j] <= edges.length
 The given edges form an undirected tree.
  */
-public class Q1245_Tree_Diameter 
-{	
+public class Q1245_Tree_Diameter {	
 	// solution 1:
-	private int diameter = 0;
+	private Set<Integer>[] graph;
+    private int diameter = 0;
     
-    public int treeDiameter(int[][] edges) 
-    {
-        if (edges == null || edges.length == 0 || edges[0].length != 2)
-        {
+    public int treeDiameter(int[][] edges) {
+        if (edges == null || edges.length == 0 || edges[0].length == 0) {
             return 0;
         }
         
-        int n = edges.length + 1;
-        Set<Integer>[] graph = new Set[n];
+        int n = edges.length+1;
+        graph = new Set[n];
         
-        for (int i = 0; i < n; ++i) 
-        {
+        for (int i = 0; i < n; i++) {
             graph[i] = new HashSet<>();
         }
         
-        for (int[] edge : edges) 
-        {
+        for (int[] edge : edges) {
             graph[edge[0]].add(edge[1]);
             graph[edge[1]].add(edge[0]);
         }
         
-        dfs(0, -1, graph);
+        dfs(0, -1);
         return diameter;
     }
     
     // return children's depth
-    private int dfs(int root, int parent, Set<Integer>[] graph) 
-    {
+    private int dfs(int curNode, int parent) {
     	// path is not need to go through root, pick two longest path
-        int maxDepth1st = 0, maxDepth2nd = 0;
+        int maxChildDepth1 = 0, maxChildDepth2 = 0;
         
-        for (int child : graph[root]) 
-        {
-            // Only one way from root node to child node, don't allow child node go to root node again!
-            if (child == parent) 
-            {
-                continue; 
+        for (int child : graph[curNode]) {
+        	// Only one way from root node to child node, don't allow child node go to root node again!
+            if (child == parent) {
+                continue;
             }
             
-            int childDepth = dfs(child, root, graph);
+            int childDepth = dfs(child, curNode);
             
-            if (childDepth > maxDepth1st) 
-            {
-                maxDepth2nd = maxDepth1st;
-                maxDepth1st = childDepth;
-            } 
-            else if (childDepth > maxDepth2nd) 
-            {
-                maxDepth2nd = childDepth;
+            if (childDepth > maxChildDepth1) {
+                maxChildDepth2 = maxChildDepth1;
+                maxChildDepth1 = childDepth;
+            } else if (childDepth > maxChildDepth2) {
+                maxChildDepth2 = childDepth;
             }
         }
         
         // the number of nodes in the longest path
-        int longestPathThroughRoot = maxDepth1st + maxDepth2nd + 1; 
+        int longestPath = maxChildDepth1 + maxChildDepth2 + 1;
         
         // diameter = number of edges = number of nodes - 1
-        diameter = Math.max(diameter, longestPathThroughRoot - 1); 
-        return maxDepth1st + 1;
+        diameter = Math.max(diameter, longestPath-1);
+        return maxChildDepth1+1;
     }
-	
+
+    
 	
 	
 	// solution 2: dfs

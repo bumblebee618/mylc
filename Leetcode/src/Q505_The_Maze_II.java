@@ -62,47 +62,38 @@ public class Q505_The_Maze_II {
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public int shortestDistance(int[][] maze, int[] start, int[] destination) 
-    {
-        if (maze == null || maze.length == 0 || maze[0].length == 0)
-        {
+    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+        if (maze == null || maze.length == 0 || maze[0].length == 0) {
             return -1;
-        }
-        else if (start == null || start.length != 2 || destination == null || destination.length != 2)
-        {
+        } else if (start == null || start.length != 2 || destination == null || destination.length != 2) {
             return -1;
         }
         
         Queue<int[]> queue = new LinkedList<>();
         queue.add(start);
-        int row = maze.length;
-        int col = maze[0].length;
+        
+        int row = maze.length, col = maze[0].length;
         int[][] distance = new int[row][col];
         
-        for (int[] distanceRow : distance)
-        {
+        for (int[] distanceRow : distance) {
             Arrays.fill(distanceRow, Integer.MAX_VALUE);
         }
         
         distance[start[0]][start[1]] = 0;
         
-        while (!queue.isEmpty()) 
-        {
+        while (!queue.isEmpty()) {
             int[] current = queue.poll();
             
-            if (current[0] == destination[0] && current[1] == destination[1])
-            {
+            if (current[0] == destination[0] && current[1] == destination[1]) {
                 continue;
             }
             
-            for (int i = 0; i < dx.length; i++) 
-            {
+            for (int i = 0; i < dx.length; i++) {
                 int newX = current[0] + dx[i];
                 int newY = current[1] + dy[i];
                 int count = 1;
                 
-                while (newX >= 0 && newY >= 0 && newX < row && newY < col && maze[newX][newY] == 0) 
-                {
+                while (newX >= 0 && newY >= 0 && newX < row && newY < col && maze[newX][newY] == 0) {
                     newX += dx[i];
                     newY += dy[i];
                     count++;
@@ -114,8 +105,7 @@ public class Q505_The_Maze_II {
                 count--;
                 
                 // update distance
-                if (distance[newX][newY] > distance[current[0]][current[1]] + count) 
-                {
+                if (distance[newX][newY] > distance[current[0]][current[1]] + count) {
                     distance[newX][newY] = distance[current[0]][current[1]] + count;
                     queue.offer(new int[] {newX, newY});
                 }

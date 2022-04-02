@@ -11,47 +11,30 @@ public class Q069_Sqrt_x {
 	 * 
 	 ************************************************/
 
-	public int mySqrt(int x) 
-	{
-		if (x <= 0) 
-		{
-			return 0;
-		} 
-		else if (x <= 3) 
-		{
-			return 1;
-		}
+	public int mySqrt(int x) {
+        if (x <= 0) {
+            return 0;
+        }
+        
+        long left = 1, right = x;
+        
+        while (left+1 < right) {
+            long mid = left + (right - left) / 2;
+            long product = mid * mid;
+            
+            if (product > (long) x) {
+                right = mid;
+            } else if (product < (long) x) {
+                left = mid;
+            } else {
+                return (int) mid;
+            }
+        }
+        
+        return left * left <= x ? (int) left : (int) right;
+    }
 
-		long left = 1, right = x;
-
-		while (left + 1 < right) 
-		{
-			long mid = left + (right - left) / 2;
-			long product = mid * mid;
-
-			if (product < x) 
-			{
-				left = mid;
-			} 
-			else if (product > x) 
-			{
-				right = mid;
-			} 
-			else 
-			{
-				return (int) mid;
-			}
-		}
-
-		if (left * left <= x) 
-		{
-			return (int) left;
-		} 
-		else 
-		{
-			return (int) right;
-		}
-	}
+	
 
 	/********************************
 	 * main function

@@ -73,7 +73,6 @@ public class Q1743_Restore_the_Array_From_Adjacent_Pairs {
         int[] result = new int[map.size()];
         int index = 0;
         
-        
         while (!queue.isEmpty()) {
             int cur = queue.poll();
             result[index++] = cur;

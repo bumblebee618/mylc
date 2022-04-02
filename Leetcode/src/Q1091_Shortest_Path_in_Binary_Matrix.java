@@ -43,44 +43,37 @@ public class Q1091_Shortest_Path_in_Binary_Matrix {
     private int[] dy = {-1, 0, 1, 1, 1, 0, -1, -1};
     
     public int shortestPathBinaryMatrix(int[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0)
-        {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return -1;
-        }
-        else if (grid[0][0] == 1)
-        {
+        } else if (grid[0][0] == 1) {
             return -1;
         }
         
-        int row = grid.length;
-        int col = grid[0].length;
-        Queue<int[]> queue = new LinkedList();
-        queue.offer(new int[] {0, 0});
-        boolean[][] visited = new boolean[row][col];
-        visited[0][0] = true;
+        int row = grid.length, col = grid[0].length;
         int step = 0;
         
-        while (!queue.isEmpty())
-        {
+        Queue<int[]> queue = new LinkedList();
+        queue.offer(new int[] {0, 0});
+        
+        boolean[][] visited = new boolean[row][col];
+        visited[0][0] = true;
+        
+        while (!queue.isEmpty()) {
             int size = queue.size();
             step++;
             
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 int[] current = queue.poll();
                 
-                if (current[0] == row-1 && current[1] == col-1)
-                {
+                if (current[0] == row-1 && current[1] == col-1) {
                     return step;
                 }
                 
-                for (int j = 0; j < dx.length; j++)
-                {
+                for (int j = 0; j < dx.length; j++) {
                     int newX = current[0] + dx[j];
                     int newY = current[1] + dy[j];
                 
-                    if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && !visited[newX][newY])
-                    {
+                    if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 0 && !visited[newX][newY]) {
                         queue.offer(new int[] {newX, newY});
                         visited[newX][newY] = true;
                     }

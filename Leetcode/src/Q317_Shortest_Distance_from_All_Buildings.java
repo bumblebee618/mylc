@@ -37,27 +37,27 @@ public class Q317_Shortest_Distance_from_All_Buildings {
 	 * 
 	 ****************************************************************************************************************/
 	
-	private int[] dx = {1, -1, 0, 0};
+	private int[][] grid;
+    private int[][] distances;
+    private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
+    private int row = 0, col = 0;
     
-    public int shortestDistance(int[][] grid) 
-    {
-        if (grid == null || grid.length == 0 || grid[0].length == 0)
-        {
+    public int shortestDistance(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return 0;
         }
         
-        int row = grid.length, col = grid[0].length;
-        int[][] distance = new int[row][col];
-        List<int[]> list = new ArrayList<>();
-        int minDistance = Integer.MAX_VALUE;
+        this.grid = grid;
+        row = grid.length;
+        col = grid[0].length;
+        distances = new int[row][col];
         
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                if (grid[i][j] == 1)
-                {
+        List<int[]> list = new ArrayList<>();
+        
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == 1) {
                     list.add(new int[] {i, j});
                 }
                 
@@ -65,18 +65,16 @@ public class Q317_Shortest_Distance_from_All_Buildings {
             }
         }
         
-        for (int i = 0; i < list.size(); i++)
-        {
-            bfs(grid, distance, list.get(i), i);
+        for (int i = 0; i < list.size(); i++) {
+            bfs(list.get(i), i);
         }
         
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                if (grid[i][j] == list.size())
-                {
-                    minDistance = Math.min(minDistance, distance[i][j]);
+        int minDistance = Integer.MAX_VALUE;
+        
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == list.size()) {
+                    minDistance = Math.min(minDistance, distances[i][j]);
                 }
             }
         }
@@ -84,32 +82,25 @@ public class Q317_Shortest_Distance_from_All_Buildings {
         return minDistance == Integer.MAX_VALUE ? -1 : minDistance;
     }
     
-    private void bfs(int[][] grid, int[][] distance, int[] root, int visitedCount)
-    {
+    private void bfs(int[] start, int alreadyVisitedCount) {
         Queue<int[]> queue = new LinkedList<>();
-        queue.offer(root);
+        queue.offer(start);
         int step = 0;
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             int size = queue.size();
             
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 int[] curNode = queue.poll();
-                distance[curNode[0]][curNode[1]] += step;
-            
-                for (int j = 0; j < dx.length; j++)
-                {
+                distances[curNode[0]][curNode[1]] += step;
+                
+                for (int j = 0; j < dx.length; j++) {
                     int newX = curNode[0] + dx[j];
                     int newY = curNode[1] + dy[j];
-                
-                    if (newX >= 0 && newX < grid.length
-                        && newY >= 0 && newY < grid[0].length
-                        && grid[newX][newY] == visitedCount)
-                    {
+                    
+                    if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == alreadyVisitedCount) {
                         queue.offer(new int[] {newX, newY});
-                        grid[newX][newY] = visitedCount+1;
+                        grid[newX][newY] = alreadyVisitedCount+1;
                     }
                 }
             }
@@ -117,6 +108,7 @@ public class Q317_Shortest_Distance_from_All_Buildings {
             step++;
         }
     }
+
     
 	
 	

@@ -64,44 +64,34 @@ informTime[i] == 0 if employee i has no subordinates.
 It is guaranteed that all the employees can be informed.
  */
 
-public class Q1376_Time_Needed_to_Inform_All_Employees 
-{
-	public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) 
-    {
-        if (n <= 0 || headID < 0 
-            || manager == null || manager.length != n
-            || informTime == null || informTime.length != n)
-        {
-            return 0;
-        }
-        
+public class Q1376_Time_Needed_to_Inform_All_Employees {
+	public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
+		if (n <= 0 || headID < 0 || manager == null || manager.length == 0 || informTime == null || informTime.length == 0) {
+			return 0;
+		}
+		
         Set<Integer>[] graph = new Set[n];
         
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             graph[i] = new HashSet<>();
         }
         
-        for (int i = 0; i < manager.length; i++)
-        {
-            if (i == headID)
-            {
+        for (int i = 0; i < manager.length; i++) {
+            if (i == headID) {
                 continue;
             }
             
             graph[manager[i]].add(i);
         }
         
-        return dfs(graph, headID, informTime);
+        return dfs(graph, informTime, headID);
     }
     
-    private int dfs(Set<Integer>[] graph, int curEmployee, int[] informTime)
-    {
+    private int dfs(Set<Integer>[] graph, int[] informTime, int curEmployee) {
         int time = 0;
         
-        for (int next : graph[curEmployee])
-        {
-            time = Math.max(time, dfs(graph, next, informTime));
+        for (int next : graph[curEmployee]) {
+            time = Math.max(time, dfs(graph, informTime, next));
         }
         
         return time + informTime[curEmployee];

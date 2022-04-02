@@ -31,23 +31,17 @@ public class Q286_Walls_and_Gates {
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
     
-    public void wallsAndGates(int[][] rooms) 
-    {
-        if (rooms == null || rooms.length == 0 || rooms[0].length == 0)
-        {
+    public void wallsAndGates(int[][] rooms) {
+        if (rooms == null || rooms.length == 0 || rooms[0].length == 0) {
             return ;
         }
         
-        int row = rooms.length;
-        int col = rooms[0].length;
+        int row = rooms.length, col = rooms[0].length;
         Queue<int[]> queue = new LinkedList<>();
 
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-            	if (rooms[i][j] == 0)
-                {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+            	if (rooms[i][j] == 0) {
             		queue.offer(new int[] {i, j});
             	}              
             }
@@ -55,21 +49,17 @@ public class Q286_Walls_and_Gates {
         
         int distance = 1;
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             int size = queue.size();
             
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 int[] index = queue.poll();
                 
-                for(int j = 0; j < dx.length; j++)
-                {
+                for(int j = 0; j < dx.length; j++) {
                     int newX = index[0] + dx[j];
                     int newY = index[1] + dy[j];
             
-                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && rooms[newX][newY] == Integer.MAX_VALUE)
-                    {
+                    if(newX >= 0 && newX < row && newY >= 0 && newY < col && rooms[newX][newY] == Integer.MAX_VALUE) {
             	        rooms[newX][newY] = distance;
                         queue.offer(new int[] {newX, newY});
                     }

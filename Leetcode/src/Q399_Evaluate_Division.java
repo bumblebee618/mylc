@@ -24,76 +24,52 @@ The input is always valid. You may assume that evaluating the queries will resul
  * 
  * */
 
-public class Q399_Evaluate_Division 
-{
+public class Q399_Evaluate_Division {
 	private Map<String, Map<String, Double>> graph = new HashMap<>();
     
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) 
-	{
-        if (equations == null || equations.size() == 0 
-        	|| values == null || values.length == 0
-        	|| queries == null || queries.size() == 0)
-        {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        if (equations == null || equations.size() == 0 || values == null || values.length == 0 || queries == null || queries.size() == 0) {
+            return new double[0];
+        } else if (equations.size() != values.length) {
             return new double[0];
         }
-        else if (equations.size() != values.length)
-        {
-            return new double[0];
+        
+        for (int i = 0; i < values.length; i++) {
+            List<String> equation = equations.get(i);
+            graph.computeIfAbsent(equation.get(0), x -> new HashMap<>()).put(equation.get(1), values[i]);
+            graph.computeIfAbsent(equation.get(1), x -> new HashMap<>()).put(equation.get(0), 1.0 / values[i]);
         }
         
         double[] result = new double[queries.size()];
         
-        // build graph;
-        for (int i = 0; i < values.length; i++)
-        {
-            graph.computeIfAbsent(equations.get(i).get(0), x -> new HashMap<>()).put(equations.get(i).get(1), values[i]);
-            graph.computeIfAbsent(equations.get(i).get(1), x -> new HashMap<>()).put(equations.get(i).get(0), 1.0 / values[i]);
-        }
-        
-        for (int i = 0; i < queries.size(); i++)
-        {
+        for (int i = 0; i < queries.size(); i++) {
             result[i] = dfs(queries.get(i).get(0), queries.get(i).get(1), 1, new HashSet<>());
         }
         
-        return result;    
+        return result;
     }
     
-    private double dfs(String startNode, String endNode, double sum, Set<String> visited)
-    {
-        if (!graph.containsKey(startNode))
-        {
+    private double dfs(String start, String end, double sum, Set<String> visited) {
+        if (!graph.containsKey(start)) {
             return -1.0;
-        }
-        // 将 startNode.equals(endNode) 放第二个，防止题目给的test里 [x, x]的情况
-        else if (startNode.equals(endNode))
-        {
+        } else if (start.equals(end)) {  // 将 startNode.equals(endNode) 放第二个，防止题目给的test里 [x, x]的情况
             return 1.0;
-        } 
-        else if (graph.get(startNode).containsKey(endNode))
-        {
-            return sum * graph.get(startNode).get(endNode);
+        } else if (graph.get(start).containsKey(end)) {
+            return sum * graph.get(start).get(end);
         }
         
-        visited.add(startNode);
-        double result = -1.0;
-        Map<String, Double> map = graph.get(startNode);
+        visited.add(start);
         
-        for (Map.Entry<String, Double> entry : map.entrySet())
-        {
-        	String nextNode = entry.getKey();
-        	
-            if (!visited.contains(nextNode))
-            {
-                result = dfs(nextNode, endNode, sum * entry.getValue(), visited);
-                    
-                if (result != -1.0)
-                {
+        for (Map.Entry<String, Double> entry : graph.get(start).entrySet()) {
+            if (!visited.contains(entry.getKey())) {
+                double result = dfs(entry.getKey(), end, sum * entry.getValue(), visited);
+                
+                if (result != -1.0) {
                     return result;
                 }
             }
         }
         
-        visited.remove(startNode);
-        return result;
+        return -1.0;
     }
 }

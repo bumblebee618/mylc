@@ -90,28 +90,28 @@ Here is how we find that position. In each iteration, we need to adjust start ba
 	
 	// time O(row * model.length)
 	public int wordsTyping(String[] sentence, int rows, int cols) {
-		if(sentence == null || sentence.length == 0 || rows <= 0 || cols <= 0) {
-            return 0;
-        }
+		if (sentence == null || sentence.length == 0 || rows <= 0 || cols <= 0) {
+			return 0;
+		}
+		
+        String s = String.join(" ", sentence).concat(" ");
+        int index = 0, size = s.length();
         
-        String model = String.join(" ", sentence) + " ";
-        int 
-        startPos = 0, len = model.length();
-        
-        for(int i = 0; i < rows; i++) {
-            startPos += cols;
+        for (int i = 0; i < rows; i++) {
+            index += cols;
             
-            if(model.charAt(startPos % len) == ' ') {   
-                startPos++;
+            if (s.charAt(index % size) == ' ') {
+                index++;
             } else {
-                while(startPos > 0 && model.charAt((startPos - 1) % len) != ' ') {  // word不可分割 !!!
-                    startPos--;
+                while (index-1 >= 0 && s.charAt((index-1) % size) != ' ') {
+                    index--;
                 }
             }
         }
         
-        return startPos / len;
-	}
+        return index / s.length();
+    }
+
 
 
 	

@@ -53,75 +53,61 @@ return [3, 4]
 
 public class Q310_Minimum_Height_Trees {
 	// Solution 1:Prune leaves
-	public List<Integer> findMinHeightTrees(int n, int[][] edges) 
-	{
-	        List<Integer> result = new LinkedList<>();
-	        
-	        if (n <= 0 || edges == null)
-	        {
-	            return result;
-	        }
-	        else if (n == 1)
-	        {
-	            result.add(0);
-	            return result;
-	        }
-	        
-            // Construct adjencent graph 
-	        Set<Integer>[] graph = new Set[n];
+	public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        List<Integer> result = new LinkedList<>();
         
-            for (int i = 0; i < n; i++)
-            {
-                graph[i] = new HashSet<>();
-            }
-	               
-	        for (int[] edge : edges)
-	        {
-	            graph[edge[0]].add(edge[1]);
-	            graph[edge[1]].add(edge[0]);
-	        }
-	        
-	        // Prune the leaves(剪枝法), start from leaves
-	        Queue<Integer> queue = new LinkedList<>();
-	        
-	        for (int i = 0; i < n; i++)
-	        {
-	            if (graph[i] != null && graph[i].size() == 1)
-	            {
-	                queue.offer(i);
-	            }
-	        }
-	        
-	        // 这里只能是 n > 2 而不是 queue.size() > 2
-	        // 例如从2个叶子开始的情况
-	        while (n > 2)  
-	        {
-	            int size = queue.size();
-	            
-	            for (int i = 0; i < size; i++)
-	            {
-	                int leave = queue.poll();
-	                n--;    // remove one leave
-	                
-	                for (int next : graph[leave])
-	                {
-	                    graph[next].remove(leave);
-	                    
-	                    if (graph[next].size() == 1)
-	                    {
-	                        queue.offer(next);
-	                    }
-	                }
-	            }
-	        }
-	        
-	        while (!queue.isEmpty())
-	        {
-	            result.add(queue.poll());
-	        }
-	        
+        if (n <= 0 || edges == null) {
+	        return result;
+	    } else if (n == 1) {
+	        result.add(0);
 	        return result;
 	    }
+        
+        Set<Integer>[] graph = new Set[n];
+        
+        for (int i = 0; i < n; i++) {
+            graph[i] = new HashSet<>();
+        }
+        
+        for (int[] edge : edges) {
+	        graph[edge[0]].add(edge[1]);
+	        graph[edge[1]].add(edge[0]);
+	    }
+        
+        // Prune the leaves(剪枝法), start from leaves
+        Queue<Integer> queue = new LinkedList<>();
+	        
+	    for (int i = 0; i < n; i++) {
+	        if (graph[i].size() == 1) {
+	            queue.offer(i);
+	        }
+	    }
+        
+	    // 这里只能是 n > 2 而不是 queue.size() > 2
+        // 例如从2个叶子开始的情况
+        while (n > 2) {
+            int size = queue.size();  // 必须level by level, test case: [1,0], [1,2], [1,3]
+            
+            for (int i = 0; i < size; i++) {
+                n--;  // remove leave
+                int leave = queue.poll();
+            
+                for (int next : graph[leave]) {
+                    graph[next].remove(leave);
+                
+                    if (graph[next].size() == 1) {
+                        queue.offer(next);
+                    }
+                }
+            }
+        }
+        
+        while (!queue.isEmpty()) {
+            result.add(queue.poll());
+        }
+        
+        return result;
+    }
 
 	
 	

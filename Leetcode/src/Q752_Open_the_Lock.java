@@ -38,25 +38,20 @@ target will not be in the list deadends.
 Every string in deadends and the string target will be a string of 4 digits from the 10,000 possibilities '0000' to '9999'.
  */
 public class Q752_Open_the_Lock {
-	public int openLock(String[] deadends, String target) 
-    {
-        if (target == null || target.length() != 4)
-        {
+	public int openLock(String[] deadends, String target) {
+        if (target == null || target.length() != 4) {
             return -1;
         }
         
         Set<String> visited = new HashSet<>();
         
-        if (deadends != null)
-        {
-            for (String deadend : deadends)
-            {
+        if (deadends != null) {
+            for (String deadend : deadends) {
                 visited.add(deadend);
             }
         }
         
-        if (visited.contains("0000") || visited.contains(target))
-        {
+        if (visited.contains("0000") || visited.contains(target)) {
             return -1;
         }
         
@@ -66,33 +61,27 @@ public class Q752_Open_the_Lock {
         int step = 0;
         int[] moves = {1, -1};
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             int size = queue.size();
             
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 String node = queue.poll();
                 
-                if (node.equals(target))
-                {
+                if (node.equals(target)) {
                     return step;
                 }
                 
                 char[] digits = node.toCharArray();
                 
-                for (int j = 0; j < digits.length; j++)
-                {
+                for (int j = 0; j < digits.length; j++) {
                     int basePos = digits[j] - '0';
                     
-                    for (int move : moves)
-                    {
+                    for (int move : moves) {
                     	// 负数的处理
                         digits[j] = (char) ((basePos + move + 10) % 10 + '0');
                         String nextNode = new String(digits);
                         
-                        if (!visited.contains(nextNode))
-                        {
+                        if (!visited.contains(nextNode)) {
                             queue.offer(nextNode);
                             visited.add(nextNode);
                         }

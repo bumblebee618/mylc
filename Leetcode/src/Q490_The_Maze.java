@@ -61,36 +61,30 @@ public class Q490_The_Maze {
     private int[] dy = {0, 0, 1, -1};
         
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        if (maze == null || maze.length == 0 || maze[0].length == 0)
-        {
+        if (maze == null || maze.length == 0 || maze[0].length == 0) {
             return false;
-        }
-        else if (start == null || start.length != 2 || destination == null || destination.length != 2)
-        {
+        } else if (start == null || start.length != 2 || destination == null || destination.length != 2) {
             return false;
         }
 
         Queue<int[]> queue = new LinkedList<>();
         queue.add(start);
+        
         boolean[][] visited = new boolean[maze.length][maze[0].length];
         visited[start[0]][start[1]] = true;
         
-        while (!queue.isEmpty()) 
-        {
+        while (!queue.isEmpty()) {
             int[] current = queue.poll();
             
-            if (current[0] == destination[0] && current[1] == destination[1])
-            {
+            if (current[0] == destination[0] && current[1] == destination[1]) {
                 return true;
             }
             
-            for (int i = 0; i < dx.length; i++) 
-            {
+            for (int i = 0; i < dx.length; i++) {
                 int newX = current[0] + dx[i];
                 int newY = current[1] + dy[i];
                 
-                while (newX >= 0 && newX < maze.length && newY >= 0 && newY < maze[0].length && maze[newX][newY] == 0) 
-                {
+                while (newX >= 0 && newX < maze.length && newY >= 0 && newY < maze[0].length && maze[newX][newY] == 0) {
                     newX += dx[i];
                     newY += dy[i];
                 }
@@ -99,8 +93,7 @@ public class Q490_The_Maze {
                 newX -= dx[i];
                 newY -= dy[i];
                 
-                if (!visited[newX][newY]) 
-                {
+                if (!visited[newX][newY]) {
                     queue.add(new int[] {newX, newY});
                     visited[newX][newY] = true;
                 }
