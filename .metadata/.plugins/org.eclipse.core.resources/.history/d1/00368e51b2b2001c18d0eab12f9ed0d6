@@ -1,0 +1,29 @@
+
+public class Q_quad_tree {
+	public QuadTree buildQuadTree(int[][] matrix) {
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+			return null;
+		}
+		
+		
+	}
+	
+	private QuadTree helper(int[][] matrix, int rowStart, int rowEnd, int colStart, int colEnd) {
+		if (rowStart > rowEnd || colStart > colEnd) {
+			return null;
+		} 
+		
+		if (rowStart == rowEnd && colStart == colEnd) {
+			QuadTree node = new QuadTree();
+			node.value = matrix[rowStart][rowEnd];
+			node.isLeaf = true;
+			node.leftTop = node.rightTop = node.leftBottom = node.rightBottom = null;
+		}
+	}
+}
+
+class QuadTree {
+	public boolean isLeaf;
+	public int value;
+	public QuadTree leftTop, rightTop, leftBottom, rightBottom;
+}

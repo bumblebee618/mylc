@@ -1,0 +1,16 @@
+
+public class Q_quad_tree {
+	public QuadTree buildQuadTree(int[][] matrix) {
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+			return null;
+		}
+		
+		
+	}
+}
+
+class QuadTree {
+	public boolean isLeaf;
+	public int value;
+	public QuadTree leftTop, rightTop, leftBottom, rightBottom;
+}

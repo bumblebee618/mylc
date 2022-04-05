@@ -41,46 +41,43 @@ public class Q291_Word_Pattern_II {
         
         this.pattern = pattern;
         this.str = str;
-        return isMatch(0, 0, new HashMap<>(), new HashSet<>());
+        
+        return search(0, 0, new HashMap<>(), new HashSet<>());
     }
-  
-    private boolean isMatch(int strIndex, int patternIndex, Map<Character, String> map, Set<String> set) {
-        if (strIndex == str.length() || patternIndex == pattern.length()) {
-            return strIndex == str.length() && patternIndex == pattern.length() ? true : false;
+    
+    private boolean search(int patternStart, int strStart, Map<Character, String> map, Set<String> visited) {
+        if (patternStart == pattern.length() || strStart == str.length()) {
+            return patternStart == pattern.length() && strStart == str.length() ? true : false;
         }
-    
-        char c = pattern.charAt(patternIndex);
-    
+        
+        char c = pattern.charAt(patternStart);
+        
         if (map.containsKey(c)) {
-            String s = map.get(c);
-      
-            if (!str.startsWith(s, strIndex)) {
+            if (!str.startsWith(map.get(c), strStart)) {
                 return false;
             }
-      
-            return isMatch(strIndex + s.length(), patternIndex + 1, map, set);
+            
+            return search(patternStart+1, strStart+map.get(c).length(), map, visited);
         } else {
-            for (int k = strIndex; k < str.length(); k++) {
-                String p = str.substring(strIndex, k + 1);
-
-                if (set.contains(p)) {
+            for (int end = strStart; end < str.length(); end++) {
+                String newWord = str.substring(strStart, end+1);
+                
+                if (visited.contains(newWord)) {
                     continue;
                 }
-
-                map.put(c, p);
-                set.add(p);
-      
-                if (isMatch(k + 1, patternIndex + 1, map, set)) {
+                
+                map.put(c, newWord);
+                visited.add(newWord);
+                
+                if (search(patternStart+1, end+1, map, visited)) {
                     return true;
                 }
-
-                // backtracking
+                
                 map.remove(c);
-                set.remove(p);
+                visited.remove(newWord);
             }
-    
-            return false;
         }
+        
+        return false;
     }
-
 }

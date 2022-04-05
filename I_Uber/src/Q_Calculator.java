@@ -1,5 +1,72 @@
 public class Q_Calculator {
-	public int calculat(String input) {
+	// solution 1:
+	public int calculate(String input) {
+		if (input == null || input.length() == 0) {
+			return 0;
+		}
+		
+		input = input.replaceAll(" ", "").toLowerCase();
+		return helper(input);
+	}
+	
+	private int helper(String input) {
+		int index = 0;
+		StringBuilder operatorBuilder = new StringBuilder();
+		
+		while (index < input.length() && Character.isLetter(input.charAt(index))) {
+			operatorBuilder.append(input.charAt(index));
+			index++;
+		}
+		
+		if (operatorBuilder.length() == 0) {
+			return 0;
+		}
+		
+		int start1 = index+1, end1 = findTargetPos(input, index);
+		
+		if (end1 == -1) {
+			return 0;
+		}
+		
+		String part1 = input.substring(start1, end1+1);
+		String part2 = input.substring(end1+2, input.length()-1);
+		
+		int num1 = Character.isDigit(part1.charAt(0)) ? Integer.parseInt(part1) : helper(part1);
+		int num2 = Character.isDigit(part2.charAt(0)) ? Integer.parseInt(part2) : helper(part2);
+		
+		return operatorBuilder.toString().equals("add") ? num1 + num2 : num1 - num2;
+	}
+	
+	private int findTargetPos(String input, int start) {
+		int count = 0;
+		
+		for (int i = start; i < input.length(); i++) {
+			char c = input.charAt(i);
+			
+			if (c == '(') {
+				count++;
+			} else if (c == ')') {
+				count--;
+			}
+			
+			if (count < 0) {
+				break;
+			}
+			
+			if (c == ',' && count == 1) {
+				return i-1;
+			}
+		}
+		
+		return -1;
+	}
+	
+	
+	
+	
+	
+	// solution 2:
+	public int calculate2(String input) {
 		if (input == null || input.length() == 0) {
 			return 0;
 		}
@@ -60,15 +127,19 @@ public class Q_Calculator {
 	
 	
 	
+	/**************************** main ****************************/
 	public static void main(String[] args) {
 		Q_Calculator test = new Q_Calculator();
 		String input1 = "Add(1, sub(3, 4))";
-		System.out.println(test.calculat(input1));
+		System.out.println(test.calculate(input1));
+		System.out.println(test.calculate2(input1));
 		
 		String input2 = "Add(sub(1234,add(123,334)), add(122,344))";
-	    System.out.println(test.calculat(input2));
+	    System.out.println(test.calculate(input2));
+	    System.out.println(test.calculate2(input2));
 	    
 	    String input3 = "Add(sub(12,add(1,3)), add(5,6))";
-	    System.out.println(test.calculat(input3));
+	    System.out.println(test.calculate(input3));
+	    System.out.println(test.calculate2(input3));
 	}
 }

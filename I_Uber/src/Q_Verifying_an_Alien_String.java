@@ -46,7 +46,6 @@ public class Q_Verifying_an_Alien_String {
 	public static void main(String[] args) {
 		Q_Verifying_an_Alien_String test = new Q_Verifying_an_Alien_String();
 		
-		/***
 		String orderStr = "654321";
 		String testStr1 = "631";
 		String testStr2 = "613";
@@ -61,8 +60,6 @@ public class Q_Verifying_an_Alien_String {
 		System.out.println(test.isAlienSorted(testStr4, orderStr));
 		System.out.println(test.isAlienSorted(testStr5, orderStr));
 		System.out.println(test.isAlienSorted(testStr6, orderStr));
-		***/
-		
 		
 		String orderStr2 = "ape"; 
 		String testStr7 = "aaaabccccccp";

@@ -67,8 +67,10 @@ public class Q773_Sliding_Puzzle {
         
         Queue<String> queue = new LinkedList<>();
         queue.offer(builder.toString());
+        
         Set<String> visited = new HashSet<>();
         visited.add(builder.toString());
+        
         int step = 0;
         
         while (!queue.isEmpty()) {
