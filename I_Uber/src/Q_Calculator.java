@@ -1,6 +1,81 @@
+import java.util.Stack;
+
 public class Q_Calculator {
 	// solution 1:
 	public int calculate(String input) {
+		if (input == null || input.length() == 0) {
+			return 0;
+		}
+		
+		input = input.replaceAll(" ", "").toLowerCase();
+		Stack<Integer> stack = new Stack<>();
+		StringBuilder operatorBuilder = new StringBuilder();
+		StringBuilder numBuilder = new StringBuilder();
+		
+		int index = input.length()-1;
+		
+		while (index >= 0) {
+			char c = input.charAt(index);
+			
+			if (Character.isDigit(c)) {
+				numBuilder.insert(0,  c);
+			} else if (numBuilder.length() > 0) {
+				int num = Integer.parseInt(numBuilder.toString());
+				stack.push(num);				
+				numBuilder = new StringBuilder();
+			}
+					
+			if (Character.isLetter(c)) {
+				operatorBuilder.insert(0, c);
+			}
+			
+			if (c == ',' || c == '(' || index == 0) {			
+				if (operatorBuilder.length() > 0) {
+					switch (operatorBuilder.toString()) {
+						case "add": {
+							if (stack.size() < 2) {
+								return -1;
+							} else {
+								int num1 = stack.pop();
+								int num2 = stack.pop();
+								stack.push(num1 + num2);
+							}
+							
+							break;
+						}
+						case "sub": {	
+							if (stack.size() < 2) {
+								return -1;
+							} else {
+								int num1 = stack.pop();
+								int num2 = stack.pop();
+								stack.push(num1 - num2);
+							}
+							
+							break;
+						}
+						default: break;
+					}
+
+					operatorBuilder = new StringBuilder();
+				} 
+			} 
+			
+			index--;
+		}
+		
+		int result = 0;
+		
+		while (!stack.isEmpty()) {
+			result += stack.pop();
+		}
+		
+		return result;
+	}
+	
+	
+	// solution 2:
+	public int calculate2(String input) {
 		if (input == null || input.length() == 0) {
 			return 0;
 		}
@@ -22,7 +97,7 @@ public class Q_Calculator {
 			return 0;
 		}
 		
-		int start1 = index+1, end1 = findTargetPos(input, index);
+		int start1 = index+1, end1 = findClosePos(input, index);
 		
 		if (end1 == -1) {
 			return 0;
@@ -37,7 +112,7 @@ public class Q_Calculator {
 		return operatorBuilder.toString().equals("add") ? num1 + num2 : num1 - num2;
 	}
 	
-	private int findTargetPos(String input, int start) {
+	private int findClosePos(String input, int start) {
 		int count = 0;
 		
 		for (int i = start; i < input.length(); i++) {
@@ -62,11 +137,8 @@ public class Q_Calculator {
 	}
 	
 	
-	
-	
-	
-	// solution 2:
-	public int calculate2(String input) {
+	// solution 3:
+	public int calculate3(String input) {
 		if (input == null || input.length() == 0) {
 			return 0;
 		}
@@ -130,6 +202,7 @@ public class Q_Calculator {
 	/**************************** main ****************************/
 	public static void main(String[] args) {
 		Q_Calculator test = new Q_Calculator();
+		
 		String input1 = "Add(1, sub(3, 4))";
 		System.out.println(test.calculate(input1));
 		System.out.println(test.calculate2(input1));

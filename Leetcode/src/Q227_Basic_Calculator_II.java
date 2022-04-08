@@ -20,77 +20,60 @@ Some examples:
 
 public class Q227_Basic_Calculator_II {
 	public int calculate(String s) {
-        if (s == null)
-        {
+        if (s == null) {
             return 0;
         }
         
-        s = s.trim();
+        s = s.replaceAll(" ", "");
         
-        if (s.length() == 0)
-        {
+        if (s.length() == 0) {
             return 0;
         }
         
         Stack<Integer> stack = new Stack<>();
-        char prevOper = ' ';
-        int num = 0;
-        int result = 0;
-        int size = s.length();
+        int num = 0, result = 0;
+        char preOper = ' ';
         
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             
-            if (c == ' ')
-            {
-                continue;
-            }
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            } 
             
-            if (Character.isDigit(c))
-            {
-                num = num*10 + (c-'0');
-            }
-            
-            if (!Character.isDigit(c) || i == size-1)
-            {
-                switch (prevOper)
-                {
+            if (!Character.isDigit(c) || i == s.length()-1) {
+                switch (preOper) {
+                    case ' ': stack.push(num); break;
                     case '+': stack.push(num); break;
                     case '-': stack.push(-num); break;
-                    case '*': 
-                        {
-                            if (stack.isEmpty())
-                            {
-                                return -1;
+                    case '*': {
+                                if (stack.isEmpty()) {
+                                    return -1;
+                                } else {
+                                    stack.push(stack.pop() * num);
+                                    break;
+                                }
                             }
-                    
-                            stack.push(stack.pop() * num);
-                            break;
-                        }
-                    case '/': 
-                        {
-                            if (stack.isEmpty())
-                            {
-                                return -1;
+                    case '/': {
+                                if (stack.isEmpty()) {
+                                    return -1;
+                                } else {
+                                    stack.push(stack.pop() / num);
+                                    break;
+                                }
                             }
-                    
-                            stack.push(stack.pop() / num);
-                            break;
-                        }
-                    case ' ': stack.push(num); break;
+                    default: break;
                 }
                 
                 num = 0;
-                prevOper = c;
+                preOper = c;
             }
         }
         
-        while (!stack.isEmpty())
-        {
+        while (!stack.isEmpty()) {
             result += stack.pop();
         }
-            
+        
         return result;
     }
 

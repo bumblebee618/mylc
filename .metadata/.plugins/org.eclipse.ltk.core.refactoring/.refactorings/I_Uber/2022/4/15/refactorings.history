@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;Q_Calculator.findTargetPos(...)&apos; to &apos;findClosePos&apos;&#x0A;- Original project: &apos;I_Uber&apos;&#x0A;- Original element: &apos;Q_Calculator.findTargetPos(...)&apos;&#x0A;- Renamed element: &apos;Q_Calculator.findClosePos(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;findTargetPos&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{Q_Calculator.java[Q_Calculator~findTargetPos~QString;~I" name="findClosePos" references="true" stamp="1649386591406" version="1.0"/>
+</session>
