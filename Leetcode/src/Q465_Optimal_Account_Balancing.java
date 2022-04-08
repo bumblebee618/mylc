@@ -51,22 +51,24 @@ public class Q465_Optimal_Account_Balancing {
         return backtrack(0, new ArrayList<>(map.values()));
     }
     
-    private int backtrack(int start, List<Integer> debts) {
-        while (start < debts.size() && debts.get(start) == 0) {
-            start++;
+    private int backtrack(int startIndex, List<Integer> debts) {
+        while (startIndex < debts.size() && debts.get(startIndex) == 0) {
+            startIndex++;
         }
         
-        if (start == debts.size()) {
+        // 从最底层返回
+        if (startIndex == debts.size()) {
             return 0;
         }
         
         int result = Integer.MAX_VALUE;
         
-        for (int i = start+1; i < debts.size(); i++) {
-            if (debts.get(start) * debts.get(i) < 0) {
-                debts.set(i, debts.get(i)+debts.get(start));
-                result = Math.min(result, backtrack(start+1, debts)+1);
-                debts.set(i, debts.get(i)-debts.get(start));
+        // find one debt to exchange with startIndex
+        for (int i = startIndex+1; i < debts.size(); i++) {
+            if (debts.get(startIndex) * debts.get(i) < 0) {
+                debts.set(i, debts.get(i) + debts.get(startIndex));
+                result = Math.min(result, backtrack(startIndex+1, debts) + 1); 
+                debts.set(i, debts.get(i) - debts.get(startIndex));
             }
         }
         

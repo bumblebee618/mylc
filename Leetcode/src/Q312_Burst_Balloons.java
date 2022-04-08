@@ -20,49 +20,41 @@ Return 167
  * 
  * */
 
-public class Q312_Burst_Balloons 
-{
+public class Q312_Burst_Balloons {
 	// solution 1: using DP, time O(n^3), space O(n^2)
-	public int maxCoins(int[] nums) 
-    {
-        if (nums == null || nums.length == 0)
-        {
+	public int maxCoins(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return 0;
         }
         
-        int size = nums.length;
-        int[][] score = new int[size][size];
+        int[][] score = new int[nums.length][nums.length];
         
-        for (int length = 1; length <= size; length++)
-        {
-            for (int start = 0; start + length <= size; start++)
-            {
-                int end = start + length - 1;
+        for (int length = 1; length <= nums.length; length++) {
+            for (int start = 0; start+length <= nums.length; start++) {
+                int end = start+length-1;
                 
                 // pick up one balloon from [start, end] to be the last one to burst
-                for (int k = start; k <= end; k++)
-                {
+                for (int last = start; last <= end; last++) {
                     int leftScore = (start == 0) ? 1 : nums[start-1];
-                    int rightScore = (end == size-1) ? 1 : nums[end+1];
+                    int rightScore = (end == nums.length-1) ? 1 : nums[end+1];
                     
-                    int leftTotalScore = (k == start) ? 0 : score[start][k-1];
-                    int rightTotalScore = (k == end) ? 0 : score[k+1][end];
+                    int leftTotalScore = (last == start) ? 0 : score[start][last-1];
+                    int rightTotalScore = (last == end) ? 0 : score[last+1][end];
                     
-                    score[start][end] = Math.max(score[start][end], leftTotalScore + rightTotalScore + leftScore * nums[k] * rightScore);
+                    score[start][end] = Math.max(score[start][end], leftTotalScore + rightTotalScore + leftScore * nums[last] * rightScore);
                 }
             }
         }
         
-        return score[0][size-1];
+        return score[0][nums.length-1];
     }
 	
 	
 	
+	
 	// solution 2: using DP, time O(n^2), space O(n^2)
-	public int maxCoins_2(int[] nums) 
-	{
-        if (nums == null || nums.length == 0) 
-        {
+	public int maxCoins_2(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return 0;
         }
         
@@ -70,22 +62,18 @@ public class Q312_Burst_Balloons
         newNums[0] = 1;
         newNums[newNums.length - 1] = 1;
         
-        for(int i = 0; i < nums.length; i++) 
-        {
+        for(int i = 0; i < nums.length; i++) {
             newNums[i+1] = nums[i];
         }
         
         int len = newNums.length;
         int[][] score = new int[len][len];
         
-        for (int length = 2; length < len; length++) 
-        {
-            for (int start = 0; start + length < len; start++) 
-            {
+        for (int length = 2; length < len; length++) {
+            for (int start = 0; start + length < len; start++) {
                 int end = start + length;
                 
-                for (int k = start + 1; k < end; k++) 
-                {
+                for (int k = start + 1; k < end; k++) {
                     score[start][end] = Math.max(score[start][end], score[start][k] + newNums[start] * newNums[k] * newNums[end] + score[k][end]); // 注意是start和end !!!
                 }
             }

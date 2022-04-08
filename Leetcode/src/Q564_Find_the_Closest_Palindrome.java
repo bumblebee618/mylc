@@ -33,13 +33,13 @@ public class Q564_Find_the_Closest_Palindrome {
         
 		int size = n.length();
         int i = size % 2 == 0 ? size/2 - 1: size/2;
-        long left = Long.parseLong(n.substring(0, i+1));
+        long leftPart = Long.parseLong(n.substring(0, i+1));
         
         // input: n = 12345
         List<Long> candidates = new ArrayList<>();
-        candidates.add(getPalindrome(left, size % 2== 0));    // 12321
-        candidates.add(getPalindrome(left+1, size % 2== 0));  // 12421
-        candidates.add(getPalindrome(left-1, size % 2== 0));  // 12221
+        candidates.add(getPalindrome(leftPart, size % 2== 0));    // 12321
+        candidates.add(getPalindrome(leftPart+1, size % 2== 0));  // 12421
+        candidates.add(getPalindrome(leftPart-1, size % 2== 0));  // 12221
         candidates.add((long) Math.pow(10, size-1) - 1);      // 9999
         candidates.add((long) Math.pow(10, size) + 1);        // 100001
         
