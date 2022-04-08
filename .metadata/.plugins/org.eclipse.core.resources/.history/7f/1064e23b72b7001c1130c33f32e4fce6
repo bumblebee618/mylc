@@ -37,17 +37,18 @@ public class Q_Shuffle_an_array_with_frequency {
         
         String hash = getHashCode(result);
         map.put(hash, map.getOrDefault(hash, 0)+1);
+        System.out.println("hash = " + hash + ", time = " + map.get(hash));
         return result;
     }
     
     private String getHashCode(int[] nums) {
-    	StringBuilder hash = new StringBuilder();
+    	String hash = "";
     	
     	for (int num : nums) {
-    		hash.append(Integer.toString(num)).append(","); 
+    		hash = hash.concat(Integer.toString(num)); 
     	}
     	
-    	return hash.toString();
+    	return hash;
     }
     
     
