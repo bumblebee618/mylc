@@ -28,68 +28,53 @@ where the largest sum among the two subarrays is only 18.
 public class Q410_Split_Array_Largest_Sum 
 {
 	// solution 1:
-	public int splitArray(int[] nums, int m) 
-	{
-        if (nums == null || nums.length == 0 || m <= 0 || m > nums.length)
-        {
+	public int splitArray(int[] nums, int m) {
+        if (nums == null || nums.length == 0 || m <= 0 || m > nums.length) {
             return 0;
         }
         
         int left = 0, right = 0;
+        int result = -1;
         
-        for (int num : nums)
-        {
+        for (int num : nums) {
             left = Math.max(left, num);
             right += num;
         }
         
-        int result = 0;
-        
-        while (left <= right)
-        {
-            int mid = left + (right-left)/2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
             
-            if (!canSplit(nums, m, mid))
-            {
+            if (!canSplit(nums, mid, m)) {
                 left = mid+1;
-            }
-            else
-            {
-                result = mid;
+            } else {
                 right = mid-1;
+                result = mid;
             }
         }
         
         return result;
     }
     
-    private boolean canSplit(int[] nums, int maxCount, int maxSum)
-    {
-        int count = 1;
-        int sum = 0;
+    private boolean canSplit(int[] nums, int maxSum, int maxArrayNum) {
+        int sum = 0, arrayNum = 1;
         
-        for (int num : nums)
-        {
-            if (sum + num > maxSum)
-            {
-                count++;
+        for (int num : nums) {
+            if (sum + num > maxSum) {
+                arrayNum++;
                 sum = 0;
+            }
+
+            if (arrayNum > maxArrayNum) {
+                return false;
             }
             
             sum += num;
-            
-            if (count > maxCount)
-            {
-                return false;
-            }
         }
         
         return true;
     }
-    
-    
-    
-    
+	
+	
     
     
     

@@ -34,45 +34,35 @@ piles.length <= H <= 10^9
  */
 public class Q875_Koko_Eating_Bananas 
 {
-	public int minEatingSpeed(int[] piles, int H) 
-	{
-        if (piles == null || piles.length == 0 || H <= 0)
-        {
+	public int minEatingSpeed(int[] piles, int H) {
+        if (piles == null || piles.length == 0 || H <= 0) {
             return 0;
         }
         
-        int left = 1, right = 1000000000;
-        int result = 0;
+        int left = 1, right = 1_000_000_000, result = -1;
         
-        while (left <= right)
-        {
-            int mid = left + (right-left)/2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
             
-            if (!isPossible(piles, H, mid))
-            {
+            if (!isPossible(piles, H, mid)) {
                 left = mid+1;
-            }
-            else
-            {
-                result = mid;
+            } else {
                 right = mid-1;
+                result = mid;
             }
         }
         
         return result;
     }
     
-    private boolean isPossible(int[] piles, int targetHour, int speed)
-    {
-        int time = 0;
+    private boolean isPossible(int[] piles, int targetHour, int speed) {
+        int hour = 0;
         
-        for (int pile : piles)
-        {
-            time += (pile-1)/speed + 1;
+        for (int pile : piles) {
+            hour += (pile-1) / speed + 1;
             
-            if (time > targetHour)
-            {
-            	return false;
+            if (hour > targetHour) {
+                return false;
             }
         }
         

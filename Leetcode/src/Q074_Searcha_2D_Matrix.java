@@ -20,46 +20,31 @@ Given target = 3, return true.
 
 public class Q074_Searcha_2D_Matrix 
 {
-	public boolean searchMatrix(int[][] matrix, int target) 
-	{
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
-        {
+	public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
         }
         
         int row = matrix.length, col = matrix[0].length;
         int left = 0, right = row * col - 1;
         
-        while (left + 1 < right) 
-        {
+        while (left < right) {
             int mid = left + (right - left) / 2;
             int x = mid / col;
             int y = mid % col;
             
-            if (matrix[x][y] > target) 
-            {
-            	right = mid;
-            } 
-            else if (matrix[x][y] < target) 
-            {
-                left = mid;
-            } 
-            else 
-            {
+            if (matrix[x][y] > target) {
+            	right = mid-1;
+            } else if (matrix[x][y] < target) {
+                left = mid+1;
+            } else {
                 return true;
             }
         }
         
-        if (matrix[left / col][left % col] == target 
-        	|| matrix[right / col][right % col] == target)
-        {
-            return true;
-        }
-        else 
-        {
-            return false;   
-        }
+        return matrix[left / col][left % col] == target ? true : false;
     }
+	
 	
 	
 	

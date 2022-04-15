@@ -37,68 +37,67 @@ sum(strs[i].length) <= 2 * 104
 strs[i] consists of lowercase letters only.
 All words in strs have the same length and are anagrams of each other.
  */
-public class Q839_Similar_String_Groups 
-{
-	public int numSimilarGroups(String[] strs) 
-	{
-        if (strs == null || strs.length == 0)
-        {
+
+public class Q839_Similar_String_Groups {
+	public int numSimilarGroups(String[] strs) {
+        if (strs == null || strs.length == 0) {
         	return 0;
         }
         
-        int count = 0;
         Set<String> visited = new HashSet<>();
+        int count = 0;
         
-        for (int i = 0; i < strs.length; i++)
-        {
-        	if (!visited.contains(strs[i]))
-        	{
-        		count++;
-                visited.add(strs[i]);
-        	    dfs(strs, strs[i], visited);
-        	}
+        for (int i = 0; i < strs.length; i++) {
+            if (!visited.contains(strs[i])) {
+                count++;
+                dfs(strs, strs[i], visited);
+            }
         }
         
         return count;
     }
-	
-	private void dfs(String[] strs, String target, Set<String> visited)
-	{
-		for (int i = 0; i < strs.length; i++)
-        {
-        	if (!visited.contains(strs[i]))
-        	{
-        		if (isSimilarGroup(target, strs[i]))
-        	    {
-                    visited.add(strs[i]);
-        		    dfs(strs, strs[i], visited);
-        	    }
-        	}
+    
+    private void dfs(String[] strs, String target, Set<String> visited) {
+        visited.add(target);
+        
+        for (int i = 0; i < strs.length; i++) {
+            if (!visited.contains(strs[i]) && isSimilarStr(strs[i], target)) {
+                dfs(strs, strs[i], visited);
+            }
         }
-	}
-	
-	private boolean isSimilarGroup(String str1, String str2)
-	{
-        if (str1.equals(str2))
-        {
+    }
+    
+    private boolean isSimilarStr(String origin, String target) {
+        if (origin.length() != target.length()) {
+            return false;
+        } else if (origin.equals(target)) {
             return true;
         }
         
-		int diff = 0;
-		
-		for (int i = 0; i < str1.length(); i++)
-		{
-			if (str1.charAt(i) != str2.charAt(i))
-			{
-				diff++;
-			}
-		}
-		
-		return diff == 2;
-	}
+        int[] indexs = new int[] {-1, -1};
+        
+        for (int i = 0; i < origin.length(); i++) {
+            if (origin.charAt(i) != target.charAt(i)) {
+                if (indexs[0] == -1) {
+                    indexs[0] = i;
+                } else if (indexs[1] == -1) {
+                    indexs[1] = i;
+                } else {
+                    return false;
+                }
+            }
+        }
+        
+        return indexs[0] != -1 && indexs[1] != -1 && origin.charAt(indexs[0]) == target.charAt(indexs[1]) && origin.charAt(indexs[1]) == target.charAt(indexs[0]);
+    }
 	
 	
 	
+	
+    
+    
+	
+	/************************************* main *************************************/
 	
 	public static void main(String[] args)
 	{

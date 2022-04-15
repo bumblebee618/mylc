@@ -32,28 +32,28 @@ public class Q564_Find_the_Closest_Palindrome {
 		}
         
 		int size = n.length();
-        int i = size % 2 == 0 ? size/2 - 1: size/2;
-        long leftPart = Long.parseLong(n.substring(0, i+1));
+        int leftEnd = size % 2 == 0 ? size/2 - 1: size/2;
+        long leftPart = Long.parseLong(n.substring(0, leftEnd+1));
         
         // input: n = 12345
         List<Long> candidates = new ArrayList<>();
-        candidates.add(getPalindrome(leftPart, size % 2== 0));    // 12321
-        candidates.add(getPalindrome(leftPart+1, size % 2== 0));  // 12421
-        candidates.add(getPalindrome(leftPart-1, size % 2== 0));  // 12221
+        candidates.add(getPalindrome(leftPart, size % 2 == 0));    // 12321
+        candidates.add(getPalindrome(leftPart+1, size % 2 == 0));  // 12421
+        candidates.add(getPalindrome(leftPart-1, size % 2 == 0));  // 12221
         candidates.add((long) Math.pow(10, size-1) - 1);      // 9999
         candidates.add((long) Math.pow(10, size) + 1);        // 100001
         
-        long diff = Long.MAX_VALUE, result = 0, num = Long.parseLong(n);
+        long minDiff = Long.MAX_VALUE, result = 0, num = Long.parseLong(n);
         
         for (long candidate : candidates) {
             if (candidate == num) {
             	continue;
             }
             
-            if (Math.abs(candidate - num) < diff) {
-                diff = Math.abs(candidate - num);
+            if (Math.abs(candidate - num) < minDiff) {
+            	minDiff = Math.abs(candidate - num);
                 result = candidate;
-            } else if (Math.abs(candidate - num) == diff) {
+            } else if (Math.abs(candidate - num) == minDiff) {
                 result = Math.min(result, candidate);
             }
         }

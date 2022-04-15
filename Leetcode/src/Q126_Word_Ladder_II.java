@@ -41,7 +41,7 @@ public class Q126_Word_Ladder_II {
 	// solution 1: bfs + dfs
 	private List<List<String>> result = new LinkedList<>();
     private Map<String, Set<String>> wordMap = new HashMap<>();
-    private Set<String> wordSet = new HashSet<>();
+    private Set<String> availableWordSet = new HashSet<>();
     
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0) {
@@ -50,9 +50,9 @@ public class Q126_Word_Ladder_II {
             return result;
         }
         
-        wordList.forEach(word -> wordSet.add(word));
+        wordList.forEach(word -> availableWordSet.add(word));
         
-        if (!wordSet.contains(endWord)) {
+        if (!availableWordSet.contains(endWord)) {
         	return result;
         }
         
@@ -68,7 +68,7 @@ public class Q126_Word_Ladder_II {
     
     // build wordMap
     private void bfs(Set<String> curLevel, String endWord) {
-        wordSet.removeAll(curLevel);
+        availableWordSet.removeAll(curLevel);
         Set<String> nextLevel = new HashSet<>();
         boolean found = false;
         
@@ -86,7 +86,7 @@ public class Q126_Word_Ladder_II {
                     letters[i] = c;
                     String newWord = new String(letters);
                     
-                    if (wordSet.contains(newWord)) {
+                    if (availableWordSet.contains(newWord)) {
                         if (newWord.equals(endWord)) {
                             found = true;
                         } else {

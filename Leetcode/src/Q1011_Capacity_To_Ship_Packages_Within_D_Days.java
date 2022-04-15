@@ -48,64 +48,47 @@ Note:
 1 <= D <= weights.length <= 50000
 1 <= weights[i] <= 500
  */
-public class Q1011_Capacity_To_Ship_Packages_Within_D_Days 
-{
-	public int shipWithinDays(int[] weights, int D) 
-	{
-        if (weights == null || weights.length == 0 || D <= 0)
-        {
+public class Q1011_Capacity_To_Ship_Packages_Within_D_Days {
+	public int shipWithinDays(int[] weights, int D) {
+        if (weights == null || weights.length == 0 || D <= 0) {
             return 0;
         }
+    
+        int left = 0, right = 0, result = 0;
         
-        int maxWeight = 0;
-        int totalWeight = 0;
-        
-        for (int weight : weights)
-        {
-            maxWeight = Math.max(maxWeight, weight);
-            totalWeight += weight;
+        for (int weight : weights) {
+            left = Math.max(left, weight);
+            right += weight;
         }
         
-        int left = maxWeight, right = totalWeight;
-        int result = 0;
-        
-        while (left <= right)
-        {
-            int mid = left + (right-left)/2;
+        while (left <= right) {
+            int mid = left + (right - left)/2;
             
-            if (!canShipWithTargetDays(weights, D, mid))
-            {
+            if (!canSplit(weights, D, mid)) {
                 left = mid+1;
-            }
-            else
-            {
-                result = mid;
+            } else {
                 right = mid-1;
+                result = mid;
             }
         }
         
         return result;
     }
     
-    private boolean canShipWithTargetDays(int[] weights, int maxDay, int maxCapacity)
-    {
-        int days = 1;
-        int curCapacity = 0;
+    private boolean canSplit(int[] weights, int D, int maxCapacity) {
+        int sum = 0, count = 1;
         
-        for (int weight : weights)
-        {
-            if (curCapacity+weight > maxCapacity)
-            {
-                days++;
-                curCapacity = 0;
+        for (int weight : weights) {
+            if (sum + weight > maxCapacity) {
+                count++;
+                sum = 0;
             }
             
-            if (days > maxDay)
-            {
+            sum += weight;
+            
+            if (count > D) {
                 return false;
             }
-            
-            curCapacity += weight;
         }
         
         return true;

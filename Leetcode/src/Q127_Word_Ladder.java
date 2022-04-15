@@ -44,22 +44,26 @@ public class Q127_Word_Ladder {
             return 0;
         }
         
-        Set<String> wordDict = new HashSet<>();
-        wordList.forEach(word -> wordDict.add(word));
+        Set<String> wordSet = new HashSet<>();
         
-        if (!wordDict.contains(endWord)) {
+        for (String word : wordList) {
+            wordSet.add(word);
+        }
+        
+        if (!wordSet.contains(endWord)) {
             return 0;
         }
         
         Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
+        
         Set<String> visited = new HashSet<>();
         visited.add(beginWord);
-        int step = 0;
+        
+        int step = 1;
         
         while (!queue.isEmpty()) {
             int size = queue.size();
-            step++;
             
             for (int i = 0; i < size; i++) {
                 String curWord = queue.poll();
@@ -68,39 +72,41 @@ public class Q127_Word_Ladder {
                     return step;
                 }
                 
-                for (String nextWord : findNextWords(curWord, wordDict, visited)) {
+                for (String nextWord : findNextWords(curWord, wordSet, visited)) {
                     queue.offer(nextWord);
                     visited.add(nextWord);
                 }
             }
+            
+            step++;
         }
         
         return 0;
     }
     
-    private List<String> findNextWords(String curWord, Set<String> wordDict, Set<String> visited) {
-        List<String> result = new LinkedList<>();
+    private List<String> findNextWords(String curWord, Set<String> wordSet, Set<String> visited) {
+        List<String> nextWords = new LinkedList<>();
         char[] letters = curWord.toCharArray();
         
         for (int i = 0; i < letters.length; i++) {
             char tmp = letters[i];
             
             for (char c = 'a'; c <= 'z'; c++) {
-                if (c == tmp) {
+                if (tmp == c) {
                     continue;
                 }
                 
                 letters[i] = c;
                 String newWord = new String(letters);
                 
-                if (wordDict.contains(newWord) && !visited.contains(newWord)) {
-                    result.add(newWord);
+                if (wordSet.contains(newWord) && !visited.contains(newWord)) {
+                    nextWords.add(newWord);
                 }
             }
             
             letters[i] = tmp;
         }
         
-        return result;
+        return nextWords;
     }
 }

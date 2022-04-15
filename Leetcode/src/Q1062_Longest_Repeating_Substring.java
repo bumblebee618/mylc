@@ -34,62 +34,39 @@ Note:
 The string S consists of only lowercase English letters from 'a' - 'z'.
 1 <= S.length <= 1500
  */
-public class Q1062_Longest_Repeating_Substring 
-{
-	public int longestRepeatingSubstring(String S) 
-	{
-        if (S == null || S.length() == 0)
-        {
+public class Q1062_Longest_Repeating_Substring {
+	public int longestRepeatingSubstring(String s) {
+        if (s == null || s.length() == 0) {
             return 0;
         }
         
-        int left = 0, right = S.length()-1;
+        int left = 0, right = s.length()-1, result = 0;
         
-        while (left+1 < right)
-        {
-            int mid = left+(right-left)/2;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
             
-            if (findRepeatingStr(mid, S))
-            {
-                left = mid;
-            }
-            else 
-            {
-                right = mid;
+            if (findRepeatedStr(s, mid)) {
+                result = mid;
+                left = mid+1;
+            } else {
+                right = mid-1;
             }
         }
         
-        if (findRepeatingStr(right, S))
-        {
-            return right;
-        }
-        else if (findRepeatingStr(left, S))
-        {
-            return left;
-        }
-        else
-        {
-            return 0;
-        }
+        return findRepeatedStr(s, left) ? left : result;
     }
     
-    private boolean findRepeatingStr(int L, String S)
-    {
-        int size = S.length();
-        Set<String> set = new HashSet<>();
+    private boolean findRepeatedStr(String s, int len) {
+        Set<String> strs = new HashSet<>();
         
-        for (int start = 0; start+L-1 < size; start++)
-        {
-            String subStr = S.substring(start, start+L);
+        for (int i = 0; i <= s.length()-len; i++) {
+            String curStr = s.substring(i, i+len);
             
-            if (set.contains(subStr))
-            {
+            if (strs.contains(curStr)) {
                 return true;
             }
-            else
-            {
-                set.add(subStr);
-            }
+            
+            strs.add(curStr);
         }
         
         return false;

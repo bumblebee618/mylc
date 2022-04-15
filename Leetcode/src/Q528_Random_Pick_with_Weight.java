@@ -32,45 +32,37 @@ The input is two lists: the subroutines called and their arguments. Solution's c
 public class Q528_Random_Pick_with_Weight 
 {
 	private int[] candidates;
-    private Random rand = new Random();
-    private int tot = 0;
+    private Random random = new Random();
+    private int totalSum = 0;
 
-    public Q528_Random_Pick_with_Weight(int[] w) 
-    {
-        if (w == null || w.length == 0)
-        {
+    public Q528_Random_Pick_with_Weight(int[] w) {
+        if (w == null || w.length == 0) {
             return;
         }
         
         candidates = new int[w.length];
         
-        for (int i = 0; i < w.length; i++)
-        {
-        	tot += w[i];
-        	candidates[i] = tot;
+        for (int i = 0; i < w.length; i++) {
+        	totalSum += w[i];
+        	candidates[i] = totalSum;
         }
     }
     
-    public int pickIndex() 
-    {
-        int target = rand.nextInt(tot);
-        int left = 0;
-        int right = candidates.length-1;
+    private int pickIndex() {
+        int left = 0, right = candidates.length-1;
+        int target = random.nextInt(totalSum);
         
-        while (left+1 < right)
-        {
-            int mid = left+(right-left)/2;
+        while (left < right) {
+            int mid = left + (right-left) / 2;
             
-            if (candidates[mid] > target)
-            {
-                right = mid;
-            }
-            else
-            {
-                left = mid;
+            if (candidates[mid] > target) {
+                right = mid-1;
+            } else {
+                left = mid+1;
             }
         }
         
-        return candidates[left] > target ? left : right;
+        // find first element larger than target
+        return candidates[left] > target ? left : left+1;
     }
 }

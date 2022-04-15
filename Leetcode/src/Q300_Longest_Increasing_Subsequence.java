@@ -24,26 +24,23 @@ public class Q300_Longest_Increasing_Subsequence {
 	 ***************************************************************/
 	
 	// solution 1: time O(nlogn), space O(n)
-	public int lengthOfLIS(int[] nums) 
-    {
-        if (nums == null || nums.length == 0)
-        {
+	public int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return 0;
         }
         
         int[] queue = new int[nums.length];
         int maxLen = 0;
         
-        for (int num : nums)
-        {
+        for (int num : nums) {
             int index = Arrays.binarySearch(queue, 0, maxLen, num);
             
+            // return first num which is equal to or larger than target num
             // 1-indexed when index < 0 (cannot find any num in this array)
             index = index < 0 ? -index-1 : index;
             queue[index] = num;
             
-            if (maxLen == index)
-            {
+            if (maxLen == index) {
                 maxLen++;
             }
         }
@@ -52,11 +49,50 @@ public class Q300_Longest_Increasing_Subsequence {
     }
 	
 	
-	// solution 2: using customized binary search, time O(nlogn)
-	public int lengthOfLIS2(int[] nums) 
-	{
-        if (nums == null || nums.length == 0)
-        {
+	// solution 2:
+	public int lengthOfLIS2(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        List<Integer> list = new ArrayList<>();
+        
+        for (int i = 0; i < nums.length; i++) {            
+            if (list.size() == 0 || nums[i] > list.get(list.size()-1)) {
+                list.add(nums[i]);
+            } else {
+                int pos = findPos2(list, nums[i]);
+                list.set(pos, nums[i]);
+            }
+        }
+        
+        return list.size();
+    }
+    
+    private int findPos2(List<Integer> list, int target) {
+        if (target <= list.get(0)) {
+            return 0;
+        }
+        
+        int left = 0, right = list.size()-1;
+        
+        while (left+1 < right) {
+            int mid = left + (right-left)/2;
+            
+            if (list.get(mid) < target) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        
+        return list.get(left) >= target ? left : right;
+    }
+	
+    
+	// solution 3: using customized binary search, time O(nlogn)
+	public int lengthOfLIS3(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return 0;
         }
         
@@ -64,15 +100,11 @@ public class Q300_Longest_Increasing_Subsequence {
         int[] queue = new int[size];
         int curTail = -1;
         
-        for (int num : nums)
-        {
-            if (curTail == -1 || num > queue[curTail])
-            {
+        for (int num : nums) {
+            if (curTail == -1 || num > queue[curTail]) {
                 queue[++curTail] = num;
-            }
-            else
-            {
-                int pos = findPos(queue, curTail, num);
+            } else {
+                int pos = findPos3(queue, curTail, num);
                 queue[pos] = num;
             }
         }
@@ -80,21 +112,16 @@ public class Q300_Longest_Increasing_Subsequence {
         return curTail+1;
     }
 
-	// find the position of first num which is equal or larger than target num
-    private int findPos(int[] queue, int curTail, int target)
-    {
+	// find the position of first num which is equal to or larger than target num
+    private int findPos3(int[] queue, int curTail, int target) {
         int left = 0, right = curTail;
         
-        while (left+1 < right)
-        {
+        while (left+1 < right) {
             int mid = left + (right-left)/2;
             
-            if (queue[mid] < target)
-            {
+            if (queue[mid] < target) {
                 left = mid;
-            }
-            else
-            {   
+            } else {   
                 right = mid;
             }
         }

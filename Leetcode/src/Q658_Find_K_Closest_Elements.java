@@ -30,7 +30,7 @@ arr is sorted in ascending order.
 -104 <= arr[i], x <= 104
  */
 public class Q658_Find_K_Closest_Elements {
-	// Solution 1: time complexity O(logn)
+	// Solution 1: time complexity O(logn + k)
 	public List<Integer> findClosestElements(int[] arr, int k, int x) 
 	{
         List<Integer> result = new ArrayList<>();
@@ -65,44 +65,69 @@ public class Q658_Find_K_Closest_Elements {
     }
 
 	
-	// Solution 2: binary search + two pointer, time O(logn + k + klogk)
-	public List<Integer> findClosestElements2(int[] arr, int k, int x) 
-    {
+	// Solution 2: binary search + two pointer, time O(logn + k)
+	public List<Integer> findClosestElements2(int[] arr, int k, int x) {
         List<Integer> result = new ArrayList<>();
         
-        if (arr == null || arr.length == 0 || k <= 0 || k > arr.length)
-        {
-            return result;            
+        if (arr == null || arr.length == 0 || k <= 0) {
+            return result;
         }
         
-        int right = Arrays.binarySearch(arr, x);
-        right = right < 0 ? -right-1 : right;
-        int left = right-1;
-            
-        for (int i = 0; i < k; i++)
-        {
-            int elem = 0;
-            
-            if (left >= 0 && right < arr.length)
-            {
-                elem = (Math.abs(x-arr[left]) <= Math.abs(x-arr[right])) ? arr[left--] : arr[right++];
+        int pos = binarySearch(arr, x);
+        int left = pos, right = pos;
+        List<Integer> list = new ArrayList<>();
+        
+        if (pos-1 >= 0 && pos+1 < arr.length) {
+            if (Math.abs(arr[pos-1] - x) >= Math.abs(arr[pos+1] - x)) {
+                right = pos+1;
+            } else {
+                left = pos-1;
             }
-            else if (left >= 0)
-            {
-                elem = arr[left--];
-            }
-            else
-            {
-                elem = arr[right++];
-            }
-            
-            result.add(elem);
+        } else if (pos-1 >= 0) {
+            left = pos-1;
+        } else if (pos+1 < arr.length) {
+            right = pos+1;
         }
         
-        Collections.sort(result);
+        while (left >= 0 || right < arr.length) {
+            if (left >= 0 && right < arr.length) {
+                if (Math.abs(arr[left] - x) <= Math.abs(arr[right] - x)) {
+                    result.add(0, arr[left--]);
+                } else {
+                    list.add(arr[right++]);
+                }
+            } else if (left >= 0) {
+                result.add(0, arr[left--]);
+            } else {
+                list.add(arr[right++]);
+            }
+            
+            if (result.size() + list.size() == k) {
+                break;
+            }
+        }
+        
+        result.addAll(list);
         return result;
     }
-	
+    
+    private int binarySearch(int[] arr, int target) {
+        int left = 0, right = arr.length-1;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            
+            if (arr[mid] < target) {
+                left = mid+1;
+            } else if (arr[mid] > target) {
+                right = mid-1;
+            } else {
+                return mid;
+            }
+        }
+        
+        return left;
+    }
     
 	
 	// Solution 3: time complexity O(n-k)

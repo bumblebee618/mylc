@@ -17,43 +17,39 @@ Note:
 
 public class Q774_Minimize_Max_Distance_to_Gas_Station 
 {
-	public double minmaxGasDist(int[] stations, int K) 
-    {
-        if (stations == null || stations.length == 0 || K < 0)
-        {
+	public double minmaxGasDist(int[] stations, int k) {
+        if (stations == null || stations.length == 0 || k < 0) {
             return 0;
         }
         
         int size = stations.length;
-        double left = 0, right = stations[size - 1] - stations[0];
+        double left = 0, right = stations[size - 1] - stations[0], result = -1.0;
 
-        while (left +1e-6 < right) 
-        {
+        while (left + 1e-6 < right) {
             double mid = (left + right) / 2;
-            int count = findCount(stations, mid);
                 
-            if (count > K) 
-            {
+            if (!isValid(stations, mid, k)) {
                 left = mid;
-            }
-            else 
-            {
+            } else {
                 right = mid;
+                result = mid;
             }
         }
         
-        return right;
+        return result;
     }
     
-    private int findCount(int[] stations, double distance)
-    {
-        int count = 0;
+    private boolean isValid(int[] stations, double distance, int maxGasCount) {
+        int gasCount = 0;
     
-        for (int i = 0; i < stations.length - 1; ++i)
-        {
-            count += Math.floor((stations[i + 1] - stations[i]) / distance);
+        for (int i = 0; i < stations.length - 1; ++i) {
+            gasCount += Math.floor((stations[i + 1] - stations[i]) / distance);
+            
+            if (gasCount > maxGasCount) {
+                return false;
+            }
         }
         
-        return count;
+        return true;
     }
 }

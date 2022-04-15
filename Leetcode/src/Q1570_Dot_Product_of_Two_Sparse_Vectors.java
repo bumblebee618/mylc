@@ -43,49 +43,35 @@ n == nums1.length == nums2.length
 public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
 	// solution 1: using List and binary search
 	public List<int[]> pairs;
-    
-	Q1570_Dot_Product_of_Two_Sparse_Vectors(int[] nums)
-    {
-        if (nums == null || nums.length == 0)
-        {
+	   
+	Q1570_Dot_Product_of_Two_Sparse_Vectors(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return;
         }
         
         pairs = new ArrayList<>();
         
-        for (int i = 0; i < nums.length; i++)
-        {
-            if (nums[i] != 0)
-            {
-                 pairs.add(new int[] {i, nums[i]});
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                pairs.add(new int[] {i, nums[i]});
             }
         }
     }
     
-    public int dotProduct(Q1570_Dot_Product_of_Two_Sparse_Vectors vec) 
-    {
-        if (vec == null)
-        {
+	// Return the dotProduct of two sparse vectors
+    public int dotProduct(Q1570_Dot_Product_of_Two_Sparse_Vectors vec) {
+        if (vec == null) {
             return 0;
-        }
-        else if (vec.pairs.size() < pairs.size())
-        {
+        } else if (vec.pairs.size() < pairs.size()) {
             return vec.dotProduct(this);
         }
         
-        return getResult_binary_search(vec);
-    }
-    
-    private int getResult_binary_search(Q1570_Dot_Product_of_Two_Sparse_Vectors vec)
-    {
         int result = 0;
         
-        for (int[] pair : pairs)
-        {
+        for (int[] pair : pairs) {
             int pos = binarySearch(vec.pairs, pair[0]);
             
-            if (pos != -1)
-            {
+            if (pos != -1) {
                 result += pair[1] * vec.pairs.get(pos)[1];
             }
         }
@@ -93,31 +79,27 @@ public class Q1570_Dot_Product_of_Two_Sparse_Vectors {
         return result;
     }
     
-    private int binarySearch(List<int[]> pairs, int target)
-    {
+    private int binarySearch(List<int[]> pairs, int target) {
         int left = 0, right = pairs.size()-1;
         
-        while (left < right)
-        {
-            int mid = left + (right-left)/2;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
             int[] pair = pairs.get(mid);
             
-            if (pair[0] < target)
-            {
-                left = mid+1;
-            }
-            else if (pair[0] > target)
-            {
+            if (pair[0] > target) {
                 right = mid-1;
-            }
-            else
-            {
+            } else if (pair[0] < target) {
+                left = mid+1;
+            } else {
                 return mid;
             }
         }
         
         return pairs.get(left)[0] == target ? left : -1;
     }
+
+	
+	
     
     // solution 2: using List and two pointers
     /*** 
