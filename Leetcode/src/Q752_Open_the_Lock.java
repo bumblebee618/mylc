@@ -57,7 +57,9 @@ public class Q752_Open_the_Lock {
         
         Queue<String> queue = new LinkedList<>();
         queue.offer("0000");
+        
         visited.add("0000");
+        
         int step = 0;
         int[] moves = {1, -1};
         

@@ -29,20 +29,20 @@ connections[i][0] != connections[i][1]
 There are no repeated connections.
  */
 public class Q1192_Critical_Connections_in_a_Network {
-	private List<List<Integer>> answers = new ArrayList<>(); // 返回结果
+    private List<List<Integer>> answers = new ArrayList<>(); // 返回结果
     private int[] depthArray;      // 节点深度数组
-    private Set<Integer>[] graph; // 结构图
+    private Set<Integer>[] graph;  // 结构图
     
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
     	if (n <= 0 || connections == null || connections.size() == 0) {
-    		return answers;
+            return answers;
     	}
     	
         depthArray = new int[n];     // 初始化深度数组
         Arrays.fill(depthArray, -1); // 所有节点初始深度为-1
-        graph = new Set[n];         // 初始化结构图map[i]代表节点i可以连通哪些节点
+        graph = new Set[n];          // 初始化结构图map[i]代表节点i可以连通哪些节点
             
-        for (int i=0;i<n;i++) {
+        for (int i = 0; i < n; i++) {
             graph[i] = new HashSet<>();
         }
         
@@ -61,35 +61,35 @@ public class Q1192_Critical_Connections_in_a_Network {
     // 返回值为当前节点所有dfs路径终点的最小深度
     private int dfs(int curNode, int prevNode, int depth) {
         depthArray[curNode] = depth;       // 将当前深度存入深度数组
-        int result = Integer.MAX_VALUE;  // 返回值
+        int result = Integer.MAX_VALUE;    // 返回值
     
-        for (int next : graph[curNode]) { 
+        for (int nextNode : graph[curNode]) { 
             // 不能走回头路
-            if (next == prevNode) { 
+            if (nextNode == prevNode) { 
                 continue;
             }
         
-            int endDeep = 0; // dfs终点深度
+            int endDepth = 0; // dfs终点深度
         
-            // 深度为-1的点没走过，可以dfs
-            if (depthArray[next] == -1) { 
-                endDeep = dfs(next, curNode, depth+1);
+            // 深度为-1的点没走过，可以dfs, 相当于visited
+            if (depthArray[nextNode] == -1) { 
+                endDepth = dfs(nextNode, curNode, depth+1);
                 
-                // 如果深度大于当前深度，说明当前点不在闭环上
+                // 如果深度大于当前深度，说明当前点不在闭环上,因为在闭环上的点总是能回到起始点
                 // 当前点与下一节点i之间的连线为答案之一
-                if (endDeep > depth) {
+                if (endDepth > depth) {
                     List<Integer> list = new ArrayList<>();
                     list.add(curNode);
-                    list.add(next);
+                    list.add(nextNode);
                     answers.add(list);
                 }
             } else {
                 // i节点深度不为-1，说明已经走过，i节点为dfs终点
-                endDeep = depthArray[next];
+                endDepth = depthArray[nextNode];
             }
             
             // 更新最小深度
-            result = Math.min(result, endDeep);
+            result = Math.min(result, endDepth);
         }
     
         return result;

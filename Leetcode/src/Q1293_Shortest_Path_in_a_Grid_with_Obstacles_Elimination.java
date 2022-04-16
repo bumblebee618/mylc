@@ -55,9 +55,7 @@ public class Q1293_Shortest_Path_in_a_Grid_with_Obstacles_Elimination {
         int[] dx = {1, -1, 0, 0}, dy = {0, 0, 1, -1};
         int row = grid.length, col = grid[0].length, step = 0;
         
-        List<Integer>[][] solutions = new List[row][col];
-        solutions[0][0] = new LinkedList<>();
-        solutions[0][0].add(grid[0][0]);
+        List<Integer>[][] solutions = new List[row][col]; // == visited
         
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[] {0, 0, 0});
@@ -77,9 +75,9 @@ public class Q1293_Shortest_Path_in_a_Grid_with_Obstacles_Elimination {
                     int newY = node[1] + dy[j];
                     
                     if (newX >= 0 && newX < row && newY >= 0 && newY < col) {
-                        int newObs = node[2] + grid[newX][newY];
+                        int newObstacles = node[2] + grid[newX][newY];
                         
-                        if (newObs > k) {
+                        if (newObstacles > k) {
                             continue;
                         }
                         
@@ -90,15 +88,15 @@ public class Q1293_Shortest_Path_in_a_Grid_with_Obstacles_Elimination {
                         boolean isValid = true;
                         
                         for (int solution : solutions[newX][newY]) {
-                            if (newObs >= solution) {
+                            if (newObstacles >= solution) {
                                 isValid = false;
                                 break;
                             }
                         }
                         
                         if (isValid) {
-                            solutions[newX][newY].add(newObs);
-                            queue.offer(new int[] {newX, newY, newObs}); 
+                            solutions[newX][newY].add(newObstacles);
+                            queue.offer(new int[] {newX, newY, newObstacles}); 
                         }
                     }
                 }

@@ -19,57 +19,52 @@ Example 2:
 
 public class Q364_Nested_List_Weight_Sum_II {
 	// solution 1:
-	private Map<Integer, List<Integer>> map = new HashMap<>();
-    private int totalDepth = 0;
-    
-    public int depthSumInverse(List<NestedInteger> nestedList) 
-    {
-        if (nestedList == null || nestedList.size() == 0)
-        {
+	public int depthSumInverse(List<NestedInteger> nestedList) {
+        if (nestedList == null || nestedList.size() == 0) {
             return 0;
         }
         
-        for (NestedInteger node : nestedList)
-        {
-            dfs(node, 1);
+        Queue<NestedInteger> queue = new LinkedList<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        for (NestedInteger elem : nestedList) {
+            queue.offer(elem);
+        }
+        
+        int level = 0;
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            level++;
+            
+            for (int i = 0; i < size; i++) {
+                NestedInteger curNode = queue.poll();
+                
+                if (curNode.isInteger()) {
+                    map.computeIfAbsent(level, x -> new LinkedList<>()).add(curNode.getInteger());
+                } else {
+                    for (NestedInteger nextNode : curNode.getList()) {
+                        queue.offer(nextNode);
+                    }
+                }
+            }
         }
         
         int result = 0;
         
-        for (int level = 1; level <= totalDepth; level++)
-        {
-            if (map.containsKey(level))
-            {
-                for (int node : map.get(level))
-                {
-                    result += node * (totalDepth - level + 1);
-                }
+        for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
+            int curLevel = entry.getKey();
+            
+            for (int elem : entry.getValue()) {
+                result += elem * (level - curLevel + 1);
             }
         }
         
         return result;
     }
-    
-    private void dfs(NestedInteger node, int level)
-    {
-        if (node.isInteger())
-        {
-            totalDepth = Math.max(totalDepth, level);
-            int val = node.getInteger();
-            map.computeIfAbsent(level, x -> new LinkedList<Integer>()).add(val);
-            return;
-        }
-        
-        for (NestedInteger next : node.getList())
-        {
-            dfs(next, level+1);
-        } 
-    }
 
 	
-    
-    
-	
+    	
 	// solution 2: using iterator
 	public int depthSumInverse2(List<NestedInteger> nestedList) {
         if(nestedList == null || nestedList.size() == 0) {
@@ -148,7 +143,7 @@ public class Q364_Nested_List_Weight_Sum_II {
             stack.push(new Node2(node.getInteger(), level));
         } else {
             for(NestedInteger nextNode : node.getList()){
-                dfs(nextNode, level + 1);
+                dfs2(nextNode, level + 1);
             }
         }
     }

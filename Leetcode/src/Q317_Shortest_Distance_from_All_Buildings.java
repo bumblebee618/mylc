@@ -53,27 +53,27 @@ public class Q317_Shortest_Distance_from_All_Buildings {
         col = grid[0].length;
         distances = new int[row][col];
         
-        List<int[]> list = new ArrayList<>();
+        List<int[]> buildings = new ArrayList<>();
         
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (grid[i][j] == 1) {
-                    list.add(new int[] {i, j});
+                    buildings.add(new int[] {i, j});
                 }
                 
                 grid[i][j] = -grid[i][j];
             }
         }
         
-        for (int i = 0; i < list.size(); i++) {
-            bfs(list.get(i), i);
+        for (int i = 0; i < buildings.size(); i++) {
+            bfs(buildings.get(i), i);
         }
         
         int minDistance = Integer.MAX_VALUE;
         
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                if (grid[i][j] == list.size()) {
+                if (grid[i][j] == buildings.size()) {
                     minDistance = Math.min(minDistance, distances[i][j]);
                 }
             }

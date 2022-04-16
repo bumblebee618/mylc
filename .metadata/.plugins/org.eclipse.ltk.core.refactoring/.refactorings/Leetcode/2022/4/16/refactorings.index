@@ -2,3 +2,7 @@
 1649968866807	Rename field 'wordSet'
 1650046697733	Rename field 'deepArray'
 1650046714382	Rename local variable 'deep'
+1650046890153	Rename local variable 'endDeep'
+1650047356233	Rename local variable 'next'
+1650052352895	Rename local variable 'newObs'
+1650053749917	Rename local variable 'list'

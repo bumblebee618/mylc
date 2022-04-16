@@ -22,60 +22,40 @@ public class Q339_Nested_List_Weight_Sum {
 	 * 这里有level的概念，因此考虑用层序遍历
 	 * 
 	 ****************************************************/
+	
 	public int depthSum(List<NestedInteger> nestedList) {
-        if (nestedList == null || nestedList.size() == 0)
-        {
+        if (nestedList == null || nestedList.size() == 0) {
             return 0;
         }
         
         int result = 0;
-        int level = 1;
-        
         Queue<NestedInteger> queue = new LinkedList<>();
         
-        for (NestedInteger item : nestedList)
-        {
-            if (item.isInteger())
-            {
-                result += item.getInteger() * level;
-            }
-            else
-            {
-                for (NestedInteger next : item.getList())
-                {
-                    queue.offer(next);
-                }
-            }
+        for (NestedInteger elem : nestedList) {
+            queue.offer(elem);
         }
         
-        // bfs
-        while (!queue.isEmpty())
-        {
+        int level = 0;
+        
+        while (!queue.isEmpty()) {
             int size = queue.size();
             level++;
             
-            for (int i = 0; i < size; i++)
-            {
-                NestedInteger item = queue.poll();
+            for (int i = 0; i < size; i++) {
+                NestedInteger curNode = queue.poll();
                 
-                if (item.isInteger())
-                {
-                    result += item.getInteger() * level;
-                }
-                else
-                {
-                    for (NestedInteger next : item.getList())
-                    {
-                        queue.offer(next);
+                if (curNode.isInteger()) {
+                    result += curNode.getInteger() * level;
+                } else {
+                    for (NestedInteger nextNode : curNode.getList()) {
+                        queue.offer(nextNode);
                     }
                 }
             }
         }
         
         return result;
-    }
-
-	
+    }	
 	
 	
 	// solution 2: using recursion

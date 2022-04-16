@@ -25,12 +25,10 @@ The length of accounts[i][j] will be in the range [1, 30].
  *
  */
 public class Q721_Accounts_Merge {
-	public List<List<String>> accountsMerge(List<List<String>> accounts) 
-	{
+	public List<List<String>> accountsMerge(List<List<String>> accounts) {
         List<List<String>> result = new LinkedList<>();
 
-        if (accounts == null || accounts.size() == 0)
-        {
+        if (accounts == null || accounts.size() == 0) {
             return result;
         }
         
@@ -38,15 +36,14 @@ public class Q721_Accounts_Merge {
         Map<String, String> emailToName = new HashMap<>();
         
         // build email graph
-        for (List<String> account : accounts)
-        {
+        for (List<String> account : accounts) {
             String name = account.get(0);
             String firstEmail = account.get(1);
+            
             emailToName.put(firstEmail, name);
             graph.computeIfAbsent(firstEmail, x -> new ArrayList<String>()).add(firstEmail);
             
-            for (int i = 2; i < account.size(); i++)
-            {
+            for (int i = 2; i < account.size(); i++) {
                 String email = account.get(i);
                 graph.computeIfAbsent(email, x -> new ArrayList<String>()).add(firstEmail);
                 emailToName.put(email, name);
@@ -57,10 +54,8 @@ public class Q721_Accounts_Merge {
         // start bfs
         Set<String> visited = new HashSet<>();
 
-        for (String email : graph.keySet())
-        {
-            if (!visited.contains(email))
-            {
+        for (String email : graph.keySet()) {
+            if (!visited.contains(email)) {
                 List<String> list = bfs(graph, email, visited);
                 Collections.sort(list);
                 String name = emailToName.get(email);
@@ -72,22 +67,19 @@ public class Q721_Accounts_Merge {
         return result;
     }
 
-    private List<String> bfs(Map<String, List<String>> graph, String rootEmail, Set<String> visited)
-    {
+    private List<String> bfs(Map<String, List<String>> graph, String rootEmail, Set<String> visited) {
         Queue<String> queue = new LinkedList<>();
         queue.offer(rootEmail);
+        
         visited.add(rootEmail);
         List<String> list = new LinkedList<>();
 
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             String node = queue.poll();
             list.add(node);
 
-            for (String next : graph.get(node))
-            {
-                if (!visited.contains(next))
-                {
+            for (String next : graph.get(node)) {
+                if (!visited.contains(next)) {
                     queue.offer(next);
                     visited.add(next);
                 }
