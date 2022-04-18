@@ -27,57 +27,53 @@ public class Q095_Unique_Binary_Search_Trees_II {
 	 *  (4). 引入记忆化搜索，去除重复计算。  
 	 *      
 	 **********************************************************/
-	public List<TreeNode> generateTrees(int n) 
-	{
-        List<TreeNode> result = new LinkedList<>();
-        
-        if (n <= 0) 
-        {
-            return result;
+private List<TreeNode>[][] memo;
+    
+    public List<TreeNode> generateTrees(int n) {
+        if (n <= 0) {
+            return new LinkedList<>();
         }
         
-        // because the label is from 1 to n, so the lenght should be n + 1 !!!
-        List<TreeNode>[][] memo = new List[n+1][n+1];  
-        return search(memo, 1, n);
+    	// because the label is from 1 to n, so the lenght should be n + 1 !!!
+        memo = new List[n+1][n+1];
+        return search(1, n);
     }
     
-    public List<TreeNode> search(List<TreeNode>[][] memo, int start, int end) {
-        if (start > end) 
-        {
+    private List<TreeNode> search(int start, int end) {
+        if (start > end) {
             List<TreeNode> list = new LinkedList<>();
-            list.add(null);                 // this step is important !!!
+            list.add(null);     // this step is important !!!
             return list;
-        } 
-        else if (memo[start][end] != null) 
-        {
-            return memo[start][end];
+        } else if (memo[start][end] != null) {
+            return memo[start][end];   
         }
         
-        memo[start][end] = new LinkedList<>();
+        memo[start][end] = new LinkedList<TreeNode>();
         
-        for (int node = start; node <= end; node++) 
-        {
-            List<TreeNode> leftList = search(memo, start, node-1);
-            List<TreeNode> rightList = search(memo, node+1, end);
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> lefts = search(start, i-1);
+            List<TreeNode> rights = search(i+1, end);
             
-            for (TreeNode left : leftList) 
-            {
-                for (TreeNode right : rightList) 
-                {
-                    TreeNode root = new TreeNode(node);
+            for (TreeNode left : lefts) {
+                for (TreeNode right : rights) {
+                    TreeNode root = new TreeNode(i);
                     root.left = left;
                     root.right = right;
                     memo[start][end].add(root);
                 }
             }
         }
-        
+
         return memo[start][end];
     }
+	
+	
     
     
     
-    /*** main function ***/
+    
+    /************************************ main function ************************************/
+    
     public static void main(String[] args){
     Q095_Unique_Binary_Search_Trees_II t = new Q095_Unique_Binary_Search_Trees_II();
     	t.generateTrees(3);

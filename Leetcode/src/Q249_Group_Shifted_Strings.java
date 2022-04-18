@@ -26,47 +26,39 @@ A solution is:
  * */
 
 public class Q249_Group_Shifted_Strings {
-	public List<List<String>> groupStrings(String[] strings) 
-	{
+	public List<List<String>> groupStrings(String[] strings) {
         List<List<String>> result = new LinkedList<>();
         
-        if (strings == null || strings.length == 0)
-        {
+        if (strings == null || strings.length == 0) {
             return result;
         }
         
         Map<String, List<String>> map = new HashMap<>();
         
-        for (String string : strings)
-        {
-            String originalStr = getOriginalStr(string);
-            map.computeIfAbsent(originalStr, x -> new LinkedList<String>()).add(string);
+        for (String str : strings) {
+            String key = findOriginStr(str);
+            map.computeIfAbsent(key, x -> new LinkedList<>()).add(str);
         }
         
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) 
-        {
-            List<String> list = entry.getValue();
-            Collections.sort(list);
-            result.add(list);
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            result.add(entry.getValue());
         }
         
         return result;
     }
     
-    private String getOriginalStr(String word)
-    {
-        char[] letters = word.toCharArray();
-        int size = word.length();
+    private String findOriginStr(String str) {
+        char[] letters = str.toCharArray();
         int diff = letters[0] - 'a';
         
-        for (int i = 0; i < size; i++)
-        {
-            int gap = letters[i] - 'a' - diff;
-            letters[i] = gap >= 0 ? (char) (letters[i] - diff) : (char) (26 + gap + 'a');
+        for (int i = 0; i < letters.length; i++) {
+            letters[i] = (char) ((letters[i] - diff + 26) % 26);
         }
         
         return new String(letters);
     }
+
+	
 
 	
     

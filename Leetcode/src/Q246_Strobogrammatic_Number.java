@@ -14,12 +14,10 @@ For example, the numbers "69", "88", and "818" are all strobogrammatic.
 
 public class Q246_Strobogrammatic_Number {
 	// solution 1:
-	public boolean isStrobogrammatic(String num) 
-    {
-        if (num == null || num.length() == 0) 
-        {
-            return false;
-        }
+	public boolean isStrobogrammatic(String num) {
+        if (num == null || num.length() <= 0) {
+            return true;
+        } 
         
         Map<Character, Character> map = new HashMap<>();
         map.put('0', '0');
@@ -28,31 +26,16 @@ public class Q246_Strobogrammatic_Number {
         map.put('8', '8');
         map.put('9', '6');
         
-        Set<Character> set = new HashSet<>();
-        set.add('0');
-        set.add('1');
-        set.add('8');
-        
         int left = 0, right = num.length()-1;
         
-        while (left < right)
-        {
-            char c1 = num.charAt(left);
-            char c2 = num.charAt(right);
-            
-            if (!map.containsKey(c1) || map.get(c1) != c2)
-            {
+        while (left <= right) {
+            if (map.getOrDefault(num.charAt(left++), ' ') != num.charAt(right--)) {
                 return false;
             }
-            
-            left++;
-            right--;
         }
-        
-        return left == right ? set.contains(num.charAt(left)) : true;
+   
+        return true;
     }
-
-	
 	
 	
 	// solution 2:

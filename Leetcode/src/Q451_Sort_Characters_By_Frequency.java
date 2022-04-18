@@ -46,33 +46,29 @@ Note that 'A' and 'a' are treated as two different characters.
  * */
 
 public class Q451_Sort_Characters_By_Frequency {
-	public String frequencySort(String s) 
-    {
-        if (s == null || s.length() == 0) 
-        {
+	public String frequencySort(String s) {
+        if (s == null || s.length() == 0) {
             return s;
         }
         
         int[] frequency = new int[256];
-        Pair[] array = new Pair[256];
+        List<Pair> list = new ArrayList<>();
         
-        for (char c : s.toCharArray()) 
-        {
+        for (char c : s.toCharArray()) {
             frequency[c]++;
         }
         
-        for (int i = 0; i < 256; i++) 
-        {
-            array[i] = new Pair((char) i, frequency[i]);    
+        for (int i = 0; i < 256; i++) {
+            if (frequency[i] > 0) {
+                list.add(new Pair((char) i, frequency[i]));    
+            }
         }
         
-        Arrays.sort(array, (a, b) -> b.frequency - a.frequency);
+        Collections.sort(list, (a, b) -> b.frequency - a.frequency);
         StringBuilder builder = new StringBuilder();
         
-        for (Pair p : array) 
-        {
-            for (int i = 0; i < p.frequency; i++) 
-            {
+        for (Pair p : list) {
+            for (int i = 0; i < p.frequency; i++) {
                 builder.append(p.c);
             }
         }
@@ -80,13 +76,11 @@ public class Q451_Sort_Characters_By_Frequency {
         return builder.toString();
     }
     
-    class Pair
-    {
+    class Pair {
         char c;
         int frequency;
         
-        public Pair(char c, int frequency) 
-        {
+        public Pair(char c, int frequency) {
             this.c = c;
             this.frequency = frequency;
         }

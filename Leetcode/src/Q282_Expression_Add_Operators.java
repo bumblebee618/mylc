@@ -19,12 +19,10 @@ Examples:
 
 public class Q282_Expression_Add_Operators {
 	// test case: ["0"], ["01"], ["101"]
-private List<String> result = new LinkedList<>();
+    private List<String> result = new LinkedList<>();
     
-    public List<String> addOperators(String num, int target) 
-    {
-        if (num == null || num.length() == 0)
-        {
+    public List<String> addOperators(String num, int target) {
+        if (num == null || num.length() == 0) {
             return result;
         }
         
@@ -32,39 +30,32 @@ private List<String> result = new LinkedList<>();
         return result;
     }
     
-    private void search(String num, int start, String solution, int target, long sum, long prevNum)
-    {
-    	// prevNum is used to store the previous valid number 
-        if (start == num.length())
-        {
-            if (sum == target)
-            {
+    // prevNum is used to store the previous valid number 
+    private void search(String num, int curIndex, String solution, int target, long sum, long prevNum) {
+        if (curIndex == num.length()) {
+            if (sum == target) {
                 result.add(solution);
             }
             
             return;
         }
         
-        for (int end = start; end < num.length(); end++)
-        {
-        	// 注意这里是start，而不是 end, str可以是 "0", 但不可以是"01"之类的 ！！！
-            if (num.charAt(start) == '0' && end > start)         
-            {                                                   
-                return;
+        for (int end = curIndex; end < num.length(); end++) {
+            String str = num.substring(curIndex, end+1);
+            
+            // 注意这里是start，而不是 end, str可以是 "0", 但不可以是"01"之类的 ！！！
+            if (str.charAt(0) == '0' && str.length() > 1) {
+                continue;
             }
             
-            String str = num.substring(start, end+1);
             long curNum = Long.parseLong(str);
             
-            if (solution.length() == 0)
-            {
+            if (solution.length() == 0) {
                 search(num, end+1, str, target, curNum, curNum);
-            }
-            else
-            {
-                search(num, end+1, String.format("%s+%s", solution, str), target, sum+curNum, curNum);
-                search(num, end+1, String.format("%s-%s", solution, str), target, sum-curNum, -curNum);
-                search(num, end+1, String.format("%s*%s", solution, str), target, sum-prevNum + prevNum*curNum, prevNum*curNum);
+            } else {
+                search(num, end+1, solution.concat("+").concat(str), target, sum+curNum, curNum);
+                search(num, end+1, solution.concat("-").concat(str), target, sum-curNum, -curNum);
+                search(num, end+1, solution.concat("*").concat(str), target, sum-prevNum + prevNum*curNum, prevNum*curNum);
             }
         }
     }

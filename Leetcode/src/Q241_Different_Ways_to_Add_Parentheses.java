@@ -26,39 +26,33 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Q241_Different_Ways_to_Add_Parentheses 
-{
-	private List<Integer> nums = new ArrayList<>();
+public class Q241_Different_Ways_to_Add_Parentheses {
+	private List<Integer> result = new LinkedList<>();
     private List<Character> opers = new ArrayList<>();
+    private List<Integer> nums = new ArrayList<>();
+    private List<Integer>[][] memo;
     
-    public List<Integer> diffWaysToCompute(String input) 
-    {
-        if (input == null || input.length() == 0)
-        {
-            return new LinkedList<Integer>();
+    public List<Integer> diffWaysToCompute(String expression) {
+        if (expression == null || expression.length() == 0) {
+            return result;
         }
         
-        init(input);
+        expression = expression.replaceAll(" ", "");
+        initialization(expression);
         
-        // use memo to reduce duplicated calculation
-        List<Integer>[][] memo = new List[nums.size()][nums.size()]; 
-        return backtrack(0, nums.size()-1, memo);
+        memo = new List[nums.size()][nums.size()];
+        return search(0, nums.size()-1);
     }
     
-    private void init(String input)
-    {
+    private void initialization(String expression) {
         int num = 0;
         
-        for (int i = 0; i < input.length(); i++)
-        {
-            char c = input.charAt(i);
+        for (int i = 0; i < expression.length(); i++) {
+            char c = expression.charAt(i);
             
-            if (Character.isDigit(c))
-            {
-                num = num*10 + (int)(c-'0');
-            }
-            else
-            {
+            if (Character.isDigit(c)) {
+                num = num * 10 + (int) (c-'0');
+            } else {
                 opers.add(c);
                 nums.add(num);
                 num = 0;
@@ -68,36 +62,32 @@ public class Q241_Different_Ways_to_Add_Parentheses
         nums.add(num);
     }
     
-    private List<Integer> backtrack(int start, int end, List<Integer>[][] memo)
-    {
-        if (memo[start][end] != null)
-        {
+    private List<Integer> search(int start, int end) {
+        if (memo[start][end] != null) {
             return memo[start][end];
         }
         
         memo[start][end] = new LinkedList<>();
         
-        if (start == end)
-        {
+        if (start == end) {
             memo[start][end].add(nums.get(start));
             return memo[start][end];
         }
         
-        for (int i = start; i < end; i++)
-        {
-            List<Integer> leftResult = backtrack(start, i, memo);
-            List<Integer> rightResult = backtrack(i+1, end, memo);
+        for (int mid = start; mid < end; mid++) {
+            List<Integer> leftResult = search(start, mid);
+            List<Integer> rightResult = search(mid+1, end);
             
-            for (int left : leftResult)
-            {
-                for (int right : rightResult)
-                {
-                    switch(opers.get(i))
-                    {
+            for (int left : leftResult) {
+                for (int right : rightResult) {
+                    char oper = opers.get(mid);
+                    
+                    switch (oper) {
                         case '+': memo[start][end].add(left+right); break;
                         case '-': memo[start][end].add(left-right); break;
                         case '*': memo[start][end].add(left*right); break;
                         case '/': memo[start][end].add(left/right); break;
+                        default: break;
                     }
                 }
             }

@@ -41,40 +41,32 @@ The graph is undirected: if any element j is in graph[i], then i will be in grap
  */
 public class Q785_Is_Graph_Bipartite {
 	public boolean isBipartite(int[][] graph) {
-        if (graph == null || graph.length == 0)
-        {
+        if (graph == null || graph.length == 0) {
             return false;
         }
         
         int n = graph.length;
-        int[] setTag = new int[n];
-        Arrays.fill(setTag, -1);
+        int[] status = new int[n];
+        Arrays.fill(status, -1);
         
-        for (int i = 0; i < n; i++)
-        {
-            if (setTag[i] != -1)
-            {
+        for (int i = 0; i < n; i++) {
+            if (status[i] != -1) {
                 continue;
             }
             
             // bfs
             Queue<Integer> queue = new LinkedList<>();
             queue.offer(i);
-            setTag[i] = 0;
+            status[i] = 0;
             
-            while (!queue.isEmpty())
-            {
+            while (!queue.isEmpty()) {
                 int node = queue.poll();
                 
-                for (int neighbor : graph[node])
-                {
-                    if (setTag[neighbor] == -1)
-                    {
-                        setTag[neighbor] = setTag[node] ^ 1;
+                for (int neighbor : graph[node]) {
+                    if (status[neighbor] == -1) {
+                        status[neighbor] = status[node] ^ 1;
                         queue.offer(neighbor);
-                    }
-                    else if (setTag[node] == setTag[neighbor])
-                    {
+                    } else if (status[node] == status[neighbor]) {
                         return false;
                     }
                 }

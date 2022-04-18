@@ -12,47 +12,43 @@ import java.util.List;
 
 public class Q216_Combination_Sum_III {
 /*****************************************************/
-	// by Jackie using backtrack
+	// solution 1:
 	public List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> result = new LinkedList<List<Integer>>();
+        List<List<Integer>> result = new LinkedList<>();
         
-        if (k <= 0 || n <= 0)
-        {
+        if (k <= 0 || n <= 0) {
             return result;
         }
         
-        List<Integer> list = new LinkedList<Integer>();
-        backtrack(result, list, 1, k, n);
+        backtrack(result, new LinkedList<Integer>(), 1, k, n);
         return result;
     }
     
-    public void backtrack(List<List<Integer>> result, List<Integer> list, int start, int k, int target)
-    {
-        if (list.size() == k)
-        {
-            if (target == 0)
-            {
-                result.add(new LinkedList<Integer>(list));
+    private void backtrack(List<List<Integer>> result, List<Integer> solution, int start, int k, int target) {
+        if (solution.size() == k) {
+            if (target == 0) {
+                result.add(new LinkedList<>(solution));
             }
             
             return;
-        } 
-        else if (target < start)
-        {
-            return;
         }
         
-        for (int i = start; i <= 9; ++i)
-        {
-            list.add(i);
-            backtrack(result, list, i + 1, k, target - i);
-            list.remove(list.size() - 1);
+        for (int i = start; i <= 9; i++) {
+            if (target < i) {
+                break;
+            }
+            
+            solution.add(i);
+            backtrack(result, solution, i+1, k, target-i);
+            solution.remove(solution.size()-1);
         }
     }
+    
+    
  
 	
 	
-	
+	// solution 2:
 	private LinkedList<LinkedList<Integer>> res = new LinkedList<LinkedList<Integer>>();
 
 	public LinkedList<LinkedList<Integer>> combinationSum3_2(int k, int n) {

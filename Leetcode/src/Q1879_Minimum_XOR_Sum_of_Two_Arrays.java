@@ -37,43 +37,34 @@ n == nums2.length
 1 <= n <= 14
 0 <= nums1[i], nums2[i] <= 107
  */
-public class Q1879_Minimum_XOR_Sum_of_Two_Arrays 
-{
+public class Q1879_Minimum_XOR_Sum_of_Two_Arrays {
 	// backtracking + memo search
 	private HashMap<Integer, Integer> memo = new HashMap<>();
 	
-	public int minimumXORSum(int[] nums1, int[] nums2) 
-	{
-		if (nums1 == null || nums1.length == 0 || nums2 == null || nums1.length != nums2.length)
-		{
+	public int minimumXORSum(int[] nums1, int[] nums2) {
+		if (nums1 == null || nums1.length == 0 || nums2 == null || nums1.length != nums2.length) {
 			return 0;
 		}
 		
         return search(nums1, nums2, 0, nums1.length, 0);
     }
 	
-	private int search(int[] nums1, int[] nums2, int curIndex, int size, int status) 
-	{
-        if (curIndex == size) 
-        {
+	private int search(int[] nums1, int[] nums2, int num1CurIndex, int size, int num2Status) {
+        if (num1CurIndex == size) {
         	return 0;
-        }
-        else if (memo.containsKey(status)) 
-        {
-        	return memo.get(status);
+        } else if (memo.containsKey(num2Status)) {
+        	return memo.get(num2Status);
         }
         
         int min = Integer.MAX_VALUE;
         
-        for (int i = 0; i < size; i++) 
-        {
-            if ((status & (1 << i)) == 0) 
-            {
-                min = Math.min(min, (nums1[curIndex] ^ nums2[i]) + search(nums1, nums2, curIndex + 1, size, status | (1 << i)));
+        for (int i = 0; i < size; i++) {
+            if ((num2Status & (1 << i)) == 0) {
+                min = Math.min(min, (nums1[num1CurIndex] ^ nums2[i]) + search(nums1, nums2, num1CurIndex + 1, size, num2Status | (1 << i)));
             }
         }
         
-        memo.put(status, min);
+        memo.put(num2Status, min);
         return min;
     } 
 }

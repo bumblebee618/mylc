@@ -48,63 +48,54 @@ Constraints:
 -108 <= arr[i] <= 108
  */
 
-public class Q1345_Jump_Game_IV 
-{
-	public int minJumps(int[] arr) 
-    {
-        if (arr == null || arr.length == 0)
-        {
+public class Q1345_Jump_Game_IV {
+	public int minJumps(int[] arr) {
+        if (arr == null || arr.length <= 1) {
             return 0;
         }
         
-        Map<Integer, List<Integer>> graph = new HashMap<>();
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         
-        for (int i = 0; i < arr.length; i++)
-        {
-            graph.computeIfAbsent(arr[i], x -> new LinkedList<>()).add(i);
+        for (int i = 0; i < arr.length; i++) {
+            graph.computeIfAbsent(arr[i], x -> new HashSet<>()).add(i);
         }
         
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(0);
+        
         Set<Integer> visited = new HashSet<>();
         visited.add(0);
+        
         int step = 0;
         
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             int size = queue.size();
             
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 int curIndex = queue.poll();
                 
-                if (curIndex >= arr.length-1)
-                {
+                if (curIndex == arr.length-1) {
                     return step;
                 }
                 
-                if (curIndex-1 >= 0 && !visited.contains(curIndex-1))
-                {
+                if (curIndex-1 >= 0 && !visited.contains(curIndex-1)) {
                     queue.offer(curIndex-1);
                     visited.add(curIndex-1);
                 }
                 
-                if (curIndex+1 < arr.length && !visited.contains(curIndex+1))
-                {
+                if (curIndex+1 < arr.length && !visited.contains(curIndex+1)) {
                     queue.offer(curIndex+1);
                     visited.add(curIndex+1);
                 }
                 
-                for (int nextIndex : graph.get(arr[curIndex]))
-                {
-                    if (!visited.contains(nextIndex))
-                    {
+                for (int nextIndex : graph.get(arr[curIndex])) {
+                    if (!visited.contains(nextIndex)) {
                         queue.offer(nextIndex);
                         visited.add(nextIndex);
                     }
                 }
-                
-                graph.get(arr[curIndex]).clear();
+
+                graph.get(arr[curIndex]).clear(); // reduce unnecessary steps.
             }
             
             step++;

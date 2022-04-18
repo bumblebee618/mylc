@@ -29,34 +29,28 @@ All points are distinct.
 public class Q939_Minimum_Area_Rectangle {
 	// solution 1
 	public int minAreaRect(int[][] points) {
-        if (points == null || points.length == 0 || points[0].length == 0)
-        {
+        if (points == null || points.length == 0 || points[0].length == 0) {
             return 0;
         }
         
         Set<Point> allPoints = new HashSet<>();
         int result = Integer.MAX_VALUE;
         
-        for(int[] point : points)
-        {
+        for(int[] point : points) {
             allPoints.add(new Point(point[0], point[1]));
         }
         
         /* Assume p1 and p2 are diagonals, check if there are p3, p4 available in given points*/
-        for (Point p1 : allPoints)
-        {
-            for (Point p2 : allPoints)
-            {
-                if (p1.equals(p2) || p1.x == p2.x || p1.y == p2.y) 
-                {
+        for (Point p1 : allPoints) {
+            for (Point p2 : allPoints) {
+                if (p1.equals(p2) || p1.x == p2.x || p1.y == p2.y) {
                     continue;
                 }
                 
-                Point p3 = new Point(p1.x,p2.y);
-                Point p4 = new Point(p2.x,p1.y);
+                Point p3 = new Point(p1.x, p2.y);
+                Point p4 = new Point(p2.x, p1.y);
                 
-                if (allPoints.contains(p3) && allPoints.contains(p4))
-                {
+                if (allPoints.contains(p3) && allPoints.contains(p4)) {
                     int area = Math.abs(p1.x-p2.x) * Math.abs(p1.y-p2.y);
                     result = Math.min(area, result);
                 }
@@ -66,27 +60,24 @@ public class Q939_Minimum_Area_Rectangle {
         return result == Integer.MAX_VALUE ? 0 : result;
     }
     
-    class Point
-    {
+	
+    class Point {
         public int x;
         public int y;
         
-        Point(int i, int j)
-        { 
+        Point(int i, int j) { 
             x = i; 
             y = j; 
         }
         
         @Override
-        public boolean equals(Object obj)
-        {
+        public boolean equals(Object obj) {
             return ((Point) obj).x == this.x && ((Point) obj).y == this.y;
         }
         
         @Override
-        public int hashCode()
-        { 
-            return Objects.hash(x,y); 
+        public int hashCode() { 
+            return Objects.hash(x, y); 
         }
     }
     

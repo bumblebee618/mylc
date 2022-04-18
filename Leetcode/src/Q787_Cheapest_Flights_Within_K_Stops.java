@@ -60,7 +60,7 @@ public class Q787_Cheapest_Flights_Within_K_Stops
         
         Queue<Node> pq = new PriorityQueue<>((a, b) -> (a.cost - b.cost));
         
-        // cost, city and steps left
+        // cost, city and steps remained
         pq.add(new Node(src, 0, K+1));
         
         while (!pq.isEmpty()) 
@@ -72,14 +72,14 @@ public class Q787_Cheapest_Flights_Within_K_Stops
                 return node.cost;
             }
             
-            if (node.stopLeft > 0) 
+            if (node.stopRemained > 0) 
             {
                 Map<Integer, Integer> priceMap = prices.getOrDefault(node.city, new HashMap<>());
                 
                 // bfs
                 for (int nextCity : priceMap.keySet()) 
                 {
-                    pq.add(new Node(nextCity, node.cost + priceMap.get(nextCity), node.stopLeft - 1));
+                    pq.add(new Node(nextCity, node.cost + priceMap.get(nextCity), node.stopRemained - 1));
                 }
             }
         }
@@ -91,13 +91,13 @@ public class Q787_Cheapest_Flights_Within_K_Stops
     {
     	public int city;
         public int cost;
-        public int stopLeft;
+        public int stopRemained;
         
-        public Node(int city, int cost, int stopLeft)
+        public Node(int city, int cost, int stopRemained)
         {
             this.city = city;
             this.cost = cost;
-            this.stopLeft = stopLeft;
+            this.stopRemained = stopRemained;
         }
     }
 	
@@ -123,7 +123,7 @@ public class Q787_Cheapest_Flights_Within_K_Stops
         
         Queue<int[]> pq = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
         
-        // price, city and steps left
+        // price, city and steps remained
         pq.add(new int[] {0, src, K + 1});
         
         while (!pq.isEmpty()) 

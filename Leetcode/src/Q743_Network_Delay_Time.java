@@ -29,65 +29,57 @@ All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 0 <= w <= 100.
  */
 public class Q743_Network_Delay_Time 
 {
-	// solution 1: BFS
-	public int networkDelayTime(int[][] times, int N, int K) 
-	{
-        if (times == null || times.length == 0 || times[0].length == 0 || N <= 0 || K <= 0)
-        {
-            return 0;
+	// solution 1: BFS + DP
+	public int networkDelayTime(int[][] times, int n, int k) {
+        if (times == null || times.length == 0 || n <= 0) {
+            return -1;
         }
         
-        Set<Node>[] graph = new Set[N+1];
+        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
         
-        for (int[] time : times)
-        {
-            if (graph[time[0]] == null)
-            {
-                graph[time[0]] = new HashSet<>();
-            }
-            
-            graph[time[0]].add(new Node(time[1], time[2]));
+        for (int[] time : times) {
+            graph.computeIfAbsent(time[0], x -> new HashMap<>()).put(time[1], time[2]);
         }
         
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(new Node(K, 0));
-        Set<Integer> visited = new HashSet<>();
-        visited.add(K);
-        int[] costs = new int[N+1];
+        if (!graph.containsKey(k)) {
+            return -1;
+        }
         
-        while (!queue.isEmpty())
-        {
-        	Node t = queue.poll();
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] {k, 0});
+        
+        int[] costs = new int[n+1];
+        Arrays.fill(costs, Integer.MAX_VALUE);
+        costs[k] = 0;
+        
+        while (!queue.isEmpty()) {
+            int[] curNode = queue.poll();
             
-            if (graph[t.node] == null)
-            {
+            if (!graph.containsKey(curNode[0])) {
                 continue;
             }
             
-            for (Node next : graph[t.node])
-            {
-                if (!visited.contains(next.node) || costs[next.node] > costs[t.node] + next.time)
-                {
-                	visited.add(next.node);
-                    costs[next.node] = costs[t.node] + next.time;
-                    queue.offer(next);
+            for (Map.Entry<Integer, Integer> entry : graph.get(curNode[0]).entrySet()) {
+                int nextNodeIndex = entry.getKey();
+                
+                if (costs[nextNodeIndex] > curNode[1] + entry.getValue()) {
+                    queue.offer(new int[] {nextNodeIndex, curNode[1] + entry.getValue()});
+                    costs[nextNodeIndex] = curNode[1] + entry.getValue();
                 }
             }
         }
         
-        if (visited.size() != N)
-        {
-            return -1;
+        int delayTime = 0;
+        
+        for (int i = 1; i < costs.length; i++) {
+            if (costs[i] == Integer.MAX_VALUE) {
+                return -1;
+            }
+            
+            delayTime = Math.max(delayTime, costs[i]);
         }
         
-        int result = 0;
-        
-        for (int cost : costs)
-        {
-            result = Math.max(result, cost);
-        }
-
-        return result;
+        return delayTime;
     }
 	
 	

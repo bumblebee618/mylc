@@ -9,38 +9,27 @@ A sudoku puzzle...
  * */
 
 public class Q037_Sudoku_Solver {
-	public void solveSudoku(char[][] board) 
-	{
-        if (board == null || board.length == 0) 
-        {
+	public void solveSudoku(char[][] board) {
+        if (board == null || board.length == 0 || board[0].length == 0) {
             return;
         }
         
         backtrack(board);
     }
     
-    private boolean backtrack(char[][] board)
-    {
-        for (int i = 0; i < board.length; i++)
-        {
-            for (int j = 0; j < board[0].length; j++)
-            {
-                if (board[i][j] == '.')
-                {
-                    for (char c = '1'; c <= '9'; c++) //trial. Try 1 through 9 for each cell
-                    {
-                        if (isValid(board, i, j, c))
-                        {
-                            board[i][j] = c; //Put c for this cell
+    private boolean backtrack(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == '.') {
+                    for (char c = '1'; c <= '9'; c++) {  //trial. Try 1 through 9 for each cell
+                        if (isValid(i, j, board, c)) {
+                            board[i][j] = c;
                             
-                            if (backtrack(board)) 
-                            {
-                                return true; //If it's the solution return true
-                            } 
-                            else 
-                            {
-                                board[i][j] = '.'; //Otherwise go back
+                            if (backtrack(board)) {
+                                return true;
                             }
+                            
+                            board[i][j] = '.';
                         }
                     }
                     
@@ -52,33 +41,21 @@ public class Q037_Sudoku_Solver {
         return true;
     }
     
-    private boolean isValid(char[][] board, int i, int j, char c)
-    {
-        //Check colum
-        for (int row = 0; row < 9; row++) 
-        {
-            if (board[row][j] == c) 
-            {
+    private boolean isValid(int row, int col, char[][] board, char target) {
+        for (int i = 0; i < 9; i++) {    
+            if (board[row][i] == target) {
+                return false;
+            }
+            
+            if (board[i][col] == target) {
                 return false;
             }
         }
-                
-        //Check row
-        for (int col = 0; col < 9; col++) 
-        {
-            if (board[i][col] == c) 
-            {
-                return false;
-            }
-        }
-                
-        //Check 3 row 3 block
-        for (int row = (i / 3) * 3; row < (i / 3) * 3 + 3; row++) 
-        {
-            for (int col = (j / 3) * 3; col < (j / 3) * 3 + 3; col++) 
-            {
-                if (board[row][col] == c) 
-                {
+        
+        // Check 3 row 3 block
+        for (int i = (row / 3) * 3; i < (row / 3) * 3 + 3; i++) {
+            for (int j = (col / 3) * 3; j < (col / 3) * 3 + 3; j++) {
+                if (board[i][j] == target) {
                     return false;
                 }
             }

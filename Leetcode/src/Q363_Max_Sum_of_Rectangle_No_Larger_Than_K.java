@@ -16,13 +16,10 @@ The rectangle inside the matrix must have an area > 0.
 What if the number of rows is much larger than the number of columns?
  */
 
-public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K 
-{
+public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K {
 	// time is O(n^3*logn)
-	public int maxSumSubmatrix(int[][] matrix, int k) 
-	{
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
-        {
+	public int maxSumSubmatrix(int[][] matrix, int k) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
 			return 0;
 		}
 
@@ -30,34 +27,28 @@ public class Q363_Max_Sum_of_Rectangle_No_Larger_Than_K
 		int result = Integer.MIN_VALUE;
         int[][] prefixSum = new int[row][col];
         
-        for (int i = 0; i < row; i++)
-        {
+        for (int i = 0; i < row; i++) {
             int rowSum = 0;
             
-            for (int j = 0; j < col; j++)
-            {
+            for (int j = 0; j < col; j++) {
                 rowSum += matrix[i][j];
                 prefixSum[i][j] = (i > 0) ? prefixSum[i-1][j] + rowSum : rowSum;
             }
         }
 
-		for (int rowStart = 0; rowStart < row; rowStart++) 
-        {
-			for (int rowEnd = rowStart; rowEnd < row; rowEnd++) 
-            {
+		for (int startRow = 0; startRow < row; startRow++) {
+			for (int endRow = startRow; endRow < row; endRow++) {
 				TreeSet<Integer> set = new TreeSet<Integer>();
 				set.add(0);   // in case k == curSum;
 
-				for (int i = 0; i < col; i++) 
-                {
-					int part1 = (rowStart > 0) ? prefixSum[rowStart-1][i] : 0;
-					int curSum = prefixSum[rowEnd][i] - part1;
+				for (int i = 0; i < col; i++) {
+					int part1 = (startRow > 0) ? prefixSum[startRow-1][i] : 0;
+					int curSum = prefixSum[endRow][i] - part1;
                     
 					// use TreeMap to binary search previous sum to get possible result
 					Integer subResult = set.ceiling(curSum - k);
 
-					if (subResult != null) 
-                    {
+					if (subResult != null) {
 						result = Math.max(result, curSum - subResult);
 					}
 
