@@ -49,30 +49,31 @@ public class Q735_Asteroid_Collision {
         Stack<Integer> stack = new Stack<>();
         
         for (int asteroid : asteroids) {
-            if (asteroid < 0 && !stack.isEmpty() && stack.peek() > 0) {
-                while (asteroid < 0 && !stack.isEmpty() && stack.peek() > 0) {
-                    if (Math.abs(asteroid) > stack.peek()) {
-                        stack.pop();
-                    } else if (Math.abs(asteroid) == stack.peek()) {
-                        stack.pop();
-                        asteroid = Integer.MAX_VALUE;  // explode
-                    } else {
-                        asteroid = Integer.MAX_VALUE;  // explode
-                    }
+            boolean deleted = false;
+            
+            while (!stack.isEmpty() && stack.peek() * asteroid < 0 && asteroid < 0) {
+                if (Math.abs(stack.peek()) < Math.abs(asteroid)) {
+                    stack.pop();
+                } else if (Math.abs(stack.peek()) == Math.abs(asteroid)) {
+                    stack.pop();
+                    deleted = true;
+                    break;
+                } else {
+                    deleted = true;
+                    break;
                 }
-                
-                if (asteroid < 0) {
-                    stack.push(asteroid);
-                }
-            } else {
+            }
+            
+            if (!deleted) {
                 stack.push(asteroid);
             }
         }
         
         int[] result = new int[stack.size()];
+        int index = result.length-1;
         
-        for (int i = stack.size()-1; i >= 0; i--) {
-            result[i] = stack.pop();
+        while (!stack.isEmpty()) {
+            result[index--] = stack.pop();
         }
         
         return result;

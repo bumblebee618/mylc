@@ -50,63 +50,57 @@ tasks.length == m
 1 <= n, m <= 2 * 105
 1 <= servers[i], tasks[j] <= 2 * 105
  */
-public class Q1882_Process_Tasks_Using_Servers 
-{
+public class Q1882_Process_Tasks_Using_Servers {
 	public int[] assignTasks(int[] servers, int[] tasks) {
+        if (servers == null || servers.length == 0 || tasks == null || tasks.length == 0) {
+            return new int[0];
+        }
+        
         Queue<Node> heap = new PriorityQueue<>((a, b) -> 
 			(a.weight != b.weight) 
 				? a.weight - b.weight 
-				: a.id - b.id);
+				: a.serverId - b.serverId);
 		
-		Queue<Node> buff = new PriorityQueue<>((a, b) -> a.freeTime - b.freeTime);
+		Queue<Node> serverPool = new PriorityQueue<>((a, b) -> a.freeTime - b.freeTime);
 		
-		for (int i = 0; i < servers.length; i++)
-		{
-			buff.offer(new Node(0, i, servers[i]));
+		for (int i = 0; i < servers.length; i++) {
+			serverPool.offer(new Node(i, 0, servers[i]));
 		}
 		
 		int[] result = new int[tasks.length];
 		int curTime = 0, index = 0;
 		
-		while (index < tasks.length)
-		{
-			while (!buff.isEmpty() && buff.peek().freeTime <= curTime)
-			{
-				heap.offer(buff.poll());
+		while (index < tasks.length) {
+			while (!serverPool.isEmpty() && serverPool.peek().freeTime <= curTime) {
+				heap.offer(serverPool.poll());
 			}
 			
-			if (!heap.isEmpty())
-			{
+			if (!heap.isEmpty()) {
 				Node node = heap.poll();
-				result[index] = node.id;
-				buff.offer(new Node(curTime + tasks[index], node.id, node.weight));
+				result[index] = node.serverId;
+				serverPool.offer(new Node(node.serverId, curTime+tasks[index], node.weight));
                 
-                if (curTime == index)
-				{
+                if (curTime == index) {
 					curTime++;
 				}
                 
 				index++;
-			}
-            else
-            {
-                curTime = buff.peek().freeTime;
+			} else {
+                curTime = serverPool.peek().freeTime;
             }
 		}
 		
 		return result;
     }
     
-    class Node
-	{
+    class Node {
+        public int serverId;
 		public int freeTime;
-		public int id;
 		public int weight;
 		
-		public Node (int f, int i, int w)
-		{
-			freeTime = f;
-			id = i;
+		public Node (int i, int f, int w) {
+			serverId = i;
+            freeTime = f;
 			weight = w;
 		}
 	}

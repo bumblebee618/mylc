@@ -83,7 +83,7 @@ public class Q305_Number_of_Islands_II {
                         int parent2 = uf.find(id2);
                         
                         if (parent1 != parent2) {
-                            uf.union(parent1, parent2);
+                            uf.union(id1, id2);
                             count--;    // union时update count, 排除重复计算的情况
                         }
                     }
@@ -132,7 +132,7 @@ public class Q305_Number_of_Islands_II {
             int parent2 = find(id2);
             
             if (parent1 != parent2) {
-                father.put(id2, parent1);  // update id2
+                father.put(parent2, parent1);  // update parent2
             }
         }
     }
