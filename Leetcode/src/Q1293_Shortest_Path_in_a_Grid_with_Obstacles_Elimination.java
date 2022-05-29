@@ -47,7 +47,62 @@ grid[i][j] == 0 or 1
 grid[0][0] == grid[m - 1][n - 1] == 0
  */
 public class Q1293_Shortest_Path_in_a_Grid_with_Obstacles_Elimination {
+	// solution 1, bfs + dp
 	public int shortestPath(int[][] grid, int k) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0 || k < 0) {
+            return -1;
+        }    
+        
+        int[] dx = {1, -1, 0, 0}, dy = {0, 0, 1, -1};
+        int row = grid.length, col = grid[0].length, step = 0;    
+        int[][] solutions = new int[row][col];  // using dp, == visited
+        
+        for (int[] solution : solutions) {
+            Arrays.fill(solution, Integer.MAX_VALUE);
+        }
+        
+        solutions[0][0] = 0;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] {0, 0, 0});
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            
+            for (int i = 0; i < size; i++) {
+                int[] node = queue.poll();
+                
+                if (node[0] == row-1 && node[1] == col-1) {
+                    return step;
+                }
+                
+                for (int j = 0; j < dx.length; j++) {
+                    int newX = node[0] + dx[j];
+                    int newY = node[1] + dy[j];
+                    
+                    if (newX >= 0 && newX < row && newY >= 0 && newY < col) {
+                        int newObs = node[2] + grid[newX][newY];
+                        
+                        if (newObs > k) {
+                            continue;
+                        }
+                        
+                        if (newObs < solutions[newX][newY]) {
+                            solutions[newX][newY] = newObs;
+                            queue.offer(new int[] {newX, newY, newObs}); 
+                        }                    
+                    }
+                }
+            }
+            
+            step++;
+        }
+        
+        return -1;
+    }
+
+	
+	// solution 2
+	public int shortestPath2(int[][] grid, int k) {
         if (grid == null || grid.length == 0 || grid[0].length == 0 || k < 0) {
             return -1;
         }    

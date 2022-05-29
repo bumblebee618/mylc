@@ -46,7 +46,44 @@ a != b
 There is at most one edge between every two nodes.
  */
 public class Q1514_Path_with_Maximum_Probability {
+	// solution 1: bfs + dp
 	public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
+        Map<Integer, Map<Integer, Double>> graph = new HashMap<>();        
+        for (int i = 0; i < edges.length; i++) {
+            graph.computeIfAbsent(edges[i][0], x -> new HashMap<>()).put(edges[i][1], succProb[i]);
+            graph.computeIfAbsent(edges[i][1], x -> new HashMap<>()).put(edges[i][0], succProb[i]);
+        }
+        
+        double[] probability = new double[n];
+        
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(start);
+        probability[start] = 1;
+        
+        while (!queue.isEmpty()) {
+            int curNode = queue.poll();
+            
+            if (curNode == end || !graph.containsKey(curNode)) {
+                continue;
+            }
+            
+            for (Map.Entry<Integer, Double> entry : graph.get(curNode).entrySet()) {
+                int nextNode = entry.getKey();
+                
+                if (probability[nextNode] < probability[curNode] * entry.getValue()) {
+                    probability[nextNode] = probability[curNode] * entry.getValue();
+                    queue.offer(nextNode);
+                }
+            }
+        }
+        
+        return probability[end];
+    }
+
+	
+	
+	// solution 2:
+	public double maxProbability2(int n, int[][] edges, double[] succProb, int start, int end) {
         Map<Integer, Double>[] graph = new Map[n];
         
         for (int i = 0; i < n; i++) {

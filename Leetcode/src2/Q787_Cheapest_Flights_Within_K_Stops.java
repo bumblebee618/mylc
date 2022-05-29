@@ -40,6 +40,60 @@ There will not be any duplicated flights or self cycles.
 public class Q787_Cheapest_Flights_Within_K_Stops 
 {
 	// solution 1:
+	public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        if (flights == null || flights.length == 0 || flights[0].length != 3) {
+            return 0;
+        } else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || k < 0 || k > n) {
+            return 0;
+        }
+        
+        Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
+        
+        for (int[] flight : flights) {
+            prices.computeIfAbsent(flight[0], x -> new HashMap<>()).put(flight[1], flight[2]);
+        }
+        
+        Queue<Node> pq = new PriorityQueue<>((a, b) -> (a.cost - b.cost));
+        pq.add(new Node(src, 0, 0));
+        
+        while (!pq.isEmpty()) {
+        	Node node = pq.poll();
+            
+            if (node.city == dst) {
+                return node.cost;
+            }
+            
+            if (node.currentStop >= k+1) {
+                continue;
+            }
+            
+            Map<Integer, Integer> priceMap = prices.getOrDefault(node.city, new HashMap<>());
+                
+            // bfs
+            for (int nextCity : priceMap.keySet()) {
+                pq.add(new Node(nextCity, node.cost + priceMap.get(nextCity), node.currentStop + 1));
+            }
+        }
+        
+        return -1;
+    }
+    
+    class Node {
+        public int city;
+        public int cost;
+        public int currentStop;
+        
+        public Node(int city, int cost, int currentStop) {
+            this.city = city;
+            this.cost = cost;
+            this.currentStop = currentStop;
+        }
+    }
+	
+    
+    
+    /***
+	// solution 1:
 	public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) 
     {
         if (flights == null || flights.length == 0 || flights[0].length != 3)
@@ -219,6 +273,7 @@ public class Q787_Cheapest_Flights_Within_K_Stops
             return this.costFromSrc - c.costFromSrc;
         }
     }
+    ***/
     
     
     
