@@ -44,28 +44,20 @@ s consists of 0's and 1's only.
  */
 public class Q1461_Check_If_a_String_Contains_All_Binary_Codes_of_Size_K 
 {
-	// time is O(n), space is O(2^k)
-	public boolean hasAllCodes(String s, int k) 
-    {
-        if (s == null || s.length() == 0 || k <= 0 || k > s.length())
-        {
+	// time is O(n), space is O(n*k)
+	public boolean hasAllCodes(String s, int k) {
+        if (s == null || s.length() < k) {
             return false;
         }
         
-        Set<String> visited = new HashSet<>();
-        int size = (1 << k);
+        Set<String> set = new HashSet<>();
         
-        for (int i = k-1; i < s.length(); i++)
-        {
-            String substr = s.substring(i-(k-1), i+1);
-            visited.add(substr);
-            
-            if (visited.size() >= size)
-            {
-                return true;
-            }
+        for (int start = 0; start+k-1 < s.length(); start++) {
+            String str = s.substring(start, start+k);
+            set.add(str);
         }
         
-        return false;
+        int expected = (1 << k);
+        return set.size() == expected;
     }
 }
