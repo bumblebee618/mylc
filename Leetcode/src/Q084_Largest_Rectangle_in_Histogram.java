@@ -28,7 +28,7 @@ public class Q084_Largest_Rectangle_in_Histogram {
         	// 利于最后一个元素出栈, 且使用 "<="
             while (!stack.isEmpty() && (i == heights.length || heights[i] <= heights[stack.peek()])) {
                 int high = heights[stack.pop()];
-                int width = stack.isEmpty() ? i : i-stack.peek()-1;  // 取值范围
+                int width = stack.isEmpty() ? i : i-1-stack.peek();  // 取值范围
                 maxArea = Math.max(maxArea, high*width);
             }
             

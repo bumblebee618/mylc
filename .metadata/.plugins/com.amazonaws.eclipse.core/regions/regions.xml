@@ -201,6 +201,37 @@
         </services>
     </region>
     <region>
+        <displayname>Asia Pacific (Hyderabad)</displayname>
+        <systemname>ap-south-2</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.ap-south-2.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.ap-south-2.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.ap-south-2.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.ap-south-2.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.ap-south-2.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.ap-south-2.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.ap-south-2.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.ap-south-2.amazonaws.com</service>
+            <service name="EC2">https://ec2.ap-south-2.amazonaws.com</service>
+            <service name="ECR" authregion="ap-south-2">https://api.ecr.ap-south-2.amazonaws.com</service>
+            <service name="ECS">https://ecs.ap-south-2.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.ap-south-2.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.ap-south-2.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.ap-south-2.amazonaws.com</service>
+            <service name="Lambda">https://lambda.ap-south-2.amazonaws.com</service>
+            <service name="Logs">https://logs.ap-south-2.amazonaws.com</service>
+            <service name="RDS">https://rds.ap-south-2.amazonaws.com</service>
+            <service name="S3">https://s3.ap-south-2.amazonaws.com</service>
+            <service name="SNS">https://sns.ap-south-2.amazonaws.com</service>
+            <service name="SQS">https://sqs.ap-south-2.amazonaws.com</service>
+            <service name="XRay">https://xray.ap-south-2.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
         <displayname>Asia Pacific (Singapore)</displayname>
         <systemname>ap-southeast-1</systemname>
         <flag-icon>flags/ap-southeast-1.png</flag-icon>
@@ -283,6 +314,7 @@
             <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
             <service name="CloudWatch">https://monitoring.ap-southeast-3.amazonaws.com</service>
             <service name="CloudWatchEvents">https://events.ap-southeast-3.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.ap-southeast-3.amazonaws.com</service>
             <service name="CodeDeploy">https://codedeploy.ap-southeast-3.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.ap-southeast-3.amazonaws.com</service>
             <service name="DynamoDBStream">https://streams.dynamodb.ap-southeast-3.amazonaws.com</service>
@@ -290,6 +322,7 @@
             <service name="ECR" authregion="ap-southeast-3">https://api.ecr.ap-southeast-3.amazonaws.com</service>
             <service name="ECS">https://ecs.ap-southeast-3.amazonaws.com</service>
             <service name="ELB">https://elasticloadbalancing.ap-southeast-3.amazonaws.com</service>
+            <service name="ElasticBeanstalk">https://elasticbeanstalk.ap-southeast-3.amazonaws.com</service>
             <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
             <service name="KMS">https://kms.ap-southeast-3.amazonaws.com</service>
             <service name="Kinesis">https://kinesis.ap-southeast-3.amazonaws.com</service>
@@ -300,6 +333,36 @@
             <service name="SNS">https://sns.ap-southeast-3.amazonaws.com</service>
             <service name="SQS">https://sqs.ap-southeast-3.amazonaws.com</service>
             <service name="XRay">https://xray.ap-southeast-3.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
+        <displayname>Asia Pacific (Melbourne)</displayname>
+        <systemname>ap-southeast-4</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.ap-southeast-4.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.ap-southeast-4.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.ap-southeast-4.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.ap-southeast-4.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.ap-southeast-4.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.ap-southeast-4.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.ap-southeast-4.amazonaws.com</service>
+            <service name="EC2">https://ec2.ap-southeast-4.amazonaws.com</service>
+            <service name="ECR" authregion="ap-southeast-4">https://api.ecr.ap-southeast-4.amazonaws.com</service>
+            <service name="ECS">https://ecs.ap-southeast-4.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.ap-southeast-4.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.ap-southeast-4.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.ap-southeast-4.amazonaws.com</service>
+            <service name="Lambda">https://lambda.ap-southeast-4.amazonaws.com</service>
+            <service name="Logs">https://logs.ap-southeast-4.amazonaws.com</service>
+            <service name="RDS">https://rds.ap-southeast-4.amazonaws.com</service>
+            <service name="S3">https://s3.ap-southeast-4.amazonaws.com</service>
+            <service name="SNS">https://sns.ap-southeast-4.amazonaws.com</service>
+            <service name="SQS">https://sqs.ap-southeast-4.amazonaws.com</service>
+            <service name="XRay">https://xray.ap-southeast-4.amazonaws.com</service>
         </services>
     </region>
     <region>
@@ -438,6 +501,36 @@
         </services>
     </region>
     <region>
+        <displayname>Europe (Zurich)</displayname>
+        <systemname>eu-central-2</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.eu-central-2.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.eu-central-2.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.eu-central-2.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.eu-central-2.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.eu-central-2.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.eu-central-2.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.eu-central-2.amazonaws.com</service>
+            <service name="EC2">https://ec2.eu-central-2.amazonaws.com</service>
+            <service name="ECR" authregion="eu-central-2">https://api.ecr.eu-central-2.amazonaws.com</service>
+            <service name="ECS">https://ecs.eu-central-2.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.eu-central-2.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.eu-central-2.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.eu-central-2.amazonaws.com</service>
+            <service name="Lambda">https://lambda.eu-central-2.amazonaws.com</service>
+            <service name="Logs">https://logs.eu-central-2.amazonaws.com</service>
+            <service name="RDS">https://rds.eu-central-2.amazonaws.com</service>
+            <service name="S3">https://s3.eu-central-2.amazonaws.com</service>
+            <service name="SNS">https://sns.eu-central-2.amazonaws.com</service>
+            <service name="SQS">https://sqs.eu-central-2.amazonaws.com</service>
+            <service name="XRay">https://xray.eu-central-2.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
         <displayname>Europe (Stockholm)</displayname>
         <systemname>eu-north-1</systemname>
         <flag-icon>flags/aws.png</flag-icon>
@@ -502,6 +595,36 @@
             <service name="SNS">https://sns.eu-south-1.amazonaws.com</service>
             <service name="SQS">https://sqs.eu-south-1.amazonaws.com</service>
             <service name="XRay">https://xray.eu-south-1.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
+        <displayname>Europe (Spain)</displayname>
+        <systemname>eu-south-2</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.eu-south-2.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.eu-south-2.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.eu-south-2.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.eu-south-2.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.eu-south-2.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.eu-south-2.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.eu-south-2.amazonaws.com</service>
+            <service name="EC2">https://ec2.eu-south-2.amazonaws.com</service>
+            <service name="ECR" authregion="eu-south-2">https://api.ecr.eu-south-2.amazonaws.com</service>
+            <service name="ECS">https://ecs.eu-south-2.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.eu-south-2.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.eu-south-2.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.eu-south-2.amazonaws.com</service>
+            <service name="Lambda">https://lambda.eu-south-2.amazonaws.com</service>
+            <service name="Logs">https://logs.eu-south-2.amazonaws.com</service>
+            <service name="RDS">https://rds.eu-south-2.amazonaws.com</service>
+            <service name="S3">https://s3.eu-south-2.amazonaws.com</service>
+            <service name="SNS">https://sns.eu-south-2.amazonaws.com</service>
+            <service name="SQS">https://sqs.eu-south-2.amazonaws.com</service>
+            <service name="XRay">https://xray.eu-south-2.amazonaws.com</service>
         </services>
     </region>
     <region>
@@ -607,6 +730,69 @@
             <service name="SNS">https://sns.eu-west-3.amazonaws.com</service>
             <service name="SQS">https://sqs.eu-west-3.amazonaws.com</service>
             <service name="XRay">https://xray.eu-west-3.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
+        <displayname>Israel (Tel Aviv)</displayname>
+        <systemname>il-central-1</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.il-central-1.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.il-central-1.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.il-central-1.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.il-central-1.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.il-central-1.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.il-central-1.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.il-central-1.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.il-central-1.amazonaws.com</service>
+            <service name="EC2">https://ec2.il-central-1.amazonaws.com</service>
+            <service name="ECR" authregion="il-central-1">https://api.ecr.il-central-1.amazonaws.com</service>
+            <service name="ECS">https://ecs.il-central-1.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.il-central-1.amazonaws.com</service>
+            <service name="ElasticBeanstalk">https://elasticbeanstalk.il-central-1.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.il-central-1.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.il-central-1.amazonaws.com</service>
+            <service name="Lambda">https://lambda.il-central-1.amazonaws.com</service>
+            <service name="Logs">https://logs.il-central-1.amazonaws.com</service>
+            <service name="RDS">https://rds.il-central-1.amazonaws.com</service>
+            <service name="S3">https://s3.il-central-1.amazonaws.com</service>
+            <service name="SNS">https://sns.il-central-1.amazonaws.com</service>
+            <service name="SQS">https://sqs.il-central-1.amazonaws.com</service>
+            <service name="XRay">https://xray.il-central-1.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
+        <displayname>Middle East (UAE)</displayname>
+        <systemname>me-central-1</systemname>
+        <flag-icon>flags/aws.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.me-central-1.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.me-central-1.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.me-central-1.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.me-central-1.amazonaws.com</service>
+            <service name="CodeCommit">https://codecommit.me-central-1.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.me-central-1.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.me-central-1.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.me-central-1.amazonaws.com</service>
+            <service name="EC2">https://ec2.me-central-1.amazonaws.com</service>
+            <service name="ECR" authregion="me-central-1">https://api.ecr.me-central-1.amazonaws.com</service>
+            <service name="ECS">https://ecs.me-central-1.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.me-central-1.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.me-central-1.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.me-central-1.amazonaws.com</service>
+            <service name="Lambda">https://lambda.me-central-1.amazonaws.com</service>
+            <service name="Logs">https://logs.me-central-1.amazonaws.com</service>
+            <service name="RDS">https://rds.me-central-1.amazonaws.com</service>
+            <service name="S3">https://s3.me-central-1.amazonaws.com</service>
+            <service name="SNS">https://sns.me-central-1.amazonaws.com</service>
+            <service name="SQS">https://sqs.me-central-1.amazonaws.com</service>
+            <service name="XRay">https://xray.me-central-1.amazonaws.com</service>
         </services>
     </region>
     <region>

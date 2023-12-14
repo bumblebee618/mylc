@@ -4,6 +4,55 @@
  **********************************************************************************/
 
 public class Q333_Largest_BST_Subtree {
+	private int result = 0;
+	
+    public int largestBSTSubtree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        dfs(root);
+        return result;
+    }
+    
+    private Tuple dfs(TreeNode node) {
+        if (node == null) {
+            return new Tuple(null, null, 0);
+        }
+        
+        Tuple leftResult = dfs(node.left);
+        Tuple rightResult = dfs(node.right);
+        
+        if (leftResult.totalCount == null || rightResult.totalCount == null) {
+            return new Tuple(null, null, null);
+        } else if (leftResult.maxValue != null && node.val <= leftResult.maxValue) {
+            return new Tuple(null, null, null);
+        } else if (rightResult.minValue != null && node.val >= rightResult.minValue) {
+            return new Tuple(null, null, null);
+        } else {
+            int min = leftResult.minValue == null ? node.val : leftResult.minValue;
+            int max = rightResult.maxValue == null ? node.val : rightResult.maxValue;
+            int count = leftResult.totalCount + rightResult.totalCount + 1;
+            result = Math.max(result, count);
+            return new Tuple(min, max, count);
+         }
+    }
+    
+    class Tuple {
+        public Integer minValue;
+        public Integer maxValue;
+        public Integer totalCount;
+        
+        public Tuple (Integer min, Integer max, Integer count) {
+            minValue = min;
+            maxValue = max;
+            totalCount = count;
+        }
+    }
+
+	
+    /***
+	
 	// return result contains 3 elements: minVal of child, maxVal of child, count from child
 	private int count = 0;
     
@@ -51,7 +100,7 @@ public class Q333_Largest_BST_Subtree {
     }
 
     
-    
+    ***/
     
     
 	// esay unstand

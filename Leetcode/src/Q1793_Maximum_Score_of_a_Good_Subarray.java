@@ -30,12 +30,10 @@ Constraints:
 1 <= nums[i] <= 2 * 104
 0 <= k < nums.length
  */
-public class Q1793_Maximum_Score_of_a_Good_Subarray 
-{
-	public int maximumScore(int[] nums, int k) 
-	{
-		if (nums == null || nums.length == 0 || k < 0 || k >= nums.length)
-        {
+public class Q1793_Maximum_Score_of_a_Good_Subarray {
+	// Solution 1: 递增栈
+	public int maximumScore(int[] nums, int k) {
+		if (nums == null || nums.length == 0 || k < 0 || k >= nums.length) {
             return 0;
         }
 		
@@ -43,17 +41,12 @@ public class Q1793_Maximum_Score_of_a_Good_Subarray
         int maxScore = 0;
         Stack<Integer> stack = new Stack<>();
         
-        for (int i = 0; i <= n; i++)
-        {
-        	 int curNum = (i == n) ? -1 : nums[i];  
-        	 
-        	 while (!stack.isEmpty() && curNum <= nums[stack.peek()]) 
-             {
+        for (int i = 0; i <= n; i++) {
+            while (!stack.isEmpty() && (i == n || nums[i] <= nums[stack.peek()])) {
                  int minNum = nums[stack.pop()];
-                 int width = (stack.isEmpty()) ? i : i - stack.peek() - 1;  
+                 int width = (stack.isEmpty()) ? i : i - 1 - stack.peek();  
                  
-                 if (i > k && i - width  <= k) 
-                 {
+                 if (i > k && i - width <= k) {
                 	 maxScore = Math.max(maxScore, minNum * width);
                  }
              }
@@ -65,33 +58,28 @@ public class Q1793_Maximum_Score_of_a_Good_Subarray
     }
     
     
-    public int maximumScore2(int[] nums, int k) 
-    {
-        if (nums == null || nums.length == 0 || k < 0 || k >= nums.length)
-        {
+	
+	// Solution 2: Heap
+    public int maximumScore2(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k < 0 || k >= nums.length) {
             return 0;
         }
         
         int maxScore = Integer.MIN_VALUE;
-        Queue<Integer> heap = new PriorityQueue<>((a, b) -> (nums[a] - nums[b]));
+        Queue<Integer> heap = new PriorityQueue<>((a, b) -> nums[a] - nums[b]);
         int left = 0, right = nums.length-1;
         
-        for (int i = 0; i < nums.length; i++)
-        {
+        for (int i = 0; i < nums.length; i++) {
         	heap.offer(i);
         }
         
-        while (left <= k && right >= k)
-        {
+        while (left <= k && right >= k) {
         	int curMinIndex = heap.poll();
         	maxScore = Math.max(maxScore, nums[curMinIndex] * (right-left+1));
         	
-        	if (curMinIndex <= k)
-        	{
+        	if (curMinIndex <= k) {
         		left = Math.max(left, curMinIndex+1);
-        	}
-        	else
-        	{
+        	} else {
         		right = Math.min(right, curMinIndex-1);
         	}
         }

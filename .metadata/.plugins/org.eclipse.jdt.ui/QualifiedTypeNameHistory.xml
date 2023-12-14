@@ -7,7 +7,6 @@
 <fullyQualifiedTypeName name="java.util.UnknownFormatConversionException"/>
 <fullyQualifiedTypeName name="Trie"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageTypeSpecifier"/>
-<fullyQualifiedTypeName name="java.util.TreeMap"/>
 <fullyQualifiedTypeName name="Q1235_Maximum_Profit_in_Job_Scheduling"/>
 <fullyQualifiedTypeName name="Pair"/>
 <fullyQualifiedTypeName name="javax.sound.sampled.Port"/>
@@ -17,8 +16,6 @@
 <fullyQualifiedTypeName name="java.lang.Appendable"/>
 <fullyQualifiedTypeName name="javax.swing.tree.TreeNode"/>
 <fullyQualifiedTypeName name="TreeNode"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="javax.security.auth.x500.X500Principal"/>
 <fullyQualifiedTypeName name="java.lang.Deprecated"/>
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
@@ -34,19 +31,23 @@
 <fullyQualifiedTypeName name="ImmutableListNode"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="javax.print.attribute.standard.RequestingUserName"/>
 <fullyQualifiedTypeName name="java.time.Instant"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.lang.Character"/>
+<fullyQualifiedTypeName name="java.util.concurrent.atomic.AtomicReference"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="java.util.TreeMap"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
 </qualifiedTypeNameHistroy>

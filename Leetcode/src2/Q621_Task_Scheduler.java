@@ -36,48 +36,48 @@ public class Q621_Task_Scheduler {
         if (tasks == null || tasks.length == 0 || n < 0) {
             return 0;
         }
-        
-        Map<Character, Integer> frequencyMap = new HashMap<>();
-        Queue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b-a);  // return max first
+
+        int[] frequency = new int[256];
         
         for (char task : tasks) {
-            frequencyMap.put(task, frequencyMap.getOrDefault(task, 0) + 1);
+            frequency[task]++;
         }
-        
-        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
-            if (entry.getValue() > 0) {
-                maxHeap.offer(entry.getValue());
+
+        Queue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+
+        for (int i = 0; i < frequency.length; i++) {
+            if (frequency[i] > 0) {
+            	maxHeap.offer(frequency[i]);
             }
         }
-        
-        int totalTime = 0;
-        
+
+        int totalTime = 0, localTime = 0;;
+        List<Integer> list = new LinkedList<>();
+
         while (!maxHeap.isEmpty()) {
-            int localTime = 0;
-            List<Integer> list = new LinkedList<>();  // 这里必须用list
-            
+            localTime = 0;
+            list.clear();
+
             while (localTime <= n) {
                 if (!maxHeap.isEmpty()) {
-                    int frequency = maxHeap.poll();
-                    
-                    if (frequency > 1) {
-                        list.add(frequency-1);
+                    int freq = maxHeap.poll();
+
+                    if (freq > 1) {
+                        list.add(freq - 1);
                     }
                 }
-                
-                totalTime++;
+
                 localTime++;
+                totalTime++;
                 
-                if (maxHeap.isEmpty() && list.size() == 0) {
+                if (list.size() == 0 && maxHeap.isEmpty()) {
                     break;
                 }
             }
-            
-            for (int frequency : list) {
-                maxHeap.offer(frequency);
-            }
+
+            list.stream().forEach(elem -> maxHeap.offer(elem));
         }
-        
+
         return totalTime;
     }
 	

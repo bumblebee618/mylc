@@ -47,6 +47,65 @@ There are no multiple edges in the graph.
 public class Q882_Reachable_Nodes_In_Subdivided_Graph {
 	// solution 1:
 	public int reachableNodes(int[][] edges, int maxMoves, int n) {
+        if (edges == null || edges.length == 0 || edges[0].length == 0 || maxMoves <= 0 || n <= 0) {
+            return 0;
+        }
+
+        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+        
+        for (int[] edge : edges) {
+            graph.computeIfAbsent(edge[0], x -> new HashMap<>()).put(edge[1], edge[2]);
+            graph.computeIfAbsent(edge[1], x -> new HashMap<>()).put(edge[0], edge[2]);
+        }
+
+        int result = 0;
+        Queue<Tuple> queue = new PriorityQueue<>((a, b) -> b.moveLeft - a.moveLeft);
+        queue.offer(new Tuple(0, maxMoves));
+
+        Set<Integer> visited = new HashSet<>();
+
+        while (!queue.isEmpty()) {
+            Tuple tuple = queue.poll();
+            int startIndex = tuple.startIndex;
+            int moveLeft = tuple.moveLeft;
+
+            // 防止当前节点已经通过其他path访问过了
+            if (visited.contains(startIndex)) {
+                continue;
+            }
+
+            visited.add(startIndex);
+            result++;
+
+            if (!graph.containsKey(startIndex)) {
+                continue;
+            }
+
+            for (Map.Entry<Integer, Integer> nextEntry : graph.get(startIndex).entrySet()) {
+                if (moveLeft > nextEntry.getValue() && !visited.contains(nextEntry.getKey())) {
+                    queue.offer(new Tuple(nextEntry.getKey(), moveLeft - nextEntry.getValue() - 1));
+                }
+
+                graph.get(nextEntry.getKey()).put(startIndex, nextEntry.getValue() - Math.min(nextEntry.getValue(), moveLeft));
+                result += Math.min(nextEntry.getValue(), moveLeft);
+            }
+        }
+
+        return result;
+    }
+
+    class Tuple {
+        public int startIndex;
+        public int moveLeft;
+
+        public Tuple(int index, int move) {
+            startIndex = index;
+            moveLeft = move;
+        }
+    }
+	
+	// solution 2:
+	public int reachableNodes2(int[][] edges, int maxMoves, int n) {
         int[][] graph = new int[n][n];
         
         for (int i = 0; i < n; i++) {
@@ -89,48 +148,3 @@ public class Q882_Reachable_Nodes_In_Subdivided_Graph {
         
         return result;
     }
-	
-	
-	
-	// solution 2:
-	public int reachableNodes2(int[][] edges, int maxMoves, int n) {
-        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
-        
-        for (int[] edge : edges) {
-            graph.computeIfAbsent(edge[0], x -> new HashMap<>()).put(edge[1], edge[2]);
-            graph.computeIfAbsent(edge[1], x -> new HashMap<>()).put(edge[0], edge[2]);
-        }
-        
-        Queue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
-        pq.offer(new int[] {0, maxMoves});
-        Set<Integer> visited = new HashSet<>();
-        int result = 0;
-        
-        while (!pq.isEmpty()) {
-            int[] pair = pq.poll();
-            int curNode = pair[0], moveLeft = pair[1];
-            
-            if (visited.contains(curNode)) {
-                continue;
-            }
-            
-            visited.add(curNode);
-            result++;
-            
-            if (!graph.containsKey(curNode)) {
-                continue;
-            }
-            
-            for (Map.Entry<Integer, Integer> nextEntry : graph.get(curNode).entrySet()) {
-                if (!visited.contains(nextEntry.getKey()) && moveLeft > nextEntry.getValue()) {
-                    pq.offer(new int[] {nextEntry.getKey(), moveLeft - nextEntry.getValue() - 1});
-                }
-                
-                graph.get(nextEntry.getKey()).put(curNode, nextEntry.getValue() - Math.min(moveLeft, nextEntry.getValue()));
-                result += Math.min(moveLeft, nextEntry.getValue());
-            }
-        }
-        
-        return result;
-    }
-}

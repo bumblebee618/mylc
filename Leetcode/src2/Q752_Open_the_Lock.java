@@ -38,64 +38,75 @@ target will not be in the list deadends.
 Every string in deadends and the string target will be a string of 4 digits from the 10,000 possibilities '0000' to '9999'.
  */
 public class Q752_Open_the_Lock {
-	public int openLock(String[] deadends, String target) {
-        if (target == null || target.length() != 4) {
+	private int[] moves = {1, -1};
+
+    public int openLock(String[] deadends, String target) {
+        if (target == null || target.length() == 0) {
             return -1;
         }
-        
+
         Set<String> visited = new HashSet<>();
-        
-        if (deadends != null) {
+
+        if (deadends != null && deadends.length > 0) {
             for (String deadend : deadends) {
                 visited.add(deadend);
             }
         }
         
-        if (visited.contains("0000") || visited.contains(target)) {
+        String start = "0000";
+
+        if (visited.contains(start) || visited.contains(target)) {
             return -1;
         }
-        
-        Queue<String> queue = new LinkedList<>();
-        queue.offer("0000");
-        
-        visited.add("0000");
-        
+
         int step = 0;
-        int[] moves = {1, -1};
-        
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(start);
+        visited.add(start);
+
         while (!queue.isEmpty()) {
             int size = queue.size();
-            
+
             for (int i = 0; i < size; i++) {
-                String node = queue.poll();
-                
-                if (node.equals(target)) {
+                String curSolution = queue.poll();
+
+                if (curSolution.equals(target)) {
                     return step;
                 }
-                
-                char[] digits = node.toCharArray();
-                
-                for (int j = 0; j < digits.length; j++) {
-                    int basePos = digits[j] - '0';
-                    
-                    for (int move : moves) {
-                    	// 负数的处理
-                        digits[j] = (char) ((basePos + move + 10) % 10 + '0');
-                        String nextNode = new String(digits);
-                        
-                        if (!visited.contains(nextNode)) {
-                            queue.offer(nextNode);
-                            visited.add(nextNode);
-                        }
-                    }
-                    
-                    digits[j] = (char) (basePos + '0');
+
+                for (String nextSolution : findNextSolutions(visited, curSolution)) {
+                    queue.offer(nextSolution);
+                    visited.add(nextSolution);
                 }
             }
             
             step++;
         }
-        
+
         return -1;
+    }
+
+    private List<String> findNextSolutions(Set<String> visited, String curSolution) {
+        List<String> nextSolutions = new LinkedList<>();
+        char[] digits = curSolution.toCharArray();
+
+        for (int i = 0; i < digits.length; i++) {
+            int basePos = digits[i] - '0';
+
+            for (int move : moves) {
+            	// 负数的处理
+                int nextPos = (basePos + move + 10) % 10;
+                digits[i] = (char) (nextPos + '0');
+                String nextSolution = new String(digits);
+
+                if (!visited.contains(nextSolution)) {
+                    nextSolutions.add(nextSolution);
+                }
+            }
+
+            digits[i] = (char) (basePos + '0');
+        }
+
+        return nextSolutions;
     }
 }

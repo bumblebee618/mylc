@@ -1,5 +1,5 @@
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 /***
  * 
@@ -36,43 +36,29 @@ Constraints:
  1 <= nums.length, k <= 105
 -104 <= nums[i] <= 104
  */
-public class Q1696_Jump_Game_VI 
-{
-	public int maxResult(int[] nums, int k) 
-    {
-        if (nums == null || nums.length == 0 || k <= 0)
-        {
+public class Q1696_Jump_Game_VI {
+	public int maxResult(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k <= 0) {
             return 0;
         }
         
-        int size = nums.length;
+        Deque<Integer> dq = new LinkedList<>(); 
         
-        // store index of `nums` elements, elements is in decreasing order, the front is the maximum element.
-        Deque<Integer> dq = new ArrayDeque<>(); 
-        dq.offer(0);
-        
-        for (int i = 1; i < size; ++i) 
-        {
-            // nums[i] = max(nums[i-k], nums[i-k+1], .., nums[i-1]) + nums[i] = nums[dq.front()] + nums[i]
-            nums[i] = nums[dq.peekFirst()] + nums[i];
+        for (int i = 0; i < nums.length; ++i) {
+            while (!dq.isEmpty() && i - dq.peek() > k) {
+                dq.pollFirst();
+            }
 
-            // Add nums[i] to our deque
-            while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]) 
-            {
-                // Eliminate elements less or equal to nums[i]
+            nums[i] += !dq.isEmpty() ? nums[dq.peekFirst()] : 0;
+
+            while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]) {
                 dq.pollLast();
             }
             
             dq.offerLast(i);
-
-            // Remove if the last element is out of window size k
-            if (i - dq.peekFirst() >= k) 
-            {
-                dq.pollFirst();
-            }
         }
         
-        return nums[size - 1];
+        return nums[nums.length - 1];
     }
 	
 	

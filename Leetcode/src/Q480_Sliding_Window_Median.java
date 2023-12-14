@@ -32,15 +32,80 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
  */
 
 public class Q480_Sliding_Window_Median {
+	// Solution 1:
 	// 类似题295
 	// test case: [1] [k = 1], [2147483647,2147483647] [k = 2],
 	// [-2147483648,-2147483648,2147483647,-2147483648,-2147483648,-2147483648,2147483647,2147483647,2147483647,2147483647,-2147483648,2147483647,-2147483648] [k = 3]
+	public double[] medianSlidingWindow(int[] nums, int k) {
+        if (nums == null || k <= 0) {
+            return new double[0];
+        }
+
+        int len = nums.length;
+        double[] result = new double[len - k + 1];
+        if (k == 1) {
+            for (int i = 0; i < len; i++) {
+                result[i] = (double) nums[i];
+            }
+            return result;
+            // return Arrays.stream(nums).asDoubleStream().toArray();
+        }
+
+        Comparator<Integer> comparator = (a, b) -> (nums[a] != nums[b] ? Integer.compare(nums[a], nums[b]) : Integer.compare(a, b));
+        TreeSet<Integer> smallNums = new TreeSet<>(comparator.reversed());
+        TreeSet<Integer> largeNums = new TreeSet<>(comparator);
+
+        for (int i = 0; i < len; i++) {
+            if (i >= k) {
+                removeElement(smallNums, largeNums, nums, i - k);
+            }
+            addElement(smallNums, largeNums, i);
+            if (i >= k - 1) {
+                result[i - (k - 1)] = getMedian(smallNums, largeNums, nums);
+            }
+        }
+
+        return result;
+    }
+
+    private void addElement(TreeSet<Integer> smallNums, TreeSet<Integer> largeNums, int idx) {
+        smallNums.add(idx);
+        largeNums.add(smallNums.pollFirst());
+        if (smallNums.size() < largeNums.size()) {
+            smallNums.add(largeNums.pollFirst());
+        }
+    }
+
+    private void removeElement(TreeSet<Integer> smallNums, TreeSet<Integer> largeNums, int[] nums, int idx) {
+        if (largeNums.contains(idx)) {
+            largeNums.remove(idx);
+            if (smallNums.size() == largeNums.size() + 2) {
+                largeNums.add(smallNums.pollFirst());
+            }
+        } else {
+            smallNums.remove(idx);
+            if (smallNums.size() < largeNums.size()) {
+                smallNums.add(largeNums.pollFirst());
+            }
+        }
+    }
+
+    private double getMedian(TreeSet<Integer> smallNums, TreeSet<Integer> largeNums, int[] nums) {
+        if (smallNums.size() == largeNums.size()) {
+            return ((double) nums[smallNums.first()] + nums[largeNums.first()]) / 2;
+        }
+        return nums[smallNums.first()];
+    }
+	
+    
+    
+    // Solution 2
 	private Queue<Double> maxHeap = new PriorityQueue<>((a, b) -> b > a ? 1 : -1);
     private Queue<Double> minHeap = new PriorityQueue<>();
     private Double median;
     private int k;
     
-    public double[] medianSlidingWindow(int[] nums, int k) {
+    public double[] medianSlidingWindow2(int[] nums, int k) {
         if (nums == null || nums.length == 0 || k <= 0) {
             return new double[0];
         } else if (k > nums.length) {

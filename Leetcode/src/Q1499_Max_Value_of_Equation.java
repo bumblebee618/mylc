@@ -35,47 +35,39 @@ xi form a strictly increasing sequence.
  */
 public class Q1499_Max_Value_of_Equation 
 {
-	public int findMaxValueOfEquation(int[][] points, int k) 
-    {
-        if (points == null || points.length == 0 || points[0].length != 2 || k < 0)
-        {
+	public int findMaxValueOfEquation(int[][] points, int k) {
+        if (points == null || points.length == 0 || points[0].length != 2 || k < 0) {
             return 0;
         }
-        
-        Deque<Node> dq = new LinkedList<>();
+
+        Deque<Tuple> dq = new LinkedList<>();
         int maxValue = Integer.MIN_VALUE;
-        
-        for (int[] point : points)
-        {
-            while (!dq.isEmpty() && point[0] - dq.peekFirst().value > k)
-            {
+
+        for (int[] point : points) {
+            while (!dq.isEmpty() && point[0] - dq.peek().x > k) {
                 dq.pollFirst();
             }
-            
-            if (!dq.isEmpty())
-            {
-                maxValue = Math.max(maxValue, dq.peek().key + point[0] + point[1]);
-            }
-            
-            while (!dq.isEmpty() && point[1]-point[0] > dq.peekLast().key)
-            {
+
+            if (!dq.isEmpty()) {
+                maxValue = Math.max(maxValue, dq.peek().value + point[0] + point[1]);
+            } 
+
+            while (!dq.isEmpty() && point[1] - point[0] >= dq.peekLast().value) {
                 dq.pollLast();
             }
-            
-            dq.offer(new Node(point[1]-point[0], point[0]));
+
+            dq.offer(new Tuple(point[0], point[1] - point[0]));
         }
-        
+
         return maxValue;
     }
-    
-    class Node
-    {
-        public int key;     // yi - xi
-        public int value;   // xi
-        
-        public Node(int key, int value)
-        {
-            this.key = key;
+
+    class Tuple {
+        public int x;      // Xi
+        public int value;  // Yi - Xi
+
+        public Tuple (int x, int value) {
+            this.x = x;
             this.value = value;
         }
     }

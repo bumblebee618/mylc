@@ -48,6 +48,54 @@ public class Q1361_Validate_Binary_Tree_Nodes
 {
 	// solution 1:
 	public boolean validateBinaryTreeNodes(int n, int[] leftChild, int[] rightChild) {
+        if (n <= 0 || leftChild == null || leftChild.length != n || rightChild == null || rightChild.length != n) {
+            return false;
+        }
+
+        Stack<Integer> stack = new Stack<>();
+        Set<Integer> visited = new HashSet<>();
+        int curNode = -1;
+
+        for (int i = 0; i < n; i++) {
+            visited.add(leftChild[i]);
+            visited.add(rightChild[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (!visited.contains(i)) {
+                if (curNode == -1) {
+                    curNode = i;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        visited.clear();
+        
+        while (curNode != -1 || !stack.isEmpty()) {
+            while (curNode != -1) {
+                stack.push(curNode);
+
+                if (!visited.contains(curNode)) {
+                    visited.add(curNode);
+                } else {
+                    return false;
+                }
+               
+                curNode = leftChild[curNode];
+                
+            }
+
+            curNode = rightChild[stack.pop()];
+        }
+
+        return visited.size() == n;
+    }
+	
+	
+	// solution 2:
+	public boolean validateBinaryTreeNodes2(int n, int[] leftChild, int[] rightChild) {
         if (n <= 0 || leftChild == null || rightChild == null)
         {
             return false;
@@ -125,8 +173,8 @@ public class Q1361_Validate_Binary_Tree_Nodes
 	
 	
 	
-	// solution 2:
-	public boolean validateBinaryTreeNodes2(int n, int[] leftChild, int[] rightChild) {
+	// solution 3:
+	public boolean validateBinaryTreeNodes3(int n, int[] leftChild, int[] rightChild) {
         if (n <= 0 || leftChild == null || leftChild.length == 0 || rightChild == null || rightChild.length == 0 || leftChild.length != rightChild.length)
         {
             return false;

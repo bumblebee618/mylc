@@ -22,66 +22,43 @@ public class Q034_Search_for_a_Range {
 	
 	// using binary search
 	public int[] searchRange(int[] nums, int target) {
-        if (nums == null || nums.length == 0)
-        {
-            return new int[] {-1, -1};
-        }
-        
-        int[] result = new int[] {-1, -1};
-        result[0] = binarySearch(nums, target, 0, nums.length - 1, true);
-        
-        if (result[0] == -1)
-        {
+        int[] result = {-1, -1};
+
+        if (nums == null || nums.length == 0) {
             return result;
         }
-        
-        result[1] = binarySearch(nums, target, result[0], nums.length - 1, false);
+
+        result[0] = binarySearch(nums, target, 0, nums.length-1, true);
+        result[1] = binarySearch(nums, target, 0, nums.length-1, false);
         return result;
     }
-    
-    private int binarySearch(int[] nums, int target, int start, int end, boolean findLeftBound)
-    {
-        while (start + 1 < end)
-        {
+
+    private int binarySearch(int[] nums, int target, int start, int end, boolean findLeftBound) {
+        while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            
-            if (findLeftBound)
-            {
-                if (nums[mid] < target)
-                {
+
+            if (findLeftBound) {
+                if (nums[mid] < target) {
                     start = mid;
-                }
-                else
-                {
+                } else {
                     end = mid;
                 }
-            }
-            else
-            {
-                if (nums[mid] > target)
-                {
+            } else {
+                if (nums[mid] > target) {
                     end = mid;
-                }
-                else
-                {
+                } else {
                     start = mid;
                 }
             }
         }
-        
-        if (nums[start] == target || nums[end] == target)
-        {
-            if (findLeftBound)
-            {
+
+        if (nums[start] == target || nums[end] == target) {
+            if (findLeftBound) {
                 return nums[start] == target ? start : end;
-            }
-            else
-            {
+            } else {
                 return nums[end] == target ? end : start;
             }
-        }
-        else
-        {
+        } else {
             return -1;
         }
     }

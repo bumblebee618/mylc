@@ -38,66 +38,70 @@ public class Q827_Making_A_Large_Island {
         if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return 0;
         }
-        
+
         int row = grid.length, col = grid[0].length;
-        int maxArea = 0;
-        
-        Map<Integer, Integer> map = new HashMap<>();
         int[][] uf = new int[row][col];
-        
+        Map<Integer, Integer> areaMap = new HashMap<>();
+        int maxArea = 0, parentId = -1, curArea = 0;
+        Set<Integer> visitedIslands = new HashSet<>();
+
+        for (int i = 0; i < uf.length; i++) {
+            Arrays.fill(uf[i], -1);
+        }
+
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                if (grid[i][j] == 1 && uf[i][j] == 0) {
-                    int id = i * col + j + 1;
-                    dfs(i, j, grid, map, uf, id);
+                if (grid[i][j] == 1 && uf[i][j] == -1) {
+                    parentId = i * col + j;
+                    curArea = dfs(i, j, parentId, grid, uf);
+                    areaMap.put(parentId, curArea);
+                    maxArea = Math.max(maxArea, curArea);
                 }
             }
         }
-        
-        for (int area : map.values()) {
-            maxArea = Math.max(maxArea, area);
-        }
-        
-        Set<Integer> islands = new HashSet<>();
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (grid[i][j] == 0) {
-                    islands.clear();
-                    int area = 1;
-                    
+                    curArea = 1;
+                    visitedIslands.clear();
+
                     for (int k = 0; k < dx.length; k++) {
                         int newX = i + dx[k];
                         int newY = j + dy[k];
-            
-                        if (newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length && grid[newX][newY] == 1) {
-                            if (!islands.contains(uf[newX][newY])) {
-                                islands.add(uf[newX][newY]);
-                                area += map.get(uf[newX][newY]);
+
+                        if (newX >= 0 && newX < row && newY >= 0 && newY < col && grid[newX][newY] == 1) {
+                            parentId = uf[newX][newY];
+
+                            if (!visitedIslands.contains(parentId)) {
+                                curArea += areaMap.get(parentId);
+                                visitedIslands.add(parentId);
                             }
                         }
                     }
-                    
-                    maxArea = Math.max(maxArea, area);
+
+                    maxArea = Math.max(maxArea, curArea);
                 }
             }
         }
-        
+
         return maxArea;
     }
-    
-    private void dfs(int x, int y, int[][] grid, Map<Integer, Integer> map, int[][] uf, int id) {
-        uf[x][y] = id;
-        map.put(id, map.getOrDefault(id, 0)+1);
-        
+
+    private int dfs(int x, int y, int parentId, int[][] grid, int[][] uf) {
+        uf[x][y] = parentId;
+        int area = 1;
+
         for (int i = 0; i < dx.length; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
-            
-            if (newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length && grid[newX][newY] == 1 && uf[newX][newY] == 0) {
-                dfs(newX, newY, grid, map, uf, id);
+
+            if (newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length && grid[newX][newY] == 1 && uf[newX][newY] == -1) {
+                area += dfs(newX, newY, parentId, grid, uf);
             }
         }
+
+        return area;
     }
 	
     

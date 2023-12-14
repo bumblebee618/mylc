@@ -39,6 +39,103 @@ public class Q126_Word_Ladder_II {
     // beginWord cannot been transfered to endWord
 	
 	// solution 1: bfs + dfs
+	
+	public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> result = new LinkedList<>();
+        
+        if (beginWord == null || endWord == null || wordList == null || wordList.size() == 0) {
+            return result;
+        } else if (beginWord.equals(endWord)) {
+            return result;
+        }
+
+        Set<String> availableWords = new HashSet<>();
+        wordList.forEach(word -> availableWords.add(word));
+
+        if (!availableWords.contains(endWord)) {
+            return result;
+        }
+
+        Map<String, Set<String>> wordGraph = new HashMap<>();
+        Set<String> curLevel = new HashSet<String>();
+        curLevel.add(beginWord);
+        bfs(wordGraph, curLevel, availableWords, endWord);
+
+        List<String> path = new LinkedList<>();
+        path.add(beginWord);
+        dfs(wordGraph, result, path, beginWord, endWord);
+
+        return result;
+    }
+
+	// bfs: build wordGraph
+    private void bfs(Map<String, Set<String>> wordGraph, Set<String> curLevel, Set<String> availableWords, String endWord) {
+        availableWords.removeAll(curLevel);
+        Set<String> nextLevel = new HashSet<>();
+        boolean found = false;
+
+        for (String curWord : curLevel) {
+            for (String nextWord : findNextWords(availableWords, curWord)) {
+                if (nextWord.equals(endWord)) {
+                    found = true;
+                } else {
+                    nextLevel.add(nextWord);
+                }
+
+                wordGraph.computeIfAbsent(curWord, x -> new HashSet<>()).add(nextWord);
+            }
+        }
+
+        if (!found && nextLevel.size() > 0) {
+            bfs(wordGraph, nextLevel, availableWords, endWord);
+        }
+    }
+
+    // dfs: find solution
+    private void dfs(Map<String, Set<String>> wordGraph, List<List<String>> result, List<String> path, String curWord, String endWord) {
+        if (curWord.equals(endWord)) {
+            result.add(new LinkedList<String>(path));
+            return;
+        } else if (!wordGraph.containsKey(curWord)) {
+            return;
+        } 
+
+        for (String nextWord : wordGraph.get(curWord)) {
+            path.add(nextWord);
+            dfs(wordGraph, result, path, nextWord, endWord);
+            path.remove(path.size()-1);
+        }
+    }
+
+    private List<String> findNextWords(Set<String> availableWords, String curWord) {
+        List<String> result = new LinkedList<>();
+        char[] letters = curWord.toCharArray();
+
+        for (int i = 0; i < letters.length; i++) {
+            char tmp = letters[i];
+
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (c == tmp) {
+                    continue;
+                }
+
+                letters[i] = c;
+                String nextWord = new String(letters);
+
+                if (availableWords.contains(nextWord)) {
+                    result.add(nextWord);
+                }
+            }
+
+            letters[i] = tmp;
+        }
+
+        return result;
+    }
+	
+    
+    
+    /***
 	private List<List<String>> result = new LinkedList<>();
     private Map<String, Set<String>> wordMap = new HashMap<>();
     private Set<String> availableWordSet = new HashSet<>();
@@ -121,13 +218,6 @@ public class Q126_Word_Ladder_II {
             path.remove(path.size()-1);
         }
     }
-
-
-    
-    
-    
-    
-
 	
 	// using DFS, BFS
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {

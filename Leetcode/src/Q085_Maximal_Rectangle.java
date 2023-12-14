@@ -46,7 +46,7 @@ public class Q085_Maximal_Rectangle {
             for (int j = 0; j <= col; j++) {
                 while (!stack.isEmpty() && (j == col || heights[i][j] <= heights[i][stack.peek()])) {
                     int height = heights[i][stack.pop()];
-                    int width = stack.isEmpty() ? j : j - stack.peek() - 1;
+                    int width = stack.isEmpty() ? j : j - 1 - stack.peek();
                     maxArea = Math.max(maxArea, height*width);
                 }
             

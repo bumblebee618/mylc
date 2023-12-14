@@ -19,7 +19,20 @@ return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
  * */
 
 public class Q112_Path_Sum {
-	public boolean hasPathSum(TreeNode root, int sum) 
+	// Solution 1:
+	public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        } else if (root.left == null && root.right == null) {
+            return root.val == targetSum;
+        }
+
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }
+	
+	
+	// Solution 2:
+	public boolean hasPathSum2(TreeNode root, int sum) 
 	{
         if (root == null) 
         {

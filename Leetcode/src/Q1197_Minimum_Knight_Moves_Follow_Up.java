@@ -34,13 +34,13 @@ public class Q1197_Minimum_Knight_Moves_Follow_Up {
 			while (!queue1.isEmpty() && !queue2.isEmpty()) {
 				step1++;
 				
-				if (bfs(graph, queue1, visited1, visited2)) {
+				if (bfs(graph, queue1, visited1, visited2, end)) {
 					return step1 + step2;
 				}
 				
 				step2++;
 				
-				if (bfs(graph, queue2, visited2, visited1)) {
+				if (bfs(graph, queue2, visited2, visited1, end)) {
 					return step1 + step2;
 				}
 			}
@@ -48,11 +48,15 @@ public class Q1197_Minimum_Knight_Moves_Follow_Up {
 			return -1;
 		}
 		
-		private boolean bfs(int[][] graph, Queue<int[]> queue, Set<String> srcVisited, Set<String> desVisited) {
+		private boolean bfs(int[][] graph, Queue<int[]> queue, Set<String> srcVisited, Set<String> desVisited, int[] end) {
 			int size = queue.size();
 			
 			for (int i = 0; i < size; i++) {
 				int[] node = queue.poll();
+				
+				if (node[0] == end[0] && node[1] == end[1]) {
+					return true;
+				}
 				
 				for (int j = 0; j < dx.length; j++) {
 					int newX = node[0] + dx[j];

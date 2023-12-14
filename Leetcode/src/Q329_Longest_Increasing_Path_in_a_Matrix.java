@@ -34,6 +34,57 @@ public class Q329_Longest_Increasing_Path_in_a_Matrix {
 	 * memoSearch比较适合此题，可以去除重复计算； bfs遍历
 	 *  
 	 *******************************************************************/
+	
+	
+	private int[] dx = {1, -1, 0, 0};
+    private int[] dy = {0, 0, 1, -1};
+
+    public int longestIncreasingPath(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
+        }
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int maxLen = 0;
+        int[][] memo = new int[row][col];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (memo[i][j] == 0) {
+                    dfs(matrix, memo, i, j);
+                } 
+
+                maxLen = Math.max(maxLen, memo[i][j]);
+            }
+        }
+
+        return maxLen;
+    }
+
+    private int dfs(int[][] matrix, int[][] memo, int x, int y) {
+        int len = 1;
+
+        for (int i = 0; i < dx.length; i++) {
+            int nextX = x + dx[i];
+            int nextY = y + dy[i];
+
+            if (nextX >= 0 && nextX < matrix.length && nextY >= 0 && nextY < matrix[0].length && matrix[x][y] > matrix[nextX][nextY]) {
+                if (memo[nextX][nextY] == 0) {
+                    dfs(matrix, memo, nextX, nextY);
+                }
+
+                len = Math.max(len, memo[nextX][nextY]+1);
+            }
+        }
+
+        memo[x][y] = len;
+        return len;
+    }
+	
+	
+	
+	/***
 	private int[] dx = {1, -1, 0, 0};
     private int[] dy = {0, 0, 1, -1};
 	
@@ -81,7 +132,7 @@ public class Q329_Longest_Increasing_Path_in_a_Matrix {
         return memo[x][y];
     }
     
-    
+    ***/
     
     
     

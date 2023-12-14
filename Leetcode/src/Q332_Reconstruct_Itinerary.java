@@ -66,7 +66,7 @@ public class Q332_Reconstruct_Itinerary {
         // stack不断push之后，stack的peek()是不断变化的
         // 如何在不知道图中总结点数的情况下，用map来dfs遍历一个图的方法：
         while (!stack.empty()) {  
-            while (graph.containsKey(stack.peek()) && !graph.get(stack.peek()).isEmpty()) {
+        	while (!graph.getOrDefault(stack.peek(), new LinkedList<String>()).isEmpty()) {
                 stack.push(graph.get(stack.peek()).poll());
             }
             
