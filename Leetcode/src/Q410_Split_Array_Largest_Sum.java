@@ -56,19 +56,19 @@ public class Q410_Split_Array_Largest_Sum
     }
     
     private boolean canSplit(int[] nums, int maxSum, int maxArrayNum) {
-        int sum = 0, arrayNum = 1;
+        int curSum = 0, curArrayNum = 1;
         
         for (int num : nums) {
-            if (sum + num > maxSum) {
-                arrayNum++;
-                sum = 0;
+            if (curSum + num > maxSum) {
+            	curArrayNum++;
+                curSum = 0;
             }
 
-            if (arrayNum > maxArrayNum) {
+            if (curArrayNum > maxArrayNum) {
                 return false;
             }
             
-            sum += num;
+            curSum += num;
         }
         
         return true;

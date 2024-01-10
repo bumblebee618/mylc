@@ -28,7 +28,32 @@ Constraints:
 arr[i] < arr[j] for 1 <= i < j <= arr.length
  */
 public class Q1539_Kth_Missing_Positive_Number {
-	public int findKthPositive(int[] arr, int k) 
+	public int findKthPositive(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k <= 0) {
+            return -1;
+        } else if (nums[nums.length-1] - nums.length < k) {
+            return nums[nums.length-1] + k - (nums[nums.length-1] - nums.length);
+        } else if (nums[0] - 1 >= k) {
+            return k;
+        }
+
+        int left = 0, right = nums.length-1;
+
+        while (left+1 < right) {
+            int mid = left + (right-left)/2;
+            
+            if (nums[mid] - mid - 1 < k) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }   
+
+        return nums[left] + k - (nums[left] - left - 1);
+    }
+
+	
+	public int findKthPositive2(int[] arr, int k) 
     {
         if (arr == null || arr.length == 0 || k <= 0)
         {

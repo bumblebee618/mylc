@@ -400,6 +400,35 @@
         </services>
     </region>
     <region>
+        <displayname>Canada West (Calgary)</displayname>
+        <systemname>ca-west-1</systemname>
+        <flag-icon>flags/ca.png</flag-icon>
+        <min-toolkit-version>1.6.2.0</min-toolkit-version>
+        <services>
+            <service name="AutoScaling">https://autoscaling.ca-west-1.amazonaws.com</service>
+            <service name="CloudFormation">https://cloudformation.ca-west-1.amazonaws.com</service>
+            <service name="CloudFront" authregion="us-east-1">https://cloudfront.amazonaws.com</service>
+            <service name="CloudWatch">https://monitoring.ca-west-1.amazonaws.com</service>
+            <service name="CloudWatchEvents">https://events.ca-west-1.amazonaws.com</service>
+            <service name="CodeDeploy">https://codedeploy.ca-west-1.amazonaws.com</service>
+            <service name="DynamoDB">https://dynamodb.ca-west-1.amazonaws.com</service>
+            <service name="DynamoDBStream">https://streams.dynamodb.ca-west-1.amazonaws.com</service>
+            <service name="ECR" authregion="ca-west-1">https://api.ecr.ca-west-1.amazonaws.com</service>
+            <service name="ECS">https://ecs.ca-west-1.amazonaws.com</service>
+            <service name="ELB">https://elasticloadbalancing.ca-west-1.amazonaws.com</service>
+            <service name="IAM" authregion="us-east-1">https://iam.amazonaws.com</service>
+            <service name="KMS">https://kms.ca-west-1.amazonaws.com</service>
+            <service name="Kinesis">https://kinesis.ca-west-1.amazonaws.com</service>
+            <service name="Lambda">https://lambda.ca-west-1.amazonaws.com</service>
+            <service name="Logs">https://logs.ca-west-1.amazonaws.com</service>
+            <service name="RDS">https://rds.ca-west-1.amazonaws.com</service>
+            <service name="S3">https://s3.ca-west-1.amazonaws.com</service>
+            <service name="SNS">https://sns.ca-west-1.amazonaws.com</service>
+            <service name="SQS">https://sqs.ca-west-1.amazonaws.com</service>
+            <service name="XRay">https://xray.ca-west-1.amazonaws.com</service>
+        </services>
+    </region>
+    <region>
         <displayname>China (Beijing)</displayname>
         <systemname>cn-north-1</systemname>
         <flag-icon>flags/cn.png</flag-icon>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 0 elements to &apos;src2&apos;&#x0A;- Destination element: &apos;src2&apos;&#x0A;- Update references to refactored element" description="Move compilation units" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1704861317442" target="/Leetcode/src2" units="0" version="1.0"/>
+</session>
