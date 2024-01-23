@@ -35,67 +35,7 @@ arr[i] contains only lower case English letters.
 
  */
 public class Q1239_Maximum_Length_of_a_Concatenated_String_with_Unique_Characters {
-	// solution 1: backtrack + bit manipulation
-	private int maxLen = 0;
-    private Map<String, Integer> identityMap;
-
-    public int maxLength(List<String> list) {
-        if (list == null || list.size() == 0) {
-            return 0;
-        }
-
-        identityMap = new HashMap<>();
-        List<String> filtedList = new ArrayList<>();
-        for (String str : list) {
-            int identity = getStrIdentity(str);
-            
-            if (identity > 0) {
-                filtedList.add(str);
-                identityMap.put(str, identity);
-            }
-        }
-
-        backtrack(filtedList, 0, 0, 0);
-        return maxLen;
-    }
-
-    private void backtrack(List<String> list, int start, int curIdentity, int curLen) {
-        maxLen = Math.max(maxLen, curLen);
-        for (int i = start; i < list.size(); i++) {
-            int nextIdentity = identityMap.get(list.get(i));
-            if ((curIdentity & nextIdentity) == 0) {
-                backtrack(list, i+1, (curIdentity | nextIdentity), curLen + list.get(i).length());
-            }
-        }
-    }
-
-    private int getStrIdentity(String s) {
-        if (s == null || s.length() == 0 || s.length() > 26) {
-            return 0;
-        }
-
-        int[] hash = new int[26];
-        for (char c : s.toCharArray()) {
-            if (hash[c-'a'] > 0) {
-                return 0;
-            } else {
-                hash[c-'a']++;
-            }
-        }
-
-        int identity = 0;
-        for (int i = 0; i < 26; i++) {
-            if (hash[i] == 1) {
-                identity |= (1 << i);
-            }
-        }
-        
-        return identity;
-    }
-    
-    
-    // Solution 2:
-	public int maxLength2(List<String> arr) {
+	public int maxLength(List<String> arr) {
         if (arr == null || arr.size() == 0) {
             return 0;
         }

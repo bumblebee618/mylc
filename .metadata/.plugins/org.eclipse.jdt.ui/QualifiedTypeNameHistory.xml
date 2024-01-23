@@ -21,7 +21,6 @@
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
 <fullyQualifiedTypeName name="javax.swing.InternalFrameFocusTraversalPolicy"/>
 <fullyQualifiedTypeName name="NordStorm_Find_Combination.Tuple"/>
-<fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="java.awt.SystemTray"/>
 <fullyQualifiedTypeName name="javax.xml.stream.events.EndDocument"/>
 <fullyQualifiedTypeName name="javax.print.attribute.standard.NumberUpSupported"/>
@@ -50,4 +49,5 @@
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.TreeMap"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
 </qualifiedTypeNameHistroy>
