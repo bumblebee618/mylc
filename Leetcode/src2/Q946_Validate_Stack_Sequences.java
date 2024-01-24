@@ -37,8 +37,33 @@ public class Q946_Validate_Stack_Sequences
 	 * test case3: pushed=[0,1,2,3],  popped=[0,1,2,3]
 	 */
 	
-	
 	// solution 1: use stack, time is O(n) and space is O(n)
+	public boolean validateStackSequences(int[] pushed, int[] popped) {
+        if (pushed == null || popped == null) {
+            return pushed == null && popped == null;
+        } else if (pushed.length != popped.length) {
+            return false;
+        }
+        
+        int index1 = 0, index2 = 0;
+        Stack<Integer> stack = new Stack<>();
+        
+        while (index1 < pushed.length || index2 < popped.length) {
+            if (!stack.isEmpty() && index2 < popped.length && stack.peek() == popped[index2]) {
+                stack.pop();
+                index2++;
+            } else if (index1 < pushed.length) {
+                stack.push(pushed[index1++]);
+            } else {
+                return false;
+            }
+        }
+        
+        return index1 == pushed.length && index2 == popped.length && stack.isEmpty();
+    }
+	
+	
+	// use stack, time is O(n) and space is O(n)
 	public boolean validateStackSequences(int[] pushed, int[] popped) 
     {
         if (pushed == null || pushed.length == 0)
