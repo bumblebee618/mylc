@@ -16,7 +16,39 @@ Note:
 The given number is in the range [0, 108]
  */
 public class Q670_Maximum_Swap {
-	public int maximumSwap(int num) 
+	// solution 1: O(nlogn)
+	public int maximumSwap(int num) {
+        if (num < 0) {
+            return num;
+        }
+        
+        char[] digits = Integer.toString(num).toCharArray();
+        int[] array = new int[digits.length];
+        Arrays.fill(array, -1);
+        Queue<Integer> heap = new PriorityQueue<>((a, b) -> digits[b] - digits[a]);
+        
+        for (int i = digits.length-1; i >= 0; i--) {
+            if (!heap.isEmpty() && digits[heap.peek()] > digits[i]) {
+                array[i] = heap.peek();
+            }
+            
+            heap.offer(i);
+        }
+        
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != -1) {
+                char temp = digits[i];
+                digits[i] = digits[array[i]];
+                digits[array[i]] = temp;
+                break;
+            }
+        }
+        
+        return Integer.parseInt(new String(digits));
+    }
+	
+	
+	public int maximumSwap2(int num) 
     {
         if (num <= 0)
         {

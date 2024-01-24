@@ -23,6 +23,51 @@ The string size will be in the range [1, 100].
  */
 public class Q678_Valid_Parenthesis_String 
 {
+	public boolean checkValidString(String s) {
+        if (s == null || s.length() == 0) {
+            return true;
+        }
+
+        Stack<Integer> stack = new Stack<>();
+        Stack<Integer> wildCardStack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            switch (s.charAt(i)) {
+                case '(': {stack.push(i); break;}
+                case '*': {wildCardStack.push(i); break;}
+                case ')': {
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                    } else if (!wildCardStack.isEmpty()) {
+                        wildCardStack.pop();
+                    } else {
+                        return false;
+                    }
+
+                    break;
+                }
+                default:
+            }
+        }
+
+        if (stack.size() > 0 && stack.size() > wildCardStack.size()) {
+            return false;
+        }
+
+        while (!stack.isEmpty()) {
+            if (wildCardStack.isEmpty() || stack.peek() > wildCardStack.peek()) {
+                return false;
+            } 
+
+            wildCardStack.pop();
+            stack.pop();
+        }
+
+        return true;
+    }
+
+	
+	
 	public boolean checkValidString(String s) 
 	{
         if (s == null || s.length() == 0)

@@ -18,8 +18,41 @@ public class Q071_Simplify_Path {
 	/*******************************************/
 	// test case: [/], [/..], [///]
 	
-	// solution 1:
-	public String simplifyPath(String path) 
+	public String simplifyPath(String path) {
+        if (path == null || path.length() == 0) {
+            return "";
+        }
+        
+        String[] strs = path.split("/");
+        Stack<String> stack = new Stack<>();
+        
+        for (String str : strs) {
+            switch (str) {
+                case "": 
+                case ".": break;
+                case "..": {
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                    }
+                    break;
+                }
+                default: stack.push(str); 
+            }
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        
+        while (!stack.isEmpty()) {
+            builder.insert(0, "/".concat(stack.pop()));
+        }
+        
+        return builder.length() == 0 ? "/" : builder.toString();
+    }
+	
+	
+	
+	// solution 2:
+	public String simplifyPath2(String path) 
 	{ 
 		if (path.length() <= 1) 
 		{
@@ -57,8 +90,8 @@ public class Q071_Simplify_Path {
 	
 	
 	
-	// solution 2:
-	public String simplifyPath_2(String path) { //by other using String.join
+	// solution 3:
+	public String simplifyPath_3(String path) { //by other using String.join
 	    Stack<String> stack = new Stack<String>();
 	    for (String s : path.split("/")) {
 	        if (s.equals("..") && !stack.isEmpty())
@@ -69,7 +102,8 @@ public class Q071_Simplify_Path {
 	    return "/" + String.join("/", stack);
 	}
 
-	public String simplifyPath_3(String path) {  //by other
+	// solution 4:
+	public String simplifyPath_4(String path) {  //by other
 		StringBuffer rst = new StringBuffer();
 		int index = 0;
 		String[] strings = path.split("/");

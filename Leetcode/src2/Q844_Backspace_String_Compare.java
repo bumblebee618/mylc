@@ -37,6 +37,51 @@ Can you solve it in O(N) time and O(1) space?
  */
 public class Q844_Backspace_String_Compare {
 	// Time complexity O(n), space complexity O(1)
+	public boolean backspaceCompare(String s, String t) {
+        if (s == null || t == null) {
+            return s == null && t == null;
+        }
+        
+        int index1 = s.length()-1, index2 = t.length()-1;
+        int delete = 0;
+        
+        while (index1 >= 0 || index2 >= 0) {
+            while (index1 >= 0 && s.charAt(index1) == '#') {
+                delete = 0;
+                while (index1 >= 0) {
+                    delete += s.charAt(index1--) == '#' ? 1 : -1;
+                    if (delete == 0) {
+                        break;
+                    }
+                }
+            }
+            
+            while (index2 >= 0 && t.charAt(index2) == '#') {
+                delete = 0;
+                while (index2 >= 0) {
+                    delete += t.charAt(index2--) == '#' ? 1 : -1;
+                    if (delete == 0) {
+                        break;
+                    }
+                }
+            }
+            
+            if (index1 >= 0 && index2 >= 0 && s.charAt(index1) != t.charAt(index2)) {
+                return false;
+            } else if ((index1 >= 0) != (index2 >= 0)) {
+                return false;
+            } else {
+                index1--;
+                index2--;
+            }
+        }
+        
+        return index1 < 0 && index2 < 0;
+    }
+	
+	
+	
+	// Time complexity O(n), space complexity O(1)
 	public boolean backspaceCompare(String S, String T) 
     {
         if (S == null || S.length() == 0 || T == null || T.length() == 0)
