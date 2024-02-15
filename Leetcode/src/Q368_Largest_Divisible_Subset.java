@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 /*****
  * 
@@ -26,8 +27,49 @@ Example 2:
 public class Q368_Largest_Divisible_Subset {
 	// test case: [],  [1]
 	
-	// solution 1: using self-definded class, time complexity is O(n^2), space is O(n)
+	// solution 1:
 	public List<Integer> largestDivisibleSubset(int[] nums) {
+        List<Integer> result = new LinkedList<>();
+
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
+
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        Arrays.sort(nums);
+
+        int maxIndex = 0, maxCount = 1;
+
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] % nums[j] == 0) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+
+                    if (dp[i] > maxCount) {
+                        maxCount = dp[i];
+                        maxIndex = i;
+                    }
+                }
+            }
+        }
+
+        int num = nums[maxIndex];
+
+        for (int i = maxIndex; i >= 0; i--) {
+            if (num % nums[i] == 0 && dp[i] == maxCount) {
+                result.add(0, nums[i]);
+                num = nums[i];
+                maxCount--;
+            }
+        }
+
+        return result;
+    }
+	
+	
+	// solution 2: using self-definded class, time complexity is O(n^2), space is O(n)
+	public List<Integer> largestDivisibleSubset2(int[] nums) {
         List<Integer> ans = new ArrayList<>();
         
         if(nums == null || nums.length == 0) {
@@ -78,8 +120,8 @@ public class Q368_Largest_Divisible_Subset {
 	
     
     
-	// solution 2: using two arrays, time complexity is O(n^2), space is O(n)
-	public List<Integer> largestDivisibleSubset2(int[] nums) {
+	// solution 3: using two arrays, time complexity is O(n^2), space is O(n)
+	public List<Integer> largestDivisibleSubset3(int[] nums) {
 		if(nums == null || nums.length == 0){
             return new ArrayList<Integer>();
         }
@@ -133,7 +175,7 @@ public class Q368_Largest_Divisible_Subset {
 	
 	/************************************ main function ***********************************/
 	// by Jackie, time complexity is O(n^2), space is O(n)
-	public List<Integer> largestDivisibleSubset3(int[] nums) {
+	public List<Integer> largestDivisibleSubset5(int[] nums) {
 		if(nums == null || nums.length == 0){
             return new ArrayList<Integer>();
         }  

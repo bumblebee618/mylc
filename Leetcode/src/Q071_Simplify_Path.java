@@ -142,6 +142,6 @@ public class Q071_Simplify_Path {
 		Q071_Simplify_Path s = new Q071_Simplify_Path();
 		String str = "/a/./b/../../c/";
 		System.out.println(s.simplifyPath(str));
-		System.out.println(s.simplifyPath_2(str));
+		System.out.println(s.simplifyPath2(str));
 	}
 }
