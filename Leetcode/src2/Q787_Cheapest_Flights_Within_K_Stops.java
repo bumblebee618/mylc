@@ -40,12 +40,16 @@ There will not be any duplicated flights or self cycles.
 public class Q787_Cheapest_Flights_Within_K_Stops 
 {
 	// solution 1:
-	public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+	public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
         if (flights == null || flights.length == 0 || flights[0].length != 3) {
             return 0;
-        } else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || k < 0 || k > n) {
+        } else if (n <= 0 || src < 0 || src >= n || dst < 0 || dst >= n || K < 0 || K > n) {
             return 0;
         }
+
+        int[] memo = new int[n];
+        Arrays.fill(memo, Integer.MAX_VALUE);
+        memo[src] = 0;
         
         Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
         
@@ -53,40 +57,43 @@ public class Q787_Cheapest_Flights_Within_K_Stops
             prices.computeIfAbsent(flight[0], x -> new HashMap<>()).put(flight[1], flight[2]);
         }
         
-        Queue<Node> pq = new PriorityQueue<>((a, b) -> (a.cost - b.cost));
-        pq.add(new Node(src, 0, 0));
+        Queue<Node> heap = new LinkedList<>();
         
-        while (!pq.isEmpty()) {
-        	Node node = pq.poll();
-            
-            if (node.city == dst) {
-                return node.cost;
+        // cost, city and steps remained
+        heap.add(new Node(src, 0));
+        int stop = 0;
+        
+        while (!heap.isEmpty()) {
+            if (stop++ >= K+1) {
+                break;
             }
-            
-            if (node.currentStop >= k+1) {
-                continue;
-            }
-            
-            Map<Integer, Integer> priceMap = prices.getOrDefault(node.city, new HashMap<>());
+
+            int size = heap.size();
+
+            for (int i = 0; i < size; i++) {
+                Node node = heap.poll();    
+                Map<Integer, Integer> priceMap = prices.getOrDefault(node.city, new HashMap<>());
                 
-            // bfs
-            for (int nextCity : priceMap.keySet()) {
-                pq.add(new Node(nextCity, node.cost + priceMap.get(nextCity), node.currentStop + 1));
+                // bfs
+                for (Map.Entry<Integer, Integer> entry : priceMap.entrySet()) {
+                    if (node.cost + entry.getValue() < memo[entry.getKey()]) {
+                        memo[entry.getKey()] = node.cost + entry.getValue();
+                        heap.add(new Node(entry.getKey(), memo[entry.getKey()]));
+                    }
+                }
             }
         }
         
-        return -1;
+        return memo[dst] == Integer.MAX_VALUE ? -1 : memo[dst];
     }
     
     class Node {
-        public int city;
+    	public int city;
         public int cost;
-        public int currentStop;
         
-        public Node(int city, int cost, int currentStop) {
+        public Node(int city, int cost) {
             this.city = city;
             this.cost = cost;
-            this.currentStop = currentStop;
         }
     }
 	

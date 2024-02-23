@@ -36,68 +36,70 @@ public class Q480_Sliding_Window_Median {
 	// 类似题295
 	// test case: [1] [k = 1], [2147483647,2147483647] [k = 2],
 	// [-2147483648,-2147483648,2147483647,-2147483648,-2147483648,-2147483648,2147483647,2147483647,2147483647,2147483647,-2147483648,2147483647,-2147483648] [k = 3]
-	public double[] medianSlidingWindow(int[] nums, int k) {
+	private TreeSet<Integer> smallNumers;
+    private TreeSet<Integer> largeNumers;
+    private int[] nums;
+
+    public double[] medianSlidingWindow(int[] nums, int k) {
         if (nums == null || k <= 0) {
             return new double[0];
         }
 
-        int len = nums.length;
-        double[] result = new double[len - k + 1];
-        if (k == 1) {
-            for (int i = 0; i < len; i++) {
-                result[i] = (double) nums[i];
-            }
-            return result;
-            // return Arrays.stream(nums).asDoubleStream().toArray();
-        }
+        // 使用Integer.compare防止溢出，如Integer.MAX_VALUE, Integer.MIN_VALUE
+        largeNumers = new TreeSet<>((a, b) -> nums[a] != nums[b] ? Integer.compare(nums[a], nums[b]) : Integer.compare(a, b));
+        smallNumers = new TreeSet<>((a, b) -> nums[a] != nums[b] ? Integer.compare(nums[b], nums[a]) : Integer.compare(b, a));
+        this.nums = nums;
+        double[] result = new double[nums.length - k + 1];
+        int index = 0;
 
-        Comparator<Integer> comparator = (a, b) -> (nums[a] != nums[b] ? Integer.compare(nums[a], nums[b]) : Integer.compare(a, b));
-        TreeSet<Integer> smallNums = new TreeSet<>(comparator.reversed());
-        TreeSet<Integer> largeNums = new TreeSet<>(comparator);
+        for (int i = 0; i < nums.length; i++) {
+            addNum(i);
 
-        for (int i = 0; i < len; i++) {
             if (i >= k) {
-                removeElement(smallNums, largeNums, nums, i - k);
+                removeNum(i-k);
             }
-            addElement(smallNums, largeNums, i);
-            if (i >= k - 1) {
-                result[i - (k - 1)] = getMedian(smallNums, largeNums, nums);
+
+            if (i >= k-1) {
+                result[index++] = getMedian();
             }
         }
 
         return result;
     }
 
-    private void addElement(TreeSet<Integer> smallNums, TreeSet<Integer> largeNums, int idx) {
-        smallNums.add(idx);
-        largeNums.add(smallNums.pollFirst());
-        if (smallNums.size() < largeNums.size()) {
-            smallNums.add(largeNums.pollFirst());
-        }
+    private void addNum(int idx) {
+        smallNumers.add(idx);
+        largeNumers.add(smallNumers.pollFirst());
+        balance();
     }
 
-    private void removeElement(TreeSet<Integer> smallNums, TreeSet<Integer> largeNums, int[] nums, int idx) {
-        if (largeNums.contains(idx)) {
-            largeNums.remove(idx);
-            if (smallNums.size() == largeNums.size() + 2) {
-                largeNums.add(smallNums.pollFirst());
-            }
+    private void removeNum(int idx) {
+        if (largeNumers.contains(idx)) {
+            largeNumers.remove(idx);
         } else {
-            smallNums.remove(idx);
-            if (smallNums.size() < largeNums.size()) {
-                smallNums.add(largeNums.pollFirst());
-            }
+            smallNumers.remove(idx);
         }
+
+        balance();
     }
 
-    private double getMedian(TreeSet<Integer> smallNums, TreeSet<Integer> largeNums, int[] nums) {
-        if (smallNums.size() == largeNums.size()) {
-            return ((double) nums[smallNums.first()] + nums[largeNums.first()]) / 2;
+    private double getMedian() {
+        if (smallNumers.size() == largeNumers.size()) {
+            return ((double) nums[smallNumers.first()] + nums[largeNumers.first()]) / 2;
         }
-        return nums[smallNums.first()];
+
+        return nums[smallNumers.first()];
+    }
+
+    private void balance() {
+        if (smallNumers.size() < largeNumers.size()) {
+            smallNumers.add(largeNumers.pollFirst());
+        } else if (largeNumers.size() + 1 < smallNumers.size()) {
+            largeNumers.add(smallNumers.pollFirst());
+        }
     }
 	
-    
+    /***
     
     // Solution 2
 	private Queue<Double> maxHeap = new PriorityQueue<>((a, b) -> b > a ? 1 : -1);
@@ -178,7 +180,7 @@ public class Q480_Sliding_Window_Median {
         }  
     }
     
-    
+    ***/
     
     
 	

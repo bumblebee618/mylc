@@ -413,6 +413,7 @@
             <service name="CodeDeploy">https://codedeploy.ca-west-1.amazonaws.com</service>
             <service name="DynamoDB">https://dynamodb.ca-west-1.amazonaws.com</service>
             <service name="DynamoDBStream">https://streams.dynamodb.ca-west-1.amazonaws.com</service>
+            <service name="EC2">https://ec2.ca-west-1.amazonaws.com</service>
             <service name="ECR" authregion="ca-west-1">https://api.ecr.ca-west-1.amazonaws.com</service>
             <service name="ECS">https://ecs.ca-west-1.amazonaws.com</service>
             <service name="ELB">https://elasticloadbalancing.ca-west-1.amazonaws.com</service>
