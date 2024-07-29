@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;prices&apos; in &apos;Q2034_Stock_Price_Fluctuation&apos; to &apos;timeStampToPrices&apos;&#x0A;- Original project: &apos;Leetcode&apos;&#x0A;- Original element: &apos;Q2034_Stock_Price_Fluctuation.prices&apos;&#x0A;- Renamed element: &apos;Q2034_Stock_Price_Fluctuation.timeStampToPrices&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;prices&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;{Q2034_Stock_Price_Fluctuation.java[Q2034_Stock_Price_Fluctuation^prices" name="timeStampToPrices" references="true" setter="false" stamp="1722226223306" textual="true" version="1.0"/>
+</session>

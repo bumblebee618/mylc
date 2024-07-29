@@ -35,6 +35,8 @@ public class NordStorm_Find_Combination {
 		for (int i = 1; i < tuples.length-1; i++) {
 			
 		}
+		
+		return null;
 	}
 	
 	class Tuple {

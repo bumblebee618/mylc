@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /***
  * 
  * @author jackie
@@ -44,12 +46,45 @@ obstacles.length == n + 1
 0 <= obstacles[i] <= 3
 obstacles[0] == obstacles[n] == 0
  */
-public class Q1824_Minimum_Sideway_Jumps 
-{
-	public int minSideJumps(int[] obstacles) 
-    {
-        if (obstacles == null || obstacles.length == 0)
-        {
+public class Q1824_Minimum_Sideway_Jumps {
+	public int minSideJumps(int[] obstacles) {
+        if (obstacles == null || obstacles.length == 0) {
+            return -1;
+        }
+        
+        int[][] minJump = new int[obstacles.length][3];
+        
+        for (int[] array : minJump) {
+            Arrays.fill(array, Integer.MAX_VALUE);
+        }
+        
+        minJump[0][1] = 0;
+        minJump[0][0] = minJump[0][2] = 1;
+        
+        for (int i = 1; i < obstacles.length; i++) {
+            if (minJump[i-1][0] == Integer.MAX_VALUE && minJump[i-1][1] == Integer.MAX_VALUE && minJump[i-1][2] == Integer.MAX_VALUE) {
+                return -1;
+            }
+            
+            for (int curLane = 0; curLane < 3; curLane++) {
+                if (obstacles[i] == curLane+1) {
+                    continue;
+                }
+                
+                for (int prevLane = 0; prevLane < 3; prevLane++) {
+                    if (minJump[i-1][prevLane] != Integer.MAX_VALUE && obstacles[i] != prevLane+1) {
+                        minJump[i][curLane] = Math.min(minJump[i][curLane], minJump[i-1][prevLane] + (curLane == prevLane ? 0 : 1));
+                    }
+                }
+            }
+        }
+        
+        return Math.min(minJump[obstacles.length-1][0], Math.min(minJump[obstacles.length-1][1], minJump[obstacles.length-1][2]));
+    }
+
+	
+	public int minSideJumps2(int[] obstacles) {
+        if (obstacles == null || obstacles.length == 0) {
             return 0;
         }
         
@@ -58,20 +93,16 @@ public class Q1824_Minimum_Sideway_Jumps
         dp[0][0] = dp[0][2] = 1;
         dp[0][1] = 0;
         
-        for (int i = 1; i < size; i++)
-        {
+        for (int i = 1; i < size; i++) {
         	int minJump = Integer.MAX_VALUE;
         	
-        	for (int lane = 0; lane < 3; lane++)
-        	{
-        		dp[i][lane] = obstacles[i]-1 == lane ? Integer.MAX_VALUE : dp[i-1][lane];
+        	for (int lane = 0; lane < 3; lane++) {
+        		dp[i][lane] = obstacles[i] - 1 == lane ? Integer.MAX_VALUE : dp[i-1][lane];
         		minJump = Math.min(minJump, dp[i][lane]);
         	}
         	
-        	for (int lane = 0; lane < 3; lane++)
-        	{
-        		if (obstacles[i]-1 == lane)
-        		{
+        	for (int lane = 0; lane < 3; lane++) {
+        		if (obstacles[i]-1 == lane) {
         			continue;
         		}
         		
