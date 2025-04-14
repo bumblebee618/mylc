@@ -15,6 +15,8 @@ public class Q255_Verify_Preorder_Sequence_in_Binary_Search_Tree {
             if(node < currentLow){
                 return false;
             }
+            
+            // Find current root
             while(!stack.isEmpty() && node > stack.peek()){  // 注意这里是while ！！！
                 currentLow = stack.pop();
             }

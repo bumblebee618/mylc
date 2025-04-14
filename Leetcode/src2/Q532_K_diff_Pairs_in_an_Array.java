@@ -52,7 +52,39 @@ public class Q532_K_diff_Pairs_in_an_Array {
         
         return result;
     }
+	
+	public int findPairs2(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
 
+        Map<Integer, Set<Integer>> map = new HashMap<>();
+        Set<Integer> visited = new HashSet<>();
+        int result = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            map.computeIfAbsent(nums[i], x -> new HashSet<>()).add(i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (visited.contains(nums[i])) {
+                continue;
+            }
+
+            if (!map.containsKey(nums[i] + k)) {
+                continue;
+            } 
+            
+            visited.add(nums[i]);
+            Set<Integer> indexSet = map.get(nums[i] + k);
+
+            if (!indexSet.contains(i) || indexSet.size() > 1) {
+                result++;
+            }
+        }
+
+        return result;
+    }
 	
 	
 	

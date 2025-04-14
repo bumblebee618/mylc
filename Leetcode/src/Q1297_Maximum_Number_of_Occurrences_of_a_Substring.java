@@ -41,7 +41,41 @@ s only contains lowercase English letters.
  */
 public class Q1297_Maximum_Number_of_Occurrences_of_a_Substring 
 {
-	public int maxFreq(String s, int maxLetters, int minSize, int maxSize) 
+	public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+        if (maxLetters <= 0 || minSize < 0 || maxSize < 0 || s == null || s.length() < minSize) {
+            return 0;
+        }
+
+        int[] hash = new int[256];
+        int uniqueLetterNum = 0;
+        Map<String, Integer> map = new HashMap<>();
+        int maxCount = 0;
+
+        for (int front = 0, back = 0; front < s.length(); front++) {
+            if (++hash[s.charAt(front)] == 1) {
+                uniqueLetterNum++;
+            }
+            
+            // Use front - back + 1 > minSize to check substring, e.g "ab" from "aab" as its frequency >= its parent's
+            while (uniqueLetterNum > maxLetters || front - back + 1 > minSize) {
+                if (--hash[s.charAt(back++)] == 0) {
+                    uniqueLetterNum--;
+                }
+            }
+
+            if (front - back + 1 >= minSize && front - back + 1 <= maxSize) {
+                String key = s.substring(back, front+1);
+                map.put(key, map.getOrDefault(key, 0) + 1);
+                maxCount = Math.max(maxCount, map.get(key));
+            }
+        }
+
+        return maxCount;
+    }
+	
+	
+	// Solution 2
+	public int maxFreq2(String s, int maxLetters, int minSize, int maxSize) 
     {
         if (s == null || s.length() == 0)
         {
