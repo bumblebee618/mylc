@@ -37,8 +37,6 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="Merge_Three_Sorted_Arrays"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="Merge_Three_Sorted_Arrays.Tuple"/>
 <fullyQualifiedTypeName name="org.omg.CORBA.SystemException"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentLinkedQueue"/>
@@ -53,11 +51,13 @@
 <fullyQualifiedTypeName name="javax.lang.model.element.Element"/>
 <fullyQualifiedTypeName name="CloudKitchChallenge.Temperature"/>
 <fullyQualifiedTypeName name="CloudKitchChallenge.ActionType"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.util.TreeMap"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
 </qualifiedTypeNameHistroy>
