@@ -1,3 +1,5 @@
+import java.util.*;
+
 /******
  * 
 You are given a binary tree in which each node contains an integer minValue.
@@ -58,6 +60,35 @@ public class Q437_Path_Sum_III {
         
         count += dfs(node.left, curSum + node.val, sum);
         count += dfs(node.right, curSum + node.val, sum);
+        return count;
+    }
+    
+    public int pathSum2(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+
+        Map<Long, Integer> map = new HashMap<>();
+        map.put(0l, 1);
+        return dfs(root, 0, targetSum, map);
+    }
+
+    private int dfs(TreeNode node, long sum, int targetSum, Map<Long, Integer> map) {
+        if (node == null) {
+            return 0;
+        }
+
+        sum += node.val;
+        int count = map.getOrDefault(sum - targetSum, 0);
+        map.put(sum, map.getOrDefault(sum, 0) + 1);
+        count += dfs(node.left, sum, targetSum, map);
+        count += dfs(node.right, sum, targetSum, map);
+        map.put(sum, map.getOrDefault(sum, 0) - 1);
+
+        if (map.get(sum) == 0) {
+            map.remove(sum);
+        } 
+
         return count;
     }
 }

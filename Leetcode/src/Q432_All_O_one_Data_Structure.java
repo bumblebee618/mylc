@@ -12,86 +12,57 @@ GetMaxKey() - Returns one of the keys with maximal minValue. If no element exist
 GetMinKey() - Returns one of the keys with minimal minValue. If no element exists, return an empty string "".
 Challenge: Perform all these in O(1) time complexity.
  */
-public class Q432_All_O_one_Data_Structure 
-{
-	private Map<String, Node> map;
-    private Queue<Node> minHeap;
-    private Queue<Node> maxHeap;
-    
-    /** Initialize your data structure here. */
-    public Q432_All_O_one_Data_Structure() 
-    {
-        map = new HashMap<String, Node>();
-        minHeap = new PriorityQueue<Node>((a, b) -> a.val - b.val);        
-        maxHeap = new PriorityQueue<Node>((a, b) -> b.val - a.val);
+public class Q432_All_O_one_Data_Structure {
+	private TreeSet<Node> treeSet;
+    private Map<String, Integer> map;
+
+    public Q432_All_O_one_Data_Structure() {
+    	treeSet = new TreeSet<>((a, b) -> a.val == b.val ? a.key.compareTo(b.key) : a.val - b.val);
+        map = new HashMap<>();
     }
     
-    /** Inserts a new key <Key> with minValue 1. Or increments an existing key by 1. */
-    public void inc(String key) 
-    {
-        if (!map.containsKey(key)) 
-        {
-            Node node = new Node(key, 1);  
-            map.put(key, node);
-            minHeap.add(node);
-            maxHeap.add(node);
+    public void inc(String key) {
+        if (!map.containsKey(key)) {
+            map.put(key, 1);
+            treeSet.add(new Node(key, 1));
+        } else {
+            int count = map.get(key);
+            map.put(key, count+1);
+            treeSet.remove(new Node(key, count));
+            treeSet.add(new Node(key, count+1));
+        }
+    }
+    
+    public void dec(String key) {
+        if (!map.containsKey(key)) {
+            return;
         } 
-        else 
-        {
-            Node node = map.get(key);
-            minHeap.remove(node);
-            maxHeap.remove(node);
-            
-            node.val++;
-            minHeap.add(node);
-            maxHeap.add(node);
+
+        int count = map.get(key);
+        
+        if (count == 1) {
+            map.remove(key);
+            treeSet.remove(new Node(key, count));
+        } else {
+            map.put(key, count-1);
+            treeSet.remove(new Node(key, count));
+            treeSet.add(new Node(key, count-1));
         }
     }
     
-    /** Decrements an existing key by 1. If Key's minValue is 1, remove it from the data structure. */
-    public void dec(String key) 
-    {
-        if (map.containsKey(key)) 
-        {
-            Node node = map.get(key);
-            
-            if (node.val == 1) 
-            {
-                map.remove(key);
-                minHeap.remove(node);
-                maxHeap.remove(node);
-            } 
-            else 
-            {
-                minHeap.remove(node);
-                maxHeap.remove(node);
-                
-                node.val--;
-                minHeap.add(node);
-                maxHeap.add(node);
-            }
-        }
+    public String getMaxKey() {
+        return treeSet.isEmpty() ? "" : treeSet.last().key;
     }
     
-    /** Returns one of the keys with maximal minValue. */
-    public String getMaxKey() 
-    {
-        return maxHeap.isEmpty() ? "" : maxHeap.peek().key;
+    public String getMinKey() {
+        return treeSet.isEmpty() ? "" : treeSet.first().key;
     }
     
-    /** Returns one of the keys with Minimal minValue. */
-    public String getMinKey() 
-    {
-        return minHeap.isEmpty() ? "" : minHeap.peek().key;
-    }
-    
-    class Node
-    {
+    class Node {
         String key;
         int val;
         
-        public Node(String key, int val) 
-        {
+        public Node(String key, int val) {
             this.key = key;
             this.val = val;
         }

@@ -36,8 +36,59 @@ Follow up:
 Can you solve it in O(N) time and O(1) space?
  */
 public class Q844_Backspace_String_Compare {
-	// Time complexity O(n), space complexity O(1)
 	public boolean backspaceCompare(String s, String t) {
+        if (s == null || t == null) {
+            return s == null && t == null;
+        }
+
+        int index_s = s.length() - 1;
+        int index_t = t.length() - 1;
+
+        while (index_s >= 0 || index_t >= 0) {
+            if (index_s >= 0) {
+                index_s = checkBackspace(index_s, s);
+            }
+
+            if (index_t >= 0) {
+                index_t = checkBackspace(index_t, t);
+            }
+            
+            if (index_s >= 0 && index_t >= 0) {
+                if (s.charAt(index_s) != t.charAt(index_t)) {
+                    return false;
+                } else {
+                    index_s--;
+                    index_t--;
+                }
+            } else if (index_s >= 0 || index_t >= 0) {
+                return false;
+            } else {
+                break;
+            }
+        }
+
+        return true;
+     }
+
+    private int checkBackspace(int index, String str) {
+        while (index >= 0 && str.charAt(index) == '#') {
+            int delete = 0;
+
+            while (index >= 0) {
+                delete += str.charAt(index) == '#' ? 1 : -1;
+                index--;
+            
+                if (delete == 0) {
+                    break;
+                }
+            }
+        }
+
+        return index;
+    }
+    
+	// Solution 2: Time complexity O(n), space complexity O(1)
+	public boolean backspaceCompare2(String s, String t) {
         if (s == null || t == null) {
             return s == null && t == null;
         }
@@ -82,7 +133,7 @@ public class Q844_Backspace_String_Compare {
 	
 	
 	// Time complexity O(n), space complexity O(1)
-	public boolean backspaceCompare(String S, String T) 
+	public boolean backspaceCompare3(String S, String T) 
     {
         if (S == null || S.length() == 0 || T == null || T.length() == 0)
         {

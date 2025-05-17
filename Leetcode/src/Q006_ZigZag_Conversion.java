@@ -16,8 +16,53 @@ convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
  * */
 
 public class Q006_ZigZag_Conversion {
-	// solution 1: using stringbuffer
 	public String convert(String s, int numRows) {
+        if (s == null || s.length() == 0 || numRows <= 1) {
+            return s;
+        } 
+
+        StringBuilder[] builders = new StringBuilder[numRows];
+
+        for (int i = 0; i < numRows; i++) {
+            builders[i] = new StringBuilder();
+        }
+
+        char[] array = s.toCharArray();
+        int index = 0;
+        int direction = 1;
+
+        for (int i = 0; i < array.length; i++) {
+            builders[index].append(array[i]);
+
+            if (direction == 1) {
+                if (index == numRows - 1) {
+                    index--;
+                    direction = -1;
+                } else {
+                    index++;
+                }
+            } else {
+                if (index == 0) {
+                    index++;
+                    direction = 1;
+                } else {
+                    index--;
+                }
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < numRows; i++) {
+            builder.append(builders[i]);
+        }
+
+        return builder.toString();
+    }
+	
+	
+	// solution 2: using stringbuffer
+	public String convert2(String s, int numRows) {
         if (s == null || s.length() == 0 || numRows <= 1 || numRows > s.length()){
             return s;
         }
@@ -50,8 +95,8 @@ public class Q006_ZigZag_Conversion {
 	
 	
 	
-	// solution 2:
-	public String convert2(String s, int numRows) {  
+	// solution 3:
+	public String convert3(String s, int numRows) {  
         if (s.length() <= numRows || numRows == 1) {
         	return s;
         }

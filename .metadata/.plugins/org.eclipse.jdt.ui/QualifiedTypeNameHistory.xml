@@ -25,7 +25,6 @@
 <fullyQualifiedTypeName name="Q000_A_Contest.Trie"/>
 <fullyQualifiedTypeName name="ImmutableListNode"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="javax.print.attribute.standard.RequestingUserName"/>
 <fullyQualifiedTypeName name="java.time.Instant"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
@@ -52,7 +51,6 @@
 <fullyQualifiedTypeName name="CloudKitchChallenge.Temperature"/>
 <fullyQualifiedTypeName name="CloudKitchChallenge.ActionType"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="java.util.TreeMap"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.TreeMap"/>
 </qualifiedTypeNameHistroy>

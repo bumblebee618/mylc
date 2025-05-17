@@ -53,8 +53,14 @@ public class Q2008_Maximum_Earnings_From_Taxi {
         for (int[] ride : rides) {
         	Map.Entry<Integer, Long> entry = treeMap.floorEntry(ride[0]);
         	long localMax = entry.getValue() + (long) (ride[1] - ride[0] + ride[2]);
+        	
+        	/*** 
+            Map.Entry<Integer, Long> currentEntry = treeMap.ceilingEntry(orders[i].start);
+            curMaxTip = currentEntry != null ? Math.max(curMaxTip, currentEntry.getValue()) : curMaxTip;
+            ***/
+        	
         	globalMax = Math.max(globalMax, localMax);
-        	treeMap.put(ride[1], globalMax);
+        	treeMap.put(ride[1], globalMax); // 注意用globalMax
         }
         
         return globalMax;
